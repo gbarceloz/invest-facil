@@ -1,0 +1,68 @@
+# ============================================================================
+# Invest Fácil API — configuração base (todos os ambientes)
+# Nenhuma credencial real neste arquivo: tudo via variáveis de ambiente
+# (fail-fast: a aplicação NÃO sobe sem datasource configurado).
+# ============================================================================
+
+spring:
+  application:
+    name: investfacil-api
+
+  datasource:
+    # Produção (Supabase): fornecidas via env no Render.
+    # Local: Postgres via Docker ou Supabase direto — sempre via env/.env local.
+    url: ${SPRING_DATASOURCE_URL:}
+    username: ${SPRING_DATASOURCE_USERNAME:}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
+    hikari:
+      # Free tier do Supabase tem limite de conexões: pool pequeno por design.
+      maximum-pool-size: 5
+      minimum-idle: 1
+      connection-timeout: 10000
+
+  jpa:
+    # O schema vem EXCLUSIVAMENTE do Flyway (V1/V2). Hibernate apenas valida.
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        default_schema: investfacil
+    open-in-view: false
+
+  flyway:
+    enabled: true
+    schemas: investfacil
+    default-schema: investfacil
+    # Separação de privilégios: migrate (DDL) vs app (DML).
+    # Quando SPRING_FLYWAY_* não for definido, usa o datasource principal.
+    url: ${SPRING_FLYWAY_URL:${spring.datasource.url}}
+    user: ${SPRING_FLYWAY_USER:${spring.datasource.username}}
+    password: ${SPRING_FLYWAY_PASSWORD:${spring.datasource.password}}
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+server:
+  port: ${PORT:8080}
+  address: 0.0.0.0
+  error:
+    # O envelope de erro é produzido pelo GlobalExceptionHandler; nunca stack trace.
+    include-stacktrace: never
+    include-message: never
+    include-binding-errors: never
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+# CORS controlado por env (origens separadas por vírgula)
+app:
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000}

@@ -1,0 +1,6 @@
+# Perfil de produção (Render) — log enxuto, nada de SQL
+logging:
+  level:
+    com.investfacil.api: INFO
+    org.springframework: WARN
+    org.hibernate: WARN

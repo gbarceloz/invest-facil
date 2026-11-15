@@ -1,0 +1,20 @@
+target/
+build/
+*.class
+
+# Segredos — nunca versionar
+.env
+.env.*
+!.env.example
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# Logs e temporários
+logs/
+*.log

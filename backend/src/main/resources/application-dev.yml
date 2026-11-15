@@ -1,0 +1,9 @@
+# Perfil de desenvolvimento (spring.profiles.active=dev)
+spring:
+  jpa:
+    show-sql: false
+
+logging:
+  level:
+    com.investfacil.api: DEBUG
+    org.springframework.security: INFO
