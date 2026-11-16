@@ -3,7 +3,7 @@
 **Status: `Código implementado` → `Teste executado` (build e testes evidenciados)**
 **Data: 2026-11-15 | Autor: arquiteto principal (GLM) | Local: `<workspace>\_staging\backend-skeleton`**
 
-> Construído em `_staging` porque `backend/` ainda contém o módulo duplicado
+> Construído em `_staging` porque `backend/` ainda continha o módulo duplicado
 > `market-data` (Nemotron) e a condição "backend/ livre" não foi confirmada.
 > Promoção para `backend/` = **cópia pura**, somente após autorização do owner.
 
@@ -87,9 +87,9 @@ user_achievements. Papéis USER/ADMIN com CHECK constraint; role vem do banco.
 5. **Autorização USER/ADMIN**: responsabilidade do Spring Security (T2), não do banco.
 
 **Validação com papéis distintos (FlywaySecurityIntegrationTest, PostgreSQL real):**
-- Flyway aplica V1+V2 em banco limpo ✔
-- `SET ROLE investfacil_app`: INSERT/SELECT OK; **DDL → SQLException** ✔
-- `SET ROLE investfacil_test_guest` (com GRANT SELECT): **0 linhas** ✔
+- Flyway aplica V1+V2 em banco limpo ✅
+- `SET ROLE investfacil_app`: INSERT/SELECT OK; **DDL → SQLException** ✅
+- `SET ROLE investfacil_test_guest` (com GRANT SELECT): **0 linhas** ✅
 
 ## 5. Configuração e perfis
 
@@ -106,7 +106,7 @@ user_achievements. Papéis USER/ADMIN com CHECK constraint; role vem do banco.
 1. **Compilação do teste** (`mapMulti` genérico, tipos inferidos) — reescrito.
 2. **Falso positivo do SecretsScanTest** — scanner agora ignora linhas de comentário.
 3. **Docker Desktop 29.8.2 + Testcontainers 1.21.3**: o proxy TCP do Desktop rejeita
-   paths de API ≤ 1.44 (docker-java usa default 1.32 → `BadRequestException 400`).
+   versões de API < 1.44 (docker-java usa default 1.32, que é < 1.44, causando BadRequestException 400).
    Diagnóstico: daemon OK por HTTP puro; a falha era do cliente Java.
    Workaround reversível nesta máquina: listener TCP 2375 habilitado no Docker Desktop
    (`ExposeDockerAPIOnTCP2375` — backup em `settings-store.json.bak`) + perfil Maven
@@ -127,7 +127,10 @@ user_achievements. Papéis USER/ADMIN com CHECK constraint; role vem do banco.
   - `GlobalExceptionHandlerTest` 4/4 (404, 400 validação, 400 corpo ilegível, 500 sem vazamento)
   - `FlywaySecurityIntegrationTest` 4/4 (PostgreSQL real via Testcontainers)
   - `SecretsScanTest` 2/2 (`.env` ausente; nenhum padrão de segredo em pom/sources/resources)
-- Log completo: `build_t1.log`; artefato: `target/investfacil-api-0.1.0-SNAPSHOT.jar`
+- Evidências de build:
+  - Testes: 10/10 aprovados (registrados no relatório de promoção).
+  - Artefato JAR gerado durante validação local: `target/investfacil-api-0.1.0-SNAPSHOT.jar` (não publicado no repositório).
+  - `promotion-manifest.sha256`: comprova correspondência de hashes entre os arquivos de staging e destino; **não comprova execução do build**.
 - Runtime real (Postgres efêmero + jar): `/v3/api-docs` 200, `/swagger-ui.html` 200,
   `/actuator/health` `{"status":"UP","groups":["liveness","readiness"]}`,
   `GET /api/v1/users/me` sem token → **403** (fail-closed).
@@ -139,7 +142,7 @@ user_achievements. Papéis USER/ADMIN com CHECK constraint; role vem do banco.
 - Sem entidade JPA ainda — `ddl-auto: validate` não valida nada além do schema; cada
   módulo trará entidades na T2+.
 
-## 9. Pendências (owner)
+## 8. Pendências (owner)
 
 1. **Autorizar promoção** do skeleton `_staging\backend-skeleton` → `backend/` (cópia pura
    + re-verify in place) após quarentena do `backend\market-data` pelo Nemotron.
@@ -147,7 +150,7 @@ user_achievements. Papéis USER/ADMIN com CHECK constraint; role vem do banco.
 3. Resend API key (T2 — verificação de e-mail/reset).
 4. URL do Figma (frente visual, em paralelo).
 
-## 10. Próxima tarefa delegável ao Nemotron (M2)
+## 9. Próxima tarefa delegável ao Nemotron (M2)
 
 **Escopo restrito, nada de arquitetura/segurança:**
 Criar `docker-compose.yml` + `Dockerfile` multi-stage (Eclipse Temurin 21, jar em camada,
@@ -156,7 +159,7 @@ executa `mvn clean verify -Pdocker-desktop-newapi` com as envs corretas.
 Proibido: alterar SecurityConfig, migrations, GlobalExceptionHandler, pom (exceto com aprovação).
 Critério de aceite: `docker compose up` sobe a API com health UP e Swagger acessível.
 
-## 11. T2 (planejada, responsabilidade do arquiteto)
+## 9. T2 (planejada, responsabilidade do arquiteto)
 
 Auth completa: JWT 15 min + refresh opaco 32B (hash SHA-256, rotação, revogação,
 detecção de reuso), verificação de e-mail, reset de senha, rate limiting,

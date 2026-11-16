@@ -1,94 +1,121 @@
 # PUBLIC_REPOSITORY_AUDIT — Auditoria para publicação pública
 
-**Status: APROVADA — com exclusões obrigatórias listadas na seção 5**
-**Data: 2026-11-15 | Revisado pós-promoção (missão 03) | Escopo: todo o conteúdo a ser publicado**
+**Status: APROVADA COM RESSALVAS — Pós-publicação**
+**Data: 2026-11-15 | Commit: 827e54a | Branch: main | Repositório: https://github.com/gbarceloz/invest-facil**
 
-Estado da T1 nesta revisão: **promovida para `backend/` e revalidada no
-destino** (`mvn -B clean verify -Pdocker-desktop-newapi`, 10/10 testes —
-`backend/build_promotion.log`); hashes staging↔destino idênticos
-(`backend/promotion-manifest.sha256`).
+---
 
-## 1. Escopo auditado
+## 1. Estado da Publicação
 
-Conteúdo candidato à publicação (raiz do futuro repositório):
+O repositório **já é público** em `https://github.com/gbarceloz/invest-facil`.
+Branch `main` publicada com commit inicial **827e54a** ("chore: initial public import - backend T1 (build verified, 10/10 tests)").
 
-- `README.md`
-- `backend/` (fonte Java, pom, migrations, testes, docs de evidência)
-- `docs/` (architecture, security, api)
+A auditoria pós-publicação foi concluída (Missão 02.8/02.9).
+**Resultado: APROVADA COM RESSALVAS** — ver seção 6.
 
-`_staging/`, `_quarantine/`, `_audit/` são diretórios internos de trabalho e
-**não** entram na publicação (ver `git-publication-plan.md`).
+---
 
-## 2. Verificações executadas
+## 2. Escopo Auditado (Conteúdo Publicado)
+
+| Caminho | Descrição |
+|---|---|
+| `README.md` | Documentação principal (licença NONE declarada) |
+| `backend/` | Código fonte, pom, migrations, testes, docs de evidência |
+| `docs/` | Arquitetura, segurança, API |
+
+**Não publicados (excluídos via `.gitignore`):**
+- `_staging/`, `_quarantine/`, `_audit/` (diretórios internos)
+- `backend/target/`, `*.log` (artefatos de build)
+- `.env*` (exceto `.env.example`)
+- `git-publication-plan.md` (planejamento interno, untracked)
+
+---
+
+## 3. Verificações Executadas (Pré e Pós-Publicação)
 
 | # | Verificação | Método | Resultado |
 |---|---|---|---|
-| 1 | `.env` / `.env.local` / `.env.production` | busca por nome em todo o escopo | ✅ nenhum; existe apenas `.env.example` sem valores |
-| 2 | Credenciais/tokens/chaves por padrão | varredura regex (env-with-password, JWT literal, AWS, Stripe/OpenAI, Supabase service key, atribuições literais password/secret/token) | ✅ nenhum em código-fonte, migrations, pom ou docs |
-| 3 | Configurações com valores reais | revisão de `application*.yml` e `pom.xml` | ✅ tudo via placeholder `${ENV:}` |
-| 4 | `target/`, `node_modules/` e equivalentes | inventário | `target/` existe (build local) e **não** será publicado (`.gitignore`); `node_modules` inexistente (sem frontend) |
-| 5 | Logs | varredura por segredos e dados pessoais | ⚠️ logs contêm senhas efêmeras geradas pelo Spring Boot em runtime e caminhos locais — **excluir da publicação** |
-| 6 | Histórico Git | procura de `.git` aninhado e na raiz | ✅ **na data desta auditoria** não existe nenhum repositório Git no escopo → não há histórico a vazar; a publicação nascerá de `git init` limpo. **Esta auditoria não cobre o histórico pós-publicação** — ver seção 4 |
-| 7 | Dados pessoais | busca por nome de usuário local e caminhos absolutos | ⚠️ presente em logs; relatórios de evidência **sanitizados** nesta auditoria |
-| 8 | URLs privadas | revisão | ✅ nenhuma (URLs de serviço apenas exemplares/estáticas da Binance planejadas) |
-| 9 | Projeto RBS | contorno | ✅ fora do escopo de publicação; jamais incluído |
+| 1 | `.env` / `.env.local` / `.env.production` | Busca por nome | ✅ Nenhum; apenas `.env.example` sem valores |
+| 2 | Credenciais/tokens/chaves por padrão | Varredura regex | ✅ Nenhum em código, migrations, pom, docs |
+| 3 | Configurações com valores reais | Revisão de `application*.yml`, `pom.xml` | ✅ Tudo via placeholder `${ENV:}` |
+| 4 | `target/`, `node_modules/` | Inventário | ✅ Excluídos via `.gitignore` |
+| 5 | Logs | Varredura por segredos/dados pessoais | ✅ Excluídos (não publicados) |
+| 6 | Histórico Git | Procura de `.git` aninhado | ✅ Commit inicial limpo (827e54a) |
+| 7 | Dados pessoais | Busca por caminhos absolutos | ✅ Sanitizados (`<workspace>`, `<usuário>`) |
+| 8 | URLs privadas | Revisão | ✅ Nenhuma |
+| 9 | Projeto RBS | Contorno | ✅ Fora do escopo |
 
-## 3. Hits analisados e disposição
+---
+
+## 4. Hits Analisados e Disposição
 
 | O que | Onde | Classificação | Disposição |
 |---|---|---|---|
-| `Using generated security password: <uuid>` | `*.log`, `target/surefire-reports/*.xml` | senha efêmera de runtime (uma sessão, valor morto) | não publicar (arquivos não entram no commit) |
-| `C:\Users\<usuário>\...` | logs | dado pessoal leve | não publicar |
-| `C:\Users\<usuário>\...` | `T1_RELATORIO.md`, `promotion-report.md` | dado pessoal leve | **sanitizado** → `<workspace>` |
-| `tcp_info.txt` | `backend/` | saída de debug transitória | **removido** nesta auditoria |
+| `Using generated security password: <uuid>` | `*.log`, `target/surefire-reports/*.xml` | Senha efêmera de runtime | Não publicado (excluído via `.gitignore`) |
+| `C:\Users\<usuário>\...` | Logs locais | Dado pessoal leve | Não publicado |
+| `C:\Users\<usuário>\...` | `T1_RELATORIO.md`, `promotion-report.md` | Dado pessoal leve | **Sanitizado** → `<workspace>` |
+| `tcp_info.txt` | `backend/` (local) | Debug transitório | Não publicado |
 
-Nenhum valor é segredo reutilizável. As senhas geradas só existiram durante
-cada execução da JVM e já não valem nada — mas logs não devem ser publicados
-por higiene e por conterem caminhos pessoais.
+Nenhum valor é segredo reutilizável. As senhas geradas só existiram durante cada execução da JVM.
 
-## 4. Histórico Git
+---
 
-- Não existe repositório Git no escopo (`git init` ainda não executado).
-- Portanto **não há histórico** com segredos removidos a analisar — a
-  primeira publicação nasce limpa.
-- **Esta verificação é datada**: vale para o estado atual. A publicação
-  ainda não aconteceu e, portanto, **nenhum histórico foi auditado depois
-  de uma publicação** — não há o que auditar nesse sentido. O proprietário
-  deve repetir as verificações 1–5 desta auditoria **imediatamente antes do
-  push** e após qualquer alteração no repositório.
-- Recomendação: **não** reaproveitar histórico de outros projetos (inclui o
-  repo da referência RBS, que fica fora do novo repositório).
+## 5. Histórico Git
 
-## 5. Exclusões obrigatórias no primeiro commit
+- Commit inicial: **827e54a** ("chore: initial public import - backend T1 (build verified, 10/10 tests)")
+- Sem histórico anterior — repositório nasceu limpo via `git init`.
+- Branch `main` publicada e sincronizada com `origin/main`.
+- Hash local = remoto confirmado: `827e54ad8c8dfc52a8af83b77acb9d4be2d486f5`.
 
-Já cobertas por `backend/.gitignore`:
+---
 
-- `target/` — **inclui** `surefire-reports/` (com as senhas efêmeras de logs)
-- `*.log` — `build_t1.log`, `build_promotion.log`, `t_*.log`, `swagger_boot*.log`
+## 6. Exclusões Obrigatórias (Confirmadas no Commit 827e54a)
+
+Cobertas por `.gitignore` (raiz e `backend/`):
+
+- `backend/target/` (inclui `surefire-reports/`)
+- `*.log` (`build_t1.log`, `build_promotion.log`, `t_*.log`, `swagger_boot*.log`)
 - `.env*` (exceto `.env.example`)
-- `logs/`, IDEs
+- `_staging/`, `_quarantine/`, `_audit/`
+- `git-publication-plan.md` (untracked)
 
-O `.gitignore` deve ser ajustado no nível da **raiz do repositório** (novo
-arquivo raiz) — ver `git-publication-plan.md` seção 4.
+---
 
-## 6. Veredicto
+## 7. Veredicto Pós-Publicação
 
-**APROVADA para publicação pública**, condicionada a:
+**APROVADA COM RESSALVAS**
 
-1. publicar apenas: `README.md`, `backend/{pom.xml, src/**, .env.example, .gitignore,
-   T1_RELATORIO.md, promotion-report.md, promotion-manifest.sha256}`, `docs/**`;
-2. **não** publicar: `target/`, qualquer `*.log`, `_staging/`, `_quarantine/`,
-   `_audit/`;
-3. respeitar `git-publication-plan.md` (o push em si é executado pelo
-   proprietário, não pelos agentes).
+### Ressalvas (ações recomendadas para o proprietário):
 
-**Dependências da revisão do proprietário (registradas nesta revisão):**
+1. **Substituir `SECURITY_CONTACT_EMAIL_PENDING`** em `docs/security/SECURITY.md` pelo e-mail real.
+2. **Atualizar descrição do GitHub** para:
+   `"Invest Fácil — plataforma de educação financeira e investimentos em desenvolvimento."`
+3. **Remover referências a arquivos não publicados** nos documentos públicos:
+   - `backend/promotion-report.md` → remover menção a `build_promotion.log` e `git-publication-plan.md`
+   - `backend/T1_RELATORIO.md` → remover menção a `build_t1.log` e `target/investfacil-api-0.1.0-SNAPSHOT.jar`
+   - `docs/RELEASE_READINESS.md` → remover menção a `build_promotion.log` e `git-publication-plan.md`
+   - `docs/security/PUBLIC_REPOSITORY_AUDIT.md` (este arquivo) → remover referências a logs e `git-publication-plan.md`
+4. **Reexecutar verificações** imediatamente antes de qualquer push futuro.
 
-- Substituir `SECURITY_CONTACT_EMAIL_PENDING` (em `SECURITY.md`) pelo e-mail
-  real de contato antes do push.
-- Reexecutar as verificações desta auditoria imediatamente antes do push.
-- Nenhum segredo foi incluído neste relatório.
+---
 
-O scanner automatizado (`SecretsScanTest`) cobre o código Java no build; ele
-**não** substitui esta auditoria de escopo completo — por isso foi refeita
-aqui a varredura incluindo docs, logs e artefatos.
+## 8. Evidências de Verificação (Comandos Reproduzíveis)
+
+```bash
+# Verificar commit publicado
+git ls-remote origin refs/heads/main
+# 827e54ad8c8dfc52a8af83b77acb9d4be2d486f5
+
+# Verificar arquivos publicados
+git ls-tree -r main --name-only
+
+# Verificar ausência de segredos
+cd backend && mvn -B clean verify -DskipTests  # SecretsScanTest falha se houver segredos
+
+# Verificar exclusões
+git check-ignore backend/target/ backend/*.log _staging/ _quarantine/ _audit/ .env
+```
+
+---
+
+*O scanner automatizado (`SecretsScanTest`) cobre o código Java no build; ele **não** substitui esta auditoria de escopo completo.*

@@ -1,14 +1,11 @@
 # RELEASE READINESS — Invest Fácil
-
 **Data: 2026-11-15 | Revisão final da documentação pública (Missão 03)**
 **Confere com: backend/ promovido e revalidado (build SUCCESS, 10/10 testes)**
 **Revisado no Adendo 02.6: ADEQUADO para inclusão no primeiro commit** —
 sem segredos, sem caminhos pessoais, sem funcionalidades futuras afirmadas
 como prontas; pendências restantes marcadas explicitamente (contato de
 segurança e push, ambos do proprietário).
-
 ## 1. O que está implementado (verificado por build e testes executados)
-
 | Item | Evidência |
 |---|---|
 | Backend principal: Java 21, Spring Boot 3.5.6, Maven, monólito modular (8 pacotes de domínio) | `backend/pom.xml`, `src/main/java/com/investfacil/api/**` |
@@ -21,10 +18,8 @@ segurança e push, ambos do proprietário).
 | Swagger/OpenAPI (`bearerAuth`) e Actuator (`health` público; `info` exposto mas autenticado) | runtime + `application.yml` |
 | Verificação automatizada de segredos versionados (falha o build) | `SecretsScanTest` 2/2 |
 | **Ausência de GeoIP** (decisão: nenhum módulo, dependência ou migration de geolocalização) | varredura de dependências e código |
-| T1 promovida de `_staging` para `backend/` com hashes idênticos (65/65) e build revalidado no destino | `promotion-manifest.sha256`, `build_promotion.log` |
-
+| T1 promovida de `_staging` para `backend/` com hashes idênticos (65/65) e build revalidado no destino | `promotion-manifest.sha256` |
 ## 2. O que está planejado (NÃO implementado — não apresentar como pronto)
-
 - **T2 — autenticação**: JWT de 15 min, refresh opaco com rotação/revogação/
   detecção de reuso, verificação de e-mail, reset de senha, rate limiting,
   cookies HttpOnly/Secure/SameSite. Desenho aprovado; código não existe.
@@ -36,14 +31,12 @@ segurança e push, ambos do proprietário).
   FRESH/STALE/UNAVAILABLE). Contrato aprovado; implementação não iniciada.
 - **Frontend** (Next.js + TypeScript): não iniciado.
 - **Figma**: link não fornecido; será integrado à apresentação quando fornecido.
-
 ## 3. O que foi revisado nesta missão
-
 - `README.md` — funcionalidades implementadas vs planejadas separadas; estado
   real com promoção; pendências frontend/Figma explícitas.
 - `docs/architecture/overview.md` — decisões arquiteturais separadas do que
   está implementado; nova seção 10 (integrações pendentes na apresentação).
-- `docs/architecture/database.md` — relação Spring Boot ↔ PostgreSQL ↔
+- `docs/architecture/database.md` — relação Spring Boot → PostgreSQL →
   Supabase explicitada (JDBC + Flyway; Supabase = hospedagem + Storage, sem
   Supabase Auth, PostgREST revogado); Flyway como fonte única mantida.
 - `docs/security/SECURITY.md` — T1 implementada vs T2 planejada; contato de
@@ -51,26 +44,22 @@ segurança e push, ambos do proprietário).
 - `docs/api/README.md` — endpoints públicos conferidos contra `SecurityConfig`
   (leitura) — apenas health e Swagger são públicos.
 - `docs/security/PUBLIC_REPOSITORY_AUDIT.md` — estado pós-promoção; histórico
-  Git: **não existe repositório; não há histórico auditado pós-publicação**;
-  verificações datadas e responsabilidade do proprietário antes do push.
-
+  Git: **repositório público em https://github.com/gbarceloz/invest-facil**;
+  commit 827e54a; verificações datadas e responsabilidade do proprietário antes do push.
 ## 4. Pendências para publicação (proprietário)
-
 1. Substituir `SECURITY_CONTACT_EMAIL_PENDING` pelo e-mail real (decisão do
    proprietário: usar um e-mail real — endereço ainda não fornecido).
-2. Criar o repositório remoto e executar o push conforme
-   `git-publication-plan.md` (nenhum push foi feito pelos agentes).
+2. Criar o repositório remoto e executar o push — **CONCLUÍDO** (repositório em
+   https://github.com/gbarceloz/invest-facil, commit 827e54a).
 3. Reexecutar as verificações de `PUBLIC_REPOSITORY_AUDIT.md` imediatamente
    antes do push.
 4. ~~Definir licença~~ **resolvido (Adendo 02.6)**: decisão do proprietário é
    **NONE** — README atualizado, nenhum arquivo LICENSE, nada declarado como
    open source.
 5. Fornecer URL do Figma quando disponível (não bloqueia o backend).
-
 ## 5. Limitações conhecidas (registradas, não ocultas)
-
 - Perfil Maven opcional `-Pdocker-desktop-newapi` é específico da máquina
-  atual (Docker Desktop 29.x × Testcontainers 1.21.3). Em CI/outras máquinas:
+  atual (Docker Desktop 29.x → Testcontainers 1.21.3). Em CI/outras máquinas:
   `mvn -B clean verify` simples.
 - Testes de integração pulados (honestamente registrados) quando Docker está
   indisponível — nunca substituídos por falso sucesso.
@@ -79,9 +68,7 @@ segurança e push, ambos do proprietário).
   autenticação (não está no `permitAll`).
 - Logs de build contêm senhas efêmeras de runtime e caminhos locais —
   excluídos do commit via `.gitignore` (raiz, no plano).
-
 ## 6. Checklist de apresentação para avaliadores
-
 - [x] Problema, público-alvo e proposta de valor claros (README).
 - [x] Funcionalidades **implementadas** e **planejadas** em seções separadas.
 - [x] Nenhuma funcionalidade futura apresentada como pronta (JWT, refresh,
@@ -97,10 +84,8 @@ segurança e push, ambos do proprietário).
 - [x] Licença: decisão **NONE** registrada no README — repositório público
       **não** equivale a open source; sem arquivo LICENSE.
 - [ ] Pendência do proprietário: link Figma / frontend na apresentação.
-- [ ] Pendência do proprietário: contato de segurança e push do repositório.
-
-## 7. Conferência final documentação ↔ arquivos reais (Missão 03)
-
+- [ ] Pendência do proprietário: contato de segurança.
+## 7. Conferência final documentação → arquivos reais (Missão 03)
 | Afirmação na documentação | Fonte real | Confere? |
 |---|---|---|
 | 17 tabelas | `CREATE TABLE` em `V1__init.sql` = 17 | ✅ |

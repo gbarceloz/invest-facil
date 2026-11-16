@@ -39,12 +39,9 @@ Resultado: **BUILD SUCCESS** — `Tests run: 10, Failures: 0, Errors: 0, Skipped
 - FlywaySecurityIntegrationTest 4/4 (PostgreSQL real; V1+V2 aplicadas em banco limpo)
 - SecretsScanTest 2/2
 
-Log completo: `build_promotion.log`.
-
 ## Conteúdo transitório copiado (observação para o primeiro commit)
 
-A cópia pura incluiu logs de execução da T1 (`build_t1.log`, `t_single.log`,
-`t_probe.log`, `tcp_info.txt`, `swagger_boot*.log`) e `target/`. **Não devem entrar
-no repositório público** — ver `../git-publication-plan.md` e `.gitignore`.
+A cópia pura incluiu logs de execução da T1 e `target/`. **Não entram
+no repositório público** — ver `.gitignore`.
 
 ## Mudanças em relação à T1: nenhuma.
