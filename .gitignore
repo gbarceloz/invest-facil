@@ -1,11 +1,16 @@
 # Build artifacts
 backend/target/
+frontend/.next/
+frontend/out/
+frontend/node_modules/
 *.class
 
 # Secrets - never commit
 .env
 .env.*
 !.env.example
+frontend/.env.local
+frontend/.env.production.local
 
 # Logs and execution evidence
 *.log
@@ -16,6 +21,7 @@ tcp_info.txt
 _staging/
 _quarantine/
 _audit/
+git-publication-plan.md
 
 # IDE and editor configs
 .idea/

@@ -1,5 +1,10 @@
 # Skill: invest-facil-auth-invariants
 
+> **Atualização 20/11/2026:** as invariantes abaixo foram implementadas no MVP
+> (JWT, refresh rotativo, MFA, verificação exigida no login, reset e sessões).
+> Consulte `docs/security/SECURITY.md` e `docs/QUALIDADE_FINAL.md` para o estado
+> verificado. Itens marcados como “planejados” são históricos.
+
 ## Invariantess de Autenticação e Autorização — Invest Fácil
 
 > **Decisões aprovadas (T1/T2):** O que está definido e não deve ser alterado sem autorização do arquiteto (GLM).

@@ -1,0 +1,1059 @@
+[
+  {
+    "id": "01",
+    "name": "Chief Architect",
+    "area": "Diretoria e Arquitetura",
+    "wave": 1,
+    "status": "DEFINED",
+    "mission": "Definir a arquitetura modular, fronteiras de domínio e decisões técnicas do MVP.",
+    "deliverables": [
+      "docs/architecture/overview.md",
+      "mapa de pacotes",
+      "ADRs"
+    ],
+    "acceptance": [
+      "Build verde e nenhuma dependência circular entre módulos."
+    ]
+  },
+  {
+    "id": "02",
+    "name": "Technical Project Manager",
+    "area": "Diretoria e Arquitetura",
+    "wave": 1,
+    "status": "DEFINED",
+    "mission": "Planejar ondas, prioridades e dependências até 12/12/2026.",
+    "deliverables": [
+      "docs/PROGRESSO_GERAL.md",
+      "backlog priorizado"
+    ],
+    "acceptance": [
+      "Toda tarefa com ID, status, responsável e evidência."
+    ]
+  },
+  {
+    "id": "03",
+    "name": "Repository Auditor",
+    "area": "Diretoria e Arquitetura",
+    "wave": 1,
+    "status": "DEFINED",
+    "mission": "Auditar GitHub, branches, commits, staging e quarentena.",
+    "deliverables": [
+      "docs/AUDITORIA_GERAL.md",
+      "inventário de divergências"
+    ],
+    "acceptance": [
+      "Nenhuma conclusão sem comando ou hash verificável."
+    ]
+  },
+  {
+    "id": "04",
+    "name": "Code Quality Auditor",
+    "area": "Diretoria e Arquitetura",
+    "wave": 1,
+    "status": "DEFINED",
+    "mission": "Revisar legibilidade, consistência, duplicação e riscos de manutenção.",
+    "deliverables": [
+      "relatório de qualidade",
+      "checklist de revisão"
+    ],
+    "acceptance": [
+      "Sem segredos, código morto crítico ou padrões conflitantes."
+    ]
+  },
+  {
+    "id": "05",
+    "name": "System Integration Architect",
+    "area": "Diretoria e Arquitetura",
+    "wave": 1,
+    "status": "DEFINED",
+    "mission": "Garantir contrato frontend↔backend, proxy, cookies e CORS.",
+    "deliverables": [
+      "contrato OpenAPI",
+      "configuração de rewrite"
+    ],
+    "acceptance": [
+      "Fluxo completo funcionando em ambiente local."
+    ]
+  },
+  {
+    "id": "06",
+    "name": "Java Backend Architect",
+    "area": "Backend Java/Spring",
+    "wave": 2,
+    "status": "DEFINED",
+    "mission": "Organizar o monólito modular por domínio e preservar fronteiras.",
+    "deliverables": [
+      "estrutura com.investfacil.api.*",
+      "interfaces de serviço"
+    ],
+    "acceptance": [
+      "Nenhum módulo acessa repository de outro domínio."
+    ]
+  },
+  {
+    "id": "07",
+    "name": "Spring Boot Specialist",
+    "area": "Backend Java/Spring",
+    "wave": 2,
+    "status": "DEFINED",
+    "mission": "Configurar Boot 3.5, perfis, beans e ciclo de vida.",
+    "deliverables": [
+      "application.yml/dev/prod",
+      "configuração tipada"
+    ],
+    "acceptance": [
+      "Aplicação sobe em dev e prod sem segredos versionados."
+    ]
+  },
+  {
+    "id": "08",
+    "name": "REST API Engineer",
+    "area": "Backend Java/Spring",
+    "wave": 2,
+    "status": "DEFINED",
+    "mission": "Projetar endpoints REST consistentes e códigos HTTP corretos.",
+    "deliverables": [
+      "controllers",
+      "coleção de requests"
+    ],
+    "acceptance": [
+      "Contratos documentados no Swagger e testados."
+    ]
+  },
+  {
+    "id": "09",
+    "name": "Domain Modeling Engineer",
+    "area": "Backend Java/Spring",
+    "wave": 2,
+    "status": "DEFINED",
+    "mission": "Modelar usuário, conteúdo, progresso, gamificação e simulação.",
+    "deliverables": [
+      "entidades JPA",
+      "relacionamentos"
+    ],
+    "acceptance": [
+      "Schema validado por Hibernate (ddl-auto=validate)."
+    ]
+  },
+  {
+    "id": "10",
+    "name": "Repository and Persistence Engineer",
+    "area": "Backend Java/Spring",
+    "wave": 2,
+    "status": "DEFINED",
+    "mission": "Implementar repositories e consultas eficientes.",
+    "deliverables": [
+      "interfaces Spring Data",
+      "queries JPQL/nativas"
+    ],
+    "acceptance": [
+      "Consultas críticas cobertas por testes de integração."
+    ]
+  },
+  {
+    "id": "11",
+    "name": "DTO and Mapping Engineer",
+    "area": "Backend Java/Spring",
+    "wave": 2,
+    "status": "DEFINED",
+    "mission": "Separar DTOs de entidades e evitar vazamento de dados internos.",
+    "deliverables": [
+      "records de request/response"
+    ],
+    "acceptance": [
+      "Nenhum hash/token/segredo exposto em JSON."
+    ]
+  },
+  {
+    "id": "12",
+    "name": "Validation Engineer",
+    "area": "Backend Java/Spring",
+    "wave": 2,
+    "status": "DEFINED",
+    "mission": "Validar entradas de cadastro, quiz, simulador e perfil.",
+    "deliverables": [
+      "anotações Jakarta Validation",
+      "mensagens pt-BR"
+    ],
+    "acceptance": [
+      "400 com envelope ApiError e detalhes por campo."
+    ]
+  },
+  {
+    "id": "13",
+    "name": "Exception Handling Engineer",
+    "area": "Backend Java/Spring",
+    "wave": 2,
+    "status": "DEFINED",
+    "mission": "Padronizar erros de negócio e infraestrutura.",
+    "deliverables": [
+      "GlobalExceptionHandler",
+      "BusinessException"
+    ],
+    "acceptance": [
+      "Nenhum stack trace/SQL vaza ao cliente."
+    ]
+  },
+  {
+    "id": "14",
+    "name": "API Documentation Engineer",
+    "area": "Backend Java/Spring",
+    "wave": 2,
+    "status": "DEFINED",
+    "mission": "Manter Swagger/OpenAPI útil e fiel ao código.",
+    "deliverables": [
+      "OpenApiConfig",
+      "docs/api/README.md"
+    ],
+    "acceptance": [
+      "/v3/api-docs e /swagger-ui.html acessíveis."
+    ]
+  },
+  {
+    "id": "15",
+    "name": "Backend Testing Engineer",
+    "area": "Backend Java/Spring",
+    "wave": 2,
+    "status": "DEFINED",
+    "mission": "Cobrir domínio, segurança e fluxos integrados.",
+    "deliverables": [
+      "testes JUnit 5 + Testcontainers"
+    ],
+    "acceptance": [
+      "Suíte verde",
+      "integração contra PostgreSQL real."
+    ]
+  },
+  {
+    "id": "16",
+    "name": "Spring Security Specialist",
+    "area": "Autenticação e Segurança",
+    "wave": 2,
+    "status": "DEFINED",
+    "mission": "Configurar cadeia stateless, autorização e headers.",
+    "deliverables": [
+      "SecurityConfig",
+      "entry point/denied handler"
+    ],
+    "acceptance": [
+      "API fail-closed",
+      "públicos mínimos",
+      "Swagger funcional."
+    ]
+  },
+  {
+    "id": "17",
+    "name": "JWT Authentication Engineer",
+    "area": "Autenticação e Segurança",
+    "wave": 2,
+    "status": "DEFINED",
+    "mission": "Implementar access token HS256 de 15 minutos.",
+    "deliverables": [
+      "JwtService",
+      "JwtAuthenticationFilter"
+    ],
+    "acceptance": [
+      "Token inválido/expirado rejeitado",
+      "papel lido do banco."
+    ]
+  },
+  {
+    "id": "18",
+    "name": "Refresh Token Engineer",
+    "area": "Autenticação e Segurança",
+    "wave": 2,
+    "status": "DEFINED",
+    "mission": "Implementar refresh opaco com hash, rotação e revogação.",
+    "deliverables": [
+      "RefreshToken",
+      "AuthService.refresh"
+    ],
+    "acceptance": [
+      "Reuso revoga a família",
+      "concorrência coberta por lock."
+    ]
+  },
+  {
+    "id": "19",
+    "name": "Multi-Factor Authentication Engineer",
+    "area": "Autenticação e Segurança",
+    "wave": 2,
+    "status": "DEFINED",
+    "mission": "Implementar TOTP e desafio de login.",
+    "deliverables": [
+      "TotpService",
+      "SecretCipher",
+      "endpoints MFA"
+    ],
+    "acceptance": [
+      "Código válido autentica",
+      "replay rejeitado."
+    ]
+  },
+  {
+    "id": "20",
+    "name": "Email Verification Engineer",
+    "area": "Autenticação e Segurança",
+    "wave": 2,
+    "status": "DEFINED",
+    "mission": "Implementar verificação de e-mail com token de uso único.",
+    "deliverables": [
+      "EmailToken",
+      "EmailService"
+    ],
+    "acceptance": [
+      "Token expira, é único e não vaza em produção."
+    ]
+  },
+  {
+    "id": "21",
+    "name": "Password Recovery Engineer",
+    "area": "Autenticação e Segurança",
+    "wave": 2,
+    "status": "DEFINED",
+    "mission": "Implementar recuperação de senha com invalidação de sessões.",
+    "deliverables": [
+      "fluxo forgot/reset",
+      "auditoria"
+    ],
+    "acceptance": [
+      "Token de 1h, uso único e revogação de refresh tokens."
+    ]
+  },
+  {
+    "id": "22",
+    "name": "Session Management Engineer",
+    "area": "Autenticação e Segurança",
+    "wave": 2,
+    "status": "DEFINED",
+    "mission": "Listar e revogar sessões ativas com segurança.",
+    "deliverables": [
+      "endpoints /auth/sessions"
+    ],
+    "acceptance": [
+      "Usuário só revoga as próprias sessões."
+    ]
+  },
+  {
+    "id": "23",
+    "name": "Authorization and RBAC Engineer",
+    "area": "Autenticação e Segurança",
+    "wave": 2,
+    "status": "DEFINED",
+    "mission": "Aplicar USER/ADMIN a partir do banco, não do claim.",
+    "deliverables": [
+      "regras de autorização",
+      "endpoint admin"
+    ],
+    "acceptance": [
+      "ADMIN exigido em /api/v1/admin/**",
+      "USER não acessa."
+    ]
+  },
+  {
+    "id": "24",
+    "name": "Rate Limiting Engineer",
+    "area": "Autenticação e Segurança",
+    "wave": 2,
+    "status": "DEFINED",
+    "mission": "Proteger login, cadastro, reset e APIs gerais.",
+    "deliverables": [
+      "RateLimitFilter",
+      "regras por rota"
+    ],
+    "acceptance": [
+      "429 com Retry-After",
+      "IP não confia em XFF sem proxy."
+    ]
+  },
+  {
+    "id": "25",
+    "name": "Security Auditor",
+    "area": "Autenticação e Segurança",
+    "wave": 2,
+    "status": "DEFINED",
+    "mission": "Auditar cookies, CSRF, enumeração, força bruta e segredos.",
+    "deliverables": [
+      "relatório de segurança",
+      "checklist"
+    ],
+    "acceptance": [
+      "Nenhum achado crítico aberto sem mitigação documentada."
+    ]
+  },
+  {
+    "id": "26",
+    "name": "PostgreSQL Architect",
+    "area": "Banco e Infraestrutura",
+    "wave": 2,
+    "status": "DEFINED",
+    "mission": "Modelar schema, índices, constraints e integridade.",
+    "deliverables": [
+      "migrations V1–V5",
+      "docs/architecture/database.md"
+    ],
+    "acceptance": [
+      "Schema aplicado em banco limpo e validado."
+    ]
+  },
+  {
+    "id": "27",
+    "name": "Supabase Specialist",
+    "area": "Banco e Infraestrutura",
+    "wave": 2,
+    "status": "DEFINED",
+    "mission": "Configurar PostgreSQL gerenciado e Storage sem expor o schema.",
+    "deliverables": [
+      "runbook Supabase",
+      "REVOKE/RLS"
+    ],
+    "acceptance": [
+      "PostgREST sem acesso",
+      "runtime com DML apenas."
+    ]
+  },
+  {
+    "id": "28",
+    "name": "Flyway Migration Engineer",
+    "area": "Banco e Infraestrutura",
+    "wave": 2,
+    "status": "DEFINED",
+    "mission": "Versionar todo o schema e evitar ddl-auto=update.",
+    "deliverables": [
+      "migrations imutáveis",
+      "checksums"
+    ],
+    "acceptance": [
+      "Flyway aplica V1–V5",
+      "Hibernate apenas valida."
+    ]
+  },
+  {
+    "id": "29",
+    "name": "Database Optimization Engineer",
+    "area": "Banco e Infraestrutura",
+    "wave": 2,
+    "status": "DEFINED",
+    "mission": "Criar índices para catálogo, progresso e tokens.",
+    "deliverables": [
+      "índices únicos e compostos"
+    ],
+    "acceptance": [
+      "Consultas críticas sem full scan evidente."
+    ]
+  },
+  {
+    "id": "30",
+    "name": "Database Testing Engineer",
+    "area": "Banco e Infraestrutura",
+    "wave": 2,
+    "status": "DEFINED",
+    "mission": "Provar RLS, privilégios e migrations com PostgreSQL real.",
+    "deliverables": [
+      "FlywaySecurityIntegrationTest"
+    ],
+    "acceptance": [
+      "App não faz DDL",
+      "guest vê 0 linhas por RLS."
+    ]
+  },
+  {
+    "id": "31",
+    "name": "Supabase Storage Engineer",
+    "area": "Banco e Infraestrutura",
+    "wave": 2,
+    "status": "DEFINED",
+    "mission": "Integrar bucket privado e URLs assinadas.",
+    "deliverables": [
+      "SupabaseStorageClient",
+      "configuração"
+    ],
+    "acceptance": [
+      "Upload autenticado e playback por URL temporária."
+    ]
+  },
+  {
+    "id": "32",
+    "name": "Video Upload Engineer",
+    "area": "Banco e Infraestrutura",
+    "wave": 2,
+    "status": "DEFINED",
+    "mission": "Implementar upload multipart com validação.",
+    "deliverables": [
+      "VideoService.upload",
+      "endpoint admin"
+    ],
+    "acceptance": [
+      "MP4/WebM/MOV até 150 MB",
+      "assinatura validada."
+    ]
+  },
+  {
+    "id": "33",
+    "name": "Media Processing Engineer",
+    "area": "Banco e Infraestrutura",
+    "wave": 2,
+    "status": "DEFINED",
+    "mission": "Registrar metadados e preparar evolução para transcodificação.",
+    "deliverables": [
+      "VideoAsset",
+      "campos de duração/mime"
+    ],
+    "acceptance": [
+      "Metadados consistentes",
+      "sem arquivo no filesystem efêmero."
+    ]
+  },
+  {
+    "id": "34",
+    "name": "File Security Engineer",
+    "area": "Banco e Infraestrutura",
+    "wave": 2,
+    "status": "DEFINED",
+    "mission": "Impedir path traversal, arquivos disfarçados e acesso público.",
+    "deliverables": [
+      "validação de MIME/assinatura",
+      "bucket privado"
+    ],
+    "acceptance": [
+      "Arquivo inválido rejeitado",
+      "service key só no servidor."
+    ]
+  },
+  {
+    "id": "35",
+    "name": "Infrastructure and Deployment Engineer",
+    "area": "Banco e Infraestrutura",
+    "wave": 2,
+    "status": "DEFINED",
+    "mission": "Preparar Docker, Render, Vercel e health checks.",
+    "deliverables": [
+      "Dockerfile",
+      "render.yaml",
+      "docs/DEPLOY.md"
+    ],
+    "acceptance": [
+      "Health UP",
+      "variáveis sem segredos versionados."
+    ]
+  },
+  {
+    "id": "36",
+    "name": "Frontend Architect",
+    "area": "Frontend e Experiência",
+    "wave": 3,
+    "status": "DEFINED",
+    "mission": "Definir App Router, camadas, estado e rotas.",
+    "deliverables": [
+      "estrutura app/",
+      "providers",
+      "lib/api"
+    ],
+    "acceptance": [
+      "Build Next.js sem erros de tipo."
+    ]
+  },
+  {
+    "id": "37",
+    "name": "React/TypeScript Engineer",
+    "area": "Frontend e Experiência",
+    "wave": 3,
+    "status": "DEFINED",
+    "mission": "Implementar telas, formulários e estados com tipagem estrita.",
+    "deliverables": [
+      "páginas e componentes",
+      "tsconfig strict"
+    ],
+    "acceptance": [
+      "npm run build verde."
+    ]
+  },
+  {
+    "id": "38",
+    "name": "Figma Integration Specialist",
+    "area": "Frontend e Experiência",
+    "wave": 3,
+    "status": "DEFINED",
+    "mission": "Traduzir identidade e fluxos do protótipo para o produto.",
+    "deliverables": [
+      "tokens visuais",
+      "mapa de telas"
+    ],
+    "acceptance": [
+      "Dark/yellow, Plus Jakarta Sans e navegação coerentes."
+    ]
+  },
+  {
+    "id": "39",
+    "name": "Design System Engineer",
+    "area": "Frontend e Experiência",
+    "wave": 3,
+    "status": "DEFINED",
+    "mission": "Criar componentes reutilizáveis e consistentes.",
+    "deliverables": [
+      "Button, Card, Badge, Progress, Alert"
+    ],
+    "acceptance": [
+      "Componentes usados nas telas",
+      "sem estilos duplicados críticos."
+    ]
+  },
+  {
+    "id": "40",
+    "name": "Dashboard Engineer",
+    "area": "Frontend e Experiência",
+    "wave": 3,
+    "status": "DEFINED",
+    "mission": "Construir dashboard com próxima missão, XP e mercado.",
+    "deliverables": [
+      "app/app/page.tsx"
+    ],
+    "acceptance": [
+      "Dados reais da API",
+      "estados de carregamento/erro."
+    ]
+  },
+  {
+    "id": "41",
+    "name": "Authentication UI Engineer",
+    "area": "Frontend e Experiência",
+    "wave": 3,
+    "status": "DEFINED",
+    "mission": "Construir login, cadastro, verificação, reset e MFA.",
+    "deliverables": [
+      "rotas de autenticação"
+    ],
+    "acceptance": [
+      "Fluxos completos com mensagens claras."
+    ]
+  },
+  {
+    "id": "42",
+    "name": "Responsive Design Engineer",
+    "area": "Frontend e Experiência",
+    "wave": 3,
+    "status": "DEFINED",
+    "mission": "Garantir uso em desktop e mobile.",
+    "deliverables": [
+      "sidebar + bottom nav",
+      "breakpoints"
+    ],
+    "acceptance": [
+      "Nenhum overflow crítico em 360px e 1440px."
+    ]
+  },
+  {
+    "id": "43",
+    "name": "Accessibility Engineer",
+    "area": "Frontend e Experiência",
+    "wave": 3,
+    "status": "DEFINED",
+    "mission": "Melhorar semântica, foco, contraste e labels.",
+    "deliverables": [
+      "aria-labels",
+      "foco visível",
+      "formulários"
+    ],
+    "acceptance": [
+      "Navegação por teclado nos fluxos principais."
+    ]
+  },
+  {
+    "id": "44",
+    "name": "Frontend API Integration Engineer",
+    "area": "Frontend e Experiência",
+    "wave": 3,
+    "status": "DEFINED",
+    "mission": "Integrar API, refresh automático e tratamento de erros.",
+    "deliverables": [
+      "lib/api.ts",
+      "rewrite /api"
+    ],
+    "acceptance": [
+      "401 renova a sessão",
+      "erros viram mensagens úteis."
+    ]
+  },
+  {
+    "id": "45",
+    "name": "Frontend Testing Engineer",
+    "area": "Frontend e Experiência",
+    "wave": 3,
+    "status": "DEFINED",
+    "mission": "Cobrir formatadores e componentes críticos.",
+    "deliverables": [
+      "Vitest + Testing Library"
+    ],
+    "acceptance": [
+      "npm test verde."
+    ]
+  },
+  {
+    "id": "46",
+    "name": "Financial Education Architect",
+    "area": "Educação Financeira",
+    "wave": 3,
+    "status": "DEFINED",
+    "mission": "Definir progressão didática e público 18–25.",
+    "deliverables": [
+      "8 trilhas",
+      "ordem de conceitos"
+    ],
+    "acceptance": [
+      "Conteúdo sem promessa de rentabilidade."
+    ]
+  },
+  {
+    "id": "47",
+    "name": "Educational Content Engineer",
+    "area": "Educação Financeira",
+    "wave": 3,
+    "status": "DEFINED",
+    "mission": "Produzir aulas e artigos em português claro.",
+    "deliverables": [
+      "seed/content.json",
+      "19 aulas",
+      "6 artigos"
+    ],
+    "acceptance": [
+      "Conteúdo verificável, com fontes quando externo."
+    ]
+  },
+  {
+    "id": "48",
+    "name": "Video Learning Engineer",
+    "area": "Educação Financeira",
+    "wave": 3,
+    "status": "DEFINED",
+    "mission": "Planejar vídeos de até 3 minutos por aula.",
+    "deliverables": [
+      "metadados de vídeo",
+      "player"
+    ],
+    "acceptance": [
+      "Aula sem vídeo exibe estado honesto."
+    ]
+  },
+  {
+    "id": "49",
+    "name": "Financial Articles Engineer",
+    "area": "Educação Financeira",
+    "wave": 3,
+    "status": "DEFINED",
+    "mission": "Escrever artigos de aprofundamento com fonte.",
+    "deliverables": [
+      "artigos e campos source"
+    ],
+    "acceptance": [
+      "Nenhum artigo sem atribuição quando derivado."
+    ]
+  },
+  {
+    "id": "50",
+    "name": "Investment Fundamentals Specialist",
+    "area": "Educação Financeira",
+    "wave": 3,
+    "status": "DEFINED",
+    "mission": "Explicar renda fixa, variável, fundos e ETFs.",
+    "deliverables": [
+      "aulas das trilhas 2–5"
+    ],
+    "acceptance": [
+      "Conceitos corretos e sem recomendação individual."
+    ]
+  },
+  {
+    "id": "51",
+    "name": "Cryptocurrency Education Specialist",
+    "area": "Educação Financeira",
+    "wave": 3,
+    "status": "DEFINED",
+    "mission": "Explicar blockchain, volatilidade e golpes.",
+    "deliverables": [
+      "trilha cripto",
+      "artigos"
+    ],
+    "acceptance": [
+      "Riscos explícitos",
+      "sem promessa de retorno."
+    ]
+  },
+  {
+    "id": "52",
+    "name": "Financial Simulator Engineer",
+    "area": "Educação Financeira",
+    "wave": 3,
+    "status": "DEFINED",
+    "mission": "Implementar juros compostos, aportes e cenários.",
+    "deliverables": [
+      "SimulatorService",
+      "gráfico"
+    ],
+    "acceptance": [
+      "Cálculo determinístico",
+      "aviso obrigatório."
+    ]
+  },
+  {
+    "id": "53",
+    "name": "Learning Progress Engineer",
+    "area": "Educação Financeira",
+    "wave": 3,
+    "status": "DEFINED",
+    "mission": "Registrar conclusão, quizzes e progresso idempotente.",
+    "deliverables": [
+      "ProgressService",
+      "user_progress"
+    ],
+    "acceptance": [
+      "Conclusão repetida não duplica XP."
+    ]
+  },
+  {
+    "id": "54",
+    "name": "Gamification Engineer",
+    "area": "Educação Financeira",
+    "wave": 3,
+    "status": "DEFINED",
+    "mission": "Implementar XP, níveis, conquistas e sequência.",
+    "deliverables": [
+      "GamificationService",
+      "xp_ledger"
+    ],
+    "acceptance": [
+      "XP append-only",
+      "conquistas por aprendizado."
+    ]
+  },
+  {
+    "id": "55",
+    "name": "User Engagement Engineer",
+    "area": "Educação Financeira",
+    "wave": 3,
+    "status": "DEFINED",
+    "mission": "Melhorar retorno ao estudo sem dark patterns.",
+    "deliverables": [
+      "dashboard",
+      "sequência",
+      "próximos passos"
+    ],
+    "acceptance": [
+      "Nenhuma notificação falsa ou urgência artificial."
+    ]
+  },
+  {
+    "id": "56",
+    "name": "End-to-End Testing Engineer",
+    "area": "Qualidade e Demonstração",
+    "wave": 4,
+    "status": "DEFINED",
+    "mission": "Cobrir jornada completa em ambiente real.",
+    "deliverables": [
+      "roteiro E2E",
+      "evidências"
+    ],
+    "acceptance": [
+      "Cadastro→aula→quiz→simulador→logout sem erro."
+    ]
+  },
+  {
+    "id": "57",
+    "name": "Performance Engineer",
+    "area": "Qualidade e Demonstração",
+    "wave": 4,
+    "status": "DEFINED",
+    "mission": "Medir build, primeira carga e consultas críticas.",
+    "deliverables": [
+      "relatório de performance"
+    ],
+    "acceptance": [
+      "Sem regressão grosseira",
+      "imagens/JS controlados."
+    ]
+  },
+  {
+    "id": "58",
+    "name": "UX Researcher",
+    "area": "Qualidade e Demonstração",
+    "wave": 4,
+    "status": "DEFINED",
+    "mission": "Avaliar clareza para iniciantes e riscos de interpretação.",
+    "deliverables": [
+      "achados de UX"
+    ],
+    "acceptance": [
+      "Nenhuma tela sugere garantia de retorno."
+    ]
+  },
+  {
+    "id": "59",
+    "name": "Product Analyst",
+    "area": "Qualidade e Demonstração",
+    "wave": 4,
+    "status": "DEFINED",
+    "mission": "Verificar aderência ao problema e ao público.",
+    "deliverables": [
+      "análise de proposta de valor"
+    ],
+    "acceptance": [
+      "Funcionalidades conectadas à dor real."
+    ]
+  },
+  {
+    "id": "60",
+    "name": "Error Monitoring Engineer",
+    "area": "Qualidade e Demonstração",
+    "wave": 4,
+    "status": "DEFINED",
+    "mission": "Preparar logs, traceId e monitoramento.",
+    "deliverables": [
+      "configuração de logs/Actuator"
+    ],
+    "acceptance": [
+      "Erros rastreáveis sem vazar dados sensíveis."
+    ]
+  },
+  {
+    "id": "61",
+    "name": "Deployment Validation Engineer",
+    "area": "Qualidade e Demonstração",
+    "wave": 4,
+    "status": "DEFINED",
+    "mission": "Validar ambiente publicado e rollback.",
+    "deliverables": [
+      "checklist de release"
+    ],
+    "acceptance": [
+      "Health, auth, conteúdo e swagger verificados."
+    ]
+  },
+  {
+    "id": "62",
+    "name": "Demo Environment Engineer",
+    "area": "Qualidade e Demonstração",
+    "wave": 4,
+    "status": "DEFINED",
+    "mission": "Preparar dados, conta demo e resiliência.",
+    "deliverables": [
+      "seed",
+      "demo initializer",
+      "runbook"
+    ],
+    "acceptance": [
+      "Demo funciona offline de provedores externos."
+    ]
+  },
+  {
+    "id": "63",
+    "name": "Presentation Architect",
+    "area": "Qualidade e Demonstração",
+    "wave": 4,
+    "status": "DEFINED",
+    "mission": "Estruturar narrativa e sequência de telas.",
+    "deliverables": [
+      "docs/APRESENTACAO.md"
+    ],
+    "acceptance": [
+      "Apresentação cobre problema, solução, demo e arquitetura."
+    ]
+  },
+  {
+    "id": "64",
+    "name": "Pitch Storytelling Specialist",
+    "area": "Qualidade e Demonstração",
+    "wave": 4,
+    "status": "DEFINED",
+    "mission": "Criar pitch com tensão, prova e chamada final.",
+    "deliverables": [
+      "roteiro de pitch"
+    ],
+    "acceptance": [
+      "Mensagem clara em 3 minutos."
+    ]
+  },
+  {
+    "id": "65",
+    "name": "Product Documentation Engineer",
+    "area": "Qualidade e Demonstração",
+    "wave": 4,
+    "status": "DEFINED",
+    "mission": "Manter README e docs fiéis ao código.",
+    "deliverables": [
+      "README",
+      "docs técnicos"
+    ],
+    "acceptance": [
+      "Nenhuma funcionalidade futura apresentada como pronta."
+    ]
+  },
+  {
+    "id": "66",
+    "name": "Integration Testing Engineer",
+    "area": "Qualidade e Demonstração",
+    "wave": 4,
+    "status": "DEFINED",
+    "mission": "Validar contrato entre módulos e ambientes.",
+    "deliverables": [
+      "MvpFlowIntegrationTest"
+    ],
+    "acceptance": [
+      "Fluxo integrado verde em PostgreSQL real."
+    ]
+  },
+  {
+    "id": "67",
+    "name": "Regression Testing Engineer",
+    "area": "Qualidade e Demonstração",
+    "wave": 4,
+    "status": "DEFINED",
+    "mission": "Reexecutar suítes após mudanças.",
+    "deliverables": [
+      "registro de regressão"
+    ],
+    "acceptance": [
+      "Falhas corrigidas com evidência antes/depois."
+    ]
+  },
+  {
+    "id": "68",
+    "name": "Accessibility and Compatibility Auditor",
+    "area": "Qualidade e Demonstração",
+    "wave": 4,
+    "status": "DEFINED",
+    "mission": "Auditar contraste, teclado, leitores e navegadores.",
+    "deliverables": [
+      "checklist WCAG/AA"
+    ],
+    "acceptance": [
+      "Achados críticos corrigidos ou documentados."
+    ]
+  },
+  {
+    "id": "69",
+    "name": "Final Quality Assurance Lead",
+    "area": "Qualidade e Demonstração",
+    "wave": 4,
+    "status": "DEFINED",
+    "mission": "Consolidar evidências e emitir veredito go/no-go.",
+    "deliverables": [
+      "docs/QUALIDADE_FINAL.md"
+    ],
+    "acceptance": [
+      "Nenhum teste é declarado sem execução real."
+    ]
+  },
+  {
+    "id": "70",
+    "name": "Hackathon Strategy Specialist",
+    "area": "Qualidade e Demonstração",
+    "wave": 4,
+    "status": "DEFINED",
+    "mission": "Alinhar entrega aos critérios de avaliação do Hack Brasil.",
+    "deliverables": [
+      "matriz critério→evidência"
+    ],
+    "acceptance": [
+      "Demo destaca diferencial, segurança e impacto."
+    ]
+  }
+]

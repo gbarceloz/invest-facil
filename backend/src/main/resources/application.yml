@@ -1,7 +1,6 @@
 # ============================================================================
 # Invest Fácil API — configuração base (todos os ambientes)
-# Nenhuma credencial real neste arquivo: tudo via variáveis de ambiente
-# (fail-fast: a aplicação NÃO sobe sem datasource configurado).
+# Nenhuma credencial real neste arquivo: tudo via variáveis de ambiente.
 # ============================================================================
 
 spring:
@@ -21,12 +20,14 @@ spring:
       connection-timeout: 10000
 
   jpa:
-    # O schema vem EXCLUSIVAMENTE do Flyway (V1/V2). Hibernate apenas valida.
+    # O schema vem EXCLUSIVAMENTE do Flyway (V1..V3). Hibernate apenas valida.
     hibernate:
       ddl-auto: validate
     properties:
       hibernate:
         default_schema: investfacil
+        jdbc:
+          time_zone: UTC
     open-in-view: false
 
   flyway:
@@ -39,6 +40,12 @@ spring:
     user: ${SPRING_FLYWAY_USER:${spring.datasource.username}}
     password: ${SPRING_FLYWAY_PASSWORD:${spring.datasource.password}}
 
+  servlet:
+    multipart:
+      # Vídeos de até 3 minutos; o service valida 150 MB e o tipo real.
+      max-file-size: 160MB
+      max-request-size: 170MB
+
   jackson:
     serialization:
       write-dates-as-timestamps: false
@@ -46,6 +53,8 @@ spring:
 server:
   port: ${PORT:8080}
   address: 0.0.0.0
+  # Não confiar em Forwarded/X-Forwarded-* por padrão. Ver TRUST_PROXY.
+  forward-headers-strategy: none
   error:
     # O envelope de erro é produzido pelo GlobalExceptionHandler; nunca stack trace.
     include-stacktrace: never
@@ -61,8 +70,73 @@ management:
     health:
       probes:
         enabled: true
+      show-details: never
 
-# CORS controlado por env (origens separadas por vírgula)
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
 app:
   cors:
     allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000}
+
+  jwt:
+    secret: ${JWT_SECRET:}
+    issuer: ${JWT_ISSUER:investfacil-api}
+    access-minutes: ${JWT_ACCESS_MINUTES:15}
+    refresh-days: ${JWT_REFRESH_DAYS:30}
+    mfa-challenge-minutes: ${JWT_MFA_CHALLENGE_MINUTES:5}
+
+  auth:
+    frontend-base-url: ${FRONTEND_BASE_URL:http://localhost:3000}
+    refresh-cookie-name: ${REFRESH_COOKIE_NAME:if_refresh}
+    cookie-secure: ${COOKIE_SECURE:true}
+    cookie-same-site: ${COOKIE_SAME_SITE:Strict}
+    expose-dev-tokens: ${EXPOSE_DEV_TOKENS:false}
+    max-failed-attempts: ${MAX_FAILED_ATTEMPTS:5}
+    lock-minutes: ${LOCK_MINUTES:15}
+    bcrypt-cost: ${BCRYPT_COST:10}
+
+  mail:
+    enabled: ${MAIL_ENABLED:false}
+    from: ${MAIL_FROM:Invest Fácil <nao-responda@investfacil.local>}
+    resend-api-key: ${RESEND_API_KEY:}
+
+  supabase:
+    url: ${SUPABASE_URL:}
+    service-key: ${SUPABASE_SERVICE_KEY:}
+    bucket: ${SUPABASE_VIDEO_BUCKET:videos}
+    signed-url-seconds: ${SUPABASE_SIGNED_URL_SECONDS:3600}
+
+  videos:
+    demo-url: ${VIDEO_DEMO_URL:}
+
+  demo:
+    enabled: ${APP_DEMO_ENABLED:false}
+    email: ${DEMO_EMAIL:}
+    password: ${DEMO_PASSWORD:}
+    name: ${DEMO_NAME:Marina Lima}
+
+  security:
+    trust-proxy: ${TRUST_PROXY:false}
+    trusted-proxies: ${TRUSTED_PROXIES:}
+    mfa-key: ${APP_MFA_KEY:}
+
+  seed:
+    content: ${SEED_CONTENT:true}
+
+  market:
+    enabled: ${MARKET_ENABLED:true}
+    base-url: ${MARKET_BASE_URL:https://api.binance.com}
+    fx-url: ${MARKET_FX_URL:https://api.frankfurter.app/latest?from=USD&to=BRL}
+    cache-seconds: ${MARKET_CACHE_SECONDS:30}
+
+  rate-limit:
+    enabled: ${RATE_LIMIT_ENABLED:true}
+
+logging:
+  level:
+    root: INFO
+    com.investfacil.api: INFO

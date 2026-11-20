@@ -3,6 +3,15 @@ spring:
   jpa:
     show-sql: false
 
+app:
+  auth:
+    # Em dev, o cookie pode ser enviado por HTTP local e o token de verificação
+    # aparece na resposta para facilitar o teste sem provedor de e-mail.
+    cookie-secure: ${COOKIE_SECURE:false}
+    expose-dev-tokens: ${EXPOSE_DEV_TOKENS:true}
+  market:
+    enabled: ${MARKET_ENABLED:true}
+
 logging:
   level:
     com.investfacil.api: DEBUG

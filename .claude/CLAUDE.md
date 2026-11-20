@@ -1,5 +1,12 @@
 # CLAUDE.md — Instruções Permanentes para Claude Code
 
+> **Atualização 20/11/2026:** o estado abaixo (“T1 concluída; T2 não iniciada;
+> frontend não iniciado”) é **histórico**. O MVP atual inclui autenticação,
+> conteúdo, progresso, gamificação, simulador, vídeos (integração pronta), mercado
+> e frontend Next.js. Consulte `docs/AUDITORIA_GERAL.md` e
+> `docs/PROGRESSO_GERAL.md` como fontes de verdade. A branch de trabalho é
+> `feat/mvp-completo`; push/merge dependem de autorização do proprietário.
+
 ## Identidade e Objetivo do Invest Fácil
 
 **Invest Fácil** é uma plataforma de educação financeira e investimentos para o Brasil, desenvolvida para o **Hack Brasil 2026** (entrega em 12/12/2026). O objetivo é oferecer trilhas estruturadas de educação financeira em português, com vídeos, artigos, quizzes e gamificação (XP, níveis, conquistas), **sem executar ordens, custodiar valores ou dar recomendação de investimento**.

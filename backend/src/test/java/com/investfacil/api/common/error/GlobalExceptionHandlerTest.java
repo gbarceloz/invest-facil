@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
@@ -26,13 +29,23 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Garante que TODAS as respostas de erro usam o envelope {@link ApiError},
  * sem stack trace, mensagem de SQL ou caminhos internos.
  */
-@WebMvcTest
+@WebMvcTest(
+        controllers = GlobalExceptionHandlerTest.ProbeController.class,
+        excludeFilters = @ComponentScan.Filter(
+                type = FilterType.ASSIGNABLE_TYPE,
+                classes = com.investfacil.api.config.SecurityConfig.class))
 @Import(GlobalExceptionHandlerTest.ProbeController.class)
-@AutoConfigureMockMvc(addFilters = false) // T1: sem JWT ainda; o foco é o handler de erros
+@AutoConfigureMockMvc(addFilters = false) // foco no handler de erros, sem a cadeia de segurança
 class GlobalExceptionHandlerTest {
 
     @Autowired
     MockMvc mvc;
+
+    @MockBean
+    com.investfacil.api.common.security.JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    @MockBean
+    com.investfacil.api.common.web.RateLimitFilter rateLimitFilter;
 
     @RestController
     @RequestMapping("/probe")

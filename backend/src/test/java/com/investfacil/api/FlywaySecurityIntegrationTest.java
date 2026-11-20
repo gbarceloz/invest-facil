@@ -10,10 +10,12 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import javax.sql.DataSource;
+import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Base64;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,6 +36,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringBootTest
 @Testcontainers(disabledWithoutDocker = true)
 class FlywaySecurityIntegrationTest {
+
+    static {
+        // JwtService exige um segredo; testes usam um valor efêmero, nunca versionado.
+        byte[] secret = new byte[48];
+        new SecureRandom().nextBytes(secret);
+        System.setProperty("JWT_SECRET", Base64.getEncoder().encodeToString(secret));
+    }
 
     @Container
     @ServiceConnection
@@ -80,6 +89,23 @@ class FlywaySecurityIntegrationTest {
                     () -> st.execute("CREATE TABLE investfacil.nao_deve_existir (id int)"),
                     "investfacil_app não deve poder executar DDL");
             assertTrue(falhou.getMessage() != null && !falhou.getMessage().isBlank());
+            st.execute("RESET ROLE");
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    @Test
+    void appNaoPodeAlterarLedgersDeAuditoriaOuXp() {
+        try (Connection conn = dataSource.getConnection();
+             Statement st = conn.createStatement()) {
+            st.execute("SET ROLE investfacil_app");
+            assertThrows(SQLException.class,
+                    () -> st.execute("UPDATE investfacil.auth_event SET event_type = 'X'"),
+                    "auth_event deve ser append-only para o runtime");
+            assertThrows(SQLException.class,
+                    () -> st.execute("UPDATE investfacil.xp_ledger SET amount = 0"),
+                    "xp_ledger deve ser append-only para o runtime");
             st.execute("RESET ROLE");
         } catch (SQLException e) {
             throw new IllegalStateException(e);

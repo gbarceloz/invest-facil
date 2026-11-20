@@ -1,6 +1,8 @@
 # Visão geral da arquitetura
 
-**Status do documento: DECISÃO APROVADA** (Missão 02, delta D1–D12)
+**Status: MVP implementado e testado localmente (20/11/2026).**
+Deploy remoto e integrações externas (Supabase/Resend) permanecem pendentes de
+credenciais. Onde algo não foi validado, está marcado.
 
 ## 1. Decisão central: monólito modular
 
@@ -9,100 +11,132 @@ domínios separados como pacotes Java de fronteira rígida.
 
 Por que não microserviços:
 
-- Equipe pequena e prazo curto (Hack Brasil, 12/12/2026).
-- Domínios fortemente acoplados ao ciclo de usuário (progresso → gamificação).
-- Um único banco PostgreSQL já resolve consistência e elimina custo de
-  infraestrutura distribuída.
+- equipe pequena e prazo curto (Hack Brasil, 12/12/2026);
+- domínios fortemente acoplados ao ciclo do usuário (progresso → gamificação);
+- um banco PostgreSQL já resolve consistência, transações e custo operacional.
 
-A fronteira de módulo é pacote + convenção: comunicação entre módulos
-somente por interfaces de serviço, nunca pelo repository de outro domínio.
+A fronteira é pacote + convenção: comunicação entre módulos somente por
+interfaces de serviço, nunca pelo repository de outro domínio.
 
 ```
 com.investfacil.api
-├── common         # envelope de erros, utilitários
-├── auth           # cadastro, login, tokens, verificação, reset
+├── common         # ApiError, exceções, JWT, TOTP, rate limit, IP
+├── config         # SecurityConfig, AppProperties, OpenAPI
+├── auth           # cadastro, login, refresh, MFA, e-mail, reset, sessões
 ├── users          # perfil, papéis USER/ADMIN
-├── content        # categorias, módulos, aulas, artigos
-├── videos         # metadados + Supabase Storage (URL assinada)
-├── progress       # conclusão de aulas, quizzes
-├── gamification   # XP (append-only), níveis, conquistas
-└── market         # cotações BTC/ETH — informativo, sem execução
+├── content        # categorias, módulos, aulas, artigos, busca
+├── videos         # metadados + Supabase Storage + upload admin
+├── progress       # conclusão, quizzes, métricas
+├── gamification   # XP append-only, níveis, conquistas, sequência
+├── simulator      # juros compostos, cenários salvos
+├── market         # BTC/ETH/SOL informativo + fallback
+└── seed           # conteúdo inicial e conta demo opcional
 ```
+
+Interfaces de fronteira relevantes:
+
+- `ContentCatalog` — conteúdo para progresso, gamificação e vídeos;
+- `ProgressMetrics` — métricas de progresso para a gamificação, sem ciclo de beans.
 
 ## 2. Requisições e streaming
 
-Spring MVC (servlet) síncrono em todo o backend. O antigo módulo de market
-data baseado em WebFlux/WebSocket/SSE **não** foi portado: a entrega de
-cotações no MVP é **REST + cache em memória (TTL 30s)**, com degradação
-controlada (estados FRESH/STALE/UNAVAILABLE) — decisão do proprietário
-(RestClient síncrono + Spring MVC).
+Spring MVC (servlet) síncrono. O antigo módulo WebFlux/WebSocket/SSE de market
+data **não** foi portado. A entrega de cotações é REST + cache em memória (TTL 30 s),
+com estados `FRESH`/`UNAVAILABLE` e fallback explícito.
 
 ## 3. Erros e observabilidade
 
-- **Envelope único** `ApiError` (`timestamp, status, code, message, traceId,
-  details`) produzido por `GlobalExceptionHandler` — nunca stack trace, SQL
-  ou caminhos internos ao cliente.
-- **Actuator** com apenas `health` e `info` expostos; probes de
-  liveness/readiness habilitadas.
+- Envelope único `ApiError` (`timestamp, status, code, message, traceId, details`).
+- `GlobalExceptionHandler` cobre validação, negócio, conflito, autorização,
+  upload e erro inesperado; nunca expõe stack trace/SQL/caminho interno.
+- Actuator com `health` e `info`; probes de liveness/readiness; `show-details=never`.
 - `server.error.include-stacktrace: never`.
 
 ## 4. Banco de dados
 
-PostgreSQL em schema dedicado `investfacil`, fonte única do schema = Flyway
-(`ddl-auto: validate` — o Hibernate só valida, nunca cria). Detalhes de
-papéis, privilégios e RLS em [database.md](database.md).
+- PostgreSQL 17, schema dedicado `investfacil`.
+- Flyway é a única fonte de DDL (`V1` a `V5`); Hibernate em `validate`.
+- RLS deny-by-default; papéis `investfacil_app` (DML) e
+  `investfacil_migrate` (DDL); runtime LOGIN provisionado fora do repositório.
+- V3 adiciona MFA/bloqueio em `users`, família em `refresh_tokens`, URL externa
+  em `video_assets` e `simulations`; V4 preserva a inflação do cenário; V5
+  torna `auth_event`, `xp_ledger` e `user_achievements` append-only.
 
-## 5. Autenticação (desenho aprovado, implementação em T2)
+Detalhes em [database.md](database.md).
 
-- Access token JWT de 15 minutos + refresh token opaco de 32 bytes.
-- Banco guarda **apenas** o hash SHA-256 do refresh (nunca o token cru).
-- Rotação de refresh a cada uso, revogação e detecção de reuso.
-- Verificação de e-mail e reset de senha por token de uso único.
-- Papel (USER/ADMIN) sempre lido do banco — nunca de claim do JWT.
-- Navegador: access token em memória + refresh em cookie HttpOnly/Secure/
-  SameSite=Strict; CSRF desabilitado por decisão (tokens via header), com
-  proteção adicional na rota de refresh documentada em
-  [../security/SECURITY.md](../security/SECURITY.md).
-- **Sem Supabase Auth** — autenticação única, do próprio backend.
+## 5. Autenticação (implementada)
 
-## 6. Segurança do PostgreSQL (resumo)
+- Access JWT HS256 de 15 minutos, emissor e propósito validados.
+- Refresh opaco 32 bytes; banco guarda apenas SHA-256; rotação com
+  `replaced_by`; reuso revoga a família.
+- Verificação de e-mail e reset por token de uso único (hash no banco).
+- MFA TOTP (6 dígitos/30 s), segredo criptografado com AES-GCM; replay rejeitado.
+- Papel USER/ADMIN sempre lido do banco a cada request.
+- Navegador: access em memória; refresh em cookie `HttpOnly`,
+  `Secure` (produção), `SameSite=Strict`, `Path=/api/v1/auth`.
+- Refresh por cookie exige `X-Requested-With`; CORS explícito.
+- Rate limit por IP+bucket; `X-Forwarded-For` só de proxy confiável.
+- **Sem Supabase Auth** — autenticação é do backend.
+
+## 6. Segurança do PostgreSQL
 
 - Schema não exposto via PostgREST.
-- Papéis NOLOGIN de grupo (`investfacil_app` DML, `investfacil_migrate` DDL);
-  senhas provisionadas fora do repositório.
-- RLS habilitada e **negada por padrão**; policy exclusiva do papel de app.
-- Autorização de negócio (USER/ADMIN) no Spring Security, não no banco.
-- Detalhes e validação: [database.md](database.md) e
-  [../security/SECURITY.md](../security/SECURITY.md).
+- Privilégio mínimo; runtime sem DDL.
+- RLS habilitada e negada por padrão; policy exclusiva do app.
+- Autorização de negócio no Spring Security, não no banco.
+- Validação em `FlywaySecurityIntegrationTest` com PostgreSQL real.
 
-## 7. Vídeos (desenho aprovado; implementação em T3+)
+## 7. Vídeos (implementado; integração real bloqueada)
 
-Objetos no Supabase Storage (bucket privado); upload e leitura por URL
-assinada — nunca streaming pela heap do servidor. Metadados e status
-(PENDING/READY/PUBLISHED/EXPIRED) em PostgreSQL. **Tabela criada em V1;
-integração de Storage não implementada.**
+- Bucket privado no Supabase Storage.
+- Upload autenticado como ADMIN, multipart, 150 MB, MIME e assinatura validados.
+- Caminho gerado pelo servidor; metadados em `video_assets`.
+- Leitura por URL assinada de curta duração; nunca streaming pela heap do servidor.
+- Sem credenciais, a UI exibe “vídeo em preparação” — não simula publicação.
 
-## 8. Market data (desenho aprovado; P1 — prazo 04/12, não implementado)
+## 8. Market data (informativo)
 
-P1, prazo 04/12/2026: apenas BTC e ETH, via Binance REST, cache TTL 30s,
-connect timeout 2s / response timeout 5s. Sem SSE/WS no MVP. A plataforma
-não executa ordens, não custodia valores e não recomenda ativos — conteúdo
-exclusivamente educacional.
+- Binance REST para BTC, ETH e SOL + câmbio USD/BRL.
+- Cache TTL 30 s; timeouts curtos; fallback rotulado `UNAVAILABLE`.
+- A plataforma não executa ordens, não custodia valores e não recomenda ativos.
 
-## 9. Decisões registradas nesta arquitetura
+## 9. Frontend
 
-- GeoIP **removido** do desenho (era da referência RBS): nenhuma identificação
-  por geolocalização; auditoria de eventos de autenticação (`auth_event`)
-  com IP/UA apenas como sinal de auditoria.
-- CSRF desabilitado (autenticação por header, não por cookie de sessão).
-- Testes de integração sempre contra PostgreSQL real (Testcontainers);
-  H2 proibido — migrations usam recursos específicos de PostgreSQL.
+- Next.js 16 App Router, TypeScript estrito, Tailwind, Recharts, React Markdown.
+- `/api` é reescrito para o backend (`API_PROXY_TARGET`), mantendo cookie
+  first-party e evitando CORS no navegador.
+- Rotas: landing, login/cadastro/verificação/reset, dashboard, mapa, módulo,
+  aula, biblioteca, artigo, mercado, simulador, progresso e perfil.
+- Design: fundo `#050505`, acento `#facc15`, Plus Jakarta Sans, cartões escuros.
+- Responsivo: sidebar no desktop, navegação inferior no mobile.
 
-## 10. Integrações pendentes na apresentação
+## 10. IA educacional (preparação, não dependência)
 
-- **Frontend** (Next.js + TypeScript): não iniciado. Será apresentado quando
-  existir; nenhuma parte desta documentação afirma integração já existente.
-- **Figma**: link de referência visual ainda **não fornecido** pelo
-  proprietário; será incorporado à apresentação e à documentação quando
-  fornecido. Nenhuma tela, fluxo ou identidade visual é descrita como
-  implementada.
+A arquitetura permite um tutor futuro usando conteúdo revisado e dados de
+progresso. Decisões para não comprometer a entrega:
+
+- IA não é dependência da demo;
+- nenhum conteúdo gerado sem revisão;
+- nenhum dado sensível enviado a provedores sem base legal;
+- a interface “Professor em breve” é um placeholder honesto.
+
+## 11. Decisões registradas
+
+- GeoIP removido (nenhuma identificação por geolocalização).
+- CSRF desabilitado como mecanismo de sessão; refresh cookie + SameSite +
+  `X-Requested-With`.
+- Testes de integração sempre contra PostgreSQL real (Testcontainers); H2 proibido.
+- Conteúdo seed em JSON idempotente, separado das migrations de schema.
+- XP idempotente por índice único parcial; sem farm de aula/quiz.
+- Porta local 8081 documentada porque 8080 pode estar ocupada no host.
+
+## 12. Estado das integrações
+
+| Integração | Estado |
+|---|---|
+| Frontend ↔ backend | **VERIFIED local** (proxy `/api`) |
+| Supabase PostgreSQL | **BLOCKED** (sem credenciais; migrations prontas) |
+| Supabase Storage | **BLOCKED** (código e SQL prontos) |
+| Resend | **BLOCKED** (fallback de log em dev) |
+| Render / Vercel | **NOT_STARTED** (Docker/CI/runbook prontos) |
+| IA comportamental | **NOT_STARTED** (arquitetura preparada) |
