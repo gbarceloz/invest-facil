@@ -57,8 +57,9 @@ Resultados:
 - Código duplicado/divergente: a duplicata de `market-data` está preservada em
   `_quarantine/backend-market-data-duplicate-20261114`; o staging antigo está em
   `_staging/market-data` e `_staging/backend-skeleton`. Nada foi apagado.
-- O repositório **não** contém frontend no commit remoto; o frontend existe apenas no
-  workspace local até que o proprietário autorize commit/push.
+- O repositório **não** contém frontend no commit remoto; o frontend e o MVP
+  existem no commit local `dc18b60` (branch `feat/mvp-completo`) até que o
+  proprietário autorize push/merge.
 
 ### RBS (referência, não alterar)
 
