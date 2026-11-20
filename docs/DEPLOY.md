@@ -72,8 +72,16 @@ Vercel (Next.js)  --/api rewrite-->  Render (Spring Boot)  -->  Supabase Postgre
 ## 5. Vídeos
 
 1. Crie o bucket privado `videos` (script acima).
-2. Faça login como ADMIN (o papel é lido do banco; provisione um usuário ADMIN
-   manualmente, com senha forte) e use:
+2. Faça login como ADMIN. Crie/verifique o usuário pelo fluxo normal e promova-o
+   no banco como owner (a promoção não é exposta pela API):
+
+```sql
+UPDATE investfacil.users
+SET role = 'ADMIN'
+WHERE lower(email) = lower('admin@seudominio.com');
+```
+
+   Depois use:
 
 ```http
 POST /api/v1/admin/videos/{lessonId}
