@@ -1,6 +1,6 @@
 # PROGRESSO GERAL — Invest Fácil
 
-**Atualizado:** 20/11/2026 · **Branch local:** `feat/mvp-completo` · **Commit local:** `dc18b60` · **Deadline:** 12/12/2026
+**Atualizado:** 20/11/2026 · **Branch local:** `feat/mvp-completo` · **Commits locais:** `dc18b60` (MVP) e `8ee5d77` (docs) · **Deadline:** 12/12/2026
 **Push/merge:** pendente de autorização do proprietário; nada foi enviado ao GitHub nesta sessão.
 
 > **Regra:** `IMPLEMENTED` ≠ `VERIFIED`. Só marcamos `VERIFIED` quando há comando,

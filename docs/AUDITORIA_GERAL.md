@@ -58,8 +58,8 @@ Resultados:
   `_quarantine/backend-market-data-duplicate-20261114`; o staging antigo está em
   `_staging/market-data` e `_staging/backend-skeleton`. Nada foi apagado.
 - O repositório **não** contém frontend no commit remoto; o frontend e o MVP
-  existem no commit local `dc18b60` (branch `feat/mvp-completo`) até que o
-  proprietário autorize push/merge.
+  existem nos commits locais `dc18b60` e `8ee5d77` (branch `feat/mvp-completo`)
+  até que o proprietário autorize push/merge.
 
 ### RBS (referência, não alterar)
 
