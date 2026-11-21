@@ -1,0 +1,21 @@
+{
+  "slug": "volatilidade-nao-e-risco",
+  "title": "Volatilidade não é risco",
+  "category": "Gestão de risco",
+  "lessonSlug": "diversificacao",
+  "format": "9:16",
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "durationSeconds": 33,
+  "language": "pt-BR",
+  "audience": "18-25 iniciantes",
+  "educationalDisclaimer": true,
+  "sources": [
+    { "name": "Banco Central do Brasil", "url": "https://www.bcb.gov.br/", "accessedAt": "2026-11-20" },
+    { "name": "CVM Educar", "url": "https://www.gov.br/cvm/", "accessedAt": "2026-11-20" }
+  ],
+  "rights": "Produção original Invest Fácil; narração TTS local para protótipo.",
+  "version": "v1",
+  "status": "draft-validated"
+}

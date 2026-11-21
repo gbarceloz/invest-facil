@@ -40,7 +40,7 @@
 | CORS com origens explícitas; nunca `*` com credenciais | `SecurityConfig` |
 | Headers: frame deny, nosniff, referrer no-referrer, CSP | `SecurityConfig` |
 | RLS deny-by-default; app sem DDL; PostgREST revogado | `V2`, `FlywaySecurityIntegrationTest` |
-| Upload de vídeo valida MIME, assinatura de container e 150 MB | `VideoService` |
+| Upload de vídeo valida MIME, assinatura de container e 50 MB | `VideoService` |
 | Bucket privado; URLs assinadas de curta duração | `SupabaseStorageClient`, `docs/supabase/STORAGE_SETUP.sql` |
 | Auditoria `auth_event` append-only | `AuthAuditService`, V1 |
 | Sem GeoIP | ausência de dependência/código |
@@ -91,7 +91,7 @@ Detalhes em [../architecture/database.md](../architecture/database.md).
 ## 6. Upload e vídeos
 
 - Bucket `videos` privado; nenhuma policy pública.
-- Upload autenticado como ADMIN, multipart, máximo 150 MB.
+- Upload autenticado como ADMIN, multipart, máximo 50 MB.
 - MIME permitido: MP4, WebM, MOV; assinatura do container é verificada.
 - Caminho gerado pelo servidor (`videos/{lessonId}/{uuid}.{ext}`), sem nome do
   cliente — evita path traversal.

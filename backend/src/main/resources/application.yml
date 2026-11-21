@@ -42,9 +42,10 @@ spring:
 
   servlet:
     multipart:
-      # Vídeos de até 3 minutos; o service valida 150 MB e o tipo real.
-      max-file-size: 160MB
-      max-request-size: 170MB
+      # Plano gratuito do Supabase Storage aceita 50 MB por arquivo.
+      # Em Supabase Pro, aumente VIDEO_MAX_UPLOAD_BYTES e os limites abaixo.
+      max-file-size: ${VIDEO_MAX_FILE_SIZE:55MB}
+      max-request-size: ${VIDEO_MAX_REQUEST_SIZE:60MB}
 
   jackson:
     serialization:
@@ -112,6 +113,7 @@ app:
 
   videos:
     demo-url: ${VIDEO_DEMO_URL:}
+    max-upload-bytes: ${VIDEO_MAX_UPLOAD_BYTES:52428800}
 
   demo:
     enabled: ${APP_DEMO_ENABLED:false}

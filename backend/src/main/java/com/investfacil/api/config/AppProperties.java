@@ -77,6 +77,8 @@ public class AppProperties {
     @Setter
     public static class Videos {
         private String demoUrl = "";
+        /** Limite alinhado ao plano gratuito do Supabase Storage (50 MB). */
+        private long maxUploadBytes = 52_428_800L;
     }
 
     @Getter

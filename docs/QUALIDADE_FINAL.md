@@ -72,7 +72,7 @@ tratamento:
 | B4 | `X-Refresh-Token` vazio pulava checagem; cookie sem prefixo | Baixo | **Corrigido** o header vazio; prefixo `__Secure-` fica como evolução |
 | B5 | Append-only não garantido no banco | Baixo | **Corrigido**: V5 revoga UPDATE/DELETE; teste de integração |
 | B6 | IP não truncado em refresh; auditoria de MFA sem IP | Baixo | **Corrigido** truncamento; auditoria de MFA com contexto fica como evolução |
-| B7 | Upload carrega 150 MB na heap; assinatura superficial | Baixo | **Documentado**: limite, bucket privado e validação; evoluir para streaming/AV |
+| B7 | Upload carrega 50 MB na heap; assinatura superficial | Baixo | **Documentado**: limite, bucket privado e validação; evoluir para streaming/AV |
 
 Nenhum achado **CRÍTICO** permaneceu aberto. Os riscos aceitos estão em
 `docs/security/SECURITY.md` e `docs/AUDITORIA_GERAL.md`.
@@ -126,7 +126,22 @@ logout, MFA e reset de senha.
 
 ---
 
-## 6. Bloqueios externos (não são falhas de código)
+## 6. Missão complementar — Firebase e CapCut
+
+| Frente | Resultado | Evidência |
+|---|---|---|
+| Firebase Spark/Blaze | **Avaliado; não integrado** | `docs/FIREBASE_EVALUATION.md`; Storage exige Blaze/cartão; Hosting Spark é estático; Crashlytics não cobre web |
+| Firebase Storage × Supabase Storage | **Supabase mantido** | 1 GB/5 GB egress e 50 MB/arquivo no Free; Firebase só com Blaze |
+| CapCut MCP | **Conectado e testado** | 17 ferramentas; clone endurecido; `docs/CAPCUT_MCP_SETUP.md` |
+| Draft piloto | **Criado e validado** | `investfacil_piloto`: 33 s, 1080×1920, 3 slides + narração; `capcut_validate` ok |
+| Abertura visual da timeline | **Parcial** | projeto listado/reconhecido; captura da timeline prejudicada por modal/foco |
+| Exportação/upload de vídeo | **Pendente** | CapCut não tem CLI de export; Supabase sem credenciais |
+| Pipeline/templates | **Implementado** | `docs/CONTENT_PIPELINE.md`, `content/templates/**`, `content/pilots/01-volatilidade/**` |
+
+Nenhum cartão foi associado, nenhum plano Blaze foi habilitado e nenhum script
+remoto foi executado. O MCP é MIT, roda localmente e foi endurecido antes do uso.
+
+## 7. Bloqueios externos (não são falhas de código)
 
 | Bloqueio | Impacto | Ação necessária |
 |---|---|---|
@@ -140,7 +155,7 @@ logout, MFA e reset de senha.
 
 ---
 
-## 7. Riscos residuais
+## 8. Riscos residuais
 
 - **IP real atrás do Render:** sem proxy confiável configurado, o rate limit é
   compartilhado; o lockout por conta continua funcionando. Configurar e validar
@@ -148,14 +163,14 @@ logout, MFA e reset de senha.
 - **MFA sem recovery codes:** perda do autenticador exige suporte manual.
 - **Sem teste de carga:** uma instância e pool 5; validar antes da final.
 - **Sem WCAG formal:** revisão visual e correções, mas falta ferramenta/leitores.
-- **Upload na heap:** 150 MB; para produção, streaming e antivírus.
+- **Upload na heap:** 50 MB; para produção, streaming e antivírus.
 - **Swagger público:** decisão intencional para avaliação; restringir se o risco
   reputacional justificar.
 - **Conta demo:** local; desabilitar/rotacionar após a apresentação.
 
 ---
 
-## 8. Veredito e próximos passos
+## 9. Veredito e próximos passos
 
 **GO para demo local** — o produto executa a jornada completa, com dados reais
 da API e testes verdes. **NO-GO para produção** — falta validar os serviços

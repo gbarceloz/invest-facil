@@ -36,7 +36,7 @@ const agents = [
   ["Database Optimization Engineer", "Banco e Infraestrutura", "Criar índices para catálogo, progresso e tokens.", "índices únicos e compostos", "Consultas críticas sem full scan evidente."],
   ["Database Testing Engineer", "Banco e Infraestrutura", "Provar RLS, privilégios e migrations com PostgreSQL real.", "FlywaySecurityIntegrationTest", "App não faz DDL; guest vê 0 linhas por RLS."],
   ["Supabase Storage Engineer", "Banco e Infraestrutura", "Integrar bucket privado e URLs assinadas.", "SupabaseStorageClient; configuração", "Upload autenticado e playback por URL temporária."],
-  ["Video Upload Engineer", "Banco e Infraestrutura", "Implementar upload multipart com validação.", "VideoService.upload; endpoint admin", "MP4/WebM/MOV até 150 MB; assinatura validada."],
+  ["Video Upload Engineer", "Banco e Infraestrutura", "Implementar upload multipart com validação.", "VideoService.upload; endpoint admin", "MP4/WebM/MOV até 50 MB; assinatura validada."],
   ["Media Processing Engineer", "Banco e Infraestrutura", "Registrar metadados e preparar evolução para transcodificação.", "VideoAsset; campos de duração/mime", "Metadados consistentes; sem arquivo no filesystem efêmero."],
   ["File Security Engineer", "Banco e Infraestrutura", "Impedir path traversal, arquivos disfarçados e acesso público.", "validação de MIME/assinatura; bucket privado", "Arquivo inválido rejeitado; service key só no servidor."],
   ["Infrastructure and Deployment Engineer", "Banco e Infraestrutura", "Preparar Docker, Render, Vercel e health checks.", "Dockerfile; render.yaml; docs/DEPLOY.md", "Health UP; variáveis sem segredos versionados."],

@@ -355,7 +355,7 @@ validação em produção permanecem explicitamente pendentes.
 
 **Entregáveis:** VideoService.upload; endpoint admin
 
-**Critérios de aceitação:** MP4/WebM/MOV até 150 MB; assinatura validada.
+**Critérios de aceitação:** MP4/WebM/MOV até 50 MB; assinatura validada.
 
 ## 33 — Media Processing Engineer
 

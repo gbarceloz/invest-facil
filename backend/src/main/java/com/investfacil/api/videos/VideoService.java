@@ -16,7 +16,6 @@ import java.util.UUID;
 @Service
 public class VideoService {
 
-    private static final long MAX_BYTES = 150L * 1024 * 1024;
     private static final Set<String> ALLOWED_MIME = Set.of(
             "video/mp4", "video/webm", "video/quicktime");
     private static final Map<String, String> EXTENSION = Map.of(
@@ -86,8 +85,11 @@ public class VideoService {
         if (file == null || file.isEmpty()) {
             throw BusinessException.badRequest("EMPTY_FILE", "Selecione um arquivo de vídeo.");
         }
-        if (file.getSize() > MAX_BYTES) {
-            throw BusinessException.badRequest("FILE_TOO_LARGE", "O vídeo deve ter no máximo 150 MB.");
+        long maxBytes = properties.getVideos().getMaxUploadBytes();
+        if (file.getSize() > maxBytes) {
+            throw BusinessException.badRequest("FILE_TOO_LARGE",
+                    "O vídeo excede o limite configurado de "
+                            + (maxBytes / (1024 * 1024)) + " MB.");
         }
         String mime = file.getContentType() == null ? "" : file.getContentType().toLowerCase();
         if (!ALLOWED_MIME.contains(mime)) {

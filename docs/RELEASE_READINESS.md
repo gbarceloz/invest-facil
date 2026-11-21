@@ -82,5 +82,5 @@
 | Cookie Secure/SameSite no domínio errado | usar proxy `/api` same-origin; validar DevTools |
 | CORS/proxy mal configurado | `API_PROXY_TARGET` explícito; testar E2E |
 | E-mail cair em spam | domínio verificado, SPF/DKIM no Resend |
-| Vídeo grande/formatos | limite 150 MB; MP4/WebM; validar assinatura |
+| Vídeo grande/formatos | limite 50 MB; MP4/WebM; validar assinatura |
 | Conta demo exposta | senha via env; desabilitar após a demo |

@@ -186,7 +186,24 @@ Nenhuma revisão alterou arquivos; os relatórios foram incorporados a
 
 ---
 
-## 6. Próximas ações (ordem de execução)
+## 6. Missão complementar (Firebase + CapCut)
+
+| ID | Tarefa | Status | Evidência | Bloqueio |
+|---|---|---|---|---|
+| F01 | Avaliar Firebase Spark/Blaze e comparar Storage/Hosting/Auth/Analytics/App Check/Crashlytics | **VERIFIED** | `docs/FIREBASE_EVALUATION.md` com fontes oficiais | — |
+| F02 | Integrar Firebase | **NOT_STARTED (decisão: não integrar)** | Storage exige Blaze/cartão; Hosting Spark é estático; Crashlytics não cobre web | autorização/orçamento |
+| C01 | Auditar MCPs CapCut e escolher opção segura | **VERIFIED** | `docs/CAPCUT_MCP_SETUP.md`; MIT commit `50beafd`; código revisado | — |
+| C02 | Endurecer e instalar MCP | **VERIFIED** | clone local em `%LOCALAPPDATA%\InvestFacil\capcut-mcp`; `npm ci --ignore-scripts`; patch de segurança | — |
+| C03 | Validar conexão MCP | **VERIFIED** | cliente SDK listou 17 ferramentas e leu o piloto | — |
+| C04 | Criar draft descartável e piloto | **TESTED** | `if_mcp_smoke` e `investfacil_piloto` (33 s, 9:16, 3 slides + narração; validação ok) | abertura visual da timeline parcial |
+| C05 | Configurar MCP nos clientes | **VERIFIED** | `opencode.json` e `mcp_config.json` com backups | reiniciar clientes |
+| C06 | Exportar e subir vídeo | **BLOCKED** | CapCut sem export CLI; Supabase sem credenciais | export manual + Supabase |
+| T01 | Pipeline e templates de conteúdo | **IMPLEMENTED** | `docs/CONTENT_PIPELINE.md`, `content/templates/**`, piloto | revisão humana/TTS final |
+
+**Custos:** nenhum cartão associado; nenhum plano Firebase Blaze habilitado;
+CapCut Pro/Ultra não foi adquirido. O MCP é MIT e roda localmente.
+
+## 7. Próximas ações (ordem de execução)
 
 1. Provisionar Supabase e rodar V1–V5; testar upload/playback real.
 2. Configurar Resend e validar e-mail.

@@ -231,6 +231,9 @@ Arquivos: `render.yaml`, `backend/Dockerfile`, `docker-compose.yml`,
 | [`docs/APRESENTACAO.md`](docs/APRESENTACAO.md) | pitch, narrativa, critérios, Q&A |
 | [`docs/DEPLOY.md`](docs/DEPLOY.md) | runbook de produção |
 | [`docs/QUALIDADE_FINAL.md`](docs/QUALIDADE_FINAL.md) | relatório final de qualidade e veredito |
+| [`docs/FIREBASE_EVALUATION.md`](docs/FIREBASE_EVALUATION.md) | avaliação Firebase Spark/Blaze e decisão |
+| [`docs/CAPCUT_MCP_SETUP.md`](docs/CAPCUT_MCP_SETUP.md) | MCP CapCut, hardening, testes e limitações |
+| [`docs/CONTENT_PIPELINE.md`](docs/CONTENT_PIPELINE.md) | pipeline e templates de vídeo educativo |
 | [`docs/api/README.md`](docs/api/README.md) | endpoints e exemplos |
 | [`docs/architecture/`](docs/architecture/) | visão geral e banco |
 | [`docs/security/`](docs/security/) | política e auditoria pública |

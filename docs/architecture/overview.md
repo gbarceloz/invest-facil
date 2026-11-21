@@ -89,7 +89,7 @@ Detalhes em [database.md](database.md).
 ## 7. Vídeos (implementado; integração real bloqueada)
 
 - Bucket privado no Supabase Storage.
-- Upload autenticado como ADMIN, multipart, 150 MB, MIME e assinatura validados.
+- Upload autenticado como ADMIN, multipart, 50 MB, MIME e assinatura validados.
 - Caminho gerado pelo servidor; metadados em `video_assets`.
 - Leitura por URL assinada de curta duração; nunca streaming pela heap do servidor.
 - Sem credenciais, a UI exibe “vídeo em preparação” — não simula publicação.

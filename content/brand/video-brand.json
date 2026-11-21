@@ -1,0 +1,24 @@
+{
+  "name": "Invest Fácil — vídeo educativo",
+  "canvas": { "width": 1080, "height": 1920, "ratio": "9:16", "fps": 30 },
+  "colors": {
+    "background": "#050505",
+    "surface": "#111111",
+    "surfaceAlt": "#181818",
+    "accent": "#FACC15",
+    "text": "#FAFAFA",
+    "muted": "#A3A3A3"
+  },
+  "typography": {
+    "family": "Plus Jakarta Sans",
+    "fallback": "Segoe UI Semibold",
+    "titleWeight": 800,
+    "bodyWeight": 400,
+    "minBodyPx": 42
+  },
+  "safeZones": { "horizontalPx": 90, "bottomPx": 220 },
+  "limits": { "maxDurationSeconds": 180, "maxFileBytes": 52428800 },
+  "disclaimer": "Conteúdo educativo. Não é recomendação de investimento. Simulações usam taxas hipotéticas.",
+  "logo": "Invest Fácil",
+  "music": "royalty-free; atribuição registrada no metadata"
+}

@@ -88,7 +88,7 @@ POST /api/v1/admin/videos/{lessonId}
 Content-Type: multipart/form-data
 Authorization: Bearer <access token>
 
-file=<mp4/webm/mov até 150 MB>
+file=<mp4/webm/mov até 50 MB>
 ```
 
 3. O backend valida MIME, assinatura do container, tamanho e envia ao Storage
