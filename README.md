@@ -234,6 +234,7 @@ Arquivos: `render.yaml`, `backend/Dockerfile`, `docker-compose.yml`,
 | [`docs/FIREBASE_EVALUATION.md`](docs/FIREBASE_EVALUATION.md) | avaliação Firebase Spark/Blaze e decisão |
 | [`docs/CAPCUT_MCP_SETUP.md`](docs/CAPCUT_MCP_SETUP.md) | MCP CapCut, hardening, testes e limitações |
 | [`docs/CONTENT_PIPELINE.md`](docs/CONTENT_PIPELINE.md) | pipeline e templates de vídeo educativo |
+| [`docs/COMPLEMENTARY_MISSION_REPORT.md`](docs/COMPLEMENTARY_MISSION_REPORT.md) | relatório Firebase + CapCut + conteúdo |
 | [`docs/api/README.md`](docs/api/README.md) | endpoints e exemplos |
 | [`docs/architecture/`](docs/architecture/) | visão geral e banco |
 | [`docs/security/`](docs/security/) | política e auditoria pública |
