@@ -1,0 +1,43 @@
+1
+00:00:00,000 --> 00:00:01,591
+Seu salário subiu.
+
+2
+00:00:01,711 --> 00:00:04,242
+Então por que o mês continua apertado?
+
+3
+00:00:04,362 --> 00:00:08,269
+Você não está imaginando. Seu dinheiro compra menos.
+
+4
+00:00:08,389 --> 00:00:11,513
+A sensação de que o salário não acompanha é real.
+
+5
+00:00:11,633 --> 00:00:15,449
+O salário pode até subir. Os preços sobem mais.
+
+6
+00:00:15,569 --> 00:00:19,662
+A cesta fica mais cara. E o que sobra no fim do mês diminui.
+
+7
+00:00:19,782 --> 00:00:23,442
+É a inflação: a alta generalizada dos preços.
+
+8
+00:00:23,662 --> 00:00:26,713
+Ela corrói o poder de compra sem fazer barulho.
+
+9
+00:00:26,833 --> 00:00:33,134
+Numa simulação de 5% ao ano, R$ 100 valem cerca de 61 em dez anos.
+
+10
+00:00:33,354 --> 00:00:35,719
+Não é impressão. É inflação.
+
+11
+00:00:35,839 --> 00:00:39,160
+Salve para entender quando o salário não acompanha.

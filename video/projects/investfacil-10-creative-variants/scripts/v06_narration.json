@@ -1,0 +1,68 @@
+[
+  {
+    "id": "L01",
+    "display": "Seu salário subiu.",
+    "tts": "Seu salário subiu.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L02",
+    "display": "Então por que o mês continua apertado?",
+    "tts": "Então por que o mês continua apertado?",
+    "pause_ms": 120
+  },
+  {
+    "id": "L03",
+    "display": "Você não está imaginando. Seu dinheiro compra menos.",
+    "tts": "Você não está imaginando. Seu dinheiro compra menos.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L04",
+    "display": "A sensação de que o salário não acompanha é real.",
+    "tts": "A sensação de que o salário não acompanha é real.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L05",
+    "display": "O salário pode até subir. Os preços sobem mais.",
+    "tts": "O salário pode até subir. Os preços sobem mais.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L06",
+    "display": "A cesta fica mais cara. E o que sobra no fim do mês diminui.",
+    "tts": "A cesta fica mais cara. E o que sobra no fim do mês diminui.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L07",
+    "display": "É a inflação: a alta generalizada dos preços.",
+    "tts": "É a inflação: a alta generalizada dos preços.",
+    "pause_ms": 220
+  },
+  {
+    "id": "L08",
+    "display": "Ela corrói o poder de compra sem fazer barulho.",
+    "tts": "Ela corrói o poder de compra sem fazer barulho.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L09",
+    "display": "Numa simulação de 5% ao ano, R$ 100 valem cerca de 61 em dez anos.",
+    "tts": "Numa simulação de cinco por cento ao ano, cem reais valem cerca de sessenta e um em dez anos.",
+    "pause_ms": 220
+  },
+  {
+    "id": "L10",
+    "display": "Não é impressão. É inflação.",
+    "tts": "Não é impressão. É inflação.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L11",
+    "display": "Salve para entender quando o salário não acompanha.",
+    "tts": "Salve para entender quando o salário não acompanha.",
+    "pause_ms": 0
+  }
+]

@@ -1,0 +1,91 @@
+{
+  "variant": "V05",
+  "voice": "pt-BR-ThalitaMultilingualNeural",
+  "rate": "-12%",
+  "sample_rate": 48000,
+  "total_s": 34.376,
+  "tail_s": 0.35,
+  "lines": [
+    {
+      "id": "L01",
+      "display": "Quanto essa nota ainda compra?",
+      "tts": "Quanto essa nota ainda compra?",
+      "start": 0.0,
+      "end": 1.663,
+      "duration": 1.663,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L02",
+      "display": "R$ 100 não é só um número impresso. É poder de compra no seu bolso.",
+      "tts": "cem reais não é só um número impresso. É poder de compra no seu bolso.",
+      "start": 1.783,
+      "end": 6.648,
+      "duration": 4.866,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L03",
+      "display": "Mas esse poder não tem o mesmo tamanho para sempre.",
+      "tts": "Mas esse poder não tem o mesmo tamanho para sempre.",
+      "start": 6.768,
+      "end": 9.93,
+      "duration": 3.162,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L04",
+      "display": "Quando os preços sobem, o dinheiro perde poder de compra.",
+      "tts": "Quando os preços sobem, o dinheiro perde poder de compra.",
+      "start": 10.05,
+      "end": 13.834,
+      "duration": 3.784,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L05",
+      "display": "O valor impresso continua igual. A nota não encolhe.",
+      "tts": "O valor impresso continua igual. A nota não encolhe.",
+      "start": 13.954,
+      "end": 18.02,
+      "duration": 4.066,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L06",
+      "display": "O que ele compra, não. E é isso que muda o seu dia.",
+      "tts": "O que ele compra, não. E é isso que muda o seu dia.",
+      "start": 18.14,
+      "end": 21.63,
+      "duration": 3.49,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L07",
+      "display": "A conta simulada: 5% ao ano, cerca de 61 em dez anos.",
+      "tts": "A conta simulada: cinco por cento ao ano, cerca de sessenta e um em dez anos.",
+      "start": 21.75,
+      "end": 27.246,
+      "duration": 5.496,
+      "pause_after_ms": 220
+    },
+    {
+      "id": "L08",
+      "display": "O valor está impresso. O que ele compra ficou menor.",
+      "tts": "O valor está impresso. O que ele compra ficou menor.",
+      "start": 27.466,
+      "end": 31.019,
+      "duration": 3.553,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L09",
+      "display": "Salve para consultar quando o preço mudar.",
+      "tts": "Salve para consultar quando o preço mudar.",
+      "start": 31.139,
+      "end": 34.026,
+      "duration": 2.887,
+      "pause_after_ms": 0
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+ "calib": {
+  "chars": 474,
+  "seconds": 35.136
+ },
+ "rows": [
+  {
+   "vid": "V01",
+   "dur": 33,
+   "raw": 402,
+   "xp": 432,
+   "lines": 10,
+   "pauses": 0.49,
+   "speech": 30.86,
+   "budget": 33.07,
+   "margin": -0.07
+  },
+  {
+   "vid": "V02",
+   "dur": 42,
+   "raw": 520,
+   "xp": 539,
+   "lines": 12,
+   "pauses": 0.9,
+   "speech": 38.5,
+   "budget": 41.38,
+   "margin": 0.62
+  },
+  {
+   "vid": "V03",
+   "dur": 33,
+   "raw": 404,
+   "xp": 417,
+   "lines": 11,
+   "pauses": 0.65,
+   "speech": 29.79,
+   "budget": 32.29,
+   "margin": 0.71
+  },
+  {
+   "vid": "V04",
+   "dur": 30,
+   "raw": 322,
+   "xp": 372,
+   "lines": 11,
+   "pauses": 0,
+   "speech": 26.57,
+   "budget": 28.42,
+   "margin": 1.58
+  },
+  {
+   "vid": "V05",
+   "dur": 36,
+   "raw": 445,
+   "xp": 461,
+   "lines": 9,
+   "pauses": 0.24,
+   "speech": 32.93,
+   "budget": 34.76,
+   "margin": 1.24
+  },
+  {
+   "vid": "V06",
+   "dur": 37,
+   "raw": 458,
+   "xp": 474,
+   "lines": 9,
+   "pauses": 0.45,
+   "speech": 33.86,
+   "budget": 35.9,
+   "margin": 1.1
+  },
+  {
+   "vid": "V07",
+   "dur": 40,
+   "raw": 448,
+   "xp": 506,
+   "lines": 9,
+   "pauses": 0.2,
+   "speech": 36.14,
+   "budget": 37.93,
+   "margin": 2.07
+  },
+  {
+   "vid": "V08",
+   "dur": 41,
+   "raw": 491,
+   "xp": 527,
+   "lines": 10,
+   "pauses": 0.2,
+   "speech": 37.64,
+   "budget": 39.56,
+   "margin": 1.44
+  },
+  {
+   "vid": "V09",
+   "dur": 37,
+   "raw": 461,
+   "xp": 474,
+   "lines": 10,
+   "pauses": 0.2,
+   "speech": 33.86,
+   "budget": 35.78,
+   "margin": 1.22
+  },
+  {
+   "vid": "V10",
+   "dur": 39,
+   "raw": 485,
+   "xp": 498,
+   "lines": 12,
+   "pauses": 0.47,
+   "speech": 35.57,
+   "budget": 38.02,
+   "margin": 0.98
+  }
+ ]
+}

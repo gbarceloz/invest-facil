@@ -1,0 +1,62 @@
+[
+  {
+    "id": "L01",
+    "display": "Aquele amigo que diz: ‘dinheiro parado não perde valor’...",
+    "tts": "Aquele amigo que diz: ‘dinheiro parado não perde valor’...",
+    "pause_ms": 120
+  },
+  {
+    "id": "L02",
+    "display": "Precisa ver isso. A conta não fecha.",
+    "tts": "Precisa ver isso. A conta não fecha.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L03",
+    "display": "Numa simulação, preços 25% maiores: R$ 100 compram quatro de cinco itens.",
+    "tts": "Numa simulação, preços vinte e cinco por cento maiores: cem reais compram quatro de cinco itens.",
+    "pause_ms": 220
+  },
+  {
+    "id": "L04",
+    "display": "Não é porque o dinheiro sumiu. Ele continua na conta.",
+    "tts": "Não é porque o dinheiro sumiu. Ele continua na conta.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L05",
+    "display": "É porque ele compra menos. O troco encolhe.",
+    "tts": "É porque ele compra menos. O troco encolhe.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L06",
+    "display": "Numa simulação, 5% ao ano. Em dez anos, cerca de 61.",
+    "tts": "Numa simulação, cinco por cento ao ano. Em dez anos, cerca de sessenta e um.",
+    "pause_ms": 220
+  },
+  {
+    "id": "L07",
+    "display": "Dinheiro parado não fica igual. Ele perde poder de compra.",
+    "tts": "Dinheiro parado não fica igual. Ele perde poder de compra.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L08",
+    "display": "É inflação. E ela age devagar.",
+    "tts": "É inflação. E ela age devagar.",
+    "pause_ms": 220
+  },
+  {
+    "id": "L09",
+    "display": "Guardar é importante. Entender o que acontece com ele, também.",
+    "tts": "Guardar é importante. Entender o que acontece com ele, também.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L10",
+    "display": "Manda esse vídeo para ele.",
+    "tts": "Manda esse vídeo para ele.",
+    "pause_ms": 0
+  }
+]

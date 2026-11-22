@@ -1,6 +1,13 @@
 # PUBLIC_REPOSITORY_AUDIT — Auditoria para publicação pública
 
-**Status: APROVADA COM RESSALVAS — Pós-publicação**
+> **Atualização 20/11/2026:** este documento é histórico do commit público
+> `827e54a` (T1). O MVP atual está na branch local `feat/mvp-completo` e ainda
+> **não foi publicado**. Antes de qualquer push, reexecutar as verificações
+> desta auditoria sobre o novo conjunto (backend + frontend + deploy). O
+> `SecretsScanTest` cobre o backend; o frontend deve ser revisado quanto a
+> `NEXT_PUBLIC_*` e variáveis de ambiente. Nenhum segredo real foi adicionado.
+
+**Status: APROVADA COM RESSALVAS — Pós-publicação (histórico T1)**
 **Data: 2026-11-15 | Commit: 827e54a | Branch: main | Repositório: https://github.com/gbarceloz/invest-facil**
 
 ---

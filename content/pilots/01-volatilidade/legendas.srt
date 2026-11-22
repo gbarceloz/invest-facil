@@ -1,0 +1,15 @@
+1
+00:00:00,000 --> 00:00:07,500
+Volatilidade é quando o preço sobe e desce.
+
+2
+00:00:07,500 --> 00:00:13,500
+Isso, por si só, não é risco.
+
+3
+00:00:13,500 --> 00:00:23,000
+Risco é a chance de perder dinheiro de forma permanente.
+
+4
+00:00:23,000 --> 00:00:32,500
+Reserva, estudo e desconfiança de retorno garantido.

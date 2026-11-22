@@ -1,0 +1,56 @@
+[
+  {
+    "id": "L01",
+    "display": "Uma linha pode explicar por que seu dinheiro vale menos.",
+    "tts": "Uma linha pode explicar por que seu dinheiro vale menos.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L02",
+    "display": "Ela começa em R$ 100. É o seu poder de compra hoje.",
+    "tts": "Ela começa em cem reais. É o seu poder de compra hoje.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L03",
+    "display": "Numa simulação de 5% ao ano, ela cai devagar.",
+    "tts": "Numa simulação de cinco por cento ao ano, ela cai devagar.",
+    "pause_ms": 220
+  },
+  {
+    "id": "L04",
+    "display": "Em cinco anos, cerca de R$ 78. A queda já aparece.",
+    "tts": "Em cinco anos, cerca de setenta e oito reais. A queda já aparece.",
+    "pause_ms": 220
+  },
+  {
+    "id": "L05",
+    "display": "Em dez anos, cerca de R$ 61. É uma perda de quase 39%.",
+    "tts": "Em dez anos, cerca de sessenta e um reais. É uma perda de quase trinta e nove por cento.",
+    "pause_ms": 220
+  },
+  {
+    "id": "L06",
+    "display": "O número na conta não mudou. A nota continua a mesma.",
+    "tts": "O número na conta não mudou. A nota continua a mesma.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L07",
+    "display": "O que ele compra, sim. A cesta fica menor.",
+    "tts": "O que ele compra, sim. A cesta fica menor.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L08",
+    "display": "Isso é inflação. E é por isso que entender importa.",
+    "tts": "Isso é inflação. E é por isso que entender importa.",
+    "pause_ms": 220
+  },
+  {
+    "id": "L09",
+    "display": "Simulação com 5% ao ano. Salve para consultar.",
+    "tts": "Simulação com cinco por cento ao ano. Salve para consultar.",
+    "pause_ms": 0
+  }
+]

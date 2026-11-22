@@ -1,5 +1,9 @@
 # Skill: invest-facil-db-rules
 
+> **Atualização 20/11/2026:** o schema está em V1–V5 (V3 MFA/famílias/simulações,
+> V4 inflação, V5 ledgers append-only). Consulte
+> `docs/architecture/database.md` para o estado atual.
+
 ## Regras de Banco de Dados — Invest Fácil
 
 > **Decisões aprovadas (T1):** O que está definido e não deve ser alterado sem autorização do arquiteto (GLM).

@@ -3,6 +3,21 @@ spring:
   jpa:
     show-sql: false
 
+app:
+  auth:
+    # Em dev, o cookie pode ser enviado por HTTP local e o token de verificação
+    # aparece na resposta para facilitar o teste sem provedor de e-mail.
+    cookie-secure: ${COOKIE_SECURE:false}
+    expose-dev-tokens: ${EXPOSE_DEV_TOKENS:true}
+  market:
+    enabled: ${MARKET_ENABLED:true}
+  security:
+    guard:
+      # Exceção explícita de desenvolvimento: o banco local frequentemente usa
+      # postgres/superuser. O guard continua verificando e loga warnings, mas
+      # o profile prod sempre força strict=true, independentemente desta flag.
+      strict: false
+
 logging:
   level:
     com.investfacil.api: DEBUG

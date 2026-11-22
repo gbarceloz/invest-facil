@@ -1,0 +1,24 @@
+{
+  "slug": "{{slug}}",
+  "title": "{{Título}}",
+  "category": "{{categoria}}",
+  "lessonSlug": "{{aula}}",
+  "format": "9:16",
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "durationSeconds": 90,
+  "language": "pt-BR",
+  "audience": "18-25 iniciantes",
+  "educationalDisclaimer": true,
+  "sources": [
+    {
+      "name": "{{fonte}}",
+      "url": "{{url}}",
+      "accessedAt": "{{AAAA-MM-DD}}"
+    }
+  ],
+  "rights": "Produção original Invest Fácil; assets de terceiros com licença registrada.",
+  "version": "v1",
+  "status": "draft"
+}

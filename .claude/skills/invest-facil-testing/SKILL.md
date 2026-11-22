@@ -1,5 +1,9 @@
 # Skill: invest-facil-testing
 
+> **Atualização 20/11/2026:** a suíte atual tem 28 testes de backend
+> (incluindo jornada integrada, MFA, reset e append-only) e 6 de frontend.
+> Consulte `docs/QUALIDADE_FINAL.md`.
+
 ## Regras de Testes — Invest Fácil
 
 > **Decisões aprovadas (T1):** O que está definido e não deve ser alterado sem autorização do arquiteto (GLM).

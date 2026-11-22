@@ -1,0 +1,31 @@
+1
+00:00:00,000 --> 00:00:06,760
+Se o seu dinheiro pudesse falar, ele diria, eu não desapareci, você só compra menos.
+
+2
+00:00:06,760 --> 00:00:11,520
+O número continua na nota, o que muda é o tamanho do que ele pode comprar.
+
+3
+00:00:11,520 --> 00:00:17,360
+O número continua o mesmo, a nota não cole, mas o poder de compra muda.
+
+4
+00:00:17,360 --> 00:00:23,360
+E muda devagar, é a inflação, ela não some com o dinheiro, ela diminui o que ele
+
+5
+00:00:23,360 --> 00:00:24,360
+pode comprar.
+
+6
+00:00:24,360 --> 00:00:30,920
+Item por item, simulação de 5% ao ano, em 10 anos, 61%.
+
+7
+00:00:30,920 --> 00:00:34,120
+O dinheiro não some, ele muda de tamanho.
+
+8
+00:00:34,120 --> 00:00:39,120
+No que você pode comprar, ele fica menor, salve para rever quando o preço subir.

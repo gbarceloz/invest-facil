@@ -1,17 +1,23 @@
 package com.investfacil.api.common.error;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.LinkedHashMap;
@@ -25,6 +31,11 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ApiError> handleBusiness(BusinessException ex, HttpServletRequest request) {
+        return build(ex.getStatus(), ex.getCode(), ex.getMessage(), request, ex.getDetails());
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiError> handleValidation(MethodArgumentNotValidException ex,
@@ -43,11 +54,25 @@ public class GlobalExceptionHandler {
                 "Parâmetros inválidos na requisição.", request, null);
     }
 
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ApiError> handleConstraintViolation(ConstraintViolationException ex,
+                                                              HttpServletRequest request) {
+        return build(HttpStatus.BAD_REQUEST, "VALIDATION_ERROR",
+                "Parâmetros inválidos na requisição.", request, null);
+    }
+
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ApiError> handleTypeMismatch(MethodArgumentTypeMismatchException ex,
                                                        HttpServletRequest request) {
         return build(HttpStatus.BAD_REQUEST, "VALIDATION_ERROR",
                 "Parâmetro com formato inválido.", request, null);
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<ApiError> handleMissingParameter(MissingServletRequestParameterException ex,
+                                                           HttpServletRequest request) {
+        return build(HttpStatus.BAD_REQUEST, "VALIDATION_ERROR",
+                "Parâmetro obrigatório ausente.", request, null);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
@@ -69,6 +94,36 @@ public class GlobalExceptionHandler {
                                                              HttpServletRequest request) {
         return build(HttpStatus.METHOD_NOT_ALLOWED, "METHOD_NOT_ALLOWED",
                 "Método HTTP não suportado para este recurso.", request, null);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ApiError> handleConflict(DataIntegrityViolationException ex,
+                                                   HttpServletRequest request) {
+        log.warn("Violação de integridade [traceId={}]: {}", request.getRequestId(), ex.getMostSpecificCause().getMessage());
+        return build(HttpStatus.CONFLICT, "CONFLICT",
+                "A operação conflita com dados existentes.", request, null);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ApiError> handleAccessDenied(AccessDeniedException ex,
+                                                       HttpServletRequest request) {
+        return build(HttpStatus.FORBIDDEN, "FORBIDDEN",
+                "Você não tem permissão para esta ação.", request, null);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ApiError> handleAuthentication(AuthenticationException ex,
+                                                         HttpServletRequest request) {
+        return build(HttpStatus.UNAUTHORIZED, "UNAUTHORIZED",
+                "Autenticação necessária.", request, null);
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<ApiError> handleUploadLimit(MaxUploadSizeExceededException ex,
+                                                      HttpServletRequest request) {
+        ex.getMostSpecificCause();
+        return build(HttpStatus.PAYLOAD_TOO_LARGE, "FILE_TOO_LARGE",
+                "O arquivo excede o limite permitido.", request, null);
     }
 
     @ExceptionHandler(Exception.class)

@@ -1,0 +1,15 @@
+{
+  "method": "Preliminary Gate 3 ranking. Technical criterion withheld because no video exists. Weights from evaluation/SCORING_TEMPLATE.md; total normalized to 100 over the 95 available points.",
+  "scores": {
+    "V01": {"creative_hook": 7.0, "creative_brand": 8.0, "retention": 16.0, "retention_hook": 8.0, "traffic_hook": 9.0, "editing": 8.5, "motion": 9.0, "sound": 7.33, "clarity": 8.5, "distribution": 7.5, "qc_brand": 9.0, "qc_risk": 6.0, "qc_viability": 8.0, "qc_editorial": "PASS"},
+    "V02": {"creative_hook": 8.0, "creative_brand": 6.5, "retention": 15.0, "retention_hook": 8.0, "traffic_hook": 8.0, "editing": 8.5, "motion": 6.67, "sound": 8.33, "clarity": 9.0, "distribution": 6.3, "qc_brand": 9.0, "qc_risk": 4.0, "qc_viability": 4.0, "qc_editorial": "FAIL"},
+    "V03": {"creative_hook": 8.5, "creative_brand": 7.5, "retention": 14.0, "retention_hook": 7.5, "traffic_hook": 8.0, "editing": 7.5, "motion": 7.33, "sound": 7.67, "clarity": 8.0, "distribution": 7.3, "qc_brand": 6.0, "qc_risk": 4.0, "qc_viability": 5.0, "qc_editorial": "FAIL"},
+    "V04": {"creative_hook": 6.5, "creative_brand": 6.0, "retention": 13.5, "retention_hook": 7.0, "traffic_hook": 8.0, "editing": 7.0, "motion": 8.67, "sound": 6.0, "clarity": 7.0, "distribution": 7.5, "qc_brand": 7.0, "qc_risk": 3.0, "qc_viability": 8.0, "qc_editorial": "FAIL"},
+    "V05": {"creative_hook": 7.0, "creative_brand": 8.5, "retention": 12.5, "retention_hook": 7.0, "traffic_hook": 6.0, "editing": 8.0, "motion": 7.67, "sound": 8.67, "clarity": 9.0, "distribution": 5.5, "qc_brand": 9.0, "qc_risk": 7.0, "qc_viability": 9.0, "qc_editorial": "PASS"},
+    "V06": {"creative_hook": 8.5, "creative_brand": 7.0, "retention": 15.0, "retention_hook": 9.0, "traffic_hook": 8.0, "editing": 7.5, "motion": 8.33, "sound": 7.33, "clarity": 8.0, "distribution": 7.8, "qc_brand": 8.0, "qc_risk": 7.0, "qc_viability": 8.0, "qc_editorial": "PASS"},
+    "V07": {"creative_hook": 6.0, "creative_brand": 8.0, "retention": 12.0, "retention_hook": 7.5, "traffic_hook": 6.0, "editing": 7.5, "motion": 7.67, "sound": 7.0, "clarity": 9.0, "distribution": 6.5, "qc_brand": 8.0, "qc_risk": 3.0, "qc_viability": 7.0, "qc_editorial": "FAIL"},
+    "V08": {"creative_hook": 7.5, "creative_brand": 5.5, "retention": 13.5, "retention_hook": 7.5, "traffic_hook": 9.0, "editing": 8.0, "motion": 8.0, "sound": 8.33, "clarity": 9.0, "distribution": 8.3, "qc_brand": 7.0, "qc_risk": 5.0, "qc_viability": 8.0, "qc_editorial": "FAIL"},
+    "V09": {"creative_hook": 9.0, "creative_brand": 8.0, "retention": 14.5, "retention_hook": 9.5, "traffic_hook": 8.0, "editing": 8.0, "motion": 8.67, "sound": 7.0, "clarity": 8.0, "distribution": 6.5, "qc_brand": 6.0, "qc_risk": 5.0, "qc_viability": 5.0, "qc_editorial": "FAIL"},
+    "V10": {"creative_hook": 6.5, "creative_brand": 7.0, "retention": 13.5, "retention_hook": 8.5, "traffic_hook": 6.0, "editing": 6.0, "motion": 8.0, "sound": 7.33, "clarity": 7.5, "distribution": 5.3, "qc_brand": 8.0, "qc_risk": 5.0, "qc_viability": 4.0, "qc_editorial": "FAIL"}
+  }
+}

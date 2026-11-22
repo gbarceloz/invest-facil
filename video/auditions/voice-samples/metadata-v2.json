@@ -1,0 +1,80 @@
+{
+  "status": "THALITA APROVADA PELO USUARIO EM 21/11/2026",
+  "updated": "2026-11-21",
+  "text": "Você acha que cem reais estão parados? Não estão. A inflação corrói o seu poder de compra. Em dez anos, a cinco por cento ao ano, cem reais valem menos de sessenta e um. O problema não é o número. É a ilusão de que o dinheiro está parado.",
+  "note": "O texto acima é o áudio temporário usado no lab. A versão corrigida do roteiro está em ../narracao-corrigida.txt.",
+  "options": [
+    {
+      "provider": "Microsoft SAPI 5 (local)",
+      "voice": "Microsoft Maria Desktop",
+      "file": "v2-normalized/07-maria-sapi.wav",
+      "status": "REPROVADO para produção",
+      "naturalness": "Voz de sistema, robótica; proxies: 2,62 palavras/s, F0 std 24,4 Hz",
+      "api_key": false,
+      "cost": "Incluída no Windows",
+      "license": "Componente do Windows; verificar termos para uso comercial"
+    },
+    {
+      "provider": "Microsoft OneCore / WinRT (local)",
+      "voice": "Microsoft Daniel",
+      "file": "v2-normalized/04-daniel-onecore.wav",
+      "status": "AMOSTRA GERADA; ESCUTA PENDENTE",
+      "naturalness": "Voz de sistema masculina; proxies: 2,22 palavras/s, F0 std 35,6 Hz",
+      "api_key": false,
+      "cost": "Incluída no Windows",
+      "license": "Componente do Windows; verificar termos para uso comercial"
+    },
+    {
+      "provider": "edge-tts (read-aloud do Edge, não oficial)",
+      "voice": "Francisca / Antonio / Thalita",
+      "files": [
+        "v2-normalized/01-francisca-edge.wav",
+        "v2-normalized/02-antonio-edge.wav",
+        "v2-normalized/03-thalita-edge.wav"
+      ],
+      "status": "AMOSTRAS GERADAS; ESCUTA PENDENTE",
+      "naturalness": "Neural; proxies: 3,14 / 2,58 / 3,02 palavras/s; F0 std 53,4 / 56,9 / 50,0 Hz",
+      "api_key": false,
+      "cost": "Gratuito no teste",
+      "license": "Serviço não oficial; uso comercial não garantido; validar termos da Microsoft"
+    },
+    {
+      "provider": "Piper (local, ONNX)",
+      "voice": "pt_BR-faber-medium",
+      "files": [
+        "v2-normalized/05-faber-piper.wav",
+        "v2-normalized/06-faber-piper-slow.wav"
+      ],
+      "status": "AMOSTRAS GERADAS; ESCUTA/LICENÇA PENDENTES",
+      "naturalness": "Local neural; proxies: 3,35 / 3,15 palavras/s; F0 std 29,4 / 30,8 Hz",
+      "api_key": false,
+      "cost": "Gratuito",
+      "license": "Código MIT; dataset CC0; licença explícita do modelo a confirmar"
+    },
+    {
+      "provider": "ElevenLabs",
+      "voice": "Não escolhida",
+      "status": "BLOQUEADO POR AUTORIZAÇÃO",
+      "naturalness": "Não testada",
+      "api_key": true,
+      "cost": "Plano gratuito limitado + planos pagos; não contratado",
+      "license": "Conforme plano; requer autorização"
+    }
+  ],
+  "comparison": "v2-normalized/comparison.m4a",
+  "comparison_duration_seconds": 128.779,
+  "documentation": "../VOICE_OPTIONS.md",
+  "elevenlabs": {
+    "status": "BLOQUEADO POR AUTORIZAÇÃO",
+    "api_key_present": false,
+    "network_call_made": false
+  },
+  "approved_voice": {
+    "provider": "edge-tts",
+    "voice": "pt-BR-ThalitaMultilingualNeural",
+    "approved_by": "user",
+    "approved_on": "2026-11-21",
+    "used_in": "investfacil-high-impact-01",
+    "note": "Aprovacao explicita do usuario; validar licenca comercial do edge-tts antes de publicar em escala."
+  }
+}

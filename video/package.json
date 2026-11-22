@@ -1,0 +1,22 @@
+{
+  "name": "investfacil-video",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "render": "remotion render src/index.ts InvestFacilLab out/investfacil-lab.mp4",
+    "render:preview": "remotion render src/index.ts InvestFacilLab out/investfacil-lab-preview.mp4 --scale=0.5",
+    "still": "remotion still src/index.ts InvestFacilLab out/investfacil-lab-still.png --frame=90"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.545",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "remotion": "4.0.545"
+  },
+  "devDependencies": {
+    "@types/react": "19.0.2",
+    "@types/react-dom": "19.0.2",
+    "typescript": "5.7.2"
+  }
+}

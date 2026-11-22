@@ -1,0 +1,68 @@
+[
+  {
+    "id": "L01",
+    "display": "A nota entra inteira na máquina.",
+    "tts": "A nota entra inteira na máquina.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L02",
+    "display": "O que ela compra sai menor.",
+    "tts": "O que ela compra sai menor.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L03",
+    "display": "Não é mágica. É inflação.",
+    "tts": "Não é mágica. É inflação.",
+    "pause_ms": 220
+  },
+  {
+    "id": "L04",
+    "display": "Os preços sobem. A mesma quantia compra menos.",
+    "tts": "Os preços sobem. A mesma quantia compra menos.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L05",
+    "display": "O número na nota não muda. Continua 100.",
+    "tts": "O número na nota não muda. Continua cem.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L06",
+    "display": "Mas o que ele compra, sim.",
+    "tts": "Mas o que ele compra, sim.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L07",
+    "display": "A cada ano, a máquina leva um pouco.",
+    "tts": "A cada ano, a máquina leva um pouco.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L08",
+    "display": "Em dez anos, a 5% ao ano, o poder de compra cai para 61.",
+    "tts": "Em dez anos, a cinco por cento ao ano, o poder de compra cai para sessenta e um.",
+    "pause_ms": 220
+  },
+  {
+    "id": "L09",
+    "display": "A inflação não rasga o dinheiro.",
+    "tts": "A inflação não rasga o dinheiro.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L10",
+    "display": "Ela diminui o que ele compra.",
+    "tts": "Ela diminui o que ele compra.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L11",
+    "display": "Compartilhe com quem acha que dinheiro parado não muda.",
+    "tts": "Compartilhe com quem acha que dinheiro parado não muda.",
+    "pause_ms": 0
+  }
+]

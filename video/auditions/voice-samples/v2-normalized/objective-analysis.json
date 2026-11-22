@@ -1,0 +1,104 @@
+{
+  "text_words": 49,
+  "note": "F0/rate are objective proxies, not perceptual approval.",
+  "samples": [
+    {
+      "file": "01-francisca-edge.wav",
+      "duration_s": 15.624,
+      "words": 49,
+      "words_per_second": 3.14,
+      "f0": {
+        "frames": 545,
+        "mean_hz": 237.48,
+        "median_hz": 225.35,
+        "std_hz": 53.4,
+        "p10_hz": 181.82,
+        "p90_hz": 313.73
+      }
+    },
+    {
+      "file": "02-antonio-edge.wav",
+      "duration_s": 19.008,
+      "words": 49,
+      "words_per_second": 2.58,
+      "f0": {
+        "frames": 503,
+        "mean_hz": 152.97,
+        "median_hz": 133.33,
+        "std_hz": 56.94,
+        "p10_hz": 104.71,
+        "p90_hz": 219.18
+      }
+    },
+    {
+      "file": "03-thalita-edge.wav",
+      "duration_s": 16.248,
+      "words": 49,
+      "words_per_second": 3.02,
+      "f0": {
+        "frames": 555,
+        "mean_hz": 195.68,
+        "median_hz": 188.24,
+        "std_hz": 50.02,
+        "p10_hz": 141.59,
+        "p90_hz": 269.38
+      }
+    },
+    {
+      "file": "04-daniel-onecore.wav",
+      "duration_s": 22.049,
+      "words": 49,
+      "words_per_second": 2.22,
+      "f0": {
+        "frames": 618,
+        "mean_hz": 137.32,
+        "median_hz": 133.33,
+        "std_hz": 35.6,
+        "p10_hz": 101.91,
+        "p90_hz": 170.21
+      }
+    },
+    {
+      "file": "05-faber-piper.wav",
+      "duration_s": 14.617,
+      "words": 49,
+      "words_per_second": 3.35,
+      "f0": {
+        "frames": 470,
+        "mean_hz": 156.89,
+        "median_hz": 156.1,
+        "std_hz": 29.42,
+        "p10_hz": 115.94,
+        "p90_hz": 195.12
+      }
+    },
+    {
+      "file": "06-faber-piper-slow.wav",
+      "duration_s": 15.546,
+      "words": 49,
+      "words_per_second": 3.15,
+      "f0": {
+        "frames": 490,
+        "mean_hz": 157.48,
+        "median_hz": 154.59,
+        "std_hz": 30.83,
+        "p10_hz": 118.52,
+        "p90_hz": 195.12
+      }
+    },
+    {
+      "file": "07-maria-sapi.wav",
+      "duration_s": 18.688,
+      "words": 49,
+      "words_per_second": 2.62,
+      "f0": {
+        "frames": 546,
+        "mean_hz": 183.14,
+        "median_hz": 181.82,
+        "std_hz": 24.35,
+        "p10_hz": 156.1,
+        "p90_hz": 213.33
+      }
+    }
+  ]
+}

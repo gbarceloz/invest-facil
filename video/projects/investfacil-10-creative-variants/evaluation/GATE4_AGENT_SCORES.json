@@ -1,0 +1,226 @@
+{
+  "generated_at": "2026-11-21",
+  "method": "Notas dos 8 agentes sobre os 10 MP4 reais; nenhuma metrica de audiencia; nenhuma aprovacao humana.",
+  "scores": {
+    "V01": {
+      "creative_hook": 7.0,
+      "creative_brand": 8.0,
+      "retention_hook": 8.0,
+      "retention": 15.5,
+      "traffic_hook": 8.0,
+      "traffic_distribution": 6.8,
+      "editing": 8.0,
+      "motion": 7.67,
+      "sound": 7.33,
+      "clarity": 8.33,
+      "qc_technique": 9.0,
+      "qc_brand": 9.0,
+      "qc_risk": 8.0,
+      "qc_verdict": "PASS (ticker corrigido e re-auditado)",
+      "notes": {
+        "strength": "Melhor ritmo do lote: ~24 cortes, frame 0 forte, barra 100->61 e contador.",
+        "weakness": "Ticker sobreposto em 5,6-8,2 s foi corrigido no ciclo de 1400 para 2360 px; ponte 'primeiro passo' generica.",
+        "best": "Reveal do mesmo numero com a nota parada e os precos rolando.",
+        "risk": "Sem escuta humana; disclaimer baixo e licenca de voz pendentes."
+      }
+    },
+    "V02": {
+      "creative_hook": 8.0,
+      "creative_brand": 7.0,
+      "retention_hook": 7.5,
+      "retention": 12.5,
+      "traffic_hook": 8.0,
+      "traffic_distribution": 6.0,
+      "editing": 6.5,
+      "motion": 6.0,
+      "sound": 8.33,
+      "clarity": 9.0,
+      "qc_technique": 8.0,
+      "qc_brand": 9.0,
+      "qc_risk": 7.0,
+      "qc_verdict": "PASS com ressalva",
+      "notes": {
+        "strength": "Melhor arco: cafe, troco encolhendo e 'o cafe e o mesmo; o troco, nao'.",
+        "weakness": "Cartao 'O MESMO PEDIDO' parado por ~5,2 s em 4,2-9,4 s; fala diz '61%' e tela mostra R$ 61.",
+        "best": "Cold open e fecho com o troco.",
+        "risk": "Hold no bloco que mais precisa reter."
+      }
+    },
+    "V03": {
+      "creative_hook": 8.0,
+      "creative_brand": 8.0,
+      "retention_hook": 7.0,
+      "retention": 11.5,
+      "traffic_hook": 9.0,
+      "traffic_distribution": 7.5,
+      "editing": 7.0,
+      "motion": 6.0,
+      "sound": 7.33,
+      "clarity": 6.83,
+      "qc_technique": 9.0,
+      "qc_brand": 9.0,
+      "qc_risk": 8.0,
+      "qc_verdict": "PASS",
+      "notes": {
+        "strength": "Metafora visual mais autoral: a maquina que encolhe o dinheiro, com 3/5 coerente.",
+        "weakness": "Whisper ouve 'continua sem' e 'compra? Sim'; a maquina fica pequena e imovel em 4-10 s.",
+        "best": "100 -> 3 de 5 itens na mesma composicao.",
+        "risk": "Articulacao de 'cem' e 'sim' no TTS; sem escuta humana."
+      }
+    },
+    "V04": {
+      "creative_hook": 6.5,
+      "creative_brand": 7.0,
+      "retention_hook": 7.0,
+      "retention": 12.5,
+      "traffic_hook": 8.0,
+      "traffic_distribution": 7.5,
+      "editing": 8.0,
+      "motion": 7.67,
+      "sound": 6.0,
+      "clarity": 7.67,
+      "qc_technique": 9.0,
+      "qc_brand": 9.0,
+      "qc_risk": 8.0,
+      "qc_verdict": "PASS",
+      "notes": {
+        "strength": "O mais limpo e rapido: 4 de 5, selo de simulacao e payoff em 56,5%.",
+        "weakness": "Timer '30' decorativo, quiz inexistente e mix de voz mais fraco do lote.",
+        "best": "Payoff mais cedo da colecao.",
+        "risk": "Mid fraco e fala densa em 30 s; Whisper ouviu 'precios'."
+      }
+    },
+    "V05": {
+      "creative_hook": 7.0,
+      "creative_brand": 9.0,
+      "retention_hook": 6.5,
+      "retention": 10.0,
+      "traffic_hook": 6.0,
+      "traffic_distribution": 5.3,
+      "editing": 6.0,
+      "motion": 5.67,
+      "sound": 8.33,
+      "clarity": 8.5,
+      "qc_technique": 9.0,
+      "qc_brand": 9.0,
+      "qc_risk": 8.0,
+      "qc_verdict": "PASS",
+      "notes": {
+        "strength": "Frame 0 e hook-pergunta fortes; 'impresso/menor' e 3/5 claros.",
+        "weakness": "Dois blocos de ~8 s e nota isolada em tela preta; a mesa nao existe.",
+        "best": "A nota de R$ 100 como objeto central.",
+        "risk": "Ritmo quase parado e automacao de 'silencio' acima do numero."
+      }
+    },
+    "V06": {
+      "creative_hook": 8.5,
+      "creative_brand": 7.5,
+      "retention_hook": 9.0,
+      "retention": 12.0,
+      "traffic_hook": 8.0,
+      "traffic_distribution": 7.3,
+      "editing": 6.75,
+      "motion": 5.33,
+      "sound": 7.33,
+      "clarity": 8.33,
+      "qc_technique": 9.0,
+      "qc_brand": 9.0,
+      "qc_risk": 7.0,
+      "qc_verdict": "PASS",
+      "notes": {
+        "strength": "Hook salarial mais especifico ('seu salario subiu...') e R$ 3.200 concreto.",
+        "weakness": "Split 'SALARIO x PRECOS' lado a lado em 9:16, imovel por ~8 s; repete 'sem fazer barulho'.",
+        "best": "R$ 3.200 como exemplo didatico rotulado.",
+        "risk": "Miolo estatico e payoff em 82,3%."
+      }
+    },
+    "V07": {
+      "creative_hook": 6.0,
+      "creative_brand": 8.0,
+      "retention_hook": 6.5,
+      "retention": 10.5,
+      "traffic_hook": 6.0,
+      "traffic_distribution": 6.3,
+      "editing": 6.0,
+      "motion": 4.33,
+      "sound": 7.0,
+      "clarity": 8.33,
+      "qc_technique": 8.0,
+      "qc_brand": 8.0,
+      "qc_risk": 7.0,
+      "qc_verdict": "PASS com ressalva",
+      "notes": {
+        "strength": "Dados claros: 39% de perda, 5 e 10 anos, 'a cesta ficou menor'.",
+        "weakness": "Grafico domina 0-26 s na mesma composicao; hook 'UMA LINHA PODE EXPLICAR.' fica sem objeto.",
+        "best": "100 -> 61 no grafico.",
+        "risk": "Hold de 18,7 s e labels pequenos no feed."
+      }
+    },
+    "V08": {
+      "creative_hook": 7.5,
+      "creative_brand": 6.5,
+      "retention_hook": 7.0,
+      "retention": 11.5,
+      "traffic_hook": 8.0,
+      "traffic_distribution": 7.8,
+      "editing": 7.75,
+      "motion": 6.0,
+      "sound": 8.0,
+      "clarity": 9.0,
+      "qc_technique": 9.0,
+      "qc_brand": 8.0,
+      "qc_risk": 8.0,
+      "qc_verdict": "PASS",
+      "notes": {
+        "strength": "Melhor loop nativo: chat do 'amigo', 25% e 5% rotulados, CTA 'manda pra ele'.",
+        "weakness": "Chat estatico nos primeiros 4 s e CTA falado de 2,3 s; identidade de chat e proxima de V01.",
+        "best": "Mensagem 'dinheiro parado nao perde valor' e resposta com a conta.",
+        "risk": "Sem transcript Whisper para confirmar a fala; hold de 6 s."
+      }
+    },
+    "V09": {
+      "creative_hook": 9.0,
+      "creative_brand": 8.5,
+      "retention_hook": 9.0,
+      "retention": 10.0,
+      "traffic_hook": 8.0,
+      "traffic_distribution": 6.0,
+      "editing": 6.75,
+      "motion": 5.67,
+      "sound": 7.33,
+      "clarity": 7.0,
+      "qc_technique": 8.0,
+      "qc_brand": 7.0,
+      "qc_risk": 4.0,
+      "qc_verdict": "PASS tecnico / FAIL editorial",
+      "notes": {
+        "strength": "Frame 0 mais forte e recibo como prova visual concreta.",
+        "weakness": "Afirma 'imposto que ninguem votou' por 4-5 s antes de corrigir; recibo '+R$ 5,51' parece cobranca real.",
+        "best": "A correcao 'nao e imposto literal; e inflacao'.",
+        "risk": "14% do video sustenta uma equivalencia falsa antes da correcao."
+      }
+    },
+    "V10": {
+      "creative_hook": 6.5,
+      "creative_brand": 8.0,
+      "retention_hook": 8.0,
+      "retention": 12.0,
+      "traffic_hook": 6.0,
+      "traffic_distribution": 5.0,
+      "editing": 7.0,
+      "motion": 6.33,
+      "sound": 8.0,
+      "clarity": 8.0,
+      "qc_technique": 9.0,
+      "qc_brand": 9.0,
+      "qc_risk": 8.0,
+      "qc_verdict": "PASS",
+      "notes": {
+        "strength": "Imagem mais autoral: a nota com reflexo no espelho.",
+        "weakness": "Cartao espelhado domina 0-20 s; payoff em 76,9% e hold de 8,4 s em 25,7-34,0 s.",
+        "best": "Reflexo da nota e 'o numero continua; a nota nao encolhe'.",
+        "risk": "Clichê 'se o dinheiro pudesse falar' e ritmo arrastado."
+      }
+    }
+  }
+}

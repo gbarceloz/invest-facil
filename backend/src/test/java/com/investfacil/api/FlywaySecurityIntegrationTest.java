@@ -10,10 +10,12 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import javax.sql.DataSource;
+import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Base64;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -22,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Teste de integração T1 contra PostgreSQL REAL (Testcontainers — nunca H2):
- * 1. Flyway aplica V1 (schema) e V2 (papéis, privilégios, RLS) em banco limpo.
+ * 1. Flyway aplica V1-V7 (schema, papéis, privilégios, RLS) em banco limpo.
  * 2. Papel investfacil_app lê/escreve (DML) e NÃO pode executar DDL.
  * 3. Papel investfacil_test_guest recebe GRANT SELECT de propósito e, mesmo
  *    assim, enxerga ZERO linhas — provando que a negação vem da RLS
@@ -35,6 +37,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Testcontainers(disabledWithoutDocker = true)
 class FlywaySecurityIntegrationTest {
 
+    static {
+        // JwtService exige um segredo; testes usam um valor efêmero, nunca versionado.
+        byte[] secret = new byte[48];
+        new SecureRandom().nextBytes(secret);
+        System.setProperty("JWT_SECRET", Base64.getEncoder().encodeToString(secret));
+    }
+
     @Container
     @ServiceConnection
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:17-alpine");
@@ -43,12 +52,12 @@ class FlywaySecurityIntegrationTest {
     DataSource dataSource;
 
     @Test
-    void flywayAplicaV1eV2EmBancoLimpo() {
+    void flywayAplicaV1aV7EmBancoLimpo() {
         JdbcTemplate jdbc = new JdbcTemplate(dataSource);
         Integer migracoesOk = jdbc.queryForObject(
-                "SELECT count(*) FROM investfacil.flyway_schema_history WHERE success = true",
+                "SELECT count(*) FROM investfacil.flyway_schema_history WHERE success = true AND type = 'SQL'",
                 Integer.class);
-        assertTrue(migracoesOk != null && migracoesOk >= 2, "V1 e V2 devem ser aplicadas");
+        assertEquals(7, migracoesOk, "V1-V7 devem ser aplicadas");
 
         Integer tabelas = jdbc.queryForObject(
                 "SELECT count(*) FROM information_schema.tables WHERE table_schema = 'investfacil'",
@@ -59,15 +68,19 @@ class FlywaySecurityIntegrationTest {
     @Test
     void investfacilAppEscreveELe() throws SQLException {
         String email = "t1-" + UUID.randomUUID() + "@investfacil.test";
-        try (Connection conn = dataSource.getConnection();
-             Statement st = conn.createStatement()) {
-            st.execute("SET ROLE investfacil_app");
-            st.execute("INSERT INTO investfacil.users (email, name, password_hash) VALUES ('"
-                    + email + "', 'Teste T1', 'hash-bcrypt-de-teste')");
-            ResultSet rs = st.executeQuery("SELECT count(*) FROM investfacil.users");
-            rs.next();
-            assertTrue(rs.getInt(1) >= 1, "Papel de app deve ler e escrever");
-            st.execute("RESET ROLE");
+        try (Connection conn = dataSource.getConnection()) {
+            conn.setAutoCommit(false);
+            try (Statement st = conn.createStatement()) {
+                st.execute("SET ROLE investfacil_app");
+                st.execute("SELECT set_config('app.auth_email', '" + email + "', true)");
+                st.execute("SELECT set_config('app.flow', 'REGISTER', true)");
+                st.execute("INSERT INTO investfacil.users (email, name, password_hash) VALUES ('"
+                        + email + "', 'Teste T1', 'hash-bcrypt-de-teste')");
+                ResultSet rs = st.executeQuery("SELECT count(*) FROM investfacil.users");
+                rs.next();
+                assertTrue(rs.getInt(1) >= 1, "Papel de app deve ler e escrever");
+                st.execute("ROLLBACK");
+            }
         }
     }
 
@@ -80,6 +93,23 @@ class FlywaySecurityIntegrationTest {
                     () -> st.execute("CREATE TABLE investfacil.nao_deve_existir (id int)"),
                     "investfacil_app não deve poder executar DDL");
             assertTrue(falhou.getMessage() != null && !falhou.getMessage().isBlank());
+            st.execute("RESET ROLE");
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    @Test
+    void appNaoPodeAlterarLedgersDeAuditoriaOuXp() {
+        try (Connection conn = dataSource.getConnection();
+             Statement st = conn.createStatement()) {
+            st.execute("SET ROLE investfacil_app");
+            assertThrows(SQLException.class,
+                    () -> st.execute("UPDATE investfacil.auth_event SET event_type = 'X'"),
+                    "auth_event deve ser append-only para o runtime");
+            assertThrows(SQLException.class,
+                    () -> st.execute("UPDATE investfacil.xp_ledger SET amount = 0"),
+                    "xp_ledger deve ser append-only para o runtime");
             st.execute("RESET ROLE");
         } catch (SQLException e) {
             throw new IllegalStateException(e);

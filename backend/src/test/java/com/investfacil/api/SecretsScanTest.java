@@ -29,7 +29,12 @@ class SecretsScanTest {
     /** Raiz do projeto Maven (user.dir = diretório de execução do build). */
     private static final Path ROOT = Paths.get(System.getProperty("user.dir")).toAbsolutePath();
 
-    private static final List<Pattern> SECRET_PATTERNS = List.of(
+    /**
+     * Padrões válidos em qualquer arquivo. Em Java, só literais entre aspas
+     * contam: declarações como "String token = header.substring(...)" são
+     * código, não credenciais.
+     */
+    private static final List<Pattern> QUOTED_PATTERNS = List.of(
             // postgres://user:senha@host — senha embutida em connection string
             Pattern.compile("(?i)postgres(?:ql)?://[^\\s'\\\"]+:[^\\s'\\\"]+@"),
             // JWT literal (header.payload)
@@ -40,8 +45,11 @@ class SecretsScanTest {
             Pattern.compile("sk-(?:live|test|proj)-[A-Za-z0-9_-]{20,}"),
             // password/secret/api_key = "valor literal" (não ${ENV}, não placeholder <...>)
             Pattern.compile("(?i)(?:password|passwd|secret|api[_-]?key|client[_-]?secret)"
-                    + "\\s*[:=]\\s*['\\\"](?![\\$\\{<])[A-Za-z0-9!@#$%^&*_+=./-]{12,}['\\\"]"),
-            // password/secret/token = valor literal sem aspas (não ${ENV}, não <placeholder>)
+                    + "\\s*[:=]\\s*['\\\"](?![\\$\\{<])[A-Za-z0-9!@#$%^&*_+=./-]{12,}['\\\"]")
+    );
+
+    /** Atribuições sem aspas só são avaliadas fora de Java (YAML/properties). */
+    private static final List<Pattern> UNQUOTED_PATTERNS = List.of(
             Pattern.compile("(?i)(?:password|secret|token)\\s*[:=]\\s*"
                     + "[^\\s'\\\"\\$\\{<][^\\s]{15,}")
     );
@@ -74,7 +82,11 @@ class SecretsScanTest {
                                         || t.startsWith("//") || t.startsWith("*")) {
                                     continue; // comentários: documentação, não segredo
                                 }
-                                for (Pattern padrao : SECRET_PATTERNS) {
+                                List<Pattern> patterns = new ArrayList<>(QUOTED_PATTERNS);
+                                if (!p.getFileName().toString().endsWith(".java")) {
+                                    patterns.addAll(UNQUOTED_PATTERNS);
+                                }
+                                for (Pattern padrao : patterns) {
                                     if (padrao.matcher(linha).find()) {
                                         suspeitos.add(p.getFileName() + ": " + linha.strip());
                                         break;

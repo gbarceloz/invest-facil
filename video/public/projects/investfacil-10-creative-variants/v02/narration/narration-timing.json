@@ -1,0 +1,118 @@
+{
+  "variant": "V02",
+  "voice": "pt-BR-ThalitaMultilingualNeural",
+  "rate": "-12%",
+  "sample_rate": 48000,
+  "total_s": 41.21,
+  "tail_s": 0.35,
+  "lines": [
+    {
+      "id": "L01",
+      "display": "Até o dia em que o dinheiro não deu.",
+      "tts": "Até o dia em que o dinheiro não deu.",
+      "start": 0.0,
+      "end": 2.423,
+      "duration": 2.423,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L02",
+      "display": "Ele comprava o mesmo café todos os dias.",
+      "tts": "Ele comprava o mesmo café todos os dias.",
+      "start": 2.543,
+      "end": 5.339,
+      "duration": 2.797,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L03",
+      "display": "O mesmo pedido. Os mesmos R$ 100 para a semana.",
+      "tts": "O mesmo pedido. Os mesmos cem reais para a semana.",
+      "start": 5.459,
+      "end": 9.125,
+      "duration": 3.665,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L04",
+      "display": "No começo, sobrava troco.",
+      "tts": "No começo, sobrava troco.",
+      "start": 9.245,
+      "end": 11.485,
+      "duration": 2.24,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L05",
+      "display": "Depois, o troco foi ficando menor.",
+      "tts": "Depois, o troco foi ficando menor.",
+      "start": 11.605,
+      "end": 14.295,
+      "duration": 2.691,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L06",
+      "display": "Até não dar mais.",
+      "tts": "Até não dar mais.",
+      "start": 14.415,
+      "end": 15.795,
+      "duration": 1.379,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L07",
+      "display": "O café não ficou caro do nada. O dinheiro é que compra menos.",
+      "tts": "O café não ficou caro do nada. O dinheiro é que compra menos.",
+      "start": 15.915,
+      "end": 20.041,
+      "duration": 4.126,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L08",
+      "display": "É a inflação. Os preços sobem, e o poder de compra cai.",
+      "tts": "É a inflação. Os preços sobem, e o poder de compra cai.",
+      "start": 20.161,
+      "end": 24.412,
+      "duration": 4.251,
+      "pause_after_ms": 220
+    },
+    {
+      "id": "L09",
+      "display": "Numa simulação de 5% ao ano, o poder de compra cai para cerca de 61.",
+      "tts": "Numa simulação de cinco por cento ao ano, o poder de compra cai para cerca de sessenta e um.",
+      "start": 24.632,
+      "end": 30.501,
+      "duration": 5.869,
+      "pause_after_ms": 220
+    },
+    {
+      "id": "L10",
+      "display": "O café é o mesmo. O troco é que encolheu.",
+      "tts": "O café é o mesmo. O troco é que encolheu.",
+      "start": 30.721,
+      "end": 33.798,
+      "duration": 3.078,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L11",
+      "display": "A inflação não faz barulho. Ela aparece no troco.",
+      "tts": "A inflação não faz barulho. Ela aparece no troco.",
+      "start": 33.918,
+      "end": 37.616,
+      "duration": 3.698,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L12",
+      "display": "Salve para lembrar quando o preço parecer ‘do nada’.",
+      "tts": "Salve para lembrar quando o preço parecer ‘do nada’.",
+      "start": 37.736,
+      "end": 40.86,
+      "duration": 3.123,
+      "pause_after_ms": 0
+    }
+  ]
+}

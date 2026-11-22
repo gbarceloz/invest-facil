@@ -1,0 +1,43 @@
+1
+00:00:00,000 --> 00:00:02,210
+A nota entra inteira na máquina.
+
+2
+00:00:02,330 --> 00:00:04,255
+O que ela compra sai menor.
+
+3
+00:00:04,375 --> 00:00:06,700
+Não é mágica. É inflação.
+
+4
+00:00:06,920 --> 00:00:10,780
+Os preços sobem. A mesma quantia compra menos.
+
+5
+00:00:10,899 --> 00:00:14,177
+O número na nota não muda. Continua 100.
+
+6
+00:00:14,297 --> 00:00:15,981
+Mas o que ele compra, sim.
+
+7
+00:00:16,101 --> 00:00:18,795
+A cada ano, a máquina leva um pouco.
+
+8
+00:00:18,915 --> 00:00:24,344
+Em dez anos, a 5% ao ano, o poder de compra cai para 61.
+
+9
+00:00:24,564 --> 00:00:26,866
+A inflação não rasga o dinheiro.
+
+10
+00:00:26,986 --> 00:00:28,851
+Ela diminui o que ele compra.
+
+11
+00:00:28,971 --> 00:00:32,359
+Compartilhe com quem acha que dinheiro parado não muda.

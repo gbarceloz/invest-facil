@@ -1,0 +1,1125 @@
+{
+  "categories": [
+    {
+      "slug": "fundamentos",
+      "name": "Fundamentos financeiros",
+      "description": "Organize o presente, entenda o dinheiro e construa uma base segura antes de investir.",
+      "order": 1,
+      "modules": [
+        {
+          "slug": "primeiros-passos",
+          "title": "Primeiros passos",
+          "description": "Orçamento, reserva de emergência e as decisões que vêm antes de qualquer investimento.",
+          "order": 1,
+          "lessons": [
+            {
+              "slug": "por-que-educacao-financeira",
+              "title": "Por que educação financeira importa",
+              "estimatedMin": 4,
+              "order": 1,
+              "content": "## Dinheiro é uma ferramenta, não um placar\n\nEducação financeira não é sobre ficar rico rápido. É sobre entender as consequências das suas decisões e escolher com intenção. Quem sabe quanto ganha, quanto gasta e quanto pode perder toma decisões melhores — inclusive a decisão de não investir em algo.\n\n## O custo de decidir no escuro\n\nNo Brasil, crédito fácil, parcelamento longo e promessas de ganho rápido convivem com informação de qualidade. Sem base, é difícil separar **educação** de **publicidade**. O resultado costuma aparecer em juros de cartão, empréstimos caros e investimentos que a pessoa não entende.\n\n## Três hábitos que mudam o jogo\n\n1. **Gastar menos do que ganha** — parece óbvio, mas é a base de tudo.\n2. **Planejar antes de comprar** — uma meta com prazo muda a comparação entre opções.\n3. **Investir com propósito** — cada real deve ter uma função: reserva, aposentadoria, estudo ou sonho.\n\n> Educação financeira não elimina o risco. Ela melhora a qualidade das decisões diante dele.",
+              "quiz": [
+                {
+                  "question": "Qual é o objetivo principal da educação financeira?",
+                  "options": [
+                    "Garantir retorno alto em pouco tempo",
+                    "Tomar decisões conscientes sobre dinheiro e risco",
+                    "Evitar qualquer tipo de investimento",
+                    "Aumentar o limite do cartão de crédito"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "Qual hábito é a base de uma vida financeira saudável?",
+                  "options": [
+                    "Gastar menos do que ganha",
+                    "Parcelar tudo em 24 vezes",
+                    "Investir todo o salário em cripto",
+                    "Comparar apenas o preço da parcela"
+                  ],
+                  "correctIndex": 0
+                }
+              ]
+            },
+            {
+              "slug": "orcamento-pessoal",
+              "title": "Orçamento pessoal sem planilha complicada",
+              "estimatedMin": 4,
+              "order": 2,
+              "content": "## O orçamento é um mapa, não uma prisão\n\nOrçamento serve para mostrar **para onde o dinheiro vai**. Não precisa ser perfeito nem detalhado. Comece com três blocos: renda, gastos essenciais e tudo o mais.\n\n## A referência 50/30/20\n\nUma regra simples para começar:\n\n- **50%** para necessidades: moradia, alimentação, transporte, contas básicas.\n- **30%** para desejos: lazer, assinaturas, roupas.\n- **20%** para poupança e dívidas.\n\nEla é um ponto de partida, não uma lei. Quem mora sozinho ou sustenta a família pode precisar de outra proporção. O importante é saber o número real.\n\n## Como fazer em 20 minutos\n\n1. Liste a renda líquida dos últimos três meses.\n2. Classifique os gastos em fixos e variáveis.\n3. Encontre os três maiores vazamentos.\n4. Defina um valor automático para poupar no dia do salário.\n5. Revise uma vez por mês, sem culpa.\n\n> O melhor orçamento é o que você consegue manter.",
+              "quiz": [
+                {
+                  "question": "Na referência 50/30/20, o querepresenta os 20%?",
+                  "options": [
+                    "Lazer e assinaturas",
+                    "Poupança e dívidas",
+                    "Moradia",
+                    "Impostos"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "Qual é uma boa forma de começar um orçamento?",
+                  "options": [
+                    "Anotar todos os gastos por três meses e comparar com a renda",
+                    "Cortar tudo o que dá prazer",
+                    "Pedir um empréstimo para organizar as contas",
+                    "Ignorar gastos pequenos"
+                  ],
+                  "correctIndex": 0
+                }
+              ]
+            },
+            {
+              "slug": "reserva-de-emergencia",
+              "title": "Reserva de emergência: seu colchão de segurança",
+              "estimatedMin": 4,
+              "order": 3,
+              "content": "## Por que a reserva vem antes do investimento\n\nImprevistos acontecem: desemprego, doença, conserto do carro. Sem reserva, a pessoa recorre ao cartão ou a um empréstimo caro — e o problema financeiro cresce.\n\nA reserva de emergência é dinheiro **separado**, de fácil acesso e baixo risco. Ela não serve para multiplicar patrimônio; serve para evitar que um imprevisto vire dívida.\n\n## Quanto guardar\n\nA referência é de **3 a 6 meses** de gastos essenciais. Quem tem renda variável, dependentes ou pouca estabilidade pode precisar de mais. Calcule o valor mensal necessário para viver com dignidade, não o salário inteiro.\n\n## Onde deixar\n\nOpções com liquidez e segurança costumam ser preferíveis: Tesouro Selic, CDB com liquidez diária de banco sólido ou fundo DI de baixo custo. Criptomoedas e ações não são reserva de emergência: podem cair justamente quando você precisa do dinheiro.\n\n> Reserva não é investimento para enriquecer. É seguro para não empobrecer.",
+              "quiz": [
+                {
+                  "question": "Qual é a principal função da reserva de emergência?",
+                  "options": [
+                    "Maximizar a rentabilidade",
+                    "Evitar que imprevistos virem dívidas",
+                    "Comprar ações na baixa",
+                    "Pagar menos imposto"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "Qual característica é mais importante em uma reserva de emergência?",
+                  "options": [
+                    "Alta volatilidade",
+                    "Liquidez e baixo risco",
+                    "Prazo de 10 anos",
+                    "Garantia de retorno alto"
+                  ],
+                  "correctIndex": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "entender-o-mercado",
+          "title": "Entender o mercado",
+          "description": "Inflação, Selic, CDI e uma leitura crítica das notícias e dos números.",
+          "order": 2,
+          "lessons": [
+            {
+              "slug": "inflacao-poder-de-compra",
+              "title": "Inflação e poder de compra",
+              "estimatedMin": 5,
+              "order": 1,
+              "content": "## O dinheiro perde valor com o tempo\n\nInflação é o aumento generalizado de preços. Se a sua renda não acompanha esse aumento, você compra menos com o mesmo dinheiro. É por isso que “guardar embaixo do colchão” também tem um custo: o poder de compra diminui.\n\n## Como medir\n\nO IPCA é o índice oficial de inflação ao consumidor no Brasil. Ele acompanha uma cesta de produtos e serviços e não representa a sua inflação pessoal. Quem gasta muito com aluguel, transporte ou alimentos pode sentir uma variação diferente.\n\n## O que fazer com essa informação\n\n- Comparar a rentabilidade de um investimento com a inflação.\n- Entender que retorno nominal não é retorno real.\n- Manter reserva de emergência com liquidez, mesmo que renda menos.\n- Evitar decisões de longo prazo baseadas apenas no preço de hoje.\n\n> Se o seu dinheiro rende 8% e a inflação é 5%, o ganho real é menor do que 3% — e impostos podem reduzir ainda mais.",
+              "quiz": [
+                {
+                  "question": "O que a inflação representa?",
+                  "options": [
+                    "A queda do preço de todos os produtos",
+                    "O aumento generalizado de preços e a perda de poder de compra",
+                    "Um imposto sobre investimentos",
+                    "A valorização garantida da moeda"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "Para saber se um investimento ganhou valor real, é preciso comparar o retorno com:",
+                  "options": [
+                    "A inflação",
+                    "O número de anos",
+                    "O preço do dólar apenas",
+                    "A taxa de desemprego"
+                  ],
+                  "correctIndex": 0
+                }
+              ]
+            },
+            {
+              "slug": "selic-cdi-juros",
+              "title": "Selic, CDI e juros",
+              "estimatedMin": 5,
+              "order": 2,
+              "content": "## Selic\n\nA Selic é a taxa básica de juros da economia brasileira, definida pelo Banco Central. Ela influencia o custo do crédito, o retorno de títulos públicos e a atratividade de investimentos de risco.\n\n## CDI\n\nO CDI é uma taxa de referência do mercado interbancário, próxima da Selic. Muitos produtos de renda fixa são comparados ao CDI: “100% do CDI”, “110% do CDI”. Isso não é garantia de retorno; é uma forma de precificar a taxa.\n\n## Juros compostos\n\nJuros compostos são juros sobre juros. O tempo é parte da equação: uma taxa pequena, mantida por muitos anos, pode superar uma taxa alta usada por pouco tempo. O efeito também funciona contra você, em dívidas caras.\n\n> Taxa alta não é sinônimo de investimento bom. É preciso olhar risco, liquidez, prazo e custos.",
+              "quiz": [
+                {
+                  "question": "O que é a Selic?",
+                  "options": [
+                    "A taxa básica de juros da economia brasileira",
+                    "O preço do dólar",
+                    "Um imposto sobre ações",
+                    "A inflação oficial"
+                  ],
+                  "correctIndex": 0
+                },
+                {
+                  "question": "“100% do CDI” significa que o investimento:",
+                  "options": [
+                    "Tem retorno garantido de 100%",
+                    "É comparado à taxa do CDI, sem garantia de retorno",
+                    "Nunca perde para a inflação",
+                    "É isento de risco"
+                  ],
+                  "correctIndex": 1
+                }
+              ]
+            },
+            {
+              "slug": "o-que-e-mercado-financeiro",
+              "title": "O que é o mercado financeiro",
+              "estimatedMin": 5,
+              "order": 3,
+              "content": "## O encontro entre quem tem e quem precisa\n\nO mercado financeiro conecta poupadores, empresas e governos. Quem tem dinheiro pode emprestar, comprar participação ou assumir risco; quem precisa pode captar recursos para investir, produzir ou financiar dívida.\n\n## Os principais blocos\n\n- **Renda fixa:** empréstimos a governos, bancos ou empresas, com regras de juros.\n- **Renda variável:** participação em empresas ou fundos, com preço que oscila.\n- **Câmbio:** moedas estrangeiras.\n- **Derivativos:** contratos cujo valor depende de outro ativo; alta complexidade.\n- **Criptoativos:** ativos digitais com regras e riscos próprios.\n\n## Economia importa\n\nJuros, inflação, emprego, câmbio e política fiscal afetam o preço dos ativos. Você não precisa prever o futuro; precisa entender como o ambiente muda o risco e o retorno esperado.\n\n> Mercado financeiro não é cassino. É um conjunto de contratos, instituições e riscos que precisam ser compreendidos.",
+              "quiz": [
+                {
+                  "question": "Qual é a função central do mercado financeiro?",
+                  "options": [
+                    "Garantir lucro para todos",
+                    "Conectar quem poupa e quem precisa de recursos",
+                    "Eliminar o risco",
+                    "Definir o preço de todos os produtos"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "Renda variável se caracteriza por:",
+                  "options": [
+                    "Retorno fixo contratado",
+                    "Preço que pode oscilar e risco de perda",
+                    "Garantia do governo",
+                    "Ausência de custos"
+                  ],
+                  "correctIndex": 1
+                }
+              ]
+            },
+            {
+              "slug": "como-interpretar-o-mercado",
+              "title": "Como interpretar o mercado",
+              "estimatedMin": 5,
+              "order": 4,
+              "content": "## Separe fato, interpretação e opinião\n\nUma notícia pode ser um fato; a leitura sobre o efeito dela é interpretação; a recomendação de compra ou venda é opinião. Educação financeira ensina a reconhecer a diferença antes de agir.\n\n## Perguntas úteis\n\n- O que exatamente mudou: juros, inflação, lucro, regulação?\n- Qual é o horizonte: dias, meses ou anos?\n- O ativo cabe no meu objetivo e no meu risco?\n- Quanto eu perderia se estivesse errado?\n- Existe conflito de interesse em quem está recomendando?\n\n## O que evitar\n\n- Manchetes que prometem retorno.\n- Gráficos sem escala ou contexto.\n- “Todo mundo está comprando.”\n- Urgência artificial.\n- Explicações que ignoram custos, impostos e liquidez.\n\n> Interpretar o mercado é fazer perguntas melhores — não prever o futuro.",
+              "quiz": [
+                {
+                  "question": "Qual é a diferença entre fato e opinião no mercado?",
+                  "options": [
+                    "Fato é o que todo mundo acredita; opinião é o que está no gráfico",
+                    "Fato é um dado verificável; opinião é uma interpretação ou recomendação",
+                    "Os dois são sinônimos",
+                    "Opinião é sempre falsa"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "Qual pergunta é mais útil antes de investir?",
+                  "options": [
+                    "Qual é a dica do momento?",
+                    "Quanto eu perderia se estivesse errado?",
+                    "Como garantir retorno?",
+                    "Qual ativo subiu mais ontem?"
+                  ],
+                  "correctIndex": 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "investimentos",
+      "name": "Investimentos",
+      "description": "Entenda o que é investir, como os juros compostos funcionam e como avaliar o risco.",
+      "order": 2,
+      "modules": [
+        {
+          "slug": "investir-com-consciencia",
+          "title": "Como investir com consciência",
+          "description": "A diferença entre investir, especular e apostar — e o papel do tempo.",
+          "order": 2,
+          "lessons": [
+            {
+              "slug": "o-que-e-investir",
+              "title": "O que é investir (e o que não é)",
+              "estimatedMin": 4,
+              "order": 1,
+              "content": "## Investir é alocar capital com expectativa de retorno\n\nInvestir significa colocar dinheiro em algo que pode gerar retorno no futuro — uma empresa, um título público, um fundo. Em troca, você aceita algum risco. Não existe retorno sem risco; existe risco que você entende e risco que você não entende.\n\n## Investir não é apostar\n\nApostar depende de um evento incerto e de curto prazo. Investir é um processo: você avalia o ativo, o prazo, a liquidez e o risco, e acompanha o resultado. A frase “vai subir” não é uma tese de investimento.\n\n## Retorno real importa\n\nSe um investimento rende 8% ao ano e a inflação é 5%, o ganho real é de aproximadamente 3%. Olhar só para o número nominal pode esconder uma perda de poder de compra.\n\n## O tripé de qualquer decisão\n\n- **Risco:** o que pode dar errado e qual é o tamanho da perda?\n- **Retorno:** qual é a expectativa e de onde ela vem?\n- **Liquidez:** quando o dinheiro volta para a sua mão?\n\n> Se você não consegue explicar como o investimento ganha dinheiro, provavelmente ainda não o entende.",
+              "quiz": [
+                {
+                  "question": "O que caracteriza um investimento?",
+                  "options": [
+                    "Retorno garantido sem risco",
+                    "Alocação de capital com expectativa de retorno e algum risco",
+                    "Comprar qualquer ativo que subiu ontem",
+                    "Guardar dinheiro sem objetivo"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "Se a inflação é 5% e o investimento rende 8%, o ganho real aproximado é:",
+                  "options": [
+                    "13%",
+                    "8%",
+                    "3%",
+                    "5%"
+                  ],
+                  "correctIndex": 2
+                }
+              ]
+            },
+            {
+              "slug": "juros-compostos",
+              "title": "Juros compostos: o tempo trabalhando por você",
+              "estimatedMin": 5,
+              "order": 2,
+              "content": "## A bola de neve\n\nJuros compostos são juros que rendem sobre juros. No primeiro mês, o rendimento é pequeno. Com o tempo, a curva acelera. É por isso que começar cedo costuma valer mais do que começar grande.\n\n## Um exemplo com números\n\nConsidere R$ 300 por mês, durante 10 anos, a uma taxa hipotética de 8% ao ano. O total aportado seria R$ 36 mil. Com juros compostos, o montante poderia chegar a aproximadamente R$ 55 mil — sem garantir que essa taxa se repita.\n\nA diferença entre 36 mil e 55 mil não veio de um mês excepcional. Veio de **tempo** e **constância**.\n\n## O que atrapalha\n\n- Começar tarde demais.\n- Resgatar a cada oscilação.\n- Pagar taxas altas que consomem o rendimento.\n- Trocar de estratégia sem motivo.\n\n## O que ajuda\n\nAutomatizar o aporte, revisar uma vez por ano e manter o objetivo claro. Juros compostos funcionam melhor quando você não interrompe o processo.\n\n> Simulações são educativas. Rentabilidade futura não é garantida.",
+              "quiz": [
+                {
+                  "question": "O que são juros compostos?",
+                  "options": [
+                    "Juros cobrados apenas no primeiro mês",
+                    "Juros que incidem também sobre os juros acumulados",
+                    "Uma taxa fixa garantida por lei",
+                    "Um tipo de imposto"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "Qual fator costuma ter mais impacto no longo prazo?",
+                  "options": [
+                    "Começar cedo e manter aportes",
+                    "Acertar o melhor dia do mês",
+                    "Trocar de ativo toda semana",
+                    "Investir apenas quando a bolsa sobe"
+                  ],
+                  "correctIndex": 0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "renda-fixa",
+      "name": "Renda fixa",
+      "description": "Títulos públicos e privados, juros, prazos, liquidez e os riscos que aparecem na letra miúda.",
+      "order": 3,
+      "modules": [
+        {
+          "slug": "renda-fixa-na-pratica",
+          "title": "Renda fixa na prática",
+          "description": "Tesouro Direto, CDB, LCI, LCA e o que comparar antes de escolher.",
+          "order": 3,
+          "lessons": [
+            {
+              "slug": "tesouro-direto",
+              "title": "Tesouro Direto sem complicação",
+              "estimatedMin": 5,
+              "order": 1,
+              "content": "## Emprestar para o governo\n\nNo Tesouro Direto, você compra títulos públicos federais. Em termos simples, empresta dinheiro ao governo em troca de uma remuneração. É considerado um dos investimentos de menor risco de crédito do país.\n\n## Os principais tipos\n\n- **Tesouro Selic:** acompanha a taxa Selic e tem alta liquidez. Costuma ser usado como reserva.\n- **Tesouro Prefixado:** taxa definida no momento da compra. Se os juros caírem, o título tende a valorizar; se subirem, pode desvalorizar antes do vencimento.\n- **Tesouro IPCA+:** paga uma taxa fixa mais a inflação. Protege o poder de compra, mas oscila.\n\n## Custos e impostos\n\nExiste a taxa de custódia da B3 e, dependendo da corretora, taxas próprias. O Imposto de Renda segue a tabela regressiva: quanto mais tempo, menor a alíquota. Resgatar antes do vencimento pode significar vender no mercado secundário, com preço diferente.\n\n## Antes de comprar\n\nPergunte: qual é o meu objetivo? Quando vou precisar do dinheiro? Entendo que o preço pode oscilar antes do vencimento?\n\n> Título público tem baixo risco de crédito, mas não é sinônimo de liquidez imediata em qualquer condição.",
+              "quiz": [
+                {
+                  "question": "O Tesouro Selic é mais indicado para qual objetivo?",
+                  "options": [
+                    "Aposentadoria em 30 anos",
+                    "Reserva com necessidade de liquidez",
+                    "Especulação com cripto",
+                    "Comprar imóveis"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "O que o Tesouro IPCA+ paga?",
+                  "options": [
+                    "Somente uma taxa fixa",
+                    "Apenas a inflação",
+                    "Uma taxa fixa mais a inflação",
+                    "Dividendos de empresas"
+                  ],
+                  "correctIndex": 2
+                }
+              ]
+            },
+            {
+              "slug": "cdb-lci-lca",
+              "title": "CDB, LCI e LCA: o que comparar",
+              "estimatedMin": 5,
+              "order": 2,
+              "content": "## Renda fixa bancária\n\nCDB, LCI e LCA são títulos emitidos por bancos. Você empresta dinheiro à instituição e recebe juros. O risco principal é o de crédito: a capacidade de o banco pagar.\n\n## FGC não é rede de segurança infinita\n\nO Fundo Garantidor de Créditos cobre até R$ 250 mil por CPF e por instituição, com limite global de R$ 1 milhão a cada quatro anos, em regras que podem mudar. A cobertura é relevante, mas não transforma qualquer emissor em investimento seguro.\n\n## A armadilha da comparação bruta\n\nLCI e LCA são isentas de Imposto de Renda para pessoa física. Um CDB de 100% do CDI e uma LCI de 90% do CDI podem ter resultados parecidos depois do imposto — depende do prazo e da alíquota. Compare sempre o **retorno líquido**, não só a porcentagem anunciada.\n\n## Liquidez também é preço\n\nUm título com resgate imediato costuma pagar menos. Um título com vencimento longo pode pagar mais, mas prende seu dinheiro. Não existe melhor produto em abstrato: existe adequação ao objetivo.\n\n> Rentabilidade passada não garante rentabilidade futura. Leia o prospecto e verifique o emissor.",
+              "quiz": [
+                {
+                  "question": "Qual é o principal risco de um CDB?",
+                  "options": [
+                    "Risco de crédito do banco emissor",
+                    "Risco de câmbio",
+                    "Risco de custódia em blockchain",
+                    "Nenhum risco"
+                  ],
+                  "correctIndex": 0
+                },
+                {
+                  "question": "Por que não se deve comparar apenas a taxa bruta de LCI e CDB?",
+                  "options": [
+                    "Porque a LCI sempre rende mais",
+                    "Porque a tributação e a liquidez mudam o resultado líquido",
+                    "Porque o CDB não tem risco",
+                    "Porque o FGC paga qualquer valor"
+                  ],
+                  "correctIndex": 1
+                }
+              ]
+            },
+            {
+              "slug": "risco-de-credito-e-liquidez",
+              "title": "Risco de crédito, liquidez e mercado",
+              "estimatedMin": 4,
+              "order": 3,
+              "content": "## Três riscos que todo investidor encontra\n\n**Crédito:** o emissor não paga. Aparece em títulos privados, debêntures e até em contrapartes de produtos estruturados.\n\n**Liquidez:** você precisa do dinheiro, mas não consegue vender no preço justo ou no prazo desejado.\n\n**Mercado:** o preço do ativo oscila antes do vencimento. Em renda fixa, isso acontece quando você vende um título antes do prazo e os juros mudaram.\n\n## Risco não é sinônimo de perigo\n\nRisco é incerteza sobre o resultado. Ele pode ser medido, precificado e diversificado. O problema é assumir um risco que você não entende ou que não cabe no seu prazo.\n\n## A pergunta certa\n\nAntes de buscar a maior taxa, pergunte: **o que preciso abrir mão para receber essa taxa?** Prazo maior, emissor menor, garantia menor ou liquidez menor costumam explicar o retorno extra.\n\n> Desconfie de retorno alto, garantido e líquido ao mesmo tempo. Essa combinação raramente existe.",
+              "quiz": [
+                {
+                  "question": "O que é risco de liquidez?",
+                  "options": [
+                    "A chance de o emissor não pagar",
+                    "A dificuldade de vender o ativo no preço e prazo desejados",
+                    "A variação do dólar",
+                    "O imposto sobre o rendimento"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "Retorno alto, garantido e com liquidez imediata é:",
+                  "options": [
+                    "Comum em renda fixa",
+                    "Um sinal de alerta",
+                    "Sempre seguro",
+                    "Garantido pelo FGC"
+                  ],
+                  "correctIndex": 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "renda-variavel",
+      "name": "Renda variável",
+      "description": "Ações, dividendos e a leitura mínima de um ativo antes de assumir risco.",
+      "order": 4,
+      "modules": [
+        {
+          "slug": "acoes-sem-misterio",
+          "title": "Ações sem mistério",
+          "description": "O que é uma ação, de onde vem o retorno e como evitar decisões por impulso.",
+          "order": 4,
+          "lessons": [
+            {
+              "slug": "o-que-e-uma-acao",
+              "title": "O que é uma ação",
+              "estimatedMin": 4,
+              "order": 1,
+              "content": "## Uma fração de uma empresa\n\nUma ação é a menor parte do capital social de uma empresa. Quem compra se torna sócio: participa dos resultados e dos riscos. Não é um empréstimo; não há promessa de devolução do valor investido.\n\n## De onde vem o retorno\n\n- **Valorização:** o preço da ação sobe ao longo do tempo.\n- **Dividendos/JCP:** parte do lucro distribuída aos acionistas.\n- **Eventos societários:** bonificações, desdobramentos, recompras.\n\nO retorno total combina esses componentes. Olhar só para o preço pode esconder ou superestimar o resultado.\n\n## Preço não é valor\n\nNo curto prazo, o preço reage a notícias, humor e liquidez. No longo prazo, tende a acompanhar os fundamentos da empresa. Isso não garante nada, mas explica por que prazo e qualidade da tese importam.\n\n## O que uma ação não é\n\nNão é renda fixa. Não é garantia de dividendos. Não é aposta de curto prazo. E não deve ser comprada só porque alguém indicou em um vídeo.\n\n> Ação é participação em um negócio. Se você não entende o negócio, não entende o risco.",
+              "quiz": [
+                {
+                  "question": "O que uma ação representa?",
+                  "options": [
+                    "Um empréstimo à empresa",
+                    "Uma fração do capital social da empresa",
+                    "Um título público",
+                    "Uma garantia de dividendos"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "Quais são componentes do retorno de uma ação?",
+                  "options": [
+                    "Apenas valorização",
+                    "Apenas dividendos",
+                    "Valorização, dividendos e eventos societários",
+                    "Somente a inflação"
+                  ],
+                  "correctIndex": 2
+                }
+              ]
+            },
+            {
+              "slug": "dividendos-e-valorizacao",
+              "title": "Dividendos e valorização",
+              "estimatedMin": 4,
+              "order": 2,
+              "content": "## Dividendos não são dinheiro grátis\n\nQuando uma empresa distribui lucro, o valor sai do caixa dela. Em teoria, o preço da ação se ajusta. O investidor ganha em caixa, mas pode ver o valor da participação cair na mesma proporção.\n\nIsso não torna dividendos ruins. Mostra que o retorno total é o que importa: **dividendos + valorização**.\n\n## Empresas que distribuem vs. empresas que reinvestem\n\nEmpresas maduras costumam distribuir mais. Empresas em crescimento podem reinvestir para expandir. Nenhum modelo é melhor em todos os casos; depende do setor, do momento e da execução.\n\n## Cuidado com a armadilha do yield\n\nUm dividend yield muito alto pode indicar:\n- distribuição extraordinária que não se repete;\n- preço caindo por problemas estruturais;\n- pagamento acima do lucro, insustentável no tempo.\n\nOlhe o histórico, o lucro e a capacidade de gerar caixa.\n\n> Regras tributárias mudam. Considere o efeito dos impostos no seu resultado líquido.",
+              "quiz": [
+                {
+                  "question": "O que o dividend yield alto pode indicar?",
+                  "options": [
+                    "Sempre uma empresa excelente",
+                    "Possível distribuição insustentável ou queda do preço",
+                    "Garantia de retorno futuro",
+                    "Isenção total de riscos"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "Qual é a métrica mais completa para o investidor?",
+                  "options": [
+                    "Preço da ação no dia",
+                    "Dividendos isolados",
+                    "Retorno total: dividendos mais valorização",
+                    "Número de seguidores da empresa"
+                  ],
+                  "correctIndex": 2
+                }
+              ]
+            },
+            {
+              "slug": "como-ler-um-ativo",
+              "title": "Como ler um ativo antes de investir",
+              "estimatedMin": 5,
+              "order": 3,
+              "content": "## Um roteiro mínimo\n\n1. **O que é?** Ação, fundo, título, cripto? Quem emite?\n2. **Como ganha dinheiro?** Qual é a fonte de retorno?\n3. **Quais são os riscos?** Crédito, mercado, liquidez, câmbio, regulatório.\n4. **Quanto custa?** Taxas, impostos, spread.\n5. **Quando vou precisar?** O prazo combina com o ativo?\n6. **O que pode dar errado?** Qual é a perda máxima plausível?\n\n## Onde encontrar informação\n\nProspectos, relatórios gerenciais, lâminas de fundos, sites de bolsa e órgãos reguladores. Redes sociais podem ser ponto de partida, nunca a única fonte.\n\n## O teste final\n\nExplique a tese em uma frase, sem jargão. Se não conseguir, estude mais ou não invista. Não existe vergonha em dizer “ainda não entendo”.\n\n> A melhor proteção contra golpes é entender o que você está comprando.",
+              "quiz": [
+                {
+                  "question": "Qual pergunta NÃO faz parte da leitura mínima de um ativo?",
+                  "options": [
+                    "Como o ativo gera retorno?",
+                    "Quais são os riscos?",
+                    "Qual é a cor do logotipo da empresa?",
+                    "Quando vou precisar do dinheiro?"
+                  ],
+                  "correctIndex": 2
+                },
+                {
+                  "question": "Se você não consegue explicar a tese sem jargão, o mais prudente é:",
+                  "options": [
+                    "Investir mesmo assim",
+                    "Estudar mais ou não investir",
+                    "Pedir dica em grupo",
+                    "Usar alavancagem"
+                  ],
+                  "correctIndex": 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "fundos-etfs",
+      "name": "Fundos e ETFs",
+      "description": "Investimento coletivo, diversificação e custos que fazem diferença no longo prazo.",
+      "order": 5,
+      "modules": [
+        {
+          "slug": "fundos-e-etfs",
+          "title": "Fundos e ETFs",
+          "description": "Como funcionam, quais custos observar e quando fazem sentido.",
+          "order": 5,
+          "lessons": [
+            {
+              "slug": "o-que-sao-fundos",
+              "title": "O que são fundos de investimento",
+              "estimatedMin": 5,
+              "order": 1,
+              "content": "## Um condomínio de investidores\n\nEm um fundo, vários investidores colocam dinheiro em uma carteira administrada por um gestor. Cada um recebe cotas proporcionais. O patrimônio é separado do patrimônio do gestor, o que é uma proteção importante.\n\n## Tipos comuns\n\n- **Renda fixa:** títulos públicos e privados.\n- **Multimercado:** várias estratégias e classes.\n- **Ações:** carteira de empresas.\n- **Indexados:** buscam acompanhar um índice.\n\n## O que olhar na lâmina\n\nTaxa de administração, taxa de performance, liquidez, prazo de resgate, público-alvo, política de investimento e histórico. Taxa baixa não garante resultado, mas custo alto corrói retorno.\n\n## Fundo não é poupança\n\nO valor da cota oscila. Não há garantia de rentabilidade. Fundos com garantia do FGC são exceções específicas, não a regra.\n\n> Leia a lâmina e o regulamento. Se a estratégia não estiver clara, procure outra opção.",
+              "quiz": [
+                {
+                  "question": "O que é uma cota de fundo?",
+                  "options": [
+                    "Um empréstimo do investidor ao gestor",
+                    "Uma fração do patrimônio do fundo",
+                    "Uma ação de empresa",
+                    "Um título do Tesouro"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "Qual custo deve ser observado em um fundo?",
+                  "options": [
+                    "Apenas a taxa de administração",
+                    "Taxa de administração, performance e custos indiretos",
+                    "Somente o imposto de renda",
+                    "Nenhum, fundos são gratuitos"
+                  ],
+                  "correctIndex": 1
+                }
+              ]
+            },
+            {
+              "slug": "etfs-na-pratica",
+              "title": "ETFs na prática",
+              "estimatedMin": 4,
+              "order": 2,
+              "content": "## Um fundo que negocia como ação\n\nETF é um fundo negociado em bolsa. Você compra e vende durante o pregão, como uma ação. Muitos buscam acompanhar um índice, como o Ibovespa ou o S&P 500.\n\n## Vantagens\n\n- Diversificação em uma única compra.\n- Custos geralmente baixos.\n- Transparência da carteira.\n- Liquidez de bolsa.\n\n## Atenção\n\n- **Spread:** diferença entre compra e venda.\n- **Liquidez:** ETFs menores podem ter spread maior.\n- **Exposição cambial:** ETFs internacionais oscilam com o dólar.\n- **Impostos:** regras específicas para ETFs no Brasil; verifique a legislação vigente.\n\n## ETF não elimina risco\n\nSe o índice cai, o ETF cai. Diversificação reduz risco específico, não o risco de mercado. E acompanhar um índice não é garantia de retorno futuro.\n\n> ETF é ferramenta, não atalho. Entenda o índice e os custos antes de comprar.",
+              "quiz": [
+                {
+                  "question": "O que um ETF faz?",
+                  "options": [
+                    "Garante renda fixa",
+                    "Negocia em bolsa e geralmente busca acompanhar um índice",
+                    "Elimina o risco de mercado",
+                    "Paga dividendos garantidos"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "Qual risco é relevante em ETF internacional?",
+                  "options": [
+                    "Exposição cambial",
+                    "Garantia do FGC",
+                    "Isenção total de imposto",
+                    "Ausência de volatilidade"
+                  ],
+                  "correctIndex": 0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "cripto",
+      "name": "Bitcoin",
+      "description": "Entenda o Bitcoin do zero: dinheiro, blockchain, escassez, mineração, custódia, segurança e leitura educacional do mercado. Sem promessas.",
+      "order": 6,
+      "modules": [
+        {
+          "slug": "cripto-com-cautela",
+          "title": "Conceitos essenciais",
+          "description": "Blockchain, volatilidade e golpes: o vocabulário e os riscos que vêm antes de qualquer decisão.",
+          "order": 1,
+          "lessons": [
+            {
+              "slug": "o-que-e-blockchain",
+              "title": "O que é blockchain",
+              "estimatedMin": 4,
+              "order": 1,
+              "content": "## Um registro compartilhado\n\nBlockchain é um registro distribuído: várias cópias de um histórico de transações são mantidas por participantes da rede. Blocos são encadeados por hashes criptográficos, o que torna a alteração retroativa muito difícil.\n\n## Consenso\n\nA rede precisa concordar sobre a ordem das transações. Diferentes blockchains usam mecanismos distintos, como prova de trabalho ou prova de participação. Cada um tem trade-offs de custo, velocidade e segurança.\n\n## Blockchain não é sinônimo de criptomoeda\n\nA tecnologia pode ser usada para rastreabilidade, registros e contratos. Criptomoedas são um uso possível. Nem todo projeto “blockchain” é útil ou seguro.\n\n## Riscos que a tecnologia não resolve\n\n- Volatilidade extrema.\n- Perda de chaves e custódia.\n- Contratos mal auditados.\n- Regulação em evolução.\n- Golpes que usam o vocabulário da tecnologia.\n\n> Entender blockchain não significa que você deve comprar cripto. São decisões diferentes.",
+              "quiz": [
+                {
+                  "question": "O que é blockchain?",
+                  "options": [
+                    "Um banco central digital",
+                    "Um registro distribuído de transações encadeadas",
+                    "Uma ação de tecnologia",
+                    "Um tipo de imposto"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "Blockchain e criptomoeda são:",
+                  "options": [
+                    "Exatamente a mesma coisa",
+                    "Conceitos relacionados, mas não sinônimos",
+                    "Sempre seguros",
+                    "Regulados de forma idêntica em todo o mundo"
+                  ],
+                  "correctIndex": 1
+                }
+              ]
+            },
+            {
+              "slug": "volatilidade-e-golpes",
+              "title": "Volatilidade e golpes",
+              "estimatedMin": 5,
+              "order": 2,
+              "content": "## Preço que oscila muito\n\nCriptoativos podem variar dezenas de por cento em pouco tempo. Isso não é necessariamente defeito ou virtude: é uma característica de mercado com alta incerteza. Quem não tolera oscilação deve evitar.\n\n## Golpes comuns\n\n- **Pirâmides e “rendimento garantido”:** retorno fixo alto não existe sem risco correspondente.\n- **Falsos influenciadores:** pedem transferência para “multiplicar” seu saldo.\n- **Phishing:** sites e aplicativos que imitam corretoras.\n- **Contratos e tokens sem auditoria:** prometem retorno e podem drenar sua carteira.\n- **Suporte falso:** nunca pede sua senha ou chave privada.\n\n## Custódia\n\n“Not your keys, not your coins” é um alerta: em exchange, você confia na plataforma. Em autocustódia, você assume a responsabilidade total. Nenhuma opção é isenta de risco.\n\n## Regra de ouro\n\nInvista apenas o que você pode perder. Não use dinheiro de emergência, aluguel ou dívida. Desconfie de urgência, garantia e segredo.\n\n> Se alguém promete retorno garantido, o produto não é investimento: é alerta.",
+              "quiz": [
+                {
+                  "question": "Qual é um sinal clássico de golpe financeiro?",
+                  "options": [
+                    "Explicar riscos e custos",
+                    "Prometer retorno garantido e alto",
+                    "Oferecer conteúdo educativo",
+                    "Informar o CNPJ da empresa"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "O que significa autocustódia?",
+                  "options": [
+                    "Deixar os ativos na exchange",
+                    "Você mesmo controla as chaves e assume a responsabilidade",
+                    "Um seguro contra queda de preço",
+                    "Uma garantia do governo"
+                  ],
+                  "correctIndex": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "bitcoin-fundamentos",
+          "title": "Fundamentos do Bitcoin",
+          "description": "O que é, por que existe e por que a oferta é limitada.",
+          "order": 2,
+          "lessons": [
+            {
+              "slug": "bitcoin-o-que-e",
+              "title": "O que é Bitcoin",
+              "estimatedMin": 5,
+              "order": 1,
+              "content": "## Uma rede monetária, não uma empresa\n\nBitcoin é um **protocolo aberto** e um ativo digital criado em 2008/2009 sob o pseudônimo Satoshi Nakamoto. Ele permite transferir valor pela internet sem depender de um banco central ou de uma empresa específica para validar cada transação.\n\nNão existe um CEO do Bitcoin. As regras — oferta, validação e consenso — são executadas por software livre e pela rede de participantes. Isso não significa que o preço seja estável nem que o ativo seja adequado para todo mundo.\n\n## O que você está comprando\n\nQuando alguém compra bitcoin, não está comprando uma ação, um depósito bancário ou uma promessa de renda. Está adquirindo uma unidade de um ativo escasso e volátil, cuja utilidade e preço são debatidos publicamente.\n\n- A oferta é limitada por regras do protocolo.\n- A unidade é divisível em satoshis (1 BTC = 100 milhões de satoshis).\n- A custódia pode ser feita por uma exchange ou por você mesmo.\n- O preço pode variar muito em pouco tempo.\n\n## Educação antes de posição\n\nEntender o que é Bitcoin é diferente de achar que ele vai subir. O ativo pode perder valor, sofrer falhas de custódia e ser alvo de golpes. Estude o funcionamento, os riscos e a sua tolerância antes de qualquer decisão.\n\n> Bitcoin é tecnologia e mercado ao mesmo tempo. Nenhum dos dois garante retorno.",
+              "quiz": [
+                {
+                  "question": "O que melhor descreve o Bitcoin?",
+                  "options": [
+                    "Uma ação de uma empresa de tecnologia",
+                    "Um protocolo aberto para transferir valor sem um intermediário central",
+                    "Um depósito garantido pelo governo",
+                    "Um fundo de renda fixa"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "Quem controla as regras do Bitcoin?",
+                  "options": [
+                    "Um CEO eleito pelos mineradores",
+                    "O banco central do país onde o Bitcoin foi criado",
+                    "O software e o consenso da rede, sem um controlador único",
+                    "A exchange onde ele é negociado"
+                  ],
+                  "correctIndex": 2
+                }
+              ]
+            },
+            {
+              "slug": "bitcoin-por-que-existe",
+              "title": "Por que Bitcoin foi criado",
+              "estimatedMin": 5,
+              "order": 2,
+              "content": "## O contexto de 2008\n\nBitcoin nasceu em um período de crise financeira global e desconfiança em bancos e governos. A proposta era criar um sistema de pagamento **ponto a ponto**, com regras verificáveis e sem depender de uma autoridade central para autorizar cada transferência.\n\nO documento fundador descreve uma rede em que participantes validam transações e mantêm um histórico comum. A emissão seria previsível, em vez de decidida discricionariamente por um comitê.\n\n## Quais problemas ele tenta endereçar\n\n- **Censura:** dificultar que um intermediário bloqueie uma transferência válida.\n- **Acesso:** permitir que qualquer pessoa com internet participe da rede.\n- **Escassez verificável:** limitar a oferta por regra de software.\n- **Transparência:** tornar o histórico de transações auditável.\n\n## O que ele não resolve\n\nBitcoin não elimina a volatilidade, não garante privacidade absoluta, não impede golpes e não substitui a necessidade de entender risco. A ausência de um banco central também significa que não há quem “devolva” o dinheiro em caso de erro de custódia.\n\n> A proposta é descentralizar o controle. O trade-off é assumir mais responsabilidade.",
+              "quiz": [
+                {
+                  "question": "Qual problema o Bitcoin tenta reduzir com sua arquitetura ponto a ponto?",
+                  "options": [
+                    "A necessidade de estudar antes de investir",
+                    "A dependência de um intermediário central para validar transferências",
+                    "A variação de preço",
+                    "A existência de golpes"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "O que o Bitcoin não garante?",
+                  "options": [
+                    "Um histórico de transações verificável",
+                    "Uma oferta com limite definido",
+                    "Retorno ou estabilidade de preço",
+                    "Transferências sem um banco autorizando cada uma"
+                  ],
+                  "correctIndex": 2
+                }
+              ]
+            },
+            {
+              "slug": "bitcoin-21-milhoes",
+              "title": "Oferta máxima e os 21 milhões",
+              "estimatedMin": 5,
+              "order": 3,
+              "content": "## Uma regra de escassez\n\nO protocolo do Bitcoin define um limite máximo de **21 milhões de BTC**. Novas unidades são criadas como recompensa pela validação de blocos, em um calendário decrescente. O limite é uma regra de software, não uma promessa de valor.\n\nA emissão não é uniforme: a recompensa por bloco cai pela metade a cada 210 mil blocos, aproximadamente a cada quatro anos — o **halving**. Com o tempo, a emissão se aproxima de zero.\n\n## Por que isso importa\n\n- A oferta não pode ser “imprimida” por um comitê.\n- A escassez é verificável por qualquer participante.\n- Moedas perdidas reduzem a oferta efetivamente disponível.\n- Escassez não garante preço alto: a demanda também importa.\n\n## O detalhe que muita gente esquece\n\nO limite é de 21 milhões, mas ninguém sabe exatamente quantas moedas ainda são acessíveis. Chaves perdidas, erros de custódia e transações antigas podem tornar unidades inutilizáveis para sempre.\n\n> Oferta limitada é uma característica. Não é uma garantia de retorno.",
+              "quiz": [
+                {
+                  "question": "Qual é o limite máximo de Bitcoin definido pelo protocolo?",
+                  "options": [
+                    "100 milhões de BTC",
+                    "21 milhões de BTC",
+                    "1 bilhão de BTC",
+                    "Não existe limite"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "O halving reduz o quê?",
+                  "options": [
+                    "O número de transações por segundo",
+                    "A taxa cobrada pelas exchanges",
+                    "A recompensa pela criação de novos blocos",
+                    "O limite máximo de 21 milhões"
+                  ],
+                  "correctIndex": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "bitcoin-funcionamento",
+          "title": "Como o Bitcoin funciona",
+          "description": "Mineração, halving, transações, carteiras e custódia.",
+          "order": 3,
+          "lessons": [
+            {
+              "slug": "bitcoin-mineracao-halving",
+              "title": "Mineração e halving",
+              "estimatedMin": 5,
+              "order": 1,
+              "content": "## O que mineradores fazem\n\nMineradores competem para propor o próximo bloco de transações. Eles executam cálculos de prova de trabalho, um mecanismo que torna a alteração do histórico cara e computacionalmente intensiva. Quem encontra uma solução válida propaga o bloco e recebe a recompensa.\n\nA mineração não é “dinheiro de graça”: envolve hardware, energia, manutenção e risco de mercado. A dificuldade se ajusta para manter o intervalo médio entre blocos próximo de dez minutos.\n\n## O halving\n\nA cada 210 mil blocos, a recompensa por bloco é reduzida pela metade. Esse é o halving. Ele diminui a entrada de novos BTC no mercado, mas não determina o preço: demanda, liquidez, regulação e expectativas também importam.\n\n## Taxas e segurança\n\nCom o tempo, as taxas de transação ganham importância relativa para remunerar quem protege a rede. A segurança do Bitcoin depende do custo de atacar o consenso, não de uma empresa garantir o sistema.\n\n> Mineração é infraestrutura, não uma promessa de lucro para quem compra BTC.",
+              "quiz": [
+                {
+                  "question": "Qual é a função principal da mineração?",
+                  "options": [
+                    "Garantir que o preço suba",
+                    "Validar transações e proteger o histórico por prova de trabalho",
+                    "Emitir moedas sem limite",
+                    "Custodiar as chaves dos usuários"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "O halving acontece aproximadamente a cada:",
+                  "options": [
+                    "210 mil blocos",
+                    "10 mil blocos",
+                    "1 milhão de blocos",
+                    "Cada transação"
+                  ],
+                  "correctIndex": 0
+                }
+              ]
+            },
+            {
+              "slug": "bitcoin-transacoes",
+              "title": "Transações, taxas e confirmações",
+              "estimatedMin": 5,
+              "order": 2,
+              "content": "## Do pedido à confirmação\n\nUma transação é assinada pela chave privada do dono e enviada à rede. Ela entra na memória temporária dos nós, a **mempool**, e espera ser incluída em um bloco. A taxa ajuda a priorizar a inclusão quando há congestionamento.\n\nUma confirmação significa que a transação foi incluída em um bloco. Quanto mais blocos forem adicionados depois, maior a segurança acumulada — mas a finalidade é probabilística, não instantânea.\n\n## O modelo UTXO\n\nBitcoin usa o modelo de saídas não gastas (UTXO). Em vez de um saldo global como em uma conta bancária, você controla um conjunto de “moedas” que podem ser gastas. A carteira seleciona UTXOs para formar o valor de uma nova transação.\n\n## Privacidade\n\nO histórico é público e pseudônimo. Endereços não são nomes, mas padrões de uso podem revelar informações. Privacidade exige cuidado — não é garantida por padrão.\n\n> Taxa baixa pode demorar. Urgência custa mais. Simples assim.",
+              "quiz": [
+                {
+                  "question": "O que uma confirmação indica?",
+                  "options": [
+                    "Que a transação foi incluída em um bloco",
+                    "Que o preço do Bitcoin subiu",
+                    "Que a exchange aprovou a compra",
+                    "Que a carteira foi hackeada"
+                  ],
+                  "correctIndex": 0
+                },
+                {
+                  "question": "O que é a mempool?",
+                  "options": [
+                    "Um banco central do Bitcoin",
+                    "Uma lista de transações aguardando inclusão em blocos",
+                    "O histórico de preços",
+                    "Um tipo de carteira física"
+                  ],
+                  "correctIndex": 1
+                }
+              ]
+            },
+            {
+              "slug": "bitcoin-carteiras-custodia",
+              "title": "Carteiras, custódia e chaves privadas",
+              "estimatedMin": 5,
+              "order": 3,
+              "content": "## A carteira não guarda moedas\n\nUma carteira guarda **chaves** e ajuda a assinar transações. As moedas existem no histórico público, associadas a endereços. Quem controla a chave privada consegue gastar as moedas daquele endereço.\n\n- **Carteira quente:** conectada à internet, prática para valores pequenos.\n- **Carteira fria:** chave offline, mais resistente a ataques remotos.\n- **Hardware wallet:** dispositivo dedicado que mantém a chave isolada.\n- **Exchange:** você transfere a custódia para a plataforma.\n\n## Custódia é uma escolha\n\nEm uma exchange, você depende da segurança, da solidez e das regras da empresa. Na autocustódia, você assume a responsabilidade por backup, senha e integridade do dispositivo. Nenhuma opção é isenta de risco.\n\n## A frase-semente\n\nA frase de recuperação (seed) é a chave-mestra da carteira. Nunca compartilhe, nunca fotografa, nunca digite em site desconhecido. Guarde em local offline e faça um teste de recuperação antes de mover valores altos.\n\n> “Not your keys, not your coins” é um alerta, não um slogan publicitário.",
+              "quiz": [
+                {
+                  "question": "O que uma carteira de Bitcoin realmente armazena?",
+                  "options": [
+                    "As moedas em um cofre digital",
+                    "As chaves que permitem gastar as moedas",
+                    "O preço atual do BTC",
+                    "Uma garantia do governo"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "Qual é a prática correta com a frase-semente?",
+                  "options": [
+                    "Compartilhar com o suporte da exchange",
+                    "Salvar em uma foto na nuvem",
+                    "Manter offline e nunca compartilhar",
+                    "Enviar por e-mail para backup"
+                  ],
+                  "correctIndex": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "bitcoin-mercado",
+          "title": "Bitcoin e mercado",
+          "description": "Volatilidade, capitalização, volume, história e leitura crítica.",
+          "order": 4,
+          "lessons": [
+            {
+              "slug": "bitcoin-volatilidade-mercado",
+              "title": "Volatilidade, preço e capitalização",
+              "estimatedMin": 5,
+              "order": 1,
+              "content": "## Preço é um acordo momentâneo\n\nO preço do bitcoin é formado por oferta e demanda em mercados com liquidez variável. Notícias, regulação, alavancagem, fluxo institucional e expectativas podem mover o preço rapidamente. Volatilidade não é sinal automático de oportunidade.\n\n## Três números que ajudam a ler o mercado\n\n- **Preço:** quanto custa uma unidade naquele momento.\n- **Capitalização de mercado:** preço × oferta circulante. Ajuda a comparar escala, mas não mede qualidade.\n- **Volume:** quanto foi negociado em um período. Pode indicar liquidez, mas também pode ser inflado.\n\n## Drawdown e tolerância\n\nUma queda de 50% exige uma alta de 100% apenas para voltar ao ponto anterior. Quem não tolera oscilações grandes não deve usar Bitcoin como reserva de emergência ou dinheiro de curto prazo.\n\n> Preço, capitalização e volume descrevem o mercado. Não dizem se você deve comprar.",
+              "quiz": [
+                {
+                  "question": "Como a capitalização de mercado é calculada?",
+                  "options": [
+                    "Preço × oferta circulante",
+                    "Volume × número de exchanges",
+                    "Preço ÷ número de miners",
+                    "Taxa média × número de transações"
+                  ],
+                  "correctIndex": 0
+                },
+                {
+                  "question": "Volatilidade alta significa:",
+                  "options": [
+                    "Retorno garantido",
+                    "Que o preço pode variar bastante em pouco tempo",
+                    "Que o ativo é sempre seguro",
+                    "Que a capitalização é falsa"
+                  ],
+                  "correctIndex": 1
+                }
+              ]
+            },
+            {
+              "slug": "bitcoin-historia-mercado",
+              "title": "História e leitura educacional do mercado",
+              "estimatedMin": 5,
+              "order": 2,
+              "content": "## Uma história curta e intensa\n\nBitcoin passou de experimento criptográfico a um mercado global em poucos anos. Houve ciclos de euforia, quedas profundas, falências de intermediários, avanços regulatórios e entrada de investidores institucionais. Cada ciclo teve narrativas próprias.\n\n## O que o passado ensina — e o que não ensina\n\n- Mostra que drawdowns severos fazem parte da história do ativo.\n- Mostra que custódia e contraparte são riscos reais.\n- Não garante que o próximo ciclo repita o anterior.\n- Não transforma uma alta passada em previsão.\n\n## Como ler o mercado sem prometer\n\nComece pelo básico: entenda o ativo, a liquidez, o prazo e o risco. Olhe preço, capitalização e volume como dados descritivos. Desconfie de análises que misturam educação com recomendação disfarçada.\n\n> O mercado é incerto. A função da educação é melhorar a decisão, não eliminar a incerteza.",
+              "quiz": [
+                {
+                  "question": "O que um ciclo passado de alta permite concluir sobre o futuro?",
+                  "options": [
+                    "Que a alta vai se repetir",
+                    "Que o preço nunca cai",
+                    "Nada garantido: o passado não é previsão",
+                    "Que a capitalização é irrelevante"
+                  ],
+                  "correctIndex": 2
+                },
+                {
+                  "question": "Qual é uma leitura educacional adequada do mercado?",
+                  "options": [
+                    "Prometer retorno com base em gráficos",
+                    "Descrever preço, liquidez e risco sem recomendar compra",
+                    "Ignorar a custódia",
+                    "Usar apenas o volume como sinal de compra"
+                  ],
+                  "correctIndex": 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "risco",
+      "name": "Gestão de risco",
+      "description": "Diversificação, perfil de investidor e decisões que sobrevivem a cenários ruins.",
+      "order": 7,
+      "modules": [
+        {
+          "slug": "risco-e-diversificacao",
+          "title": "Risco e diversificação",
+          "description": "Como reduzir riscos sem abrir mão de entender o que está fazendo.",
+          "order": 7,
+          "lessons": [
+            {
+              "slug": "diversificacao",
+              "title": "Diversificação não é comprar tudo",
+              "estimatedMin": 4,
+              "order": 1,
+              "content": "## Não colocar todos os ovos na mesma cesta\n\nDiversificar é distribuir o dinheiro entre ativos, setores e classes que não se movem exatamente juntos. O objetivo não é eliminar o risco, mas reduzir a dependência de um único evento.\n\n## Diversificação de verdade\n\nComprar dez ações de bancos não é diversificação ampla: todas reagem a riscos parecidos. Comprar dez criptomoedas também não. Olhe para a **correlação** e para a exposição econômica.\n\n## Camadas\n\n- **Classe:** renda fixa, variável, fundos, cripto.\n- **Setor:** tecnologia, saúde, energia.\n- **Geografia:** Brasil, exterior.\n- **Emissor:** não concentrar em um único banco ou empresa.\n\n## Excesso também é problema\n\nCarteiras com dezenas de ativos podem ficar impossíveis de acompanhar e gerar custos desnecessários. Diversificação é equilíbrio, não coleção.\n\n> Diversificação reduz risco específico. Ela não impede perdas em crises amplas de mercado.",
+              "quiz": [
+                {
+                  "question": "O que a diversificação busca reduzir?",
+                  "options": [
+                    "Todo e qualquer risco",
+                    "A dependência de um único ativo ou evento",
+                    "Os impostos",
+                    "A necessidade de estudar"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "Comprar dez ações do mesmo setor é:",
+                  "options": [
+                    "Diversificação ampla",
+                    "Concentração em um risco comum",
+                    "Renda fixa",
+                    "Garantia de retorno"
+                  ],
+                  "correctIndex": 1
+                }
+              ]
+            },
+            {
+              "slug": "perfil-de-investidor",
+              "title": "Perfil de investidor",
+              "estimatedMin": 4,
+              "order": 2,
+              "content": "## Três perguntas antes da carteira\n\n1. **Objetivo:** para que você está investindo?\n2. **Prazo:** quando vai precisar do dinheiro?\n3. **Tolerância:** como você reage a uma queda de 20%?\n\nO perfil não é um rótulo eterno. Muda com o conhecimento, a renda, os objetivos e o momento de vida.\n\n## Capacidade vs. vontade\n\nCapacidade de assumir risco é objetiva: renda estável, reserva, prazo. Vontade é subjetiva: conforto psicológico. Um investidor pode ter capacidade e não ter vontade — e vice-versa.\n\n## Questionário não é destino\n\nQuestionários são ponto de partida. A decisão final deve considerar o contexto. Não existe perfil “certo”; existe adequação ao objetivo.\n\n> O melhor investimento é o que você consegue manter nos dias ruins.",
+              "quiz": [
+                {
+                  "question": "Qual pergunta ajuda a definir o perfil de investidor?",
+                  "options": [
+                    "Qual é a cor da corretora?",
+                    "Quando vou precisar do dinheiro?",
+                    "Quantos seguidores tem o influenciador?",
+                    "Qual ativo subiu mais ontem?"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "Perfil de investidor é:",
+                  "options": [
+                    "Um rótulo imutável",
+                    "Uma adequação que pode mudar com o tempo",
+                    "Uma garantia de retorno",
+                    "Uma regra do banco central"
+                  ],
+                  "correctIndex": 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "planejamento",
+      "name": "Planejamento financeiro",
+      "description": "Metas, prioridades e o primeiro investimento com método.",
+      "order": 8,
+      "modules": [
+        {
+          "slug": "planejamento-que-funciona",
+          "title": "Planejamento que funciona",
+          "description": "Transforme intenção em plano com prazo e valor.",
+          "order": 8,
+          "lessons": [
+            {
+              "slug": "metas-financeiras",
+              "title": "Metas financeiras com prazo e valor",
+              "estimatedMin": 4,
+              "order": 1,
+              "content": "## “Quero investir” não é meta\n\nMeta precisa de valor, prazo e prioridade. “Guardar R$ 5.000 para uma viagem em 12 meses” é acionável. “Ficar rico” não é.\n\n## Curto, médio e longo prazo\n\n- **Curto:** até 1 ano — liquidez e segurança.\n- **Médio:** 1 a 5 anos — equilíbrio entre risco e retorno.\n- **Longo:** acima de 5 anos — mais espaço para volatilidade.\n\n## O método SMART\n\nEspecífica, mensurável, alcançável, relevante e temporal. Aplique à meta e divida pelo prazo: quanto por mês? Automatize o aporte.\n\n## Prioridades\n\n1. Sair de dívidas caras.\n2. Construir reserva.\n3. Investir para objetivos.\n4. Aumentar conhecimento.\n\n> Plano bom é plano que cabe no seu orçamento e sobrevive a um mês difícil.",
+              "quiz": [
+                {
+                  "question": "O que torna uma meta acionável?",
+                  "options": [
+                    "Ser apenas um desejo",
+                    "Ter valor, prazo e prioridade",
+                    "Depender de sorte",
+                    "Ser igual à meta de outra pessoa"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "Qual deve ser uma prioridade antes de investir em ativos de risco?",
+                  "options": [
+                    "Quitar dívidas caras e construir reserva",
+                    "Comprar o ativo da moda",
+                    "Aumentar o limite do cartão",
+                    "Parcelar mais compras"
+                  ],
+                  "correctIndex": 0
+                }
+              ]
+            },
+            {
+              "slug": "primeiro-investimento",
+              "title": "Seu primeiro investimento",
+              "estimatedMin": 5,
+              "order": 2,
+              "content": "## Antes de escolher o produto\n\nVerifique dívidas caras, reserva de emergência e objetivo. Investir sem essa base costuma terminar em resgate no pior momento.\n\n## Abra a conta em uma instituição sólida\n\nCompare taxas, liquidez, atendimento e segurança. Desconfie de promessas de retorno alto e de pressão para decidir rápido. Confira se a instituição é autorizada pelos órgãos reguladores.\n\n## Comece simples\n\nUm título de baixo risco ou um fundo indexado de baixo custo pode ser suficiente para entender o processo. O primeiro investimento não precisa ser o mais rentável; precisa ser compreensível.\n\n## Rotina de acompanhamento\n\n- Aporte automático.\n- Revisão trimestral ou semestral.\n- Rebalanceamento quando necessário.\n- Atualização do conhecimento.\n\n> O objetivo do primeiro investimento é criar consistência, não acertar a melhor tacada.",
+              "quiz": [
+                {
+                  "question": "O que verificar antes do primeiro investimento?",
+                  "options": [
+                    "Dívidas caras, reserva e objetivo",
+                    "Apenas a rentabilidade de ontem",
+                    "A dica de um influenciador",
+                    "O número de curtidas"
+                  ],
+                  "correctIndex": 0
+                },
+                {
+                  "question": "Qual é um bom objetivo para o primeiro investimento?",
+                  "options": [
+                    "Acertar a maior rentabilidade possível",
+                    "Criar consistência e entender o processo",
+                    "Investir dinheiro de emergência",
+                    "Usar alavancagem"
+                  ],
+                  "correctIndex": 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "articles": [
+    {
+      "slug": "juros-compostos-tempo",
+      "title": "Juros compostos: o tempo a seu favor",
+      "subtitle": "Por que constância importa mais do que acertar o momento perfeito.",
+      "categorySlug": "fundamentos",
+      "readingMinutes": 4,
+      "content": "Juros compostos são frequentemente chamados de “juros sobre juros”. A ideia é simples: o rendimento de um período passa a fazer parte da base de cálculo do período seguinte. No começo, o efeito é pequeno; com o tempo, ele se torna dominante.\n\n## Um exemplo conservador\n\nConsidere alguém que guarda R$ 300 por mês durante 10 anos, a uma taxa hipotética de 8% ao ano. O total aportado é R$ 36 mil. O montante final pode chegar a cerca de R$ 55 mil. A diferença vem do tempo e da constância, não de uma tacada.\n\nSe a mesma pessoa esperasse cinco anos para começar, o montante seria bem menor, mesmo aportando o mesmo valor mensal por mais tempo. O tempo é o ingrediente que não se compra.\n\n## O que corrói o efeito\n\nTaxas altas, resgates frequentes e troca de estratégia sem motivo. Também corrói a inflação quando o retorno nominal é baixo: ganhar 5% com inflação de 6% é perder poder de compra.\n\n## O que ajuda\n\nAutomatizar o aporte, manter uma reserva separada para não precisar resgatar e revisar o plano uma vez por ano. Juros compostos não prometem retorno; eles recompensam quem consegue permanecer.\n\n> Simulações são educativas. Rentabilidade futura não é garantida.",
+      "sourceName": "Banco Central do Brasil — Calculadora do Cidadão",
+      "sourceUrl": "https://www.bcb.gov.br/"
+    },
+    {
+      "slug": "tesouro-direto-sem-complicacao",
+      "title": "Tesouro Direto sem complicação",
+      "subtitle": "Selic, Prefixado e IPCA+: qual faz sentido para cada objetivo.",
+      "categorySlug": "renda-fixa",
+      "readingMinutes": 5,
+      "content": "O Tesouro Direto permite comprar títulos públicos federais. Na prática, o investidor empresta dinheiro ao governo e recebe uma remuneração. É um dos investimentos de menor risco de crédito do país, mas não é isento de oscilações.\n\n## Tesouro Selic\n\nAcompanha a taxa Selic e costuma ter boa liquidez. É bastante usado como reserva de emergência, desde que o investidor entenda que o resgate pode ocorrer no mercado secundário.\n\n## Tesouro Prefixado\n\nA taxa é definida no momento da compra. Se os juros de mercado caírem, o título tende a valorizar; se subirem, pode desvalorizar antes do vencimento. É indicado para quem pode esperar até o prazo.\n\n## Tesouro IPCA+\n\nPaga uma taxa fixa mais a inflação. Protege o poder de compra no longo prazo, mas também oscila. Faz sentido para objetivos distantes, como aposentadoria.\n\n## Custos e imposto\n\nHá taxa de custódia da B3 e possíveis taxas da corretora. O Imposto de Renda segue a tabela regressiva. Antes de comprar, simule o retorno líquido e leia as condições.\n\n> Título público tem baixo risco de crédito, mas preço pode oscilar.",
+      "sourceName": "Tesouro Nacional",
+      "sourceUrl": "https://www.tesourodireto.com.br/"
+    },
+    {
+      "slug": "etfs-o-que-sao",
+      "title": "ETFs: diversificação em uma compra",
+      "subtitle": "Como funcionam, quais custos observar e o que o ETF não resolve.",
+      "categorySlug": "fundos-etfs",
+      "readingMinutes": 4,
+      "content": "ETF é um fundo negociado em bolsa. Ele permite comprar uma cesta de ativos em uma única operação, com a liquidez de uma ação. Muitos ETFs buscam acompanhar um índice, como o Ibovespa ou o S&P 500.\n\n## Por que são populares\n\nCustos geralmente baixos, transparência da carteira e diversificação imediata. Para quem está começando, podem simplificar a construção de uma carteira diversificada.\n\n## O que observar\n\n- **Taxa de administração:** parece pequena, mas importa no longo prazo.\n- **Spread:** diferença entre compra e venda; afeta o custo real.\n- **Liquidez:** ETFs menores podem ter spread maior.\n- **Índice:** entenda o que está sendo acompanhado.\n- **Câmbio:** ETFs internacionais oscilam com o dólar.\n\n## O que o ETF não faz\n\nNão elimina o risco de mercado. Se o índice cai, o ETF cai. Também não garante retorno nem protege contra uma crise ampla. Diversificação reduz riscos específicos, não todos os riscos.\n\n> ETF é ferramenta. Entenda o índice, os custos e o seu objetivo.",
+      "sourceName": "B3 — ETFs",
+      "sourceUrl": "https://www.b3.com.br/"
+    },
+    {
+      "slug": "cripto-risco",
+      "title": "Criptomoedas: entre a inovação e o risco",
+      "subtitle": "O que a tecnologia resolve, o que ela não resolve e como evitar golpes.",
+      "categorySlug": "cripto",
+      "readingMinutes": 5,
+      "content": "Criptomoedas são ativos digitais que usam criptografia e registros distribuídos. A tecnologia por trás pode ter usos legítimos, mas isso não torna qualquer projeto seguro nem qualquer promessa verdadeira.\n\n## Volatilidade extrema\n\nO preço pode variar dezenas de por cento em pouco tempo. Quem não tolera oscilações fortes não deve usar cripto como parte relevante da carteira. Dinheiro de emergência e recursos de curto prazo não combinam com esse risco.\n\n## Custódia\n\nEm uma exchange, você confia na plataforma. Em autocustódia, você controla as chaves e assume a responsabilidade total. Perder a chave pode significar perder o ativo. Não existe suporte central que recupere tudo.\n\n## Golpes comuns\n\nPromessas de rendimento garantido, pirâmides, falsos influenciadores, phishing e contratos sem auditoria. A regra é simples: se alguém pede urgência, segredo ou transferência para “multiplicar” seu saldo, desconfie.\n\n## Regulação\n\nO ambiente regulatório evolui. Verifique as regras vigentes, a reputação da instituição e o seu próprio entendimento antes de decidir.\n\n> Invista apenas o que você pode perder. Cripto não é poupança.",
+      "sourceName": "Banco Central do Brasil — Criptoativos",
+      "sourceUrl": "https://www.bcb.gov.br/"
+    },
+    {
+      "slug": "reserva-de-emergencia-como-montar",
+      "title": "Como montar uma reserva de emergência",
+      "subtitle": "Quanto guardar, onde deixar e por que ela vem antes do investimento.",
+      "categorySlug": "fundamentos",
+      "readingMinutes": 4,
+      "content": "A reserva de emergência é o dinheiro separado para imprevistos. Sem ela, qualquer susto vira dívida. Por isso, costuma ser a primeira prioridade financeira, antes de investimentos de risco.\n\n## Quanto guardar\n\nA referência é de 3 a 6 meses de gastos essenciais. Quem tem renda variável, dependentes ou pouca estabilidade pode precisar de mais. O cálculo deve usar o custo de vida, não o salário.\n\n## Onde deixar\n\nOpções com liquidez e baixo risco: Tesouro Selic, CDB com liquidez diária de banco sólido ou fundo DI de baixo custo. O objetivo não é maximizar retorno, mas preservar o valor e permitir acesso rápido.\n\n## O que evitar\n\nAções, criptomoedas, fundos com prazo de resgate longo e qualquer ativo que possa cair justamente quando você precisa do dinheiro. Reserva não é aposta.\n\n## Como começar\n\nDefina o valor mensal possível, automatize a transferência e acompanhe o progresso. Se a reserva ainda não existe, comece pequeno: o hábito importa mais do que o valor inicial.\n\n> Reserva não enriquece. Ela evita que um imprevisto empobreça.",
+      "sourceName": "Banco Central do Brasil — Educação Financeira",
+      "sourceUrl": "https://www.bcb.gov.br/"
+    },
+    {
+      "slug": "diversificacao-nao-e-colecao",
+      "title": "Diversificação não é sair comprando tudo",
+      "subtitle": "Como distribuir risco de verdade, sem virar colecionador de ativos.",
+      "categorySlug": "risco",
+      "readingMinutes": 4,
+      "content": "Diversificar é reduzir a dependência de um único ativo, setor ou evento. Não é comprar dezenas de produtos aleatórios. Uma carteira com dez ações do mesmo setor pode parecer diversificada, mas concentra o mesmo risco.\n\n## Camadas de diversificação\n\n- **Classe:** renda fixa, renda variável, fundos, cripto.\n- **Setor:** tecnologia, saúde, energia, financeiro.\n- **Geografia:** Brasil e exterior.\n- **Emissor:** não concentrar em um único banco ou empresa.\n\n## Correlação importa\n\nAtivos que se movem juntos oferecem pouca diversificação. Durante crises, correlações podem aumentar. Por isso, diversificar é uma proteção parcial, não uma garantia.\n\n## Excesso também custa\n\nMuitos ativos podem gerar custos, impostos e dificuldade de acompanhamento. O equilíbrio é ter o suficiente para reduzir risco específico, sem perder controle.\n\n> Diversificação reduz risco específico. Não elimina o risco de mercado.",
+      "sourceName": "Comissão de Valores Mobiliários — Educar",
+      "sourceUrl": "https://www.gov.br/cvm/"
+    }
+  ]
+}

@@ -1,107 +1,141 @@
 # Banco de dados — Invest Fácil
 
-**Status: DECISÃO APROVADA | Fonte única do schema: Flyway**
+**Status: V1–V7 implementadas e validadas em PostgreSQL 17 real (Testcontainers).**
+Supabase remoto ainda não provisionado.
 
-## 1. Decisão Flyway (fonte única de verdade)
+## 1. Flyway é a fonte única de DDL
 
-Todo o schema do Invest Fácil nasce de migrations Flyway versionadas em
+Todo o schema nasce de migrations versionadas em
 `backend/src/main/resources/db/migration/`:
 
-- `V1__init.sql` — 17 tabelas do domínio (schema `investfacil`).
-- `V2__postgres_security.sql` — papéis, privilégios e RLS.
+| Migration | Conteúdo |
+|---|---|
+| `V1__init.sql` | 17 tabelas do domínio, schema `investfacil` |
+| `V2__postgres_security.sql` | papéis, grants, RLS deny-by-default, revogação do PostgREST |
+| `V3__auth_mfa_simulator.sql` | MFA/bloqueio, família de refresh, `simulations`, URL externa de vídeo, índice anti-farm |
+| `V4__simulation_inflation.sql` | preserva a inflação hipotética no cenário salvo |
+| `V5__append_only_ledgers.sql` | revoga UPDATE/DELETE de `auth_event`, `xp_ledger` e `user_achievements` para o runtime |
+| `V6__user_rls.sql` | RLS por usuário, FORCE RLS, 68 policies `s24_*`, contexto transacional e guard de `users` |
+| `V7__database_function_hardening.sql` | search_path fixo nas 9 funções, EXECUTE mínimo, initplan e remoção da função legada apply_table_security |
 
-O Hibernate roda com `spring.jpa.hibernate.ddl-auto=validate`: **valida, nunca
-cria ou altera**. Não existe e não deve existir um caminho alternativo de DDL.
+Hibernate roda com `ddl-auto=validate`: **valida, nunca cria/altere**. Não existe
+caminho alternativo de DDL (`supabase/migrations` duplicado é proibido).
 
-## 2. Decisão sobre Supabase (documentada, não executada)
+## 2. Evolução V3 (detalhe)
 
-O banco de produção será o PostgreSQL do **Supabase**, mas:
+### `users`
+- `avatar_url`, `mfa_enabled`, `mfa_secret` (AES-GCM), `mfa_last_counter`,
+  `failed_login_attempts`, `locked_until`, `last_login_at`.
 
-- **Flyway permanece a única fonte de verdade.** Nenhuma migration duplicada
-  será mantida em `supabase/migrations` sem aprovação expressa do
-  proprietário — dois caminhos de DDL são risco de divergência de schema.
-- O schema lógico (`investfacil`) é próprio da aplicação e **não** depende de
-  recursos exclusivos do Supabase; ele roda igual em PostgreSQL local
-  (Testcontainers) e no Supabase.
-- Nesta fase **não** há projeto Supabase criado, credenciais configuradas nem
-  migrations aplicadas remotamente. Provisionamento e conexão são etapas do
-  proprietário, executadas com as credenciais dele, fora deste repositório.
+### `refresh_tokens`
+- `family_id uuid NOT NULL DEFAULT gen_random_uuid()` + índice, para revogar a
+  família inteira na detecção de reuso. O token cru nunca é armazenado; apenas
+  SHA-256 em `token_hash`.
 
-### Relação Spring Boot ↔ PostgreSQL ↔ Supabase
+### `video_assets`
+- `external_url` opcional para fallback controlado; produção usa o bucket privado.
 
-- **Spring Boot** acessa o banco exclusivamente por JDBC (Hikari) com
-  Hibernate em `validate` — o DDL vem **só** do Flyway.
-- **PostgreSQL** é o banco de fato: schema `investfacil`, migrations e modelo
-  de papéis/RLS são PostgreSQL puro, sem recursos proprietários.
-- **Supabase** é a hospedagem gerenciada desse PostgreSQL (mesmo protocolo,
-  connection string comum) e, além disso, fornece o **Storage** para vídeos.
-  O **Supabase Auth não é usado** — a autenticação é do próprio backend
-  (T2) — e o PostgREST do Supabase **não expõe** o schema do app
-  (revogado em V2).
+### `simulations`
+- `id`, `user_id` (FK), `name`, `initial_amount`, `monthly_contribution`,
+  `months` (1–600), `annual_rate` (0–100), `inflation_rate` (0–100, V4),
+  `final_amount`, `invested_amount`, `created_at`; índice por usuário/data; RLS aplicada.
 
-### Procedimento de aplicação das migrations (quando o Supabase existir)
+### Append-only real
+A V5 revoga `UPDATE`/`DELETE` de `auth_event`, `xp_ledger` e
+`user_achievements` para `investfacil_app`. O runtime só pode inserir/ler esses
+ledgers; alteração exigiria o owner do banco. Validado por
+`FlywaySecurityIntegrationTest.appNaoPodeAlterarLedgersDeAuditoriaOuXp`.
 
-1. Provisionar no Supabase, via painel/SQL editor (com senha forte, fora de
-   arquivos versionados):
-   - papéis de grupo (já criados por V2, se aplicável);
-   - um LOGIN de runtime membro de `investfacil_app` (DML) e, opcionalmente,
-     um LOGIN de migração membro de `investfacil_migrate` (DDL).
-2. Configurar as variáveis de conexão apenas no ambiente de execução
-   (`.env` local / painel do provedor de deploy) — ver seção 4.
-3. Executar a aplicação (ou `mvn flyway:migrate`): o Flyway aplica V1+V2
-   automaticamente em banco limpo e registra o histórico em
-   `investfacil.flyway_schema_history`.
-4. Validar: tabela `flyway_schema_history` com `success = true` e teste de
-   papel guest vendo 0 linhas (RLS deny-by-default).
+### XP idempotente
+Índice único parcial:
 
-## 3. Modelo de papéis e privilégios (V2)
+```sql
+CREATE UNIQUE INDEX ux_xp_once_per_lesson_reason
+  ON investfacil.xp_ledger (user_id, lesson_id, reason)
+  WHERE lesson_id IS NOT NULL
+    AND reason IN ('LESSON_COMPLETED', 'QUIZ_PASSED');
+```
 
-| Papel | Tipo | Escopo | Senha |
-|---|---|---|---|
-| `investfacil_app` | grupo NOLOGIN | DML (SELECT/INSERT/UPDATE/DELETE) em todas as tabelas do schema | — |
-| `investfacil_migrate` | grupo NOLOGIN | DDL (USAGE, CREATE no schema) — usado pelo Flyway quando configurado | — |
-| `investfacil_test_guest` | grupo NOLOGIN | GRANT SELECT de propósito — existência apenas para **provar** que a negação vem da RLS | — |
-| `investfacil_runtime` | LOGIN (provisionamento) | membro de `investfacil_app` | **fora do repositório** |
+Impede farm de XP repetindo a mesma aula/quiz, inclusive sob concorrência.
 
-Camadas de proteção separadas e explícitas:
+## 3. Modelo lógico (V1–V7)
 
-1. **PostgREST**: `REVOKE ALL ON SCHEMA investfacil FROM PUBLIC/anon/authenticated`.
-   O acesso total do `investfacil_app` **não** protege contra vazamento das
-   credenciais desse papel — o que impede exfiltração via PostgREST é a
-   revogação do schema; o que limita o papel de runtime é a RLS.
-2. **Privilégio mínimo**: app = DML; migrate = DDL; histórico do Flyway
-   (`flyway_schema_history`) não recebe privilégio de nenhum papel de runtime.
-3. **RLS deny-by-default**: habilitada em todas as tabelas de aplicação; única
-   policy é `app_rw ... TO investfacil_app`. Papéis sem policy veem 0 linhas
-   mesmo com `GRANT SELECT` — **validado por teste** com papel distinto
-   (`FlywaySecurityIntegrationTest`, PostgreSQL real via Testcontainers).
-4. **Autorização de negócio** (USER/ADMIN): Spring Security, não o banco.
+```mermaid
+erDiagram
+    users ||--o{ refresh_tokens : "sessões"
+    users ||--o{ email_tokens : "verify/reset"
+    users ||--o{ auth_event : "auditoria"
+    users ||--o{ user_progress : "conclusões"
+    users ||--o{ quiz_attempts : "tentativas"
+    users ||--o{ xp_ledger : "XP"
+    users ||--o{ user_achievements : "conquistas"
+    users ||--o{ simulations : "cenários"
+    categories ||--o{ modules : "organiza"
+    categories ||--o{ articles : "categoriza"
+    modules ||--o{ lessons : "contém"
+    lessons ||--o| video_assets : "1 vídeo"
+    lessons ||--o{ quiz_questions : "quiz"
+    lessons ||--o{ lesson_articles : "leitura"
+    articles ||--o{ lesson_articles : "vínculo"
+    quiz_attempts ||--o{ quiz_attempt_answers : "respostas"
+    quiz_questions ||--o{ quiz_attempt_answers : "avaliada"
+    achievements ||--o{ user_achievements : "desbloqueio"
+```
 
-## 4. Variáveis de conexão
+Tabelas: `users`, `refresh_tokens`, `email_tokens`, `auth_event`, `categories`,
+`modules`, `lessons`, `video_assets`, `articles`, `lesson_articles`,
+`user_progress`, `quiz_questions`, `quiz_attempts`, `quiz_attempt_answers`,
+`xp_ledger`, `achievements`, `user_achievements`, `simulations`.
+(18 tabelas no total; a V4 adiciona apenas a coluna `inflation_rate`.)
 
-| Variável | Uso | Preenchida em |
+## 4. Segurança do banco
+
+| Papel | Tipo | Escopo |
 |---|---|---|
-| `SPRING_DATASOURCE_URL` | JDBC do PostgreSQL runtime (`investfacil_app`) | `.env` local / painel do provedor |
-| `SPRING_DATASOURCE_USERNAME` / `SPRING_DATASOURCE_PASSWORD` | login de runtime | idem |
-| `SPRING_FLYWAY_URL/USER/PASSWORD` | opcional: separar conexão DDL do Flyway | idem |
+| `investfacil_app` | NOLOGIN | DML em todas as tabelas |
+| `investfacil_migrate` | LOGIN INHERIT | DDL (USAGE/CREATE), owner do schema |
+| `investfacil_test_guest` | NOLOGIN | `GRANT SELECT` de propósito, para provar RLS |
+| `investfacil_runtime` | LOGIN INHERIT | membro de `investfacil_app`; senha fora do repositório |
 
-Nenhuma dessas variáveis é versionada com valores reais (proibido). Exemplo
-estrutural: `backend/.env.example`.
+- `REVOKE ALL ON SCHEMA investfacil FROM PUBLIC/anon/authenticated`.
+- RLS habilitada + FORCE RLS nas 18 tabelas; 68 policies `s24_*`; zero `app_rw`.
+- Funções V7 com search_path vazio e EXECUTE mínimo; o runtime herda investfacil_app; apply_table_security foi removida na V7.
+- `DatabaseSecurityGuard` valida V6/V7 e exige a versão declarada em `APP_SECURITY_GUARD_EXPECTED_VERSION`.
+- `flyway_schema_history` sem privilégio de runtime.
+- App não pode executar DDL (testado).
+- App não pode alterar/apagar ledgers de auditoria/XP (V5, testado).
+- Guest com SELECT vê 0 linhas (testado).
 
-## 5. Diagrama ER
+### 4.1 V7 - hardening local (S2.8/R1)
 
-Ver `backend/T1_RELATORIO.md` (seção 3) — 17 tabelas: usuários e segurança
-(users, refresh_tokens, email_tokens, auth_event), conteúdo (categories,
-modules, lessons, video_assets, articles, lesson_articles) e progresso/
-gamificação (user_progress, quiz_questions, quiz_attempts,
-quiz_attempt_answers, xp_ledger, achievements, user_achievements).
+- Nove funções com search_path vazio; apply_table_security foi removida, sem assinatura residual.
+- EXECUTE: investfacil_app nos helpers e na trigger; investfacil_migrate nas nove; zero PUBLIC/anon/authenticated; apply_table_security removida.
+- Policy s24_users_register_insert usa subquery escalar para current_setting de app.flow (initplan).
+- A V7 foi aplicada apenas em Testcontainers/local; o Lab permanece em V6 nesta etapa.
 
-## 6. Regras de evolução do schema
+## 5. Supabase
 
-- Toda mudança é uma nova migration (V3, V4, ...): sem edição de V1/V2 após
-  irem a qualquer ambiente compartilhado.
-- Tabelas novas de aplicação herdam privilégios via `ALTER DEFAULT PRIVILEGES`
-  e devem receber RLS + policy (a função `apply_table_security()` é a
-  referência; novas migrations devem repetir o padrão, excluindo tabelas
-  internas do Flyway).
-- Índices e constraints fazem parte da migration que cria a tabela.
+- PostgreSQL gerenciado; usar a conexão **direta (5432)** para Flyway. O pooler
+  (6543) pode não suportar DDL.
+- `investfacil_runtime` provisionado fora do repositório
+  (`docs/supabase/PROVISION_RUNTIME_ROLE.sql`).
+- PostgREST não expõe o schema; Supabase Auth não é usado.
+- Storage separado para vídeos (`docs/supabase/STORAGE_SETUP.sql`).
+
+## 6. Seed de conteúdo
+
+- Conteúdo educativo fica em `backend/src/main/resources/seed/content.json`,
+  gerado por `scripts/generate-seed.mjs`.
+- O seed é aplicado por `ContentSeedService` de forma idempotente (só quando não
+  há categorias) e não cria schema.
+- 8 categorias, 12 módulos, 31 aulas, 62 questões de quiz, 6 artigos e 7 conquistas.
+- Conta demo é opcional (`APP_DEMO_ENABLED`, `DEMO_PASSWORD`); nunca há senha
+  versionada.
+
+## 7. Regras de evolução
+
+- Toda mudança é uma nova migration (V4, V5, ...); V1–V7 são imutáveis após
+  ambientes compartilhados.
+- Tabelas novas herdam privilégios via ALTER DEFAULT PRIVILEGES; apply_table_security foi removida na V7 e não deve ser recriada. Novas tabelas exigem policies explícitas.
+- Índices e constraints pertencem à migration que cria a tabela.
+- Antes de migration destrutiva: backup/PITR e janela combinada.

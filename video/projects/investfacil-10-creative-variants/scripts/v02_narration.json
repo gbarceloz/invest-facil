@@ -1,0 +1,74 @@
+[
+  {
+    "id": "L01",
+    "display": "Até o dia em que o dinheiro não deu.",
+    "tts": "Até o dia em que o dinheiro não deu.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L02",
+    "display": "Ele comprava o mesmo café todos os dias.",
+    "tts": "Ele comprava o mesmo café todos os dias.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L03",
+    "display": "O mesmo pedido. Os mesmos R$ 100 para a semana.",
+    "tts": "O mesmo pedido. Os mesmos cem reais para a semana.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L04",
+    "display": "No começo, sobrava troco.",
+    "tts": "No começo, sobrava troco.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L05",
+    "display": "Depois, o troco foi ficando menor.",
+    "tts": "Depois, o troco foi ficando menor.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L06",
+    "display": "Até não dar mais.",
+    "tts": "Até não dar mais.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L07",
+    "display": "O café não ficou caro do nada. O dinheiro é que compra menos.",
+    "tts": "O café não ficou caro do nada. O dinheiro é que compra menos.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L08",
+    "display": "É a inflação. Os preços sobem, e o poder de compra cai.",
+    "tts": "É a inflação. Os preços sobem, e o poder de compra cai.",
+    "pause_ms": 220
+  },
+  {
+    "id": "L09",
+    "display": "Numa simulação de 5% ao ano, o poder de compra cai para cerca de 61.",
+    "tts": "Numa simulação de cinco por cento ao ano, o poder de compra cai para cerca de sessenta e um.",
+    "pause_ms": 220
+  },
+  {
+    "id": "L10",
+    "display": "O café é o mesmo. O troco é que encolheu.",
+    "tts": "O café é o mesmo. O troco é que encolheu.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L11",
+    "display": "A inflação não faz barulho. Ela aparece no troco.",
+    "tts": "A inflação não faz barulho. Ela aparece no troco.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L12",
+    "display": "Salve para lembrar quando o preço parecer ‘do nada’.",
+    "tts": "Salve para lembrar quando o preço parecer ‘do nada’.",
+    "pause_ms": 0
+  }
+]

@@ -1,4 +1,15 @@
-# Perfil de produção (Render) — log enxuto, nada de SQL
+# Perfil de produção (Render) — log enxuto, nada de SQL.
+#
+# Em produção o Flyway NÃO pode cair silenciosamente no datasource de runtime
+# (DML). As três variáveis abaixo são obrigatórias e devem apontar para a
+# identidade de migration (owner do schema ou role com os privilégios DDL
+# comprovados). Sem elas, o startup falha de forma explícita.
+spring:
+  flyway:
+    url: ${SPRING_FLYWAY_URL}
+    user: ${SPRING_FLYWAY_USER}
+    password: ${SPRING_FLYWAY_PASSWORD}
+
 logging:
   level:
     com.investfacil.api: INFO

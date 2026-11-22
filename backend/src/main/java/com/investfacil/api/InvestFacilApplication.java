@@ -2,6 +2,7 @@ package com.investfacil.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 
 /**
  * Backend principal do Invest Fácil — monólito modular.
@@ -22,7 +23,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * {@code investfacil_migrate} (DDL) e {@code investfacil_app} (DML),
  * RLS negada por padrão — ver {@code db/migration/V2__postgres_security.sql}.
  */
-@SpringBootApplication
+@SpringBootApplication(exclude = UserDetailsServiceAutoConfiguration.class)
 public class InvestFacilApplication {
 
     public static void main(String[] args) {

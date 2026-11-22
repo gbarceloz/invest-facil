@@ -1,0 +1,100 @@
+{
+  "variant": "V01",
+  "voice": "pt-BR-ThalitaMultilingualNeural",
+  "rate": "-12%",
+  "sample_rate": 48000,
+  "total_s": 33.535,
+  "tail_s": 0.35,
+  "lines": [
+    {
+      "id": "L01",
+      "display": "R$ 100 parece pouco? Não é impressão.",
+      "tts": "Cem reais parece pouco? Não é impressão.",
+      "start": 0.0,
+      "end": 3.181,
+      "duration": 3.181,
+      "pause_after_ms": 150
+    },
+    {
+      "id": "L02",
+      "display": "Os preços se movem o tempo todo.",
+      "tts": "Os preços se movem o tempo todo.",
+      "start": 3.331,
+      "end": 5.544,
+      "duration": 2.213,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L03",
+      "display": "A nota continua com o mesmo número.",
+      "tts": "A nota continua com o mesmo número.",
+      "start": 5.664,
+      "end": 8.086,
+      "duration": 2.422,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L04",
+      "display": "Mas compra menos café, menos pão, menos transporte.",
+      "tts": "Mas compra menos café, menos pão, menos transporte.",
+      "start": 8.206,
+      "end": 12.191,
+      "duration": 3.985,
+      "pause_after_ms": 140
+    },
+    {
+      "id": "L05",
+      "display": "Isso é inflação.",
+      "tts": "Isso é inflação.",
+      "start": 12.331,
+      "end": 13.579,
+      "duration": 1.248,
+      "pause_after_ms": 250
+    },
+    {
+      "id": "L06",
+      "display": "A alta generalizada dos preços corrói seu poder de compra.",
+      "tts": "A alta generalizada dos preços corrói seu poder de compra.",
+      "start": 13.829,
+      "end": 17.95,
+      "duration": 4.122,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L07",
+      "display": "Simulação: 5% ao ano. Em dez anos, cerca de R$ 61.",
+      "tts": "Simulação: cinco por cento ao ano. Em dez anos, cerca de sessenta e um reais.",
+      "start": 18.07,
+      "end": 24.168,
+      "duration": 6.097,
+      "pause_after_ms": 160
+    },
+    {
+      "id": "L08",
+      "display": "O número é o mesmo. O poder de compra, não.",
+      "tts": "O número é o mesmo. O poder de compra, não.",
+      "start": 24.328,
+      "end": 27.646,
+      "duration": 3.318,
+      "pause_after_ms": 240
+    },
+    {
+      "id": "L09",
+      "display": "Entender isso é o primeiro passo.",
+      "tts": "Entender isso é o primeiro passo.",
+      "start": 27.886,
+      "end": 29.914,
+      "duration": 2.028,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L10",
+      "display": "Siga para entender a inflação no próximo vídeo.",
+      "tts": "Siga para entender a inflação no próximo vídeo.",
+      "start": 30.034,
+      "end": 33.185,
+      "duration": 3.151,
+      "pause_after_ms": 0
+    }
+  ]
+}
