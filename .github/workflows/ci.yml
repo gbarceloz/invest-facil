@@ -19,7 +19,7 @@ concurrency:
 jobs:
   integrity:
     name: Integrity and workflow policy
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
       - name: Checkout
@@ -33,7 +33,7 @@ jobs:
 
   backend:
     name: Backend, database and secrets (Testcontainers)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 25
     steps:
       - name: Checkout
@@ -44,6 +44,13 @@ jobs:
           distribution: temurin
           java-version: "21"
           cache: maven
+      - name: Configure Docker API for Testcontainers
+        run: |
+          set -euo pipefail
+          api_version="$(docker version --format '{{.Server.API-Version}}')"
+          echo "Docker server API: ${api_version}"
+          existing="${JAVA_TOOL_OPTIONS:-}"
+          echo "JAVA_TOOL_OPTIONS=${existing:+$existing }-Dapi.version=${api_version}" >> "$GITHUB_ENV"
       - name: Build and test (Testcontainers, Flyway, secrets scan)
         working-directory: backend
         run: mvn -B clean verify
@@ -60,7 +67,7 @@ jobs:
 
   frontend:
     name: Frontend (Vitest, TypeScript, build)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - name: Checkout
@@ -89,7 +96,7 @@ jobs:
 
   api-contract:
     name: API contract snapshot
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - name: Checkout
@@ -100,9 +107,18 @@ jobs:
           distribution: temurin
           java-version: "21"
           cache: maven
+      - name: Configure Docker API for Testcontainers
+        run: |
+          set -euo pipefail
+          api_version="$(docker version --format '{{.Server.API-Version}}')"
+          echo "Docker server API: ${api_version}"
+          existing="${JAVA_TOOL_OPTIONS:-}"
+          echo "JAVA_TOOL_OPTIONS=${existing:+$existing }-Dapi.version=${api_version}" >> "$GITHUB_ENV"
       - name: Capture exposed OpenAPI document
         working-directory: backend
         run: mvn -B -Dtest=OpenApiSnapshotIntegrationTest test
+      - name: Assert OpenAPI capture ran
+        run: python3 scripts/ci/assert-openapi-capture.py
       - name: Compare against versioned snapshot
         run: python3 scripts/contracts/check_openapi_contract.py --report contract-report/openapi-report.txt
       - name: Upload contract report
@@ -116,7 +132,7 @@ jobs:
 
   security-integration:
     name: Ownership and ADMIN integration
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 25
     steps:
       - name: Checkout
@@ -127,9 +143,18 @@ jobs:
           distribution: temurin
           java-version: "21"
           cache: maven
+      - name: Configure Docker API for Testcontainers
+        run: |
+          set -euo pipefail
+          api_version="$(docker version --format '{{.Server.API-Version}}')"
+          echo "Docker server API: ${api_version}"
+          existing="${JAVA_TOOL_OPTIONS:-}"
+          echo "JAVA_TOOL_OPTIONS=${existing:+$existing }-Dapi.version=${api_version}" >> "$GITHUB_ENV"
       - name: Run ownership, authorization and extended flows
         working-directory: backend
         run: mvn -B -Dtest=OwnershipSecurityIntegrationTest,VideoAdminIntegrationTest,ExtendedIntegrationTest test
+      - name: Assert security suites really ran
+        run: python3 scripts/ci/assert-security-surefire.py
       - name: Upload security surefire reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -141,7 +166,7 @@ jobs:
 
   e2e:
     name: End-to-end (Playwright + local backend)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 35
     steps:
       - name: Checkout
@@ -186,7 +211,7 @@ jobs:
 
   security:
     name: Security (production dependency audit)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -215,7 +240,7 @@ jobs:
       - e2e
       - security
     if: always()
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
       - name: Require all mandatory gates
