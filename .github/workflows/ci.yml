@@ -47,7 +47,7 @@ jobs:
       - name: Configure Docker API for Testcontainers
         run: |
           set -euo pipefail
-          api_version="$(docker version --format '{{.Server.API-Version}}')"
+          api_version="$(docker version --format '{{.Server.APIVersion}}')"
           echo "Docker server API: ${api_version}"
           existing="${JAVA_TOOL_OPTIONS:-}"
           echo "JAVA_TOOL_OPTIONS=${existing:+$existing }-Dapi.version=${api_version}" >> "$GITHUB_ENV"
@@ -110,7 +110,7 @@ jobs:
       - name: Configure Docker API for Testcontainers
         run: |
           set -euo pipefail
-          api_version="$(docker version --format '{{.Server.API-Version}}')"
+          api_version="$(docker version --format '{{.Server.APIVersion}}')"
           echo "Docker server API: ${api_version}"
           existing="${JAVA_TOOL_OPTIONS:-}"
           echo "JAVA_TOOL_OPTIONS=${existing:+$existing }-Dapi.version=${api_version}" >> "$GITHUB_ENV"
@@ -146,7 +146,7 @@ jobs:
       - name: Configure Docker API for Testcontainers
         run: |
           set -euo pipefail
-          api_version="$(docker version --format '{{.Server.API-Version}}')"
+          api_version="$(docker version --format '{{.Server.APIVersion}}')"
           echo "Docker server API: ${api_version}"
           existing="${JAVA_TOOL_OPTIONS:-}"
           echo "JAVA_TOOL_OPTIONS=${existing:+$existing }-Dapi.version=${api_version}" >> "$GITHUB_ENV"
