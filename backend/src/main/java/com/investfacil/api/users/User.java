@@ -11,12 +11,14 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.Instant;
 import java.util.UUID;
 
 @Entity
 @Table(name = "users", schema = "investfacil")
+@DynamicUpdate
 @Getter
 @Setter
 @NoArgsConstructor

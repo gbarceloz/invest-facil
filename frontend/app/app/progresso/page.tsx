@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -42,7 +42,7 @@ export default function ProgressPage() {
   const unlocked = gamification?.achievements.filter((achievement) => achievement.unlocked) ?? [];
 
   return (
-    <div>
+    <div className="mx-auto max-w-4xl">
       <PageHeader
         eyebrow="Evolução real"
         title="Seu progresso"
@@ -71,7 +71,7 @@ export default function ProgressPage() {
             xp={gamification?.xp ?? 0}
             size={168}
           />
-          <h2 className="mt-4 text-xl font-extrabold">{gamification?.level.name ?? "Curioso"}</h2>
+          <h2 className="mt-4 text-[20px] font-medium tracking-[-0.02em]">{gamification?.level.name ?? "Curioso"}</h2>
           <p className="mt-1 text-xs text-muted">
             {gamification
               ? `${gamification.xp.toLocaleString("pt-BR")} XP acumulados · ${gamification.xpToNextLevel.toLocaleString("pt-BR")} para o próximo nível`
@@ -79,15 +79,15 @@ export default function ProgressPage() {
           </p>
           <div className="mt-5 grid w-full grid-cols-3 gap-3 border-t border-ink-500/60 pt-5 text-center">
             <div>
-              <p className="text-lg font-extrabold">{progress?.completedLessons ?? 0}</p>
+              <p className="text-[17px] font-medium">{progress?.completedLessons ?? 0}</p>
               <p className="text-[10px] uppercase tracking-wider text-muted">Aulas</p>
             </div>
             <div>
-              <p className="text-lg font-extrabold">{progress?.quizAttempts ?? 0}</p>
+              <p className="text-[17px] font-medium">{progress?.quizAttempts ?? 0}</p>
               <p className="text-[10px] uppercase tracking-wider text-muted">Quizzes</p>
             </div>
             <div>
-              <p className="text-lg font-extrabold">{gamification?.bestStreak ?? 0}</p>
+              <p className="text-[17px] font-medium">{gamification?.bestStreak ?? 0}</p>
               <p className="text-[10px] uppercase tracking-wider text-muted">Melhor sequência</p>
             </div>
           </div>

@@ -39,7 +39,7 @@ Fontes:
 |---|---|---|---|
 | Plano gratuito real | **Não há** no Spark; exige Blaze e cartão | 1 GB armazenado; 5 GB egress + 5 GB cached egress; sem cartão | Supabase vence no custo zero |
 | Limite por arquivo | Depende do bucket/regras; no Blaze, sem limite rígido | **50 MB por arquivo no Free**; 500 GB no Pro | Ajustamos o upload para **50 MB** (configurável) |
-| Armazenamento incluso | 5 GB-mês no Blaze (3 regiões dos EUA) | 1 GB no Free; 100 GB no Pro | 19 aulas em vídeos curtos cabem em 1 GB se comprimidos |
+| Armazenamento incluso | 5 GB-mês no Blaze (3 regiões dos EUA) | 1 GB no Free; 100 GB no Pro | 31 aulas em vídeos curtos cabem em 1 GB se comprimidos |
 | Download/egress | 100 GB/mês no Blaze (3 regiões) | 5 GB + 5 GB cached no Free | Para audiência pequena, 5 GB basta; para escala, avaliar |
 | Segurança | Rules + App Check; service account | Bucket privado + RLS/policies + URL assinada | Já implementamos bucket privado + URL assinada |
 | Integração com o backend | Admin SDK/Google Cloud credentials | REST + service role key (já implementado) | Supabase já está codificado e testável |

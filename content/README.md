@@ -11,7 +11,8 @@ de vídeo. O conteúdo publicado no produto continua sendo o JSON de seed do bac
 content/
 ├── brand/video-brand.json        # tokens de identidade para vídeo
 ├── templates/                    # roteiro, storyboard, SRT, metadata, checklist
-└── pilots/01-volatilidade/       # piloto educativo validado em draft
+├── pilots/01-volatilidade/       # piloto 01 — draft validado
+└── pilots/02-diversificacao/     # piloto 02 — draft validado e conferido no CapCut
 ```
 
 ## Regra editorial

@@ -1,0 +1,74 @@
+[
+  {
+    "id": "L01",
+    "display": "Se o seu dinheiro pudesse falar...",
+    "tts": "Se o seu dinheiro pudesse falar...",
+    "pause_ms": 120
+  },
+  {
+    "id": "L02",
+    "display": "Ele diria: eu não desapareci.",
+    "tts": "Ele diria: eu não desapareci.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L03",
+    "display": "Você só compra menos. O número continua na nota.",
+    "tts": "Você só compra menos. O número continua na nota.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L04",
+    "display": "O que muda é o tamanho do que ele pode comprar.",
+    "tts": "O que muda é o tamanho do que ele pode comprar.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L05",
+    "display": "O número continua o mesmo. A nota não encolhe.",
+    "tts": "O número continua o mesmo. A nota não encolhe.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L06",
+    "display": "Mas o poder de compra muda. E muda devagar.",
+    "tts": "Mas o poder de compra muda. E muda devagar.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L07",
+    "display": "É a inflação. Ela não some com o dinheiro.",
+    "tts": "É a inflação. Ela não some com o dinheiro.",
+    "pause_ms": 220
+  },
+  {
+    "id": "L08",
+    "display": "Ela diminui o que ele pode comprar. Item por item.",
+    "tts": "Ela diminui o que ele pode comprar. Item por item.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L09",
+    "display": "Simulação de 5% ao ano. Em dez anos, 61.",
+    "tts": "Simulação de cinco por cento ao ano. Em dez anos, sessenta e um.",
+    "pause_ms": 220
+  },
+  {
+    "id": "L10",
+    "display": "O dinheiro não some. Ele muda de tamanho.",
+    "tts": "O dinheiro não some. Ele muda de tamanho.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L11",
+    "display": "No que você pode comprar, ele fica menor.",
+    "tts": "No que você pode comprar, ele fica menor.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L12",
+    "display": "Salve para rever quando o preço subir.",
+    "tts": "Salve para rever quando o preço subir.",
+    "pause_ms": 0
+  }
+]

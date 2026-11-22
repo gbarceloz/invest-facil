@@ -21,17 +21,20 @@ Vercel (Next.js)  --/api rewrite-->  Render (Spring Boot)  -->  Supabase Postgre
 
 1. Crie o projeto PostgreSQL (região próxima dos usuários).
 2. Anote a conexão **direta** (porta 5432), não apenas o pooler.
-3. Execute `docs/supabase/PROVISION_RUNTIME_ROLE.sql` no SQL Editor para criar
-   `investfacil_runtime` (membro de `investfacil_app`). A senha fica só no
-   provedor.
+3. Execute `docs/supabase/PROVISION_MIGRATION_ROLE.sql` no SQL Editor, na mesma
+   sessão de um `SET app.migration_password = '<senha>'`, para criar
+   `investfacil_migrate` (LOGIN INHERIT, owner do schema) e as roles de grupo.
+   Depois execute `docs/supabase/PROVISION_RUNTIME_ROLE.sql` com
+   `SET app.runtime_password = '<senha>'` para criar `investfacil_runtime`
+   (LOGIN INHERIT, membro de `investfacil_app`). Nenhuma senha fica no arquivo.
 4. Execute `docs/supabase/STORAGE_SETUP.sql` para criar o bucket privado
    `videos`.
 5. Configure no Render:
    - `SPRING_DATASOURCE_URL` / `USERNAME` / `PASSWORD` do runtime (DML).
-   - `SPRING_FLYWAY_URL` / `USER` / `PASSWORD` do owner ou de um LOGIN membro de
-     `investfacil_migrate` (DDL). Sem isso, o Flyway tenta usar o runtime e
-     falha — comportamento correto de privilégio mínimo.
-6. Rode a aplicação uma vez para o Flyway aplicar V1–V5 e o seed de conteúdo.
+   - `SPRING_FLYWAY_URL` / `USER` / `PASSWORD` da identidade de migration
+     (`investfacil_migrate` ou owner). O perfil `prod` exige essas três
+     variáveis; sem elas o startup falha explicitamente.
+6. Rode a aplicação uma vez para o Flyway aplicar V1–V7 e o seed de conteúdo.
 
 > **Nunca** use `ddl-auto=update`. O schema é exclusivamente Flyway
 > (`ddl-auto=validate`).
@@ -109,7 +112,7 @@ intencional: nenhum vídeo fictício é apresentado como publicado.
 
 ## 7. Checklist de release
 
-- [ ] `mvn -B clean verify` verde (28 testes, incluindo Testcontainers).
+- [ ] `mvn -B clean verify` verde (63 testes, incluindo Testcontainers).
 - [ ] `npm test` verde (6 testes) e `npm run build` verde.
 - [ ] Health check `UP` no ambiente publicado.
 - [ ] Swagger e `/v3/api-docs` públicos.

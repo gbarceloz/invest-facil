@@ -21,7 +21,7 @@ export function ProgressBar({
         </div>
       )}
       <div
-        className="h-2 w-full overflow-hidden rounded-full bg-ink-600"
+        className="h-1.5 w-full overflow-hidden rounded-full bg-white/10"
         role="progressbar"
         aria-valuenow={Math.round(safe)}
         aria-valuemin={0}

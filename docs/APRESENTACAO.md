@@ -81,7 +81,7 @@ português e simulador transparente.
 |---|---|---|
 | Problema e público | Jovens 18–25 iniciantes, sem jargão | README, conteúdo, landing |
 | Inovação | Gamificação por aprendizado + simulador educativo + contexto de risco | XP, quizzes, simulador, disclaimers |
-| Execução | Backend, frontend, banco, auth, testes e docs | 28 testes backend + 6 frontend + build |
+| Execução | Backend, frontend, banco, auth, testes e docs | 63 testes backend + 6 frontend + build |
 | Viabilidade | Stack gratuita/gerenciada (Supabase, Render, Vercel) | `render.yaml`, `docs/DEPLOY.md` |
 | Segurança | JWT/refresh/MFA/rate limit/RLS | testes e docs de segurança |
 | Impacto | Educação antes do risco; sem promessa de retorno | conteúdo e avisos |

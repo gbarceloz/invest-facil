@@ -75,9 +75,6 @@ public class ContentSeedService {
     @Transactional
     public void seed() {
         seedAchievements();
-        if (categories.count() > 0) {
-            return;
-        }
         SeedData data;
         try (InputStream input = new ClassPathResource("seed/content.json").getInputStream()) {
             data = objectMapper.readValue(input, SeedData.class);
@@ -85,9 +82,11 @@ public class ContentSeedService {
             throw new IllegalStateException("Falha ao carregar seed/content.json", ex);
         }
 
+        // Sincroniza por slug: preserva IDs, progresso e quizzes já existentes,
+        // cria apenas o que falta e atualiza textos/ordenação. Nunca apaga conteúdo.
         Map<String, Category> categoryBySlug = new HashMap<>();
         for (SeedCategory seedCategory : data.categories()) {
-            Category category = new Category();
+            Category category = categories.findBySlug(seedCategory.slug()).orElseGet(Category::new);
             category.setSlug(seedCategory.slug());
             category.setName(seedCategory.name());
             category.setDescription(seedCategory.description());
@@ -96,7 +95,7 @@ public class ContentSeedService {
             categoryBySlug.put(category.getSlug(), category);
 
             for (SeedModule seedModule : seedCategory.modules()) {
-                CourseModule module = new CourseModule();
+                CourseModule module = modules.findBySlug(seedModule.slug()).orElseGet(CourseModule::new);
                 module.setCategoryId(category.getId());
                 module.setSlug(seedModule.slug());
                 module.setTitle(seedModule.title());
@@ -105,7 +104,8 @@ public class ContentSeedService {
                 modules.save(module);
 
                 for (SeedLesson seedLesson : seedModule.lessons()) {
-                    Lesson lesson = new Lesson();
+                    Lesson lesson = lessons.findBySlug(seedLesson.slug()).orElseGet(Lesson::new);
+                    boolean isNew = lesson.getId() == null;
                     lesson.setModuleId(module.getId());
                     lesson.setSlug(seedLesson.slug());
                     lesson.setTitle(seedLesson.title());
@@ -115,16 +115,18 @@ public class ContentSeedService {
                     lesson.setPublished(true);
                     lessons.save(lesson);
 
-                    int position = 1;
-                    for (SeedQuestion seedQuestion : seedLesson.quiz()) {
-                        QuizQuestion question = new QuizQuestion();
-                        question.setLessonId(lesson.getId());
-                        question.setPosition(position++);
-                        question.setQuestion(seedQuestion.question());
-                        question.setOptions(seedQuestion.options().stream()
-                                .map(QuizOption::new).toList());
-                        question.setCorrectIndex(seedQuestion.correctIndex());
-                        questions.save(question);
+                    if (isNew) {
+                        int position = 1;
+                        for (SeedQuestion seedQuestion : seedLesson.quiz()) {
+                            QuizQuestion question = new QuizQuestion();
+                            question.setLessonId(lesson.getId());
+                            question.setPosition(position++);
+                            question.setQuestion(seedQuestion.question());
+                            question.setOptions(seedQuestion.options().stream()
+                                    .map(QuizOption::new).toList());
+                            question.setCorrectIndex(seedQuestion.correctIndex());
+                            questions.save(question);
+                        }
                     }
                 }
             }
@@ -132,7 +134,8 @@ public class ContentSeedService {
 
         Instant now = Instant.now();
         for (SeedArticle seedArticle : data.articles()) {
-            Article article = new Article();
+            Article article = articles.findBySlug(seedArticle.slug()).orElseGet(Article::new);
+            boolean isNew = article.getId() == null;
             Category category = categoryBySlug.get(seedArticle.categorySlug());
             article.setCategoryId(category != null ? category.getId() : null);
             article.setSlug(seedArticle.slug());
@@ -142,7 +145,9 @@ public class ContentSeedService {
             article.setSourceName(seedArticle.sourceName());
             article.setSourceUrl(seedArticle.sourceUrl());
             article.setPublished(true);
-            article.setPublishedAt(now);
+            if (isNew) {
+                article.setPublishedAt(now);
+            }
             article.setReadingMinutes(seedArticle.readingMinutes());
             articles.save(article);
         }

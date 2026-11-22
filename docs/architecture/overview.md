@@ -55,7 +55,7 @@ com estados `FRESH`/`UNAVAILABLE` e fallback explícito.
 ## 4. Banco de dados
 
 - PostgreSQL 17, schema dedicado `investfacil`.
-- Flyway é a única fonte de DDL (`V1` a `V5`); Hibernate em `validate`.
+- Flyway é a única fonte de DDL (`V1` a `V7`); Hibernate em `validate`.
 - RLS deny-by-default; papéis `investfacil_app` (DML) e
   `investfacil_migrate` (DDL); runtime LOGIN provisionado fora do repositório.
 - V3 adiciona MFA/bloqueio em `users`, família em `refresh_tokens`, URL externa

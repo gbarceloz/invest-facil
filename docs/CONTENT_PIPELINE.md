@@ -80,6 +80,8 @@ autorização.
 - Uma ideia por tela; contraste alto; texto grande (≥ 48 px no arquivo final).
 - Transições discretas; evitar zoom/giro excessivo.
 - Legendas queimadas e, se possível, faixa inferior reservada.
+- Drafts podem ser montados pelo VectCutAPI e refinados pelo CapCut MCP; a
+  conferência visual no CapCut e a exportação continuam manuais.
 
 **Gate:** assistir no celular em 360p e no desktop; nada essencial fora de quadro.
 
@@ -114,6 +116,8 @@ Checklist obrigatório:
 - Nome: `if-aula-<slug>-v<versao>.mp4`.
 - Preservar projeto editável (CapCut draft) + MP4 + SRT + roteiro + fontes.
 - Verificar duração, áudio, legendas e tamanho antes do upload.
+- Rodar `scripts/verify-mp4.py` no arquivo exportado para conferir container,
+  duração, resolução, FPS, codec e presença de áudio sem depender de `ffprobe`.
 
 **Gate:** arquivo abre em player comum; tamanho ≤ 50 MB; duração ≤ 3 min.
 
@@ -170,6 +174,12 @@ Tokens em `content/brand/video-brand.json`.
 - **CapCut** para montagem/exportação manual e drafts.
 - **MCP CapCut** (endurecido) para criar/editar drafts de forma programática,
   sempre com backup e validação; ver `docs/CAPCUT_MCP_SETUP.md`.
+- **VectCutAPI** (isolado) para montar drafts 9:16 com imagens, áudio, texto e
+  SRT via MCP, sem upload remoto. O fluxo é sequencial: VectCutAPI monta e salva,
+  o draft é copiado para a pasta do CapCut, o CapCut MCP lê/valida/salva e o
+  CapCut abre para conferência visual. Ver `docs/VECTCUTAPI_INTEGRATION.md`.
+- **Regra de ouro:** não editar o mesmo draft nos dois MCPs ao mesmo tempo nem
+  sobrescrever drafts do usuário (`1023`, `1120`, `investfacil_piloto`).
 - **FFmpeg** (quando disponível) para probe/transcodificação; o ffmpeg embutido
   no CapCut é uma biblioteca e não serve como CLI completa.
 - **TTS local** apenas para protótipo; voz humana na versão final.

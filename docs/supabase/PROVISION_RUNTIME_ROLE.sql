@@ -1,25 +1,51 @@
 -- ============================================================================
--- Provisionamento do LOGIN de runtime (execute no Supabase, fora do repositório)
+-- Invest Fácil — identidade de runtime
 --
--- A senha NUNCA deve ser versionada. Use uma variável psql ou o painel:
---   \set runtime_password 'cole-a-senha-forte-aqui'
+-- Execute DEPOIS de PROVISION_MIGRATION_ROLE.sql, como owner/admin do projeto
+-- Supabase, no SQL Editor ou psql.
 --
--- O papel de grupo investfacil_app é criado pela migration V2.
--- Flyway deve rodar com o owner/postgres (ou um LOGIN membro de investfacil_migrate).
--- Para o pooler do Supabase, use a conexão direta (porta 5432) nas migrations.
+-- A senha NUNCA fica neste arquivo. No SQL Editor, execute na MESMA sessão:
+--   SET app.runtime_password = '<senha-forte-com-16-ou-mais-caracteres>';
+-- Depois cole/execute este script. Em psql, use o mesmo SET.
+--
+-- Modelo:
+--   investfacil_runtime LOGIN INHERIT
+--   membro de investfacil_app
+--   sem ownership, sem DDL, sem CREATEROLE, sem BYPASSRLS
+--
+-- INHERIT é obrigatório: a aplicação não executa SET ROLE e o Hikari pode
+-- reciclar conexões. Um SET ROLE feito uma única vez não é modelo válido.
 -- ============================================================================
 
 DO $$
+DECLARE
+    pw text := current_setting('app.runtime_password', true);
 BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'investfacil_runtime') THEN
-        CREATE ROLE investfacil_runtime LOGIN NOINHERIT;
+    IF pw IS NULL OR length(pw) < 16 THEN
+        RAISE EXCEPTION
+            'Defina app.runtime_password (>=16 caracteres) na mesma sessão antes deste script.';
     END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'investfacil_app') THEN
+        RAISE EXCEPTION
+            'investfacil_app não existe. Execute PROVISION_MIGRATION_ROLE.sql primeiro.';
+    END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'investfacil_runtime') THEN
+        EXECUTE 'CREATE ROLE investfacil_runtime LOGIN INHERIT';
+    END IF;
+
+    -- Corrige também uma role criada anteriormente com NOINHERIT.
+    EXECUTE 'ALTER ROLE investfacil_runtime LOGIN INHERIT';
+    EXECUTE format('ALTER ROLE investfacil_runtime PASSWORD %L', pw);
+    EXECUTE 'GRANT investfacil_app TO investfacil_runtime';
+    EXECUTE format(
+        'GRANT CONNECT ON DATABASE %I TO investfacil_runtime',
+        current_database());
 END $$;
 
-ALTER ROLE investfacil_runtime PASSWORD :'runtime_password';
-GRANT investfacil_app TO investfacil_runtime;
-
--- Verificação: o runtime deve conseguir DML e NÃO conseguir DDL.
--- (Execute conectado como investfacil_runtime.)
---   select count(*) from investfacil.users;
---   create table investfacil.teste_proibido (id int); -- deve falhar
+-- Verificação (não imprime segredo):
+--   SELECT r.rolname, r.rolcanlogin, r.rolinherit, r.rolsuper,
+--          r.rolcreaterole, r.rolbypassrls,
+--          pg_has_role('investfacil_runtime', 'investfacil_app', 'MEMBER') AS member_app
+--   FROM pg_roles r WHERE r.rolname = 'investfacil_runtime';

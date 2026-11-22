@@ -1,7 +1,6 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 import { AuthLayout } from "@/components/auth-layout";
@@ -12,8 +11,8 @@ import type { RegisterResponse } from "@/lib/types";
 const PASSWORD_RULE = "Use ao menos 8 caracteres, com letras e números.";
 
 export default function RegisterPage() {
-  const router = useRouter();
-  const [form, setForm] = useState({ name: "", email: "", password: "", confirm: "" });
+  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [accepted, setAccepted] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [created, setCreated] = useState<RegisterResponse | null>(null);
@@ -25,8 +24,8 @@ export default function RegisterPage() {
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     setError(null);
-    if (form.password !== form.confirm) {
-      setError("As senhas não conferem.");
+    if (!accepted) {
+      setError("Aceite os Termos de Uso e a Política de Privacidade para continuar.");
       return;
     }
     if (!/^(?=.*[A-Za-z])(?=.*\d).{8,72}$/.test(form.password)) {
@@ -50,25 +49,22 @@ export default function RegisterPage() {
 
   if (created) {
     return (
-      <AuthLayout
-        title="Conta criada"
-        subtitle="Falta pouco para começar sua jornada."
-      >
+      <AuthLayout title="Conta criada" subtitle="Falta pouco para começar sua jornada.">
         <div className="space-y-5">
-          <div className="flex items-start gap-3 rounded-xl border border-emerald-500/25 bg-emerald-500/10 p-4 text-sm text-emerald-200">
-            <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0" />
+          <div className="flex items-start gap-3 rounded-lg border border-emerald-500/25 bg-emerald-500/10 p-4 text-[12px] leading-5 text-emerald-200">
+            <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />
             <p>{created.message}</p>
           </div>
           {created.devVerificationToken && process.env.NODE_ENV !== "production" && (
-            <div className="rounded-xl border border-accent/25 bg-accent/5 p-4 text-xs leading-5 text-neutral-300">
-              <p className="font-bold text-accent">Modo desenvolvimento</p>
+            <div className="rounded-lg border border-accent/25 bg-accent/[0.04] p-4 text-[11px] leading-5 text-neutral-300">
+              <p className="font-semibold text-accent">Modo desenvolvimento</p>
               <p className="mt-1">
                 O provedor de e-mail não está configurado. Use o link abaixo para confirmar a conta
                 agora:
               </p>
               <Link
                 href={`/verificar-email?token=${encodeURIComponent(created.devVerificationToken)}`}
-                className="mt-2 inline-flex font-bold text-accent underline underline-offset-4"
+                className="mt-2 inline-flex font-semibold text-accent underline underline-offset-4"
               >
                 Confirmar meu e-mail
               </Link>
@@ -78,7 +74,7 @@ export default function RegisterPage() {
             <Link href="/entrar" className="btn-primary w-full">
               Ir para o login <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link href="/" className="btn-ghost w-full text-xs">
+            <Link href="/" className="btn-ghost w-full text-[11px]">
               Voltar ao início
             </Link>
           </div>
@@ -89,8 +85,8 @@ export default function RegisterPage() {
 
   return (
     <AuthLayout
-      title="Criar conta gratuita"
-      subtitle="Leva menos de um minuto. Sem cartão de crédito e sem dinheiro real."
+      title="Comece sua jornada"
+      subtitle="Leva menos de 1 minuto. Sem cartão de crédito e sem dinheiro real."
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && <Alert>{error}</Alert>}
@@ -101,7 +97,7 @@ export default function RegisterPage() {
           <input
             id="name"
             className="input"
-            placeholder="Como podemos te chamar?"
+            placeholder="Como podemos chamar você?"
             value={form.name}
             onChange={(event) => update("name", event.target.value)}
             autoComplete="name"
@@ -141,36 +137,24 @@ export default function RegisterPage() {
             maxLength={72}
             required
           />
-          <p className="mt-1.5 text-[11px] text-neutral-500">{PASSWORD_RULE}</p>
+          <p className="mt-1.5 text-[10px] text-neutral-500">{PASSWORD_RULE}</p>
         </div>
-        <div>
-          <label htmlFor="confirm" className="label">
-            Confirmar senha
-          </label>
+        <label className="flex items-start gap-2.5 text-[11px] leading-5 text-neutral-400">
           <input
-            id="confirm"
-            type="password"
-            className="input"
-            placeholder="Repita a senha"
-            value={form.confirm}
-            onChange={(event) => update("confirm", event.target.value)}
-            autoComplete="new-password"
-            minLength={8}
-            maxLength={72}
-            required
+            type="checkbox"
+            className="mt-0.5 h-3.5 w-3.5 accent-[#facc15]"
+            checked={accepted}
+            onChange={(event) => setAccepted(event.target.checked)}
           />
-        </div>
+          <span>Aceito os Termos de Uso e a Política de Privacidade.</span>
+        </label>
         <button type="submit" className="btn-primary w-full" disabled={submitting}>
           {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-          Criar minha conta <ArrowRight className="h-4 w-4" />
+          Criar conta grátis <ArrowRight className="h-4 w-4" />
         </button>
-        <p className="text-center text-[11px] leading-5 text-neutral-400">
-          Ao criar a conta, você concorda em usar a plataforma apenas para fins educativos. Nenhuma
-          operação real é executada.
-        </p>
-        <p className="text-center text-xs text-muted">
-          Já tem conta?{" "}
-          <Link href="/entrar" className="font-bold text-accent hover:underline">
+        <p className="text-center text-[11px] text-neutral-500">
+          Já possui uma conta?{" "}
+          <Link href="/entrar" className="font-semibold text-accent hover:underline">
             Entrar
           </Link>
         </p>

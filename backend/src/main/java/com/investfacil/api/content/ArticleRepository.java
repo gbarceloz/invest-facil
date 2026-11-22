@@ -12,6 +12,8 @@ public interface ArticleRepository extends JpaRepository<Article, UUID> {
 
     List<Article> findByPublishedTrueOrderByPublishedAtDesc();
 
+    Optional<Article> findBySlug(String slug);
+
     Optional<Article> findBySlugAndPublishedTrue(String slug);
 
     List<Article> findByCategoryIdAndPublishedTrueOrderByPublishedAtDesc(UUID categoryId);

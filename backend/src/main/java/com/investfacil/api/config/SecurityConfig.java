@@ -69,7 +69,8 @@ public class SecurityConfig {
                                 "/api/v1/auth/forgot-password",
                                 "/api/v1/auth/reset-password",
                                 "/api/v1/auth/mfa/verify").permitAll()
-                        .requestMatchers("/api/v1/content/**", "/api/v1/market/**").permitAll()
+                        .requestMatchers("/api/v1/content/**", "/api/v1/market/**",
+                                "/api/v1/bitcoin/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/simulator/calculate").permitAll()
                         .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/**").authenticated()

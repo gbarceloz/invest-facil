@@ -1,0 +1,100 @@
+{
+  "variant": "V04",
+  "voice": "pt-BR-ThalitaMultilingualNeural",
+  "rate": "-12%",
+  "sample_rate": 48000,
+  "total_s": 29.467,
+  "tail_s": 0.35,
+  "lines": [
+    {
+      "id": "L01",
+      "display": "R$ 100. Quanto isso compra?",
+      "tts": "cem reais. Quanto isso compra?",
+      "start": 0.0,
+      "end": 2.288,
+      "duration": 2.288,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L02",
+      "display": "Depende do ano.",
+      "tts": "Depende do ano.",
+      "start": 2.408,
+      "end": 3.578,
+      "duration": 1.17,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L03",
+      "display": "Hoje: uma cesta cheia.",
+      "tts": "Hoje: uma cesta cheia.",
+      "start": 3.698,
+      "end": 5.646,
+      "duration": 1.947,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L04",
+      "display": "Simulação: preços 25% maiores, quatro de cinco.",
+      "tts": "Simulação: preços vinte e cinco por cento maiores, quatro de cinco.",
+      "start": 5.766,
+      "end": 10.691,
+      "duration": 4.925,
+      "pause_after_ms": 220
+    },
+    {
+      "id": "L05",
+      "display": "Simulação: dez anos a 5%, cerca de R$ 61.",
+      "tts": "Simulação: dez anos a cinco por cento, cerca de sessenta e um reais.",
+      "start": 10.911,
+      "end": 16.083,
+      "duration": 5.172,
+      "pause_after_ms": 220
+    },
+    {
+      "id": "L06",
+      "display": "A resposta mudou. A pergunta continua a mesma.",
+      "tts": "A resposta mudou. A pergunta continua a mesma.",
+      "start": 16.303,
+      "end": 20.085,
+      "duration": 3.782,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L07",
+      "display": "Não é quanto você tem.",
+      "tts": "Não é quanto você tem.",
+      "start": 20.205,
+      "end": 21.806,
+      "duration": 1.6,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L08",
+      "display": "É o que ele compra.",
+      "tts": "É o que ele compra.",
+      "start": 21.926,
+      "end": 23.018,
+      "duration": 1.093,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L09",
+      "display": "Entender inflação muda como você olha o preço.",
+      "tts": "Entender inflação muda como você olha o preço.",
+      "start": 23.138,
+      "end": 26.226,
+      "duration": 3.087,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L10",
+      "display": "Comente: o que ficou mais caro para você?",
+      "tts": "Comente: o que ficou mais caro para você?",
+      "start": 26.346,
+      "end": 29.117,
+      "duration": 2.772,
+      "pause_after_ms": 0
+    }
+  ]
+}

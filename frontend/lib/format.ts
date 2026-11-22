@@ -15,9 +15,32 @@ const compact = new Intl.NumberFormat("pt-BR", {
   maximumFractionDigits: 1,
 });
 
+const usdFormat = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  maximumFractionDigits: 2,
+});
+
+const usdCompact = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  notation: "compact",
+  maximumFractionDigits: 1,
+});
+
 export function money(value: number | string | null | undefined): string {
   const number = typeof value === "string" ? Number(value) : value ?? 0;
   return brl.format(Number.isFinite(number) ? number : 0);
+}
+
+export function usd(value: number | string | null | undefined): string {
+  const number = typeof value === "string" ? Number(value) : value ?? 0;
+  return usdFormat.format(Number.isFinite(number) ? number : 0);
+}
+
+export function compactUsd(value: number | string | null | undefined): string {
+  const number = typeof value === "string" ? Number(value) : value ?? 0;
+  return usdCompact.format(Number.isFinite(number) ? number : 0);
 }
 
 export function compactMoney(value: number | string | null | undefined): string {
@@ -67,6 +90,16 @@ export function dateLong(value: Date = new Date()): string {
       month: "long",
     })
     .replace(/^./, (char) => char.toUpperCase());
+}
+
+export function dateTime(value: string | null | undefined): string {
+  if (!value) return "—";
+  return new Date(value).toLocaleString("pt-BR", {
+    day: "2-digit",
+    month: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 }
 
 export function relativeTime(value: string | null | undefined): string {

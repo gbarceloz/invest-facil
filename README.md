@@ -9,14 +9,15 @@ quizzes, simulador com dinheiro fictício e gamificação honesta. Projeto do
 
 ---
 
-## Estado atual (20/11/2026)
+## Estado atual (22/11/2026)
 
 | Camada | Estado |
 |---|---|
 | Backend Spring Boot + PostgreSQL | **funcional e testado localmente** (28 testes) |
 | Autenticação completa | **implementada e testada** (JWT, refresh, MFA, e-mail, reset, sessões) |
-| Frontend Next.js | **funcional** (16 páginas + not-found, 6 testes, build verde) |
-| Integração frontend ↔ backend | **validada localmente** (login, aula, quiz, simulador, perfil) |
+| Frontend Next.js | **funcional** (19 rotas de aplicação + not-found; 6 testes; build verde) |
+| Integração frontend ↔ backend | **validada manualmente** em sessão local (login, aula, quiz, simulador, perfil); sem E2E automatizado |
+| CI e governança de agentes | CI em todas as branches/PRs; execução remota **não verificada**; 8 agentes locais com default-deny; riscos globais abertos (P0.3) |
 | Banco remoto (Supabase) | **pendente de credenciais** |
 | Upload/playback real de vídeo | **pendente de credenciais** (código pronto) |
 | E-mail transacional (Resend) | **pendente de credenciais** (fallback de log em dev) |
@@ -38,8 +39,8 @@ mercado.
 
 ## A proposta
 
-- **Trilhas estruturadas:** 8 categorias, 8 módulos, 19 aulas e 6 artigos.
-- **Aprendizado ativo:** 38 questões de quiz; XP por aula concluída e quiz aprovado.
+- **Trilhas estruturadas:** 8 categorias, 12 módulos, 31 aulas e 6 artigos.
+- **Aprendizado ativo:** 62 questões de quiz; XP por aula concluída e quiz aprovado.
 - **Simulador educativo:** capital inicial, aportes, prazo, taxa hipotética,
   inflação e comparação de cenários.
 - **Gamificação honesta:** níveis, conquistas e sequência de estudos — sem
@@ -224,9 +225,13 @@ Arquivos: `render.yaml`, `backend/Dockerfile`, `docker-compose.yml`,
 
 | Documento | Conteúdo |
 |---|---|
+| [`docs/engineering/CONTEXT_INDEX.md`](docs/engineering/CONTEXT_INDEX.md) | ponto de entrada: domínio → fonte oficial → evidência |
+| [`docs/architecture/README.md`](docs/architecture/README.md) | mapas técnicos, 18 features e caminhos críticos |
+| [`docs/engineering/SOURCE_REGISTRY.md`](docs/engineering/SOURCE_REGISTRY.md) | matriz de fontes, owners funcionais, frescor e conflitos |
+| [`docs/engineering/SOURCE_OF_TRUTH.md`](docs/engineering/SOURCE_OF_TRUTH.md) | hierarquia de autoridade, status e resolução de conflitos |
 | [`docs/AUDITORIA_GERAL.md`](docs/AUDITORIA_GERAL.md) | auditoria GitHub/workspace/Figma, riscos, plano |
 | [`docs/PROGRESSO_GERAL.md`](docs/PROGRESSO_GERAL.md) | ledger de tarefas e evidências |
-| [`docs/AGENTES_70.md`](docs/AGENTES_70.md) | 70 papéis com escopo/entregáveis/aceitação |
+| [`docs/AGENTES_70.md`](docs/AGENTES_70.md) | 70 papéis documentais (não são 70 agentes executáveis) |
 | [`docs/DEMO_SCRIPT.md`](docs/DEMO_SCRIPT.md) | roteiro de 8–10 min + plano B |
 | [`docs/APRESENTACAO.md`](docs/APRESENTACAO.md) | pitch, narrativa, critérios, Q&A |
 | [`docs/DEPLOY.md`](docs/DEPLOY.md) | runbook de produção |
@@ -245,6 +250,11 @@ Arquivos: `render.yaml`, `backend/Dockerfile`, `docker-compose.yml`,
 
 - Deploy remoto, Supabase e Resend **não** foram validados nesta sessão por
   ausência de credenciais.
+- A CI foi executada localmente (parse, integridade e gates), mas **não** há evidência de
+  execução no GitHub Actions nem branch protection.
+- A validação de integração é manual; não há E2E automatizado de browser.
+- O P0.3 manteve riscos abertos: MCP global com acesso ao projeto, shell amplo em 10
+  agentes globais, browser não verificado e ausência de sandbox/aprovação técnica.
 - O player exibe “vídeo em preparação” quando não há vídeo publicado; a
   integração com o bucket privado está implementada, mas sem teste real.
 - Cotações usam fallback estático quando o provedor está indisponível; a UI

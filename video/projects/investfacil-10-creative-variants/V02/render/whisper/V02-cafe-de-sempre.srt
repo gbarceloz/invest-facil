@@ -1,0 +1,43 @@
+1
+00:00:00,000 --> 00:00:06,040
+Até o dia em que o dinheiro não deu, ele comprava o mesmo café todos os dias, o mesmo
+
+2
+00:00:06,040 --> 00:00:09,320
+pedido, os mesmos 100 reais para semana.
+
+3
+00:00:09,320 --> 00:00:15,920
+No começo, sobrava troco, depois o troco foi ficando menor, até não dar mais.
+
+4
+00:00:15,920 --> 00:00:18,000
+O café não ficou caro do nada.
+
+5
+00:00:18,000 --> 00:00:24,600
+O dinheiro é que compra menos, é a inflação, os preços sobem e o poder de compra cai.
+
+6
+00:00:24,600 --> 00:00:30,720
+Numa simulação de 5% ao ano, o poder de compra cai para cerca de 61%.
+
+7
+00:00:30,720 --> 00:00:32,240
+O café é o mesmo.
+
+8
+00:00:32,240 --> 00:00:33,920
+O troco é que encolheu.
+
+9
+00:00:33,920 --> 00:00:36,120
+A inflação não faz barulho.
+
+10
+00:00:36,120 --> 00:00:37,800
+Ela aparece no troco.
+
+11
+00:00:37,800 --> 00:00:40,840
+Salve para lembrar quando o preço parecer do nada.

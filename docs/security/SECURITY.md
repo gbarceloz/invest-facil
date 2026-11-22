@@ -3,6 +3,13 @@
 **Status: autenticação e segurança do MVP implementadas e testadas localmente
 (20/11/2026). Deploy remoto e provedores externos ainda não validados.**
 
+> **Atualização S2.8 (22/11/2026):** V6 validada no Lab; V7 de hardening local (search_path, EXECUTE mínimo) ainda não aplicada remotamente. 63 testes locais. Ver `docs/verification/S2.8/S2.8_DATABASE_FUNCTION_HARDENING_REPORT.md`.
+
+> **P0.4:** este documento cobre a segurança do **produto**. Segurança de agentes está em
+> `docs/engineering/AGENT_SECURITY_POLICY.md`, `AGENT_PERMISSION_MATRIX.md` e
+> `P0_3_VERIFICATION.md`; os riscos globais de MCP/shell/browser continuam abertos e não
+> são resolvidos por esta política. Fonte de estado: `SOURCE_REGISTRY.md`.
+
 ## 1. Princípios
 
 1. **Fail-closed**: qualquer rota exige autenticação por padrão; a superfície
@@ -39,7 +46,7 @@
 | `X-Forwarded-For` só é aceito de proxy explicitamente confiável | `ClientIpResolver` + testes |
 | CORS com origens explícitas; nunca `*` com credenciais | `SecurityConfig` |
 | Headers: frame deny, nosniff, referrer no-referrer, CSP | `SecurityConfig` |
-| RLS deny-by-default; app sem DDL; PostgREST revogado | `V2`, `FlywaySecurityIntegrationTest` |
+| RLS per-user, FORCE RLS, 68 policies `s24_*`; funções V7 com search_path fixo | V6/V7 + `RlsIsolationIntegrationTest` |
 | Upload de vídeo valida MIME, assinatura de container e 50 MB | `VideoService` |
 | Bucket privado; URLs assinadas de curta duração | `SupabaseStorageClient`, `docs/supabase/STORAGE_SETUP.sql` |
 | Auditoria `auth_event` append-only | `AuthAuditService`, V1 |
@@ -78,10 +85,12 @@
 
 Detalhes em [../architecture/database.md](../architecture/database.md).
 
-- `investfacil_app` (DML) e `investfacil_migrate` (DDL) são NOLOGIN.
-- `investfacil_runtime` é um LOGIN membro de `investfacil_app`; senha fora do
+- `investfacil_app` é NOLOGIN (DML); `investfacil_migrate` é LOGIN INHERIT (DDL, owner do schema).
+- `investfacil_runtime` é LOGIN INHERIT, membro de `investfacil_app`; senha fora do
   repositório.
-- RLS habilitada em todas as tabelas; única policy `app_rw` para o app.
+- RLS + FORCE nas 18 tabelas; 68 policies `s24_*`; zero `app_rw`; contexto via `set_config(..., true)`.
+- Funções V7: search_path vazio e EXECUTE mínimo; PUBLIC/anon/authenticated não executam; apply_table_security foi removida na V7.
+- DatabaseSecurityGuard valida V6/V7 e exige a versão declarada em APP_SECURITY_GUARD_EXPECTED_VERSION.
 - `flyway_schema_history` sem privilégio de runtime.
 - `auth_event`, `xp_ledger` e `user_achievements`: runtime sem `UPDATE`/`DELETE`
   (V5), portanto append-only de fato.

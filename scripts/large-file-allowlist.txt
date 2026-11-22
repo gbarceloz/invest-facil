@@ -1,0 +1,6 @@
+# Explicit exceptions for scripts/check-large-files.ps1
+# One repo-relative path per line. Comments start with #.
+# Keep this list short and justified. Prefer external storage or ignore rules.
+#
+# Example:
+# content/pilots/example/assets/source-master.wav

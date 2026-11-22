@@ -18,8 +18,8 @@ export function PageHeader({
     <div className={cn("mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between", className)}>
       <div>
         {eyebrow && <p className="eyebrow mb-2">{eyebrow}</p>}
-        <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl">{title}</h1>
-        {description && <p className="mt-2 max-w-2xl text-sm leading-6 text-muted">{description}</p>}
+        <h1 className="text-[26px] font-medium tracking-[-0.035em] text-neutral-100 sm:text-[30px]">{title}</h1>
+        {description && <p className="mt-2 max-w-2xl text-[12px] leading-6 text-neutral-400">{description}</p>}
       </div>
       {actions && <div className="flex flex-wrap gap-2">{actions}</div>}
     </div>
@@ -40,13 +40,13 @@ export function Stat({
   tone?: "default" | "accent";
 }) {
   return (
-    <div className={cn("card p-4 sm:p-5", tone === "accent" && "border-accent/30 bg-accent/5")}>
+    <div className={cn("rounded-xl border border-white/[0.07] bg-[#111111] p-4", tone === "accent" && "border-accent/20 bg-accent/[0.04]")}>
       <div className="flex items-center justify-between gap-3">
-        <p className="text-[11px] font-bold uppercase tracking-wider text-muted">{label}</p>
+        <p className="text-[9px] font-semibold uppercase tracking-[0.12em] text-neutral-500">{label}</p>
         {icon && <span className="text-accent">{icon}</span>}
       </div>
-      <p className="mt-2 text-2xl font-extrabold tracking-tight">{value}</p>
-      {hint && <p className="mt-1 text-xs text-muted">{hint}</p>}
+      <p className="mt-2 text-[21px] font-medium tracking-[-0.02em] text-neutral-100">{value}</p>
+      {hint && <p className="mt-1 text-[10px] text-neutral-500">{hint}</p>}
     </div>
   );
 }

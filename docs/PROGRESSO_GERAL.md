@@ -1,11 +1,17 @@
 # PROGRESSO GERAL — Invest Fácil
 
-**Atualizado:** 20/11/2026 · **Branch local:** `feat/mvp-completo` · **Commits locais:** `dc18b60` (MVP) e `8ee5d77` (docs) · **Deadline:** 12/12/2026
+> **Atualização S2.8 (22/11/2026):** relatório histórico. Estado atual: V1-V7, 63 testes, RLS per-user; a V7 é local e ainda não foi aplicada no Lab. Ver docs/verification/S2.8/S2.8_DATABASE_FUNCTION_HARDENING_REPORT.md.
+
+**Atualizado:** 22/11/2026 · **Branch local:** `feat/mvp-completo` · **Commits locais:** `dc18b60`–`100d3fe` · **Deadline Hack Brasil:** 12/12/2026 (README/APRESENTAÇÃO/AUDITORIA); 29/11/2026 sem fonte — UNKNOWN.
 **Push/merge:** pendente de autorização do proprietário; nada foi enviado ao GitHub nesta sessão.
 
 > **Regra:** `IMPLEMENTED` ≠ `VERIFIED`. Só marcamos `VERIFIED` quando há comando,
 > teste ou navegação real registrada. Bloqueios externos ficam explícitos.
 > `DEFINED` é usado para papéis/tarefas planejadas que ainda não foram executadas.
+>
+> **Semântica P0.4:** `DEFINED`/`NOT_STARTED` → `PLANNED`; `IN_PROGRESS` → `PARTIAL`;
+> `DONE`/`CONCLUÍDO` → `VERIFIED` apenas com evidência. Ver
+> `docs/engineering/SOURCE_OF_TRUTH.md`.
 
 ---
 
@@ -17,12 +23,15 @@
 | T1 preservada e reexecutada | **VERIFIED** | `mvn verify`, 28 testes; staging intacto |
 | Banco V1–V5 | **VERIFIED** | Testcontainers PostgreSQL 17 |
 | Backend MVP (auth, conteúdo, progresso, XP, simulador, vídeos, mercado) | **VERIFIED** (vídeo real bloqueado) | build + testes + runtime |
-| Frontend MVP (16 páginas + not-found) | **VERIFIED** (build + navegação local) | `npm run build`, `npm test` |
-| Integração frontend↔backend | **VERIFIED** local | login, aula, quiz, simulador, perfil |
-| Deploy remoto | **NOT_STARTED** | sem credenciais |
+| Frontend MVP (19 rotas de aplicação + not-found) | **VERIFIED** (build + testes) | `npm run build`, `npm test` |
+| Integração frontend↔backend | **TESTED** manual local | login, aula, quiz, simulador, perfil; sem E2E automatizado |
+| Pipeline de vídeo (CapCut + VectCutAPI) | **TESTED**; visual **VERIFIED** (52 amostras, pós-save) | `docs/VECTCUTAPI_INTEGRATION.md`; piloto 02 |
+| Variantes Gate 4 (Remotion) | **TESTED** técnico; **HUMAN REVIEW REQUIRED** | 10 MP4, QC/loudness; publicação não aprovada |
+| Deploy remoto | **NOT VERIFIED** (não deployado) | sem credenciais |
+| Fonte de verdade/contexto | **VERIFIED** (docs) | `CONTEXT_INDEX.md` + `SOURCE_REGISTRY.md` |
 | Vídeos reais no Supabase | **BLOCKED** | sem credenciais/bucket |
 | E-mail real | **BLOCKED** | sem Resend/domínio |
-| Ensaio e pitch | **IN_PROGRESS** | docs iniciais |
+| Ensaio e pitch | **PARTIAL** | docs iniciais |
 
 ---
 
@@ -35,8 +44,19 @@
 | A01 | Auditar GitHub (branches, commits, workflows) | Repository Auditor | VERIFIED | `docs/AUDITORIA_GERAL.md` | `gh repo view`, `git log`, `git branch -a` | — | — |
 | A02 | Auditar workspace e T1/Missão 01.2 | Repository Auditor | VERIFIED | `_audit/*`, `backend/`, `_staging/` | contagem de fontes, relatórios, hashes | — | — |
 | A03 | Inspecionar Figma e capturar identidade | Figma Integration Specialist | VERIFIED | `docs/AUDITORIA_GERAL.md` §4 | navegação real nas telas | — | — |
-| A04 | Registrar 70 papéis | Technical PM | **IMPLEMENTED** | `docs/AGENTES_70.md`, `docs/agentes/registry.json` | 70 seções geradas | — | — |
+| A04 | Registrar 70 papéis | Technical PM | **IMPLEMENTED** | `docs/AGENTES_70.md`, `docs/agentes/registry.json` | 70 seções geradas; não são 70 agentes executáveis | — | — |
 | A05 | Criar branch de trabalho | Technical PM | VERIFIED | `feat/mvp-completo` | `git switch` | autorização local | push não autorizado |
+
+### Fase P0 — Transformação e proteção
+
+| ID | Tarefa | Status | Evidência | Limitações |
+|---|---|---|---|---|
+| P01 | Media safety / Git hygiene | **PASS** | `docs/engineering/P0_1_VERIFICATION.md` | hook opcional; mídia local |
+| P02 | CI em todas as branches | **PASS WITH LIMITATIONS** | `docs/engineering/P0_2_VERIFICATION.md` | remoto/branch protection não verificados |
+| P03 | Permissões de agentes | **PASS WITH LIMITATIONS** | `docs/engineering/P0_3_VERIFICATION.md` | globais/MCP/shell/browser abertos |
+| P04 | Source of truth e contexto | **PASS WITH LIMITATIONS** | `docs/engineering/P0_4_VERIFICATION.md` | drift histórico e lacunas de evidência |
+
+---
 
 ### Fase 1 — Fundação backend/banco
 
@@ -51,7 +71,7 @@
 | B07 | Verificação de e-mail/reset | Email Engineers | **TESTED** (lógica) | `EmailToken*`, `EmailService` | verificação bloqueia login até confirmar; reset com token de uso único testado; envio real não testado | B05 | Resend |
 | B08 | Rate limit + resolução de IP | Security Engineer | VERIFIED | `RateLimitFilter`, `ClientIpResolver` | `ClientIpResolverTest` 3/3; filtro ativo no runtime | — | carga não testada |
 | B09 | Envelope de erro + exceções de negócio | Exception Engineer | VERIFIED | `BusinessException`, `GlobalExceptionHandler` | `GlobalExceptionHandlerTest` 4/4 | — | — |
-| B10 | Catálogo de conteúdo + seed | Content Engineer | VERIFIED | `content/**`, `seed/content.json` | 8 categorias, 8 módulos, 19 aulas, 38 questões, 6 artigos; teste integrado | B01 | — |
+| B10 | Catálogo de conteúdo + seed | Content Engineer | VERIFIED | `content/**`, `seed/content.json` | 8 categorias, 12 módulos, 31 aulas, 62 questões, 6 artigos; teste integrado | B01 | — |
 | B11 | Progresso idempotente + quizzes | Progress Engineer | VERIFIED | `progress/**` | conclusão 201→200; quiz 100% no teste | B10 | — |
 | B12 | Gamificação (XP/níveis/conquistas/streak) | Gamification Engineer | VERIFIED | `gamification/**` | XP 120 no fluxo; 4 conquistas desbloqueadas na demo (7 disponíveis); UI local | B11 | — |
 | B13 | Simulador de juros compostos | Simulator Engineer | VERIFIED | `simulator/**` | `SimulatorServiceTest` 3/3; UI local | B12 | — |
@@ -71,7 +91,7 @@
 | C03 | Landing page | React Engineer | VERIFIED | `app/page.tsx` | navegação real | C02 | — |
 | C04 | Login/cadastro/verificação/reset | Auth UI | VERIFIED | `app/entrar`, `cadastro`, `verificar-email`, `recuperar-senha`, `redefinir-senha` | login real com conta demo | C01 | e-mail real bloqueado |
 | C05 | App shell + dashboard | Dashboard Engineer | VERIFIED | `components/app-shell.tsx`, `app/app/page.tsx` | screenshot e texto reais | C03 | — |
-| C06 | Mapa de aprendizado + módulo | Frontend Engineer | VERIFIED | `app/app/aprender/**` | navegação real; 5/19 e próxima aula correta | B10 | — |
+| C06 | Mapa de aprendizado + módulo | Frontend Engineer | VERIFIED | `app/app/aprender/**` | navegação real; 5/31 e próxima aula correta | B10 | — |
 | C07 | Aula + vídeo + quiz + conclusão | Frontend Engineer | VERIFIED | `app/app/aprender/aula/[slug]` | conclusão e quiz reais no browser | B11 | vídeo real |
 | C08 | Biblioteca + artigo | Content/Frontend | VERIFIED | `app/app/biblioteca/**` | artigo renderizado | B10 | — |
 | C09 | Mercado | Frontend | VERIFIED | `app/app/mercado/page.tsx` | fallback rotulado | B14 | provedor |
@@ -87,9 +107,9 @@
 |---|---|---|---|---|---|---|---|
 | D01 | Suíte backend completa | Backend Testing | VERIFIED | `backend/src/test/**` | 28/28, 0 skipped | Docker | — |
 | D02 | Fluxo integrado backend | Integration Testing | VERIFIED | `MvpFlowIntegrationTest` | 1/1 jornada completa | PostgreSQL | — |
-| D03 | E2E manual no browser | E2E Engineer | VERIFIED | — | login, aula, quiz, simulador, perfil | backend+frontend | — |
-| D04 | CI GitHub Actions | Deployment Engineer | **IMPLEMENTED** | `.github/workflows/ci.yml` | workflow criado; não executado remoto | push | autorização |
-| D05 | Docker/Render/Vercel runbook | Infra Engineer | **TESTED** | `Dockerfile`, `render.yaml`, `docs/DEPLOY.md` | imagem Docker buildada; container em produção local com health 200 e Flyway validado | Docker | credenciais Render/Vercel |
+| D03 | E2E manual no browser | E2E Engineer | **TESTED** (manual) | — | login, aula, quiz, simulador, perfil; sem automação | backend+frontend | — |
+| D04 | CI GitHub Actions | Deployment Engineer | **IMPLEMENTED**; remoto **NOT VERIFIED** | `.github/workflows/ci.yml` | 5 jobs, triggers `**`; sem run remoto | push | autorização/branch protection |
+| D05 | Docker/Render/Vercel runbook | Infra Engineer | **TESTED** (histórico local) | `Dockerfile`, `render.yaml`, `docs/DEPLOY.md` | imagem Docker buildada; container local com health 200 | Docker | credenciais Render/Vercel |
 | D06 | Documentação de auditoria/progresso | Product Docs | VERIFIED | `docs/AUDITORIA_GERAL.md`, este arquivo | leitura e conferência | — | — |
 | D07 | README e docs de arquitetura/API | Product Docs | **IMPLEMENTED** | `README.md`, `docs/**` | auditoria de docs vs código; contagens corrigidas | — | — |
 | D08 | Roteiro de demo e apresentação | Presentation Architect | **IMPLEMENTED** | `docs/DEMO_SCRIPT.md`, `docs/APRESENTACAO.md` | rascunho completo com plano B | D03 | ensaio pendente |
@@ -109,6 +129,26 @@
 | E05 | Vídeos educativos | BLOCKED | arquivos e direitos | demonstração de vídeo |
 | E06 | Push/merge para `main` | BLOCKED | autorização do proprietário | publicação do código |
 | E07 | Contato de segurança | BLOCKED | e-mail real | documento público |
+
+### Fase 5 — Pipeline de vídeo (CapCut + VectCutAPI)
+
+| ID | Tarefa | Agente | Status | Arquivos | Testes/evidência | Dependências | Bloqueios |
+|---|---|---|---|---|---|---|---|
+| V01 | Instalar VectCutAPI isolado | Video/Integration | **INSTALLED** | `%LOCALAPPDATA%\InvestFacil\tools\VectCutAPI` | venv 3.12.8; dependências; `mcp_server.py` | — | — |
+| V02 | Endurecer VectCutAPI | Security/Video | **TESTED** | `config.json`, `settings/local.py`, `save_draft_impl.py` | domínio local; upload/auto-deploy desligados; mídia remota bloqueada | V01 | — |
+| V03 | Configurar MCP no OpenCode | Integration | **CONNECTED** | `~/.config/opencode/opencode.json` | `opencode mcp list` → `vectcut-api connected` | V01 | — |
+| V04 | Validar ferramentas VectCutAPI | QA | **TESTED** | `_audit/vectcut-*.py` | 11 ferramentas; create/add/save; guarda remota | V03 | — |
+| V05 | Piloto 01 via CapCut MCP | Video | **TESTED**; visual **parcial** | `content/pilots/01-volatilidade/**` | 33 s, 3 slides + narração; `ok: true` | — | abertura visual |
+| V06 | Piloto 02 via VectCutAPI | Video | **TESTED** | `content/pilots/02-diversificacao/**` | 51,1 s, 3 imagens, áudio, 12 legendas revisadas | V02/V04 | — |
+| V07 | Interop VectCutAPI → CapCut MCP | Integration/QA | **TESTED** | `_audit/vectcut-build-pilot02.py`, `capcut-mcp/interop-pilot02.mjs` | read/validate/save; `ok: true` | V06 | — |
+| V08 | Reabrir e inspecionar no CapCut 9.8 | Visual QA | **VERIFIED** (52 amostras) | `_audit/missao03-contact-sheet-52s.png` | 0–51 s; cenas 1–3; sem tela preta | V06 | — |
+| V09 | Exportar MP4 | Video | **PENDING (manual)** | `content/pilots/02-diversificacao/export/` | editor pronto no início | V08 | ação humana |
+| V10 | Verificar MP4 exportado | QA | **PENDING** | `scripts/verify-mp4.py` | aguarda o arquivo | V09 | arquivo MP4 |
+| V11 | Subir no Supabase | Storage | **BLOCKED** | — | — | V10 | credenciais |
+
+**Status do piloto 02:** **CONCLUÍDO COM RESSALVAS** — SRT corrigido, draft
+reaberto e validado; MP4 e verificação independente pendentes de exportação
+manual.
 
 ---
 
@@ -141,7 +181,7 @@ Resultado: **28 testes, 0 falhas, 0 erros, 0 skipped**.
 ```powershell
 cd frontend
 npm test        # 6 testes
-npm run build   # 16 páginas + not-found, build de produção
+npm run build   # 20 entradas de rota (19 app + not-found), build de produção
 ```
 
 ### Runtime local
@@ -155,6 +195,20 @@ npm run build   # 16 páginas + not-found, build de produção
 - MFA testado por API: setup → enable → login desafiado → verify → replay do
   mesmo código (401) → disable.
 - Logout testado: 204 e refresh antigo passa a 401 (família revogada).
+
+### Pipeline de vídeo
+
+- VectCutAPI (11 ferramentas) criou `if_piloto_diversificacao` com 3 imagens,
+  áudio de 51,1 s e 12 legendas revisadas; mídia remota bloqueada.
+- CapCut MCP (17 ferramentas) leu o draft, validou `ok: true` e salvou.
+- CapCut 9.8 reabriu o draft após o save; a inspeção visual cobriu 0–51 s em 52
+  amostras, sem tela preta e com legendas horizontais acima do rodapé.
+- Áudio analisado: 51,084 s, mono 22,05 kHz/16-bit, pico 0,5464, sem clipping.
+- O áudio do draft era WAV renomeado como `.mp3`; foi convertido para MP3 real
+  (192 kbps, 51,147 s) e validado com `ffprobe`.
+- Saída visual: `_audit/missao03-contact-sheet-52s.png`,
+  `_audit/missao03-timeline-chart.png`, `_audit/missao03-editor-ready.png`.
+- MP4: ainda não exportado; `scripts/verify-mp4.py` está preparado.
 
 ---
 
@@ -195,22 +249,32 @@ Nenhuma revisão alterou arquivos; os relatórios foram incorporados a
 | C01 | Auditar MCPs CapCut e escolher opção segura | **VERIFIED** | `docs/CAPCUT_MCP_SETUP.md`; MIT commit `50beafd`; código revisado | — |
 | C02 | Endurecer e instalar MCP | **VERIFIED** | clone local em `%LOCALAPPDATA%\InvestFacil\capcut-mcp`; `npm ci --ignore-scripts`; patch de segurança | — |
 | C03 | Validar conexão MCP | **VERIFIED** | cliente SDK listou 17 ferramentas e leu o piloto | — |
-| C04 | Criar draft descartável e piloto | **TESTED** | `if_mcp_smoke` e `investfacil_piloto` (33 s, 9:16, 3 slides + narração; validação ok) | abertura visual da timeline parcial |
-| C05 | Configurar MCP nos clientes | **VERIFIED** | `opencode.json` e `mcp_config.json` com backups | reiniciar clientes |
+| C04 | Criar draft descartável e piloto | **TESTED** | `if_mcp_smoke` e `investfacil_piloto` (33 s, 9:16, 3 slides + narração; validação ok) | abertura visual do piloto 01 parcial |
+| C05 | Configurar MCP nos clientes | **VERIFIED** | `opencode.json` (`capcut` e `vectcut-api`) e `mcp_config.json` com backups | Gemini/Antigravity exige reinício |
 | C06 | Exportar e subir vídeo | **BLOCKED** | CapCut sem export CLI; Supabase sem credenciais | export manual + Supabase |
-| T01 | Pipeline e templates de conteúdo | **IMPLEMENTED** | `docs/CONTENT_PIPELINE.md`, `content/templates/**`, piloto | revisão humana/TTS final |
+| C07 | Instalar/endurecer VectCutAPI | **TESTED** | `%LOCALAPPDATA%\InvestFacil\tools\VectCutAPI`; domínio local; mídia remota bloqueada | — |
+| C08 | Criar piloto 02 com VectCutAPI | **TESTED** | `if_piloto_diversificacao` (51,1 s, 3 imagens, áudio, 12 legendas) | — |
+| C09 | Interop CapCut MCP no piloto 02 | **TESTED** | `read_timeline` + `validate` + `save`; `ok: true` | — |
+| C10 | Reabrir e inspecionar o piloto 02 | **VERIFIED** (52 amostras) | CapCut 9.8; 0–51 s; sem tela preta | — |
+| C11 | Exportar e verificar MP4 | **PENDING (manual)** | `export/` vazio; `scripts/verify-mp4.py` pronto | ação humana |
+| T01 | Pipeline e templates de conteúdo | **IMPLEMENTED** | `docs/CONTENT_PIPELINE.md`, `content/templates/**`, pilotos 01 e 02 | revisão humana/TTS final |
 
 **Custos:** nenhum cartão associado; nenhum plano Firebase Blaze habilitado;
-CapCut Pro/Ultra não foi adquirido. O MCP é MIT e roda localmente.
+CapCut Pro/Ultra não foi adquirido. CapCut MCP e VectCutAPI são open source e
+rodam localmente.
 
 ## 7. Próximas ações (ordem de execução)
 
-1. Provisionar Supabase e rodar V1–V5; testar upload/playback real.
-2. Configurar Resend e validar e-mail.
-3. Deploy Render + Vercel; repetir checklist de release.
-4. Executar E2E publicado e corrigir CSP/proxy/rate limit.
-5. Adicionar teste integrado de MFA e logout.
-6. Auditar acessibilidade e responsividade com ferramenta.
-7. Teste de carga básico.
-8. Ensaiar demo com plano B (mercado fallback e vídeo placeholder).
-9. Revisar documentação final e emitir `QUALIDADE_FINAL.md`.
+1. Exportar o MP4 do piloto 02 no CapCut (editor aberto no início) e rodar
+   `scripts/verify-mp4.py`; revisar o resultado.
+2. Exportar o MP4 do piloto 01 e revisar os dois arquivos no celular.
+3. Fazer a escuta humana da narração e ajustar TTS/SRT se necessário.
+4. Provisionar Supabase e rodar V1–V5; testar upload/playback real.
+5. Configurar Resend e validar e-mail.
+6. Deploy Render + Vercel; repetir checklist de release.
+7. Executar E2E publicado e corrigir CSP/proxy/rate limit.
+8. Adicionar teste integrado de MFA e logout.
+9. Auditar acessibilidade e responsividade com ferramenta.
+10. Teste de carga básico.
+11. Ensaiar demo com plano B (mercado fallback e vídeo placeholder).
+12. Revisar documentação final e emitir `QUALIDADE_FINAL.md`.

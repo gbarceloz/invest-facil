@@ -1,0 +1,16 @@
+{
+  "provider": "Microsoft SAPI (local)",
+  "voice": "Microsoft Maria Desktop (pt-BR)",
+  "text": "Seu dinheiro está parado? A inflação corrói o poder de compra. Em 10 anos, a 5%, R$ 100 valem R$ 61.",
+  "samples": [
+    { "file": "01-maria-lenta.wav", "rate": -1, "durationSeconds": 14.779 },
+    { "file": "02-maria-natural.wav", "rate": 0, "durationSeconds": 13.23 },
+    { "file": "03-maria-rapida.wav", "rate": 1, "durationSeconds": 11.942 }
+  ],
+  "notes": "As três amostras usam a mesma voz local. Não representam aprovação de naturalidade. Daniel (masculino) existe no registro OneCore, mas não é selecionável pela API System.Speech usada neste teste.",
+  "elevenLabs": {
+    "status": "BLOQUEADO",
+    "reason": "Nenhuma API key configurada no ambiente; nenhum plano ou crédito foi contratado.",
+    "costKnown": "Plano gratuito/API e planos pagos variam por caractere; consultar antes de contratar."
+  }
+}

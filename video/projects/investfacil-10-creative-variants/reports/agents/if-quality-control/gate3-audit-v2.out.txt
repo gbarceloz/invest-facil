@@ -1,0 +1,219 @@
+PASS | V01 7 docs | CONCEPT.md,SCRIPT.md,STORYBOARD.md,EDITING_TIMELINE.md,SOUND_DESIGN.md,RETENTION_MAP.md,QUALITY_CHECKLIST.md
+PASS | V02 7 docs | CONCEPT.md,SCRIPT.md,STORYBOARD.md,EDITING_TIMELINE.md,SOUND_DESIGN.md,RETENTION_MAP.md,QUALITY_CHECKLIST.md
+PASS | V03 7 docs | CONCEPT.md,SCRIPT.md,STORYBOARD.md,EDITING_TIMELINE.md,SOUND_DESIGN.md,RETENTION_MAP.md,QUALITY_CHECKLIST.md
+PASS | V04 7 docs | CONCEPT.md,SCRIPT.md,STORYBOARD.md,EDITING_TIMELINE.md,SOUND_DESIGN.md,RETENTION_MAP.md,QUALITY_CHECKLIST.md
+PASS | V05 7 docs | CONCEPT.md,SCRIPT.md,STORYBOARD.md,EDITING_TIMELINE.md,SOUND_DESIGN.md,RETENTION_MAP.md,QUALITY_CHECKLIST.md
+PASS | V06 7 docs | CONCEPT.md,SCRIPT.md,STORYBOARD.md,EDITING_TIMELINE.md,SOUND_DESIGN.md,RETENTION_MAP.md,QUALITY_CHECKLIST.md
+PASS | V07 7 docs | CONCEPT.md,SCRIPT.md,STORYBOARD.md,EDITING_TIMELINE.md,SOUND_DESIGN.md,RETENTION_MAP.md,QUALITY_CHECKLIST.md
+PASS | V08 7 docs | CONCEPT.md,SCRIPT.md,STORYBOARD.md,EDITING_TIMELINE.md,SOUND_DESIGN.md,RETENTION_MAP.md,QUALITY_CHECKLIST.md
+PASS | V09 7 docs | CONCEPT.md,SCRIPT.md,STORYBOARD.md,EDITING_TIMELINE.md,SOUND_DESIGN.md,RETENTION_MAP.md,QUALITY_CHECKLIST.md
+PASS | V10 7 docs | CONCEPT.md,SCRIPT.md,STORYBOARD.md,EDITING_TIMELINE.md,SOUND_DESIGN.md,RETENTION_MAP.md,QUALITY_CHECKLIST.md
+PASS | V01 no stale 'energia média-alta'
+PASS | V01 no stale 'Conheça a plataforma'
+PASS | V01 no stale 'Fechar em 40 s'
+PASS | V01 no stale 'Fechar em 35 s'
+PASS | V01 no stale 'Fechar em 30 s'
+PASS | V01 no stale 'uma cadeira'
+PASS | V01 no stale 'agora com preço maior'
+PASS | V01 no stale 'dois itens saem'
+PASS | V01 no stale 'números verificáveis'
+PASS | V01 no stale 'O ponto não é quanto você tem'
+PASS | V01 concepto tem duração calculada
+PASS | V01 script tem direção de voz
+PASS | V01 script tem pausas
+PASS | V01 editing tem cortes internos
+PASS | V01 storyboard tem disclaimer
+PASS | V01 storyboard tem safe zone TikTok
+PASS | V01 sound tem ducking
+PASS | V01 sound tem limite de SFX
+PASS | V02 no stale 'energia média-alta'
+PASS | V02 no stale 'Conheça a plataforma'
+PASS | V02 no stale 'Fechar em 40 s'
+PASS | V02 no stale 'Fechar em 35 s'
+PASS | V02 no stale 'Fechar em 30 s'
+PASS | V02 no stale 'uma cadeira'
+PASS | V02 no stale 'agora com preço maior'
+PASS | V02 no stale 'dois itens saem'
+PASS | V02 no stale 'números verificáveis'
+PASS | V02 no stale 'O ponto não é quanto você tem'
+PASS | V02 concepto tem duração calculada
+PASS | V02 script tem direção de voz
+PASS | V02 script tem pausas
+PASS | V02 editing tem cortes internos
+PASS | V02 storyboard tem disclaimer
+PASS | V02 storyboard tem safe zone TikTok
+PASS | V02 sound tem ducking
+PASS | V02 sound tem limite de SFX
+PASS | V03 no stale 'energia média-alta'
+PASS | V03 no stale 'Conheça a plataforma'
+PASS | V03 no stale 'Fechar em 40 s'
+PASS | V03 no stale 'Fechar em 35 s'
+PASS | V03 no stale 'Fechar em 30 s'
+PASS | V03 no stale 'uma cadeira'
+PASS | V03 no stale 'agora com preço maior'
+PASS | V03 no stale 'dois itens saem'
+PASS | V03 no stale 'números verificáveis'
+PASS | V03 no stale 'O ponto não é quanto você tem'
+PASS | V03 concepto tem duração calculada
+PASS | V03 script tem direção de voz
+PASS | V03 script tem pausas
+PASS | V03 editing tem cortes internos
+PASS | V03 storyboard tem disclaimer
+PASS | V03 storyboard tem safe zone TikTok
+PASS | V03 sound tem ducking
+PASS | V03 sound tem limite de SFX
+PASS | V04 no stale 'energia média-alta'
+PASS | V04 no stale 'Conheça a plataforma'
+PASS | V04 no stale 'Fechar em 40 s'
+PASS | V04 no stale 'Fechar em 35 s'
+PASS | V04 no stale 'Fechar em 30 s'
+PASS | V04 no stale 'uma cadeira'
+PASS | V04 no stale 'agora com preço maior'
+PASS | V04 no stale 'dois itens saem'
+PASS | V04 no stale 'números verificáveis'
+PASS | V04 no stale 'O ponto não é quanto você tem'
+PASS | V04 concepto tem duração calculada
+PASS | V04 script tem direção de voz
+PASS | V04 script tem pausas
+PASS | V04 editing tem cortes internos
+PASS | V04 storyboard tem disclaimer
+PASS | V04 storyboard tem safe zone TikTok
+PASS | V04 sound tem ducking
+PASS | V04 sound tem limite de SFX
+PASS | V05 no stale 'energia média-alta'
+PASS | V05 no stale 'Conheça a plataforma'
+PASS | V05 no stale 'Fechar em 40 s'
+PASS | V05 no stale 'Fechar em 35 s'
+PASS | V05 no stale 'Fechar em 30 s'
+PASS | V05 no stale 'uma cadeira'
+PASS | V05 no stale 'agora com preço maior'
+PASS | V05 no stale 'dois itens saem'
+PASS | V05 no stale 'números verificáveis'
+PASS | V05 no stale 'O ponto não é quanto você tem'
+PASS | V05 concepto tem duração calculada
+PASS | V05 script tem direção de voz
+PASS | V05 script tem pausas
+PASS | V05 editing tem cortes internos
+PASS | V05 storyboard tem disclaimer
+PASS | V05 storyboard tem safe zone TikTok
+PASS | V05 sound tem ducking
+PASS | V05 sound tem limite de SFX
+PASS | V06 no stale 'energia média-alta'
+PASS | V06 no stale 'Conheça a plataforma'
+PASS | V06 no stale 'Fechar em 40 s'
+PASS | V06 no stale 'Fechar em 35 s'
+PASS | V06 no stale 'Fechar em 30 s'
+PASS | V06 no stale 'uma cadeira'
+PASS | V06 no stale 'agora com preço maior'
+PASS | V06 no stale 'dois itens saem'
+PASS | V06 no stale 'números verificáveis'
+PASS | V06 no stale 'O ponto não é quanto você tem'
+PASS | V06 concepto tem duração calculada
+PASS | V06 script tem direção de voz
+PASS | V06 script tem pausas
+PASS | V06 editing tem cortes internos
+PASS | V06 storyboard tem disclaimer
+PASS | V06 storyboard tem safe zone TikTok
+PASS | V06 sound tem ducking
+PASS | V06 sound tem limite de SFX
+PASS | V07 no stale 'energia média-alta'
+PASS | V07 no stale 'Conheça a plataforma'
+PASS | V07 no stale 'Fechar em 40 s'
+PASS | V07 no stale 'Fechar em 35 s'
+PASS | V07 no stale 'Fechar em 30 s'
+PASS | V07 no stale 'uma cadeira'
+PASS | V07 no stale 'agora com preço maior'
+PASS | V07 no stale 'dois itens saem'
+PASS | V07 no stale 'números verificáveis'
+PASS | V07 no stale 'O ponto não é quanto você tem'
+PASS | V07 concepto tem duração calculada
+PASS | V07 script tem direção de voz
+PASS | V07 script tem pausas
+PASS | V07 editing tem cortes internos
+PASS | V07 storyboard tem disclaimer
+PASS | V07 storyboard tem safe zone TikTok
+PASS | V07 sound tem ducking
+PASS | V07 sound tem limite de SFX
+PASS | V08 no stale 'energia média-alta'
+PASS | V08 no stale 'Conheça a plataforma'
+PASS | V08 no stale 'Fechar em 40 s'
+PASS | V08 no stale 'Fechar em 35 s'
+PASS | V08 no stale 'Fechar em 30 s'
+PASS | V08 no stale 'uma cadeira'
+PASS | V08 no stale 'agora com preço maior'
+PASS | V08 no stale 'dois itens saem'
+PASS | V08 no stale 'números verificáveis'
+PASS | V08 no stale 'O ponto não é quanto você tem'
+PASS | V08 concepto tem duração calculada
+PASS | V08 script tem direção de voz
+PASS | V08 script tem pausas
+PASS | V08 editing tem cortes internos
+PASS | V08 storyboard tem disclaimer
+PASS | V08 storyboard tem safe zone TikTok
+PASS | V08 sound tem ducking
+PASS | V08 sound tem limite de SFX
+PASS | V09 no stale 'energia média-alta'
+PASS | V09 no stale 'Conheça a plataforma'
+PASS | V09 no stale 'Fechar em 40 s'
+PASS | V09 no stale 'Fechar em 35 s'
+PASS | V09 no stale 'Fechar em 30 s'
+PASS | V09 no stale 'uma cadeira'
+PASS | V09 no stale 'agora com preço maior'
+PASS | V09 no stale 'dois itens saem'
+PASS | V09 no stale 'números verificáveis'
+PASS | V09 no stale 'O ponto não é quanto você tem'
+PASS | V09 concepto tem duração calculada
+PASS | V09 script tem direção de voz
+PASS | V09 script tem pausas
+PASS | V09 editing tem cortes internos
+PASS | V09 storyboard tem disclaimer
+PASS | V09 storyboard tem safe zone TikTok
+PASS | V09 sound tem ducking
+PASS | V09 sound tem limite de SFX
+PASS | V10 no stale 'energia média-alta'
+PASS | V10 no stale 'Conheça a plataforma'
+PASS | V10 no stale 'Fechar em 40 s'
+PASS | V10 no stale 'Fechar em 35 s'
+PASS | V10 no stale 'Fechar em 30 s'
+PASS | V10 no stale 'uma cadeira'
+PASS | V10 no stale 'agora com preço maior'
+PASS | V10 no stale 'dois itens saem'
+PASS | V10 no stale 'números verificáveis'
+PASS | V10 no stale 'O ponto não é quanto você tem'
+PASS | V10 concepto tem duração calculada
+PASS | V10 script tem direção de voz
+PASS | V10 script tem pausas
+PASS | V10 editing tem cortes internos
+PASS | V10 storyboard tem disclaimer
+PASS | V10 storyboard tem safe zone TikTok
+PASS | V10 sound tem ducking
+PASS | V10 sound tem limite de SFX
+PASS | V03 hook corrigido
+PASS | V06 hook corrigido
+PASS | V04 shot 4/5 corrigido
+PASS | V02 shot sem preço maior
+PASS | V09 qualifica imposto
+PASS | matriz 10 IDs
+PASS | matriz V01 1 ocorrência no núcleo | 4
+PASS | matriz V02 1 ocorrência no núcleo | 4
+PASS | matriz V03 1 ocorrência no núcleo | 4
+PASS | matriz V04 1 ocorrência no núcleo | 4
+PASS | matriz V05 1 ocorrência no núcleo | 4
+PASS | matriz V06 1 ocorrência no núcleo | 4
+PASS | matriz V07 1 ocorrência no núcleo | 4
+PASS | matriz V08 1 ocorrência no núcleo | 4
+PASS | matriz V09 1 ocorrência no núcleo | 4
+PASS | matriz V10 1 ocorrência no núcleo | 4
+PASS | Nenhuma fala idêntica em 3+ vídeos | {}
+PASS | V01 simulações rotuladas
+PASS | V02 simulações rotuladas
+PASS | V03 simulações rotuladas
+PASS | V04 simulações rotuladas
+PASS | V05 simulações rotuladas
+PASS | V06 simulações rotuladas
+PASS | V07 simulações rotuladas
+PASS | V08 simulações rotuladas
+PASS | V09 simulações rotuladas
+PASS | V10 simulações rotuladas
+
+TOTAL 217 checks, 0 failures

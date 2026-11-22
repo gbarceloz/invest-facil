@@ -1,0 +1,62 @@
+{
+  "total": 51.08417233560091,
+  "scenes": [
+    {
+      "image": "slide-01.png",
+      "start": 0.0,
+      "end": 12.623310657596374
+    },
+    {
+      "image": "slide-02.png",
+      "start": 12.623310657596374,
+      "end": 29.640589569161
+    },
+    {
+      "image": "slide-03.png",
+      "start": 29.640589569161,
+      "end": 51.08417233560091
+    }
+  ],
+  "sentences": [
+    {
+      "text": "Diversificar não é comprar tudo.",
+      "start": 0.0,
+      "end": 3.9067120181405897
+    },
+    {
+      "text": "É espalhar o risco entre ativos diferentes, sem abrir mão de entender o que você tem.",
+      "start": 4.20671201814059,
+      "end": 12.323310657596373
+    },
+    {
+      "text": "Concentrar tudo em uma única aposta aumenta o impacto de qualquer erro.",
+      "start": 12.623310657596374,
+      "end": 19.524852607709754
+    },
+    {
+      "text": "Se a sua reserva e os seus investimentos dependem da mesma coisa, o risco também está concentrado.",
+      "start": 19.82485260770975,
+      "end": 29.340589569160997
+    },
+    {
+      "text": "Diversificar é método, não coleção.",
+      "start": 29.640589569161,
+      "end": 34.13274376417234
+    },
+    {
+      "text": "Comece pela reserva, defina prazos e limites, e estude antes de decidir.",
+      "start": 34.432743764172336,
+      "end": 42.6243537414966
+    },
+    {
+      "text": "Conteúdo educativo.",
+      "start": 42.9243537414966,
+      "end": 45.94580498866213
+    },
+    {
+      "text": "Não é recomendação de investimento.",
+      "start": 46.24580498866214,
+      "end": 50.18417233560091
+    }
+  ]
+}

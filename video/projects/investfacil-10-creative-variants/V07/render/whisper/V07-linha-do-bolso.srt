@@ -1,0 +1,39 @@
+1
+00:00:00,000 --> 00:00:03,580
+Uma linha pode explicar por que seu dinheiro vale menos.
+
+2
+00:00:03,580 --> 00:00:07,660
+Ela começa em R$ 100, é o seu poder de compra hoje.
+
+3
+00:00:07,660 --> 00:00:11,900
+Numa simulação de 5% ao ano, ela cai devagar.
+
+4
+00:00:11,900 --> 00:00:17,260
+Em 5 anos, cerca de R$ 78, a queda já aparece.
+
+5
+00:00:17,260 --> 00:00:23,780
+Em 10 anos, cerca de R$ 61, é uma perda de quase 39%.
+
+6
+00:00:23,780 --> 00:00:27,980
+O número na conta não mudou, a nota continua mesma.
+
+7
+00:00:27,980 --> 00:00:31,480
+O que ele compra? Sim, a sexta fica menor.
+
+8
+00:00:31,480 --> 00:00:34,960
+Isso é inflação, e é por isso que entender importa.
+
+9
+00:00:34,960 --> 00:00:37,620
+Simulação com 5% ao ano.
+
+10
+00:00:37,620 --> 00:00:39,220
+Salve para consultar!

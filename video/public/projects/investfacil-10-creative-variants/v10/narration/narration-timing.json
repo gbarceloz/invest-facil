@@ -1,0 +1,118 @@
+{
+  "variant": "V10",
+  "voice": "pt-BR-ThalitaMultilingualNeural",
+  "rate": "-12%",
+  "sample_rate": 48000,
+  "total_s": 39.566,
+  "tail_s": 0.35,
+  "lines": [
+    {
+      "id": "L01",
+      "display": "Se o seu dinheiro pudesse falar...",
+      "tts": "Se o seu dinheiro pudesse falar...",
+      "start": 0.0,
+      "end": 2.065,
+      "duration": 2.065,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L02",
+      "display": "Ele diria: eu não desapareci.",
+      "tts": "Ele diria: eu não desapareci.",
+      "start": 2.185,
+      "end": 4.624,
+      "duration": 2.439,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L03",
+      "display": "Você só compra menos. O número continua na nota.",
+      "tts": "Você só compra menos. O número continua na nota.",
+      "start": 4.744,
+      "end": 8.757,
+      "duration": 4.012,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L04",
+      "display": "O que muda é o tamanho do que ele pode comprar.",
+      "tts": "O que muda é o tamanho do que ele pode comprar.",
+      "start": 8.877,
+      "end": 11.419,
+      "duration": 2.542,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L05",
+      "display": "O número continua o mesmo. A nota não encolhe.",
+      "tts": "O número continua o mesmo. A nota não encolhe.",
+      "start": 11.539,
+      "end": 15.202,
+      "duration": 3.663,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L06",
+      "display": "Mas o poder de compra muda. E muda devagar.",
+      "tts": "Mas o poder de compra muda. E muda devagar.",
+      "start": 15.322,
+      "end": 18.668,
+      "duration": 3.346,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L07",
+      "display": "É a inflação. Ela não some com o dinheiro.",
+      "tts": "É a inflação. Ela não some com o dinheiro.",
+      "start": 18.788,
+      "end": 21.815,
+      "duration": 3.027,
+      "pause_after_ms": 220
+    },
+    {
+      "id": "L08",
+      "display": "Ela diminui o que ele pode comprar. Item por item.",
+      "tts": "Ela diminui o que ele pode comprar. Item por item.",
+      "start": 22.035,
+      "end": 25.63,
+      "duration": 3.596,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L09",
+      "display": "Simulação de 5% ao ano. Em dez anos, 61.",
+      "tts": "Simulação de cinco por cento ao ano. Em dez anos, sessenta e um.",
+      "start": 25.75,
+      "end": 30.704,
+      "duration": 4.954,
+      "pause_after_ms": 220
+    },
+    {
+      "id": "L10",
+      "display": "O dinheiro não some. Ele muda de tamanho.",
+      "tts": "O dinheiro não some. Ele muda de tamanho.",
+      "start": 30.924,
+      "end": 33.98,
+      "duration": 3.056,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L11",
+      "display": "No que você pode comprar, ele fica menor.",
+      "tts": "No que você pode comprar, ele fica menor.",
+      "start": 34.1,
+      "end": 36.638,
+      "duration": 2.538,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L12",
+      "display": "Salve para rever quando o preço subir.",
+      "tts": "Salve para rever quando o preço subir.",
+      "start": 36.758,
+      "end": 39.216,
+      "duration": 2.458,
+      "pause_after_ms": 0
+    }
+  ]
+}

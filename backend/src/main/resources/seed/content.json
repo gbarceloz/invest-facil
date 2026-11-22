@@ -100,6 +100,130 @@
               ]
             }
           ]
+        },
+        {
+          "slug": "entender-o-mercado",
+          "title": "Entender o mercado",
+          "description": "Inflação, Selic, CDI e uma leitura crítica das notícias e dos números.",
+          "order": 2,
+          "lessons": [
+            {
+              "slug": "inflacao-poder-de-compra",
+              "title": "Inflação e poder de compra",
+              "estimatedMin": 5,
+              "order": 1,
+              "content": "## O dinheiro perde valor com o tempo\n\nInflação é o aumento generalizado de preços. Se a sua renda não acompanha esse aumento, você compra menos com o mesmo dinheiro. É por isso que “guardar embaixo do colchão” também tem um custo: o poder de compra diminui.\n\n## Como medir\n\nO IPCA é o índice oficial de inflação ao consumidor no Brasil. Ele acompanha uma cesta de produtos e serviços e não representa a sua inflação pessoal. Quem gasta muito com aluguel, transporte ou alimentos pode sentir uma variação diferente.\n\n## O que fazer com essa informação\n\n- Comparar a rentabilidade de um investimento com a inflação.\n- Entender que retorno nominal não é retorno real.\n- Manter reserva de emergência com liquidez, mesmo que renda menos.\n- Evitar decisões de longo prazo baseadas apenas no preço de hoje.\n\n> Se o seu dinheiro rende 8% e a inflação é 5%, o ganho real é menor do que 3% — e impostos podem reduzir ainda mais.",
+              "quiz": [
+                {
+                  "question": "O que a inflação representa?",
+                  "options": [
+                    "A queda do preço de todos os produtos",
+                    "O aumento generalizado de preços e a perda de poder de compra",
+                    "Um imposto sobre investimentos",
+                    "A valorização garantida da moeda"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "Para saber se um investimento ganhou valor real, é preciso comparar o retorno com:",
+                  "options": [
+                    "A inflação",
+                    "O número de anos",
+                    "O preço do dólar apenas",
+                    "A taxa de desemprego"
+                  ],
+                  "correctIndex": 0
+                }
+              ]
+            },
+            {
+              "slug": "selic-cdi-juros",
+              "title": "Selic, CDI e juros",
+              "estimatedMin": 5,
+              "order": 2,
+              "content": "## Selic\n\nA Selic é a taxa básica de juros da economia brasileira, definida pelo Banco Central. Ela influencia o custo do crédito, o retorno de títulos públicos e a atratividade de investimentos de risco.\n\n## CDI\n\nO CDI é uma taxa de referência do mercado interbancário, próxima da Selic. Muitos produtos de renda fixa são comparados ao CDI: “100% do CDI”, “110% do CDI”. Isso não é garantia de retorno; é uma forma de precificar a taxa.\n\n## Juros compostos\n\nJuros compostos são juros sobre juros. O tempo é parte da equação: uma taxa pequena, mantida por muitos anos, pode superar uma taxa alta usada por pouco tempo. O efeito também funciona contra você, em dívidas caras.\n\n> Taxa alta não é sinônimo de investimento bom. É preciso olhar risco, liquidez, prazo e custos.",
+              "quiz": [
+                {
+                  "question": "O que é a Selic?",
+                  "options": [
+                    "A taxa básica de juros da economia brasileira",
+                    "O preço do dólar",
+                    "Um imposto sobre ações",
+                    "A inflação oficial"
+                  ],
+                  "correctIndex": 0
+                },
+                {
+                  "question": "“100% do CDI” significa que o investimento:",
+                  "options": [
+                    "Tem retorno garantido de 100%",
+                    "É comparado à taxa do CDI, sem garantia de retorno",
+                    "Nunca perde para a inflação",
+                    "É isento de risco"
+                  ],
+                  "correctIndex": 1
+                }
+              ]
+            },
+            {
+              "slug": "o-que-e-mercado-financeiro",
+              "title": "O que é o mercado financeiro",
+              "estimatedMin": 5,
+              "order": 3,
+              "content": "## O encontro entre quem tem e quem precisa\n\nO mercado financeiro conecta poupadores, empresas e governos. Quem tem dinheiro pode emprestar, comprar participação ou assumir risco; quem precisa pode captar recursos para investir, produzir ou financiar dívida.\n\n## Os principais blocos\n\n- **Renda fixa:** empréstimos a governos, bancos ou empresas, com regras de juros.\n- **Renda variável:** participação em empresas ou fundos, com preço que oscila.\n- **Câmbio:** moedas estrangeiras.\n- **Derivativos:** contratos cujo valor depende de outro ativo; alta complexidade.\n- **Criptoativos:** ativos digitais com regras e riscos próprios.\n\n## Economia importa\n\nJuros, inflação, emprego, câmbio e política fiscal afetam o preço dos ativos. Você não precisa prever o futuro; precisa entender como o ambiente muda o risco e o retorno esperado.\n\n> Mercado financeiro não é cassino. É um conjunto de contratos, instituições e riscos que precisam ser compreendidos.",
+              "quiz": [
+                {
+                  "question": "Qual é a função central do mercado financeiro?",
+                  "options": [
+                    "Garantir lucro para todos",
+                    "Conectar quem poupa e quem precisa de recursos",
+                    "Eliminar o risco",
+                    "Definir o preço de todos os produtos"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "Renda variável se caracteriza por:",
+                  "options": [
+                    "Retorno fixo contratado",
+                    "Preço que pode oscilar e risco de perda",
+                    "Garantia do governo",
+                    "Ausência de custos"
+                  ],
+                  "correctIndex": 1
+                }
+              ]
+            },
+            {
+              "slug": "como-interpretar-o-mercado",
+              "title": "Como interpretar o mercado",
+              "estimatedMin": 5,
+              "order": 4,
+              "content": "## Separe fato, interpretação e opinião\n\nUma notícia pode ser um fato; a leitura sobre o efeito dela é interpretação; a recomendação de compra ou venda é opinião. Educação financeira ensina a reconhecer a diferença antes de agir.\n\n## Perguntas úteis\n\n- O que exatamente mudou: juros, inflação, lucro, regulação?\n- Qual é o horizonte: dias, meses ou anos?\n- O ativo cabe no meu objetivo e no meu risco?\n- Quanto eu perderia se estivesse errado?\n- Existe conflito de interesse em quem está recomendando?\n\n## O que evitar\n\n- Manchetes que prometem retorno.\n- Gráficos sem escala ou contexto.\n- “Todo mundo está comprando.”\n- Urgência artificial.\n- Explicações que ignoram custos, impostos e liquidez.\n\n> Interpretar o mercado é fazer perguntas melhores — não prever o futuro.",
+              "quiz": [
+                {
+                  "question": "Qual é a diferença entre fato e opinião no mercado?",
+                  "options": [
+                    "Fato é o que todo mundo acredita; opinião é o que está no gráfico",
+                    "Fato é um dado verificável; opinião é uma interpretação ou recomendação",
+                    "Os dois são sinônimos",
+                    "Opinião é sempre falsa"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "Qual pergunta é mais útil antes de investir?",
+                  "options": [
+                    "Qual é a dica do momento?",
+                    "Quanto eu perderia se estivesse errado?",
+                    "Como garantir retorno?",
+                    "Qual ativo subiu mais ontem?"
+                  ],
+                  "correctIndex": 1
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -459,15 +583,15 @@
     },
     {
       "slug": "cripto",
-      "name": "Criptomoedas",
-      "description": "Blockchain, volatilidade, custódia e golpes — sem promessas e sem atalhos.",
+      "name": "Bitcoin",
+      "description": "Entenda o Bitcoin do zero: dinheiro, blockchain, escassez, mineração, custódia, segurança e leitura educacional do mercado. Sem promessas.",
       "order": 6,
       "modules": [
         {
           "slug": "cripto-com-cautela",
-          "title": "Cripto com cautela",
-          "description": "O básico para entender a tecnologia e os riscos antes de qualquer decisão.",
-          "order": 6,
+          "title": "Conceitos essenciais",
+          "description": "Blockchain, volatilidade e golpes: o vocabulário e os riscos que vêm antes de qualquer decisão.",
+          "order": 1,
           "lessons": [
             {
               "slug": "o-que-e-blockchain",
@@ -522,6 +646,262 @@
                     "Você mesmo controla as chaves e assume a responsabilidade",
                     "Um seguro contra queda de preço",
                     "Uma garantia do governo"
+                  ],
+                  "correctIndex": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "bitcoin-fundamentos",
+          "title": "Fundamentos do Bitcoin",
+          "description": "O que é, por que existe e por que a oferta é limitada.",
+          "order": 2,
+          "lessons": [
+            {
+              "slug": "bitcoin-o-que-e",
+              "title": "O que é Bitcoin",
+              "estimatedMin": 5,
+              "order": 1,
+              "content": "## Uma rede monetária, não uma empresa\n\nBitcoin é um **protocolo aberto** e um ativo digital criado em 2008/2009 sob o pseudônimo Satoshi Nakamoto. Ele permite transferir valor pela internet sem depender de um banco central ou de uma empresa específica para validar cada transação.\n\nNão existe um CEO do Bitcoin. As regras — oferta, validação e consenso — são executadas por software livre e pela rede de participantes. Isso não significa que o preço seja estável nem que o ativo seja adequado para todo mundo.\n\n## O que você está comprando\n\nQuando alguém compra bitcoin, não está comprando uma ação, um depósito bancário ou uma promessa de renda. Está adquirindo uma unidade de um ativo escasso e volátil, cuja utilidade e preço são debatidos publicamente.\n\n- A oferta é limitada por regras do protocolo.\n- A unidade é divisível em satoshis (1 BTC = 100 milhões de satoshis).\n- A custódia pode ser feita por uma exchange ou por você mesmo.\n- O preço pode variar muito em pouco tempo.\n\n## Educação antes de posição\n\nEntender o que é Bitcoin é diferente de achar que ele vai subir. O ativo pode perder valor, sofrer falhas de custódia e ser alvo de golpes. Estude o funcionamento, os riscos e a sua tolerância antes de qualquer decisão.\n\n> Bitcoin é tecnologia e mercado ao mesmo tempo. Nenhum dos dois garante retorno.",
+              "quiz": [
+                {
+                  "question": "O que melhor descreve o Bitcoin?",
+                  "options": [
+                    "Uma ação de uma empresa de tecnologia",
+                    "Um protocolo aberto para transferir valor sem um intermediário central",
+                    "Um depósito garantido pelo governo",
+                    "Um fundo de renda fixa"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "Quem controla as regras do Bitcoin?",
+                  "options": [
+                    "Um CEO eleito pelos mineradores",
+                    "O banco central do país onde o Bitcoin foi criado",
+                    "O software e o consenso da rede, sem um controlador único",
+                    "A exchange onde ele é negociado"
+                  ],
+                  "correctIndex": 2
+                }
+              ]
+            },
+            {
+              "slug": "bitcoin-por-que-existe",
+              "title": "Por que Bitcoin foi criado",
+              "estimatedMin": 5,
+              "order": 2,
+              "content": "## O contexto de 2008\n\nBitcoin nasceu em um período de crise financeira global e desconfiança em bancos e governos. A proposta era criar um sistema de pagamento **ponto a ponto**, com regras verificáveis e sem depender de uma autoridade central para autorizar cada transferência.\n\nO documento fundador descreve uma rede em que participantes validam transações e mantêm um histórico comum. A emissão seria previsível, em vez de decidida discricionariamente por um comitê.\n\n## Quais problemas ele tenta endereçar\n\n- **Censura:** dificultar que um intermediário bloqueie uma transferência válida.\n- **Acesso:** permitir que qualquer pessoa com internet participe da rede.\n- **Escassez verificável:** limitar a oferta por regra de software.\n- **Transparência:** tornar o histórico de transações auditável.\n\n## O que ele não resolve\n\nBitcoin não elimina a volatilidade, não garante privacidade absoluta, não impede golpes e não substitui a necessidade de entender risco. A ausência de um banco central também significa que não há quem “devolva” o dinheiro em caso de erro de custódia.\n\n> A proposta é descentralizar o controle. O trade-off é assumir mais responsabilidade.",
+              "quiz": [
+                {
+                  "question": "Qual problema o Bitcoin tenta reduzir com sua arquitetura ponto a ponto?",
+                  "options": [
+                    "A necessidade de estudar antes de investir",
+                    "A dependência de um intermediário central para validar transferências",
+                    "A variação de preço",
+                    "A existência de golpes"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "O que o Bitcoin não garante?",
+                  "options": [
+                    "Um histórico de transações verificável",
+                    "Uma oferta com limite definido",
+                    "Retorno ou estabilidade de preço",
+                    "Transferências sem um banco autorizando cada uma"
+                  ],
+                  "correctIndex": 2
+                }
+              ]
+            },
+            {
+              "slug": "bitcoin-21-milhoes",
+              "title": "Oferta máxima e os 21 milhões",
+              "estimatedMin": 5,
+              "order": 3,
+              "content": "## Uma regra de escassez\n\nO protocolo do Bitcoin define um limite máximo de **21 milhões de BTC**. Novas unidades são criadas como recompensa pela validação de blocos, em um calendário decrescente. O limite é uma regra de software, não uma promessa de valor.\n\nA emissão não é uniforme: a recompensa por bloco cai pela metade a cada 210 mil blocos, aproximadamente a cada quatro anos — o **halving**. Com o tempo, a emissão se aproxima de zero.\n\n## Por que isso importa\n\n- A oferta não pode ser “imprimida” por um comitê.\n- A escassez é verificável por qualquer participante.\n- Moedas perdidas reduzem a oferta efetivamente disponível.\n- Escassez não garante preço alto: a demanda também importa.\n\n## O detalhe que muita gente esquece\n\nO limite é de 21 milhões, mas ninguém sabe exatamente quantas moedas ainda são acessíveis. Chaves perdidas, erros de custódia e transações antigas podem tornar unidades inutilizáveis para sempre.\n\n> Oferta limitada é uma característica. Não é uma garantia de retorno.",
+              "quiz": [
+                {
+                  "question": "Qual é o limite máximo de Bitcoin definido pelo protocolo?",
+                  "options": [
+                    "100 milhões de BTC",
+                    "21 milhões de BTC",
+                    "1 bilhão de BTC",
+                    "Não existe limite"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "O halving reduz o quê?",
+                  "options": [
+                    "O número de transações por segundo",
+                    "A taxa cobrada pelas exchanges",
+                    "A recompensa pela criação de novos blocos",
+                    "O limite máximo de 21 milhões"
+                  ],
+                  "correctIndex": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "bitcoin-funcionamento",
+          "title": "Como o Bitcoin funciona",
+          "description": "Mineração, halving, transações, carteiras e custódia.",
+          "order": 3,
+          "lessons": [
+            {
+              "slug": "bitcoin-mineracao-halving",
+              "title": "Mineração e halving",
+              "estimatedMin": 5,
+              "order": 1,
+              "content": "## O que mineradores fazem\n\nMineradores competem para propor o próximo bloco de transações. Eles executam cálculos de prova de trabalho, um mecanismo que torna a alteração do histórico cara e computacionalmente intensiva. Quem encontra uma solução válida propaga o bloco e recebe a recompensa.\n\nA mineração não é “dinheiro de graça”: envolve hardware, energia, manutenção e risco de mercado. A dificuldade se ajusta para manter o intervalo médio entre blocos próximo de dez minutos.\n\n## O halving\n\nA cada 210 mil blocos, a recompensa por bloco é reduzida pela metade. Esse é o halving. Ele diminui a entrada de novos BTC no mercado, mas não determina o preço: demanda, liquidez, regulação e expectativas também importam.\n\n## Taxas e segurança\n\nCom o tempo, as taxas de transação ganham importância relativa para remunerar quem protege a rede. A segurança do Bitcoin depende do custo de atacar o consenso, não de uma empresa garantir o sistema.\n\n> Mineração é infraestrutura, não uma promessa de lucro para quem compra BTC.",
+              "quiz": [
+                {
+                  "question": "Qual é a função principal da mineração?",
+                  "options": [
+                    "Garantir que o preço suba",
+                    "Validar transações e proteger o histórico por prova de trabalho",
+                    "Emitir moedas sem limite",
+                    "Custodiar as chaves dos usuários"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "O halving acontece aproximadamente a cada:",
+                  "options": [
+                    "210 mil blocos",
+                    "10 mil blocos",
+                    "1 milhão de blocos",
+                    "Cada transação"
+                  ],
+                  "correctIndex": 0
+                }
+              ]
+            },
+            {
+              "slug": "bitcoin-transacoes",
+              "title": "Transações, taxas e confirmações",
+              "estimatedMin": 5,
+              "order": 2,
+              "content": "## Do pedido à confirmação\n\nUma transação é assinada pela chave privada do dono e enviada à rede. Ela entra na memória temporária dos nós, a **mempool**, e espera ser incluída em um bloco. A taxa ajuda a priorizar a inclusão quando há congestionamento.\n\nUma confirmação significa que a transação foi incluída em um bloco. Quanto mais blocos forem adicionados depois, maior a segurança acumulada — mas a finalidade é probabilística, não instantânea.\n\n## O modelo UTXO\n\nBitcoin usa o modelo de saídas não gastas (UTXO). Em vez de um saldo global como em uma conta bancária, você controla um conjunto de “moedas” que podem ser gastas. A carteira seleciona UTXOs para formar o valor de uma nova transação.\n\n## Privacidade\n\nO histórico é público e pseudônimo. Endereços não são nomes, mas padrões de uso podem revelar informações. Privacidade exige cuidado — não é garantida por padrão.\n\n> Taxa baixa pode demorar. Urgência custa mais. Simples assim.",
+              "quiz": [
+                {
+                  "question": "O que uma confirmação indica?",
+                  "options": [
+                    "Que a transação foi incluída em um bloco",
+                    "Que o preço do Bitcoin subiu",
+                    "Que a exchange aprovou a compra",
+                    "Que a carteira foi hackeada"
+                  ],
+                  "correctIndex": 0
+                },
+                {
+                  "question": "O que é a mempool?",
+                  "options": [
+                    "Um banco central do Bitcoin",
+                    "Uma lista de transações aguardando inclusão em blocos",
+                    "O histórico de preços",
+                    "Um tipo de carteira física"
+                  ],
+                  "correctIndex": 1
+                }
+              ]
+            },
+            {
+              "slug": "bitcoin-carteiras-custodia",
+              "title": "Carteiras, custódia e chaves privadas",
+              "estimatedMin": 5,
+              "order": 3,
+              "content": "## A carteira não guarda moedas\n\nUma carteira guarda **chaves** e ajuda a assinar transações. As moedas existem no histórico público, associadas a endereços. Quem controla a chave privada consegue gastar as moedas daquele endereço.\n\n- **Carteira quente:** conectada à internet, prática para valores pequenos.\n- **Carteira fria:** chave offline, mais resistente a ataques remotos.\n- **Hardware wallet:** dispositivo dedicado que mantém a chave isolada.\n- **Exchange:** você transfere a custódia para a plataforma.\n\n## Custódia é uma escolha\n\nEm uma exchange, você depende da segurança, da solidez e das regras da empresa. Na autocustódia, você assume a responsabilidade por backup, senha e integridade do dispositivo. Nenhuma opção é isenta de risco.\n\n## A frase-semente\n\nA frase de recuperação (seed) é a chave-mestra da carteira. Nunca compartilhe, nunca fotografa, nunca digite em site desconhecido. Guarde em local offline e faça um teste de recuperação antes de mover valores altos.\n\n> “Not your keys, not your coins” é um alerta, não um slogan publicitário.",
+              "quiz": [
+                {
+                  "question": "O que uma carteira de Bitcoin realmente armazena?",
+                  "options": [
+                    "As moedas em um cofre digital",
+                    "As chaves que permitem gastar as moedas",
+                    "O preço atual do BTC",
+                    "Uma garantia do governo"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "Qual é a prática correta com a frase-semente?",
+                  "options": [
+                    "Compartilhar com o suporte da exchange",
+                    "Salvar em uma foto na nuvem",
+                    "Manter offline e nunca compartilhar",
+                    "Enviar por e-mail para backup"
+                  ],
+                  "correctIndex": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "bitcoin-mercado",
+          "title": "Bitcoin e mercado",
+          "description": "Volatilidade, capitalização, volume, história e leitura crítica.",
+          "order": 4,
+          "lessons": [
+            {
+              "slug": "bitcoin-volatilidade-mercado",
+              "title": "Volatilidade, preço e capitalização",
+              "estimatedMin": 5,
+              "order": 1,
+              "content": "## Preço é um acordo momentâneo\n\nO preço do bitcoin é formado por oferta e demanda em mercados com liquidez variável. Notícias, regulação, alavancagem, fluxo institucional e expectativas podem mover o preço rapidamente. Volatilidade não é sinal automático de oportunidade.\n\n## Três números que ajudam a ler o mercado\n\n- **Preço:** quanto custa uma unidade naquele momento.\n- **Capitalização de mercado:** preço × oferta circulante. Ajuda a comparar escala, mas não mede qualidade.\n- **Volume:** quanto foi negociado em um período. Pode indicar liquidez, mas também pode ser inflado.\n\n## Drawdown e tolerância\n\nUma queda de 50% exige uma alta de 100% apenas para voltar ao ponto anterior. Quem não tolera oscilações grandes não deve usar Bitcoin como reserva de emergência ou dinheiro de curto prazo.\n\n> Preço, capitalização e volume descrevem o mercado. Não dizem se você deve comprar.",
+              "quiz": [
+                {
+                  "question": "Como a capitalização de mercado é calculada?",
+                  "options": [
+                    "Preço × oferta circulante",
+                    "Volume × número de exchanges",
+                    "Preço ÷ número de miners",
+                    "Taxa média × número de transações"
+                  ],
+                  "correctIndex": 0
+                },
+                {
+                  "question": "Volatilidade alta significa:",
+                  "options": [
+                    "Retorno garantido",
+                    "Que o preço pode variar bastante em pouco tempo",
+                    "Que o ativo é sempre seguro",
+                    "Que a capitalização é falsa"
+                  ],
+                  "correctIndex": 1
+                }
+              ]
+            },
+            {
+              "slug": "bitcoin-historia-mercado",
+              "title": "História e leitura educacional do mercado",
+              "estimatedMin": 5,
+              "order": 2,
+              "content": "## Uma história curta e intensa\n\nBitcoin passou de experimento criptográfico a um mercado global em poucos anos. Houve ciclos de euforia, quedas profundas, falências de intermediários, avanços regulatórios e entrada de investidores institucionais. Cada ciclo teve narrativas próprias.\n\n## O que o passado ensina — e o que não ensina\n\n- Mostra que drawdowns severos fazem parte da história do ativo.\n- Mostra que custódia e contraparte são riscos reais.\n- Não garante que o próximo ciclo repita o anterior.\n- Não transforma uma alta passada em previsão.\n\n## Como ler o mercado sem prometer\n\nComece pelo básico: entenda o ativo, a liquidez, o prazo e o risco. Olhe preço, capitalização e volume como dados descritivos. Desconfie de análises que misturam educação com recomendação disfarçada.\n\n> O mercado é incerto. A função da educação é melhorar a decisão, não eliminar a incerteza.",
+              "quiz": [
+                {
+                  "question": "O que um ciclo passado de alta permite concluir sobre o futuro?",
+                  "options": [
+                    "Que a alta vai se repetir",
+                    "Que o preço nunca cai",
+                    "Nada garantido: o passado não é previsão",
+                    "Que a capitalização é irrelevante"
+                  ],
+                  "correctIndex": 2
+                },
+                {
+                  "question": "Qual é uma leitura educacional adequada do mercado?",
+                  "options": [
+                    "Prometer retorno com base em gráficos",
+                    "Descrever preço, liquidez e risco sem recomendar compra",
+                    "Ignorar a custódia",
+                    "Usar apenas o volume como sinal de compra"
                   ],
                   "correctIndex": 1
                 }

@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Teste de integração T1 contra PostgreSQL REAL (Testcontainers — nunca H2):
- * 1. Flyway aplica V1 (schema) e V2 (papéis, privilégios, RLS) em banco limpo.
+ * 1. Flyway aplica V1-V7 (schema, papéis, privilégios, RLS) em banco limpo.
  * 2. Papel investfacil_app lê/escreve (DML) e NÃO pode executar DDL.
  * 3. Papel investfacil_test_guest recebe GRANT SELECT de propósito e, mesmo
  *    assim, enxerga ZERO linhas — provando que a negação vem da RLS
@@ -52,12 +52,12 @@ class FlywaySecurityIntegrationTest {
     DataSource dataSource;
 
     @Test
-    void flywayAplicaV1eV2EmBancoLimpo() {
+    void flywayAplicaV1aV7EmBancoLimpo() {
         JdbcTemplate jdbc = new JdbcTemplate(dataSource);
         Integer migracoesOk = jdbc.queryForObject(
-                "SELECT count(*) FROM investfacil.flyway_schema_history WHERE success = true",
+                "SELECT count(*) FROM investfacil.flyway_schema_history WHERE success = true AND type = 'SQL'",
                 Integer.class);
-        assertTrue(migracoesOk != null && migracoesOk >= 2, "V1 e V2 devem ser aplicadas");
+        assertEquals(7, migracoesOk, "V1-V7 devem ser aplicadas");
 
         Integer tabelas = jdbc.queryForObject(
                 "SELECT count(*) FROM information_schema.tables WHERE table_schema = 'investfacil'",
@@ -68,15 +68,19 @@ class FlywaySecurityIntegrationTest {
     @Test
     void investfacilAppEscreveELe() throws SQLException {
         String email = "t1-" + UUID.randomUUID() + "@investfacil.test";
-        try (Connection conn = dataSource.getConnection();
-             Statement st = conn.createStatement()) {
-            st.execute("SET ROLE investfacil_app");
-            st.execute("INSERT INTO investfacil.users (email, name, password_hash) VALUES ('"
-                    + email + "', 'Teste T1', 'hash-bcrypt-de-teste')");
-            ResultSet rs = st.executeQuery("SELECT count(*) FROM investfacil.users");
-            rs.next();
-            assertTrue(rs.getInt(1) >= 1, "Papel de app deve ler e escrever");
-            st.execute("RESET ROLE");
+        try (Connection conn = dataSource.getConnection()) {
+            conn.setAutoCommit(false);
+            try (Statement st = conn.createStatement()) {
+                st.execute("SET ROLE investfacil_app");
+                st.execute("SELECT set_config('app.auth_email', '" + email + "', true)");
+                st.execute("SELECT set_config('app.flow', 'REGISTER', true)");
+                st.execute("INSERT INTO investfacil.users (email, name, password_hash) VALUES ('"
+                        + email + "', 'Teste T1', 'hash-bcrypt-de-teste')");
+                ResultSet rs = st.executeQuery("SELECT count(*) FROM investfacil.users");
+                rs.next();
+                assertTrue(rs.getInt(1) >= 1, "Papel de app deve ler e escrever");
+                st.execute("ROLLBACK");
+            }
         }
     }
 

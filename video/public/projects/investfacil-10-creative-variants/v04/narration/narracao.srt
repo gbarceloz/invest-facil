@@ -1,0 +1,39 @@
+1
+00:00:00,000 --> 00:00:02,288
+R$ 100. Quanto isso compra?
+
+2
+00:00:02,408 --> 00:00:03,578
+Depende do ano.
+
+3
+00:00:03,698 --> 00:00:05,646
+Hoje: uma cesta cheia.
+
+4
+00:00:05,766 --> 00:00:10,691
+Simulação: preços 25% maiores, quatro de cinco.
+
+5
+00:00:10,911 --> 00:00:16,083
+Simulação: dez anos a 5%, cerca de R$ 61.
+
+6
+00:00:16,303 --> 00:00:20,085
+A resposta mudou. A pergunta continua a mesma.
+
+7
+00:00:20,205 --> 00:00:21,806
+Não é quanto você tem.
+
+8
+00:00:21,926 --> 00:00:23,018
+É o que ele compra.
+
+9
+00:00:23,138 --> 00:00:26,226
+Entender inflação muda como você olha o preço.
+
+10
+00:00:26,346 --> 00:00:29,117
+Comente: o que ficou mais caro para você?

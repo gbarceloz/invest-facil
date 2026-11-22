@@ -1,157 +1,173 @@
 import Link from "next/link";
 import {
   ArrowRight,
-  BookOpen,
-  CheckCircle2,
-  Flame,
+  Bitcoin,
+  Check,
+  ChevronRight,
+  CircleDollarSign,
   LineChart,
+  Lock,
+  Play,
   ShieldCheck,
   Sparkles,
-  Target,
-  Trophy,
-  Wallet,
+  TrendingUp,
 } from "lucide-react";
 import { Logo } from "@/components/logo";
 import { Disclaimer } from "@/components/ui";
 
+const JOURNEY = [
+  { label: "Fundamentos", state: "done" },
+  { label: "Mercado", state: "current" },
+  { label: "Bitcoin", state: "locked" },
+];
+
 const STEPS = [
   {
     number: "01",
-    title: "Aprenda",
-    description: "Aulas curtas, visuais e sem jargões. Cada conceito prepara o próximo.",
-    icon: BookOpen,
+    title: "Escolha seu ponto de partida",
+    description: "Mercado financeiro ou Bitcoin. Duas trilhas claras, sem menus infinitos.",
   },
   {
     number: "02",
-    title: "Pratique",
-    description: "Teste decisões com dinheiro fictício e compare cenários no simulador.",
-    icon: Target,
+    title: "Aprenda em sequência",
+    description: "Aulas curtas, exemplos visuais e quizzes que verificam entendimento.",
   },
   {
     number: "03",
-    title: "Entenda",
-    description: "Descubra o resultado e, principalmente, o motivo por trás de cada escolha.",
-    icon: Sparkles,
+    title: "Acompanhe o que importa",
+    description: "Progresso, próximos passos e conceitos conectados — sem gamificação vazia.",
   },
-];
-
-const TRACKS = [
-  { icon: Wallet, title: "Fundamentos", detail: "Orçamento, reserva e juros compostos" },
-  { icon: LineChart, title: "Investimentos", detail: "Renda fixa, ações, fundos e ETFs" },
-  { icon: ShieldCheck, title: "Risco", detail: "Diversificação e perfil de investidor" },
-  { icon: Trophy, title: "Progresso", detail: "XP, níveis e conquistas por aprender" },
 ];
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen overflow-hidden">
-      <header className="relative z-20">
-        <div className="container-page flex h-20 items-center justify-between">
+    <div className="min-h-screen">
+      <header className="border-b border-white/[0.07]">
+        <div className="container-page flex h-16 items-center justify-between gap-6">
           <Logo />
-          <nav className="hidden items-center gap-7 text-sm font-semibold text-muted md:flex" aria-label="Navegação">
-            <a href="#aprender" className="transition hover:text-neutral-50">
-              Aprender
-            </a>
-            <a href="#como-funciona" className="transition hover:text-neutral-50">
-              Como funciona
-            </a>
-            <a href="#filosofia" className="transition hover:text-neutral-50">
-              Filosofia
-            </a>
+          <nav className="hidden items-center gap-7 text-[12px] font-medium text-neutral-400 md:flex" aria-label="Navegação">
+            <a href="#aprender" className="transition hover:text-neutral-100">Aprender</a>
+            <a href="#modulos" className="transition hover:text-neutral-100">Mercado</a>
+            <a href="#modulos" className="transition hover:text-neutral-100">Bitcoin</a>
+            <a href="#como-funciona" className="transition hover:text-neutral-100">Sobre</a>
           </nav>
-          <div className="flex items-center gap-2">
-            <Link href="/entrar" className="btn-ghost hidden sm:inline-flex">
+          <div className="flex items-center gap-3">
+            <Link href="/entrar" className="hidden text-[12px] font-medium text-neutral-300 transition hover:text-neutral-50 sm:block">
               Entrar
             </Link>
             <Link href="/cadastro" className="btn-primary">
-              Começar agora <ArrowRight className="h-4 w-4" />
+              Começar agora
             </Link>
           </div>
         </div>
       </header>
 
       <main>
-        <section className="relative">
-          <div className="pointer-events-none absolute inset-0 grid-lines opacity-40 [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
-          <div className="container-page relative grid items-center gap-12 pb-20 pt-10 lg:grid-cols-[1.05fr_0.95fr] lg:pb-28 lg:pt-16">
+        <section id="aprender" className="relative overflow-hidden">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(60rem_42rem_at_75%_15%,rgba(250,204,21,0.07),transparent_65%)]" />
+          <div className="pointer-events-none absolute inset-0 opacity-[0.16] [background-image:linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:72px_72px] [mask-image:radial-gradient(ellipse_at_70%_20%,black,transparent_70%)]" />
+          <div className="container-page relative grid items-center gap-12 pb-16 pt-14 lg:grid-cols-[1.1fr_0.9fr] lg:pb-20 lg:pt-20">
             <div className="animate-fade-up">
-              <p className="eyebrow mb-5">Educação financeira para iniciantes</p>
-              <h1 className="max-w-2xl text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
-                Aprenda a investir <span className="text-accent">antes</span> de colocar seu dinheiro em risco.
+              <span className="inline-flex items-center gap-2 rounded-md border border-accent/25 bg-accent/[0.06] px-3 py-1.5 text-[10px] font-semibold text-accent">
+                <Sparkles className="h-3 w-3" /> Educação financeira para iniciantes
+              </span>
+              <h1 className="mt-6 max-w-[720px] text-[44px] font-medium leading-[1.04] tracking-[-0.045em] text-neutral-100 sm:text-[58px] lg:text-[62px]">
+                Aprenda a investir
+                <br />
+                <span className="text-accent">antes de colocar seu dinheiro em risco.</span>
               </h1>
-              <p className="mt-6 max-w-xl text-base leading-7 text-muted sm:text-lg">
+              <p className="mt-6 max-w-[520px] text-[15px] leading-7 text-neutral-400">
                 Aulas rápidas, desafios interativos e simulações com dinheiro fictício para você
-                entender o mercado de verdade — no seu ritmo e em português.
+                entender o mercado de verdade.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Link href="/cadastro" className="btn-primary px-6 py-3.5 text-base">
+                <Link href="/cadastro" className="btn-primary px-5 py-3 text-sm">
                   Começar minha jornada <ArrowRight className="h-4 w-4" />
                 </Link>
-                <Link href="/entrar" className="btn-secondary px-6 py-3.5 text-base">
-                  Já tenho conta
-                </Link>
+                <a href="#modulos" className="btn-secondary px-5 py-3 text-sm">
+                  Explorar o mercado
+                </a>
               </div>
-              <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs text-muted">
-                <span className="inline-flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-accent" /> Sem dinheiro real
-                </span>
-                <span className="inline-flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-accent" /> Sem promessas de retorno
-                </span>
-                <span className="inline-flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-accent" /> Conteúdo em português
-                </span>
-              </div>
+              <p className="mt-6 inline-flex items-center gap-2 text-[11px] text-neutral-500">
+                <ShieldCheck className="h-4 w-4 text-accent" />
+                Conteúdo educacional. Sem promessas. Sem dinheiro real.
+              </p>
             </div>
 
-            <div className="relative animate-fade-up lg:justify-self-end">
-              <div className="absolute -inset-6 rounded-[2rem] bg-accent/10 blur-3xl" aria-hidden="true" />
-              <div className="relative w-full max-w-md rounded-[1.75rem] border border-ink-500/80 bg-ink-800/95 p-5 shadow-2xl">
-                <div className="flex items-center justify-between">
-                  <span className="pill border-accent/30 bg-accent/10 text-accent">
-                    <Sparkles className="h-3.5 w-3.5" /> Próxima missão
-                  </span>
-                  <span className="text-xs font-bold text-accent">+100 XP</span>
-                </div>
-                <div className="mt-4 rounded-2xl border border-ink-500/70 bg-ink-900/80 p-4">
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-muted">
-                    Fundamentos • Missão 01
-                  </p>
-                  <h2 className="mt-2 text-xl font-extrabold">O que é blockchain?</h2>
-                  <p className="mt-2 text-xs leading-5 text-muted">
-                    Entenda a tecnologia por trás do Bitcoin — sem termos complicados.
-                  </p>
-                  <div className="mt-4 flex items-center justify-between text-[11px] text-muted">
-                    <span>Iniciante · 4 min</span>
-                    <span className="inline-flex items-center gap-1 text-accent">
-                      <Flame className="h-3.5 w-3.5" /> 7 dias
-                    </span>
+            <div className="relative mx-auto w-full max-w-[540px] animate-fade-up lg:justify-self-end">
+              <div className="absolute -inset-10 rounded-full bg-accent/[0.06] blur-3xl" aria-hidden="true" />
+
+              <div className="relative ml-auto w-[74%] rounded-xl border border-white/10 bg-[#121212]/90 p-4 shadow-2xl backdrop-blur">
+                <div className="flex items-start gap-3">
+                  <div className="grid h-9 w-9 place-items-center rounded-lg bg-accent/10 text-accent">
+                    <BookIcon />
                   </div>
+                  <div className="min-w-0">
+                    <p className="text-[9px] font-semibold uppercase tracking-[0.16em] text-neutral-500">Próxima missão</p>
+                    <p className="mt-1 truncate text-[13px] font-semibold text-neutral-100">O que é Bitcoin?</p>
+                  </div>
+                  <span className="ml-auto shrink-0 text-[10px] font-semibold text-accent">+100 XP</span>
+                </div>
+              </div>
+
+              <div className="relative mt-4 rounded-2xl border border-white/10 bg-[#111111]/95 p-6 shadow-2xl sm:p-7">
+                <div className="flex items-center gap-1.5">
+                  <span className="h-1.5 w-1.5 rounded-full bg-white/20" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-white/20" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-accent/70" />
+                </div>
+                <p className="mt-7 text-[9px] font-semibold uppercase tracking-[0.2em] text-accent">Sua jornada</p>
+                <h2 className="mt-2 text-[26px] font-medium tracking-[-0.03em] text-neutral-100">Fundamentos do mercado</h2>
+
+                <div className="mt-9 flex items-center justify-between gap-2">
+                  {JOURNEY.map((item, index) => {
+                    const done = item.state === "done";
+                    const current = item.state === "current";
+                    return (
+                      <div key={item.label} className="flex flex-1 items-center">
+                        <div className="flex flex-col items-center gap-2">
+                          <div
+                            className={`grid h-11 w-11 place-items-center rounded-full border ${
+                              done
+                                ? "border-accent bg-accent text-ink-950"
+                                : current
+                                  ? "border-accent/70 bg-accent/[0.08] text-accent"
+                                  : "border-white/10 bg-white/[0.03] text-neutral-600"
+                            }`}
+                          >
+                            {done ? <Check className="h-4 w-4" /> : current ? <Play className="h-4 w-4" /> : <Lock className="h-3.5 w-3.5" />}
+                          </div>
+                          <span className={`text-[10px] ${current ? "font-semibold text-accent" : "text-neutral-500"}`}>{item.label}</span>
+                        </div>
+                        {index < JOURNEY.length - 1 && (
+                          <div className="mx-2 mb-5 h-px flex-1 bg-white/10">
+                            <div className={`h-px ${done ? "w-full bg-accent" : "w-0"}`} />
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
 
-                <div className="mt-4 rounded-2xl border border-ink-500/70 bg-ink-900/80 p-4">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-bold text-neutral-200">Sua jornada</span>
-                    <span className="text-muted">2 de 6</span>
+                <div className="mt-8">
+                  <div className="flex items-center justify-between text-[10px] text-neutral-500">
+                    <span>2 de 6</span>
+                    <span>missões concluídas</span>
                   </div>
-                  <div className="mt-3 h-2 overflow-hidden rounded-full bg-ink-600">
+                  <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/10">
                     <div className="h-full w-1/3 rounded-full bg-accent" />
                   </div>
-                  <div className="mt-3 flex justify-between text-[10px] text-muted">
-                    <span>Fundamentos</span>
-                    <span>Mercado</span>
-                    <span>Bitcoin</span>
-                  </div>
                 </div>
+              </div>
 
-                <div className="mt-4 grid grid-cols-2 gap-3">
-                  <div className="rounded-xl border border-ink-500/70 bg-ink-900/80 p-3">
-                    <p className="text-[10px] uppercase tracking-wider text-muted">Nível</p>
-                    <p className="mt-1 text-lg font-extrabold">01 · Curioso</p>
-                  </div>
-                  <div className="rounded-xl border border-ink-500/70 bg-ink-900/80 p-3">
-                    <p className="text-[10px] uppercase tracking-wider text-muted">XP</p>
-                    <p className="mt-1 text-lg font-extrabold text-accent">420</p>
+              <div className="absolute -bottom-5 left-0 rounded-xl border border-white/10 bg-[#141414]/95 px-4 py-3 shadow-xl backdrop-blur">
+                <div className="flex items-center gap-3">
+                  <span className="grid h-8 w-8 place-items-center rounded-lg bg-accent/10 text-accent">
+                    <TrendingUp className="h-4 w-4" />
+                  </span>
+                  <div>
+                    <p className="text-[13px] font-semibold text-neutral-100">7 dias</p>
+                    <p className="text-[10px] text-neutral-500">sequência de estudos</p>
                   </div>
                 </div>
               </div>
@@ -159,128 +175,129 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section id="aprender" className="border-y border-ink-500/50 bg-ink-900/40">
-          <div className="container-page py-14">
-            <p className="text-center text-xs font-bold uppercase tracking-[0.25em] text-muted">
-              Um caminho claro, do zero à primeira decisão consciente
+        <section id="como-funciona" className="border-y border-white/[0.06] bg-[#0c0c0c]">
+          <div className="container-page py-16 text-center sm:py-20">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">Como funciona</p>
+            <h2 className="mx-auto mt-4 max-w-2xl text-[32px] font-medium tracking-[-0.04em] text-neutral-100 sm:text-[42px]">
+              Um próximo passo claro. Sempre.
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-neutral-400">
+              Do primeiro conceito à primeira decisão simulada, você aprende no seu ritmo — com
+              quizzes que verificam entendimento, não cliques.
             </p>
-            <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {TRACKS.map((track) => {
-                const Icon = track.icon;
-                return (
-                  <div key={track.title} className="card card-hover p-5">
-                    <Icon className="h-6 w-6 text-accent" />
-                    <h3 className="mt-4 font-bold">{track.title}</h3>
-                    <p className="mt-1.5 text-xs leading-5 text-muted">{track.detail}</p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
 
-        <section id="como-funciona" className="container-page py-20">
-          <p className="eyebrow">Como funciona</p>
-          <h2 className="mt-3 max-w-2xl text-3xl font-extrabold tracking-tight sm:text-4xl">
-            Um próximo passo claro. Sempre.
-          </h2>
-          <p className="mt-4 max-w-2xl text-sm leading-7 text-muted">
-            Do primeiro conceito à primeira decisão simulada, você aprende no seu ritmo — com
-            quizzes que verificam entendimento, não cliques.
-          </p>
-          <div className="mt-10 grid gap-4 md:grid-cols-3">
-            {STEPS.map((step) => {
-              const Icon = step.icon;
-              return (
-                <article key={step.number} className="card relative overflow-hidden p-6">
-                  <span className="absolute right-5 top-4 text-4xl font-extrabold text-ink-500">
-                    {step.number}
-                  </span>
-                  <div className="grid h-11 w-11 place-items-center rounded-xl bg-accent/10 text-accent">
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <h3 className="mt-5 text-xl font-extrabold">{step.title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-muted">{step.description}</p>
-                </article>
-              );
-            })}
-          </div>
-        </section>
-
-        <section id="filosofia" className="border-y border-ink-500/50 bg-ink-900/40">
-          <div className="container-page grid gap-10 py-20 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-            <div>
-              <p className="eyebrow">A nossa filosofia</p>
-              <h2 className="mt-3 text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">
-                Informação vira conhecimento.
-                <br />
-                Conhecimento vira <span className="text-accent">decisão consciente</span>.
-              </h2>
-              <p className="mt-5 max-w-xl text-sm leading-7 text-muted">
-                Não prometemos enriquecimento rápido. Não empurramos transações. Recompensamos
-                estudo concluído com XP honesto — nunca com dinheiro real. O objetivo é que você
-                entenda o risco antes de assumir qualquer posição.
-              </p>
-              <Link href="/cadastro" className="btn-primary mt-7">
-                Quero começar do zero <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-            <div className="space-y-3">
-              {[
-                "Trilhas em ordem didática, com quizzes por aula.",
-                "Simulador com capital, aportes, prazo e taxa hipotética.",
-                "Avisos explícitos de que simulação não é garantia.",
-                "Gamificação que mede aprendizado, não especulação.",
-              ].map((item) => (
-                <div key={item} className="flex items-start gap-3 rounded-xl border border-ink-500/70 bg-ink-800/70 p-4">
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
-                  <p className="text-sm leading-6 text-neutral-300">{item}</p>
+            <div className="mt-12 grid gap-4 text-left md:grid-cols-3">
+              {STEPS.map((step) => (
+                <div key={step.number} className="rounded-xl border border-white/[0.07] bg-[#111111] p-6">
+                  <span className="text-[10px] font-semibold tracking-[0.16em] text-accent">{step.number}</span>
+                  <h3 className="mt-5 text-[15px] font-semibold text-neutral-100">{step.title}</h3>
+                  <p className="mt-2 text-[12px] leading-6 text-neutral-400">{step.description}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="container-page py-20 text-center">
-          <h2 className="mx-auto max-w-2xl text-3xl font-extrabold tracking-tight sm:text-4xl">
-            Seu primeiro passo não precisa ser um investimento.
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-muted">
-            Pode ser uma aula de quatro minutos, um quiz ou uma simulação. Comece pelo que você
-            entende — e avance com contexto.
-          </p>
-          <Link href="/cadastro" className="btn-primary mt-8 px-7 py-3.5 text-base">
-            Criar minha conta gratuita <ArrowRight className="h-4 w-4" />
-          </Link>
-          <Disclaimer className="mx-auto mt-10 max-w-2xl" />
+        <section id="modulos" className="container-page py-16 sm:py-20">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">Dois módulos</p>
+              <h2 className="mt-3 text-[30px] font-medium tracking-[-0.04em] text-neutral-100 sm:text-[38px]">
+                O que você precisa entender, na ordem certa.
+              </h2>
+            </div>
+            <p className="max-w-sm text-[12px] leading-6 text-neutral-500">
+              Nada de dez categorias ou gráficos decorativos. Cada módulo tem uma promessa simples:
+              explicar bem.
+            </p>
+          </div>
+
+          <div className="mt-9 grid gap-4 lg:grid-cols-2">
+            <Link href="/app/mercado-financeiro" className="group rounded-xl border border-white/[0.08] bg-[#111111] p-6 transition hover:border-accent/25">
+              <div className="flex items-start justify-between">
+                <div className="grid h-10 w-10 place-items-center rounded-lg bg-accent/10 text-accent">
+                  <LineChart className="h-5 w-5" />
+                </div>
+                <ChevronRight className="h-4 w-4 text-neutral-600 transition group-hover:text-accent" />
+              </div>
+              <p className="mt-6 text-[10px] font-semibold uppercase tracking-[0.16em] text-accent">Módulo 01</p>
+              <h3 className="mt-2 text-[24px] font-medium tracking-[-0.03em] text-neutral-100">Mercado financeiro</h3>
+              <p className="mt-2 text-[12px] leading-6 text-neutral-400">
+                Inflação, Selic, renda fixa, ações, ETFs e risco. A base para entender o sistema — não
+                para seguir dicas.
+              </p>
+              <div className="mt-5 flex flex-wrap gap-2">
+                {["Inflação", "Selic", "Renda fixa", "Ações", "ETFs"].map((topic) => (
+                  <span key={topic} className="rounded-md border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[10px] text-neutral-400">{topic}</span>
+                ))}
+              </div>
+            </Link>
+
+            <Link href="/app/bitcoin" className="group rounded-xl border border-white/[0.08] bg-[#111111] p-6 transition hover:border-accent/25">
+              <div className="flex items-start justify-between">
+                <div className="grid h-10 w-10 place-items-center rounded-lg bg-accent/10 text-accent">
+                  <Bitcoin className="h-5 w-5" />
+                </div>
+                <ChevronRight className="h-4 w-4 text-neutral-600 transition group-hover:text-accent" />
+              </div>
+              <p className="mt-6 text-[10px] font-semibold uppercase tracking-[0.16em] text-accent">Módulo 02</p>
+              <h3 className="mt-2 text-[24px] font-medium tracking-[-0.03em] text-neutral-100">Bitcoin</h3>
+              <p className="mt-2 text-[12px] leading-6 text-neutral-400">
+                A tecnologia, a escassez e a custódia explicadas do zero. O mercado como contexto
+                educacional, com dados reais e sem promessas.
+              </p>
+              <div className="mt-5 flex flex-wrap gap-2">
+                {["Blockchain", "21 milhões", "Mineração", "Carteiras", "Volatilidade"].map((topic) => (
+                  <span key={topic} className="rounded-md border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[10px] text-neutral-400">{topic}</span>
+                ))}
+              </div>
+            </Link>
+          </div>
+        </section>
+
+        <section className="container-page pb-20 text-center">
+          <div className="mx-auto max-w-2xl rounded-xl border border-white/[0.07] bg-[#111111] px-6 py-10">
+            <CircleDollarSign className="mx-auto h-6 w-6 text-accent" />
+            <h2 className="mt-4 text-[28px] font-medium tracking-[-0.04em] text-neutral-100">
+              Seu primeiro passo não precisa ser um investimento.
+            </h2>
+            <p className="mx-auto mt-3 max-w-lg text-[13px] leading-6 text-neutral-400">
+              Pode ser uma aula de quatro minutos sobre inflação, uma introdução ao Bitcoin ou um quiz.
+            </p>
+            <Link href="/cadastro" className="btn-primary mt-6 px-5 py-3 text-sm">
+              Criar minha conta gratuita <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+          <Disclaimer className="mx-auto mt-8 max-w-2xl text-[11px]" />
         </section>
       </main>
 
-      <footer className="border-t border-ink-500/60">
-        <div className="container-page flex flex-col gap-6 py-10 sm:flex-row sm:items-center sm:justify-between">
+      <footer className="border-t border-white/[0.07]">
+        <div className="container-page flex flex-col gap-6 py-8 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <Logo />
-            <p className="mt-3 max-w-sm text-xs leading-5 text-neutral-400">
-              Plataforma de educação financeira para o Hack Brasil 2026. Conteúdo educativo,
-              sem recomendação de investimento e sem execução de ordens.
+            <p className="mt-3 max-w-sm text-[11px] leading-5 text-neutral-500">
+              Plataforma de educação financeira. Conteúdo educativo, sem recomendação de investimento
+              e sem execução de ordens.
             </p>
           </div>
-          <div className="flex flex-wrap gap-x-6 gap-y-2 text-xs font-semibold text-muted">
-            <Link href="/entrar" className="hover:text-neutral-100">
-              Entrar
-            </Link>
-            <Link href="/cadastro" className="hover:text-neutral-100">
-              Criar conta
-            </Link>
-            <a href="#como-funciona" className="hover:text-neutral-100">
-              Como funciona
-            </a>
-            <a href="#filosofia" className="hover:text-neutral-100">
-              Filosofia
-            </a>
+          <div className="flex flex-wrap gap-x-6 gap-y-2 text-[11px] text-neutral-500">
+            <Link href="/entrar" className="hover:text-neutral-100">Entrar</Link>
+            <Link href="/cadastro" className="hover:text-neutral-100">Criar conta</Link>
+            <a href="#modulos" className="hover:text-neutral-100">Módulos</a>
+            <a href="#como-funciona" className="hover:text-neutral-100">Como funciona</a>
           </div>
         </div>
       </footer>
     </div>
+  );
+}
+
+function BookIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4" aria-hidden="true">
+      <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z" />
+      <path d="M4 5.5v16" />
+    </svg>
   );
 }

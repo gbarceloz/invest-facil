@@ -1,0 +1,424 @@
+[
+ {
+  "vid": "V01",
+  "target": 34,
+  "scriptSpan": 34,
+  "spokenWords": 106,
+  "avgWps": 3.12,
+  "minRuntimeAtCalib": 39.3,
+  "slack": -5.3,
+  "overload": [
+   {
+    "time": "0,0–0,8",
+    "dur": 0.8,
+    "spokenWords": 5,
+    "wps": 6.25,
+    "neededAtCalib": 1.9,
+    "text": "Se R$ 100 parece pouco..."
+   },
+   {
+    "time": "2,4–5,0",
+    "dur": 2.6,
+    "spokenWords": 14,
+    "wps": 5.38,
+    "neededAtCalib": 5.2,
+    "text": "Os preços não sobem todos de uma vez. Eles se movem o tempo todo."
+   },
+   {
+    "time": "5,0–8,0",
+    "dur": 3,
+    "spokenWords": 11,
+    "wps": 3.67,
+    "neededAtCalib": 4.1,
+    "text": "Enquanto isso, o seu R$ 100 continua com o mesmo número."
+   },
+   {
+    "time": "15,0–19,0",
+    "dur": 4,
+    "spokenWords": 13,
+    "wps": 3.25,
+    "neededAtCalib": 4.8,
+    "text": "É a alta generalizada dos preços. E ela corrói o poder de compra."
+   },
+   {
+    "time": "19,0–23,0",
+    "dur": 4,
+    "spokenWords": 21,
+    "wps": 5.25,
+    "neededAtCalib": 7.8,
+    "text": "Em uma simulação de 5% ao ano, R$ 100 valem cerca de R$ 61 em 10 anos."
+   },
+   {
+    "time": "23,0–26,0",
+    "dur": 3,
+    "spokenWords": 10,
+    "wps": 3.33,
+    "neededAtCalib": 3.7,
+    "text": "O número é o mesmo. O poder de compra, não."
+   }
+  ]
+ },
+ {
+  "vid": "V02",
+  "target": 45,
+  "scriptSpan": 45,
+  "spokenWords": 111,
+  "avgWps": 2.47,
+  "minRuntimeAtCalib": 41.1,
+  "slack": 3.9,
+  "overload": [
+   {
+    "time": "0,0–2,0",
+    "dur": 2,
+    "spokenWords": 7,
+    "wps": 3.5,
+    "neededAtCalib": 2.6,
+    "text": "Todo dia, ele comprava o mesmo café."
+   },
+   {
+    "time": "2,0–4,5",
+    "dur": 2.5,
+    "spokenWords": 12,
+    "wps": 4.8,
+    "neededAtCalib": 4.4,
+    "text": "O mesmo pedido. O mesmo R$ 100 no bolso. O mesmo café."
+   },
+   {
+    "time": "16,0–20,0",
+    "dur": 4,
+    "spokenWords": 16,
+    "wps": 4,
+    "neededAtCalib": 5.9,
+    "text": "Não foi o café que ficou mais caro de repente. Foi o dinheiro que ficou menor."
+   },
+   {
+    "time": "25,0–31,0",
+    "dur": 6,
+    "spokenWords": 18,
+    "wps": 3,
+    "neededAtCalib": 6.7,
+    "text": "Em 10 anos, com 5% ao ano, R$ 100 viram cerca de R$ 61."
+   }
+  ]
+ },
+ {
+  "vid": "V03",
+  "target": 35,
+  "scriptSpan": 35,
+  "spokenWords": 102,
+  "avgWps": 2.91,
+  "minRuntimeAtCalib": 37.8,
+  "slack": -2.8,
+  "overload": [
+   {
+    "time": "0,0–2,0",
+    "dur": 2,
+    "spokenWords": 6,
+    "wps": 3,
+    "neededAtCalib": 2.2,
+    "text": "O dinheiro entra inteiro na máquina."
+   },
+   {
+    "time": "2,0–4,0",
+    "dur": 2,
+    "spokenWords": 6,
+    "wps": 3,
+    "neededAtCalib": 2.2,
+    "text": "E sai menor do que entrou."
+   },
+   {
+    "time": "15,0–19,0",
+    "dur": 4,
+    "spokenWords": 12,
+    "wps": 3,
+    "neededAtCalib": 4.4,
+    "text": "Mas o que ele compra, sim. E isso muda o seu dia."
+   },
+   {
+    "time": "19,0–23,0",
+    "dur": 4,
+    "spokenWords": 21,
+    "wps": 5.25,
+    "neededAtCalib": 7.8,
+    "text": "Em uma simulação de 5% ao ano, R$ 100 valem cerca de R$ 61 em 10 anos."
+   },
+   {
+    "time": "23,0–27,0",
+    "dur": 4,
+    "spokenWords": 13,
+    "wps": 3.25,
+    "neededAtCalib": 4.8,
+    "text": "A inflação não rasga o dinheiro. Ela não tira o número da nota."
+   },
+   {
+    "time": "27,0–31,0",
+    "dur": 4,
+    "spokenWords": 13,
+    "wps": 3.25,
+    "neededAtCalib": 4.8,
+    "text": "Ela diminui o que ele compra. É por isso que o troco encolhe."
+   }
+  ]
+ },
+ {
+  "vid": "V04",
+  "target": 30,
+  "scriptSpan": 30,
+  "spokenWords": 98,
+  "avgWps": 3.27,
+  "minRuntimeAtCalib": 36.3,
+  "slack": -6.3,
+  "overload": [
+   {
+    "time": "0,0–1,5",
+    "dur": 1.5,
+    "spokenWords": 5,
+    "wps": 3.33,
+    "neededAtCalib": 1.9,
+    "text": "R$ 100. Quanto isso compra?"
+   },
+   {
+    "time": "5,0–7,0",
+    "dur": 2,
+    "spokenWords": 13,
+    "wps": 6.5,
+    "neededAtCalib": 4.8,
+    "text": "Com os preços 25% maiores: quatro de cinco itens."
+   },
+   {
+    "time": "7,0–9,0",
+    "dur": 2,
+    "spokenWords": 15,
+    "wps": 7.5,
+    "neededAtCalib": 5.6,
+    "text": "Em 10 anos, a 5% ao ano: cerca de R$ 61."
+   },
+   {
+    "time": "9,0–12,0",
+    "dur": 3,
+    "spokenWords": 10,
+    "wps": 3.33,
+    "neededAtCalib": 3.7,
+    "text": "O número é o mesmo. O poder de compra, não."
+   },
+   {
+    "time": "18,0–21,0",
+    "dur": 3,
+    "spokenWords": 10,
+    "wps": 3.33,
+    "neededAtCalib": 3.7,
+    "text": "Entender inflação muda a forma como você olha o preço."
+   },
+   {
+    "time": "21,0–24,0",
+    "dur": 3,
+    "spokenWords": 10,
+    "wps": 3.33,
+    "neededAtCalib": 3.7,
+    "text": "O número é o mesmo. O poder de compra, não."
+   },
+   {
+    "time": "24,0–27,0",
+    "dur": 3,
+    "spokenWords": 11,
+    "wps": 3.67,
+    "neededAtCalib": 4.1,
+    "text": "Comente: quanto você acha que R$ 100 compra em 10 anos?"
+   }
+  ]
+ },
+ {
+  "vid": "V05",
+  "target": 40,
+  "scriptSpan": 40,
+  "spokenWords": 91,
+  "avgWps": 2.27,
+  "minRuntimeAtCalib": 33.7,
+  "slack": 6.3,
+  "overload": [
+   {
+    "time": "0,0–2,5",
+    "dur": 2.5,
+    "spokenWords": 8,
+    "wps": 3.2,
+    "neededAtCalib": 3,
+    "text": "R$ 100 não é só um número impresso."
+   },
+   {
+    "time": "2,5–5,0",
+    "dur": 2.5,
+    "spokenWords": 10,
+    "wps": 4,
+    "neededAtCalib": 3.7,
+    "text": "É uma promessa de compra que você carrega no bolso."
+   }
+  ]
+ },
+ {
+  "vid": "V06",
+  "target": 38,
+  "scriptSpan": 38,
+  "spokenWords": 93,
+  "avgWps": 2.45,
+  "minRuntimeAtCalib": 34.4,
+  "slack": 3.6,
+  "overload": [
+   {
+    "time": "0,0–2,0",
+    "dur": 2,
+    "spokenWords": 8,
+    "wps": 4,
+    "neededAtCalib": 3,
+    "text": "Você não está imaginando. Seu dinheiro compra menos."
+   },
+   {
+    "time": "2,0–5,0",
+    "dur": 3,
+    "spokenWords": 10,
+    "wps": 3.33,
+    "neededAtCalib": 3.7,
+    "text": "A sensação de que o salário não acompanha é real."
+   },
+   {
+    "time": "5,0–8,0",
+    "dur": 3,
+    "spokenWords": 10,
+    "wps": 3.33,
+    "neededAtCalib": 3.7,
+    "text": "O salário pode até subir. O número na conta aumenta."
+   },
+   {
+    "time": "8,0–11,0",
+    "dur": 3,
+    "spokenWords": 14,
+    "wps": 4.67,
+    "neededAtCalib": 5.2,
+    "text": "Mas a cesta também sobe. E o que sobra no fim do mês diminui."
+   },
+   {
+    "time": "19,0–24,0",
+    "dur": 5,
+    "spokenWords": 18,
+    "wps": 3.6,
+    "neededAtCalib": 6.7,
+    "text": "Em 10 anos, com 5% ao ano, R$ 100 valem cerca de R$ 61."
+   }
+  ]
+ },
+ {
+  "vid": "V07",
+  "target": 42,
+  "scriptSpan": 42,
+  "spokenWords": 103,
+  "avgWps": 2.45,
+  "minRuntimeAtCalib": 38.1,
+  "slack": 3.9,
+  "overload": [
+   {
+    "time": "0,0–2,0",
+    "dur": 2,
+    "spokenWords": 9,
+    "wps": 4.5,
+    "neededAtCalib": 3.3,
+    "text": "Essa linha explica por que seu dinheiro vale menos."
+   },
+   {
+    "time": "2,0–6,0",
+    "dur": 4,
+    "spokenWords": 13,
+    "wps": 3.25,
+    "neededAtCalib": 4.8,
+    "text": "Ela começa em R$ 100. Esse é o seu poder de compra hoje."
+   }
+  ]
+ },
+ {
+  "vid": "V08",
+  "target": 34,
+  "scriptSpan": 34,
+  "spokenWords": 89,
+  "avgWps": 2.62,
+  "minRuntimeAtCalib": 33,
+  "slack": 1,
+  "overload": [
+   {
+    "time": "0,0–2,0",
+    "dur": 2,
+    "spokenWords": 9,
+    "wps": 4.5,
+    "neededAtCalib": 3.3,
+    "text": "Aquele amigo que diz: ‘dinheiro parado não perde valor’…"
+   },
+   {
+    "time": "5,0–9,0",
+    "dur": 4,
+    "spokenWords": 16,
+    "wps": 4,
+    "neededAtCalib": 5.9,
+    "text": "Com os preços 25% maiores, R$ 100 compram 4 de 5 itens."
+   },
+   {
+    "time": "17,0–22,0",
+    "dur": 5,
+    "spokenWords": 18,
+    "wps": 3.6,
+    "neededAtCalib": 6.7,
+    "text": "Em 10 anos, a 5% ao ano, R$ 100 valem cerca de R$ 61."
+   }
+  ]
+ },
+ {
+  "vid": "V09",
+  "target": 40,
+  "scriptSpan": 40,
+  "spokenWords": 103,
+  "avgWps": 2.58,
+  "minRuntimeAtCalib": 38.1,
+  "slack": 1.9,
+  "overload": [
+   {
+    "time": "0,0–2,5",
+    "dur": 2.5,
+    "spokenWords": 12,
+    "wps": 4.8,
+    "neededAtCalib": 4.4,
+    "text": "Existe um imposto que ninguém votou. E você paga todos os dias."
+   },
+   {
+    "time": "19,0–24,0",
+    "dur": 5,
+    "spokenWords": 18,
+    "wps": 3.6,
+    "neededAtCalib": 6.7,
+    "text": "Em 10 anos, com 5% ao ano, R$ 100 valem cerca de R$ 61."
+   }
+  ]
+ },
+ {
+  "vid": "V10",
+  "target": 45,
+  "scriptSpan": 45,
+  "spokenWords": 106,
+  "avgWps": 2.36,
+  "minRuntimeAtCalib": 39.3,
+  "slack": 5.7,
+  "overload": [
+   {
+    "time": "0,0–2,5",
+    "dur": 2.5,
+    "spokenWords": 11,
+    "wps": 4.4,
+    "neededAtCalib": 4.1,
+    "text": "Se o seu dinheiro pudesse falar, ele diria: eu não desapareci."
+   },
+   {
+    "time": "28,0–33,0",
+    "dur": 5,
+    "spokenWords": 18,
+    "wps": 3.6,
+    "neededAtCalib": 6.7,
+    "text": "Em 10 anos, com 5% ao ano, R$ 100 valem cerca de R$ 61."
+   }
+  ]
+ }
+]

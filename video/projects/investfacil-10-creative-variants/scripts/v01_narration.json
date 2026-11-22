@@ -1,0 +1,62 @@
+[
+  {
+    "id": "L01",
+    "display": "R$ 100 parece pouco? Não é impressão.",
+    "tts": "cem reais parece pouco? Não é impressão.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L02",
+    "display": "Os preços se movem o tempo todo.",
+    "tts": "Os preços se movem o tempo todo.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L03",
+    "display": "A nota continua com o mesmo número.",
+    "tts": "A nota continua com o mesmo número.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L04",
+    "display": "Mas compra menos café, menos pão, menos transporte.",
+    "tts": "Mas compra menos café, menos pão, menos transporte.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L05",
+    "display": "Isso é inflação.",
+    "tts": "Isso é inflação.",
+    "pause_ms": 220
+  },
+  {
+    "id": "L06",
+    "display": "A alta generalizada dos preços corrói seu poder de compra.",
+    "tts": "A alta generalizada dos preços corrói seu poder de compra.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L07",
+    "display": "Simulação: 5% ao ano. Em dez anos, cerca de R$ 61.",
+    "tts": "Simulação: cinco por cento ao ano. Em dez anos, cerca de sessenta e um reais.",
+    "pause_ms": 220
+  },
+  {
+    "id": "L08",
+    "display": "O número é o mesmo. O poder de compra, não.",
+    "tts": "O número é o mesmo. O poder de compra, não.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L09",
+    "display": "Entender isso é o primeiro passo.",
+    "tts": "Entender isso é o primeiro passo.",
+    "pause_ms": 120
+  },
+  {
+    "id": "L10",
+    "display": "Siga para entender a inflação no próximo vídeo.",
+    "tts": "Siga para entender a inflação no próximo vídeo.",
+    "pause_ms": 0
+  }
+]

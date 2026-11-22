@@ -25,6 +25,7 @@ public class AppProperties {
     private Security security = new Security();
     private Seed seed = new Seed();
     private Market market = new Market();
+    private Bitcoin bitcoin = new Bitcoin();
     private RateLimit rateLimit = new RateLimit();
 
     @Getter
@@ -111,6 +112,14 @@ public class AppProperties {
         private String baseUrl = "https://api.binance.com";
         private String fxUrl = "https://api.frankfurter.app/latest?from=USD&to=BRL";
         private long cacheSeconds = 30;
+    }
+
+    @Getter
+    @Setter
+    public static class Bitcoin {
+        private boolean enabled = true;
+        private String baseUrl = "https://api.coingecko.com/api/v3";
+        private long cacheSeconds = 120;
     }
 
     @Getter

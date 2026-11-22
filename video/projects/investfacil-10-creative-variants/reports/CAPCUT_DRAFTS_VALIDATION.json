@@ -1,0 +1,155 @@
+{
+  "results": [
+    {
+      "variant": "V01",
+      "draft_id": "dfd_cat_1795291509_c004cef0",
+      "checks": {
+        "content_exists": true,
+        "video_materials": 1,
+        "audio_materials": 1,
+        "tracks": 3,
+        "segments": 2,
+        "video_paths_exist": true,
+        "audio_paths_exist": true,
+        "has_video_segment": true,
+        "has_audio_segment": true
+      }
+    },
+    {
+      "variant": "V02",
+      "draft_id": "dfd_cat_1795291509_3d7f3a28",
+      "checks": {
+        "content_exists": true,
+        "video_materials": 1,
+        "audio_materials": 1,
+        "tracks": 3,
+        "segments": 2,
+        "video_paths_exist": true,
+        "audio_paths_exist": true,
+        "has_video_segment": true,
+        "has_audio_segment": true
+      }
+    },
+    {
+      "variant": "V03",
+      "draft_id": "dfd_cat_1795291509_48bbfce3",
+      "checks": {
+        "content_exists": true,
+        "video_materials": 1,
+        "audio_materials": 1,
+        "tracks": 3,
+        "segments": 2,
+        "video_paths_exist": true,
+        "audio_paths_exist": true,
+        "has_video_segment": true,
+        "has_audio_segment": true
+      }
+    },
+    {
+      "variant": "V04",
+      "draft_id": "dfd_cat_1795291510_58572e5b",
+      "checks": {
+        "content_exists": true,
+        "video_materials": 1,
+        "audio_materials": 1,
+        "tracks": 3,
+        "segments": 2,
+        "video_paths_exist": true,
+        "audio_paths_exist": true,
+        "has_video_segment": true,
+        "has_audio_segment": true
+      }
+    },
+    {
+      "variant": "V05",
+      "draft_id": "dfd_cat_1795291510_cb69f788",
+      "checks": {
+        "content_exists": true,
+        "video_materials": 1,
+        "audio_materials": 1,
+        "tracks": 3,
+        "segments": 2,
+        "video_paths_exist": true,
+        "audio_paths_exist": true,
+        "has_video_segment": true,
+        "has_audio_segment": true
+      }
+    },
+    {
+      "variant": "V06",
+      "draft_id": "dfd_cat_1795291510_e4afaeea",
+      "checks": {
+        "content_exists": true,
+        "video_materials": 1,
+        "audio_materials": 1,
+        "tracks": 3,
+        "segments": 2,
+        "video_paths_exist": true,
+        "audio_paths_exist": true,
+        "has_video_segment": true,
+        "has_audio_segment": true
+      }
+    },
+    {
+      "variant": "V07",
+      "draft_id": "dfd_cat_1795291511_f022af44",
+      "checks": {
+        "content_exists": true,
+        "video_materials": 1,
+        "audio_materials": 1,
+        "tracks": 3,
+        "segments": 2,
+        "video_paths_exist": true,
+        "audio_paths_exist": true,
+        "has_video_segment": true,
+        "has_audio_segment": true
+      }
+    },
+    {
+      "variant": "V08",
+      "draft_id": "dfd_cat_1795291511_e020998f",
+      "checks": {
+        "content_exists": true,
+        "video_materials": 1,
+        "audio_materials": 1,
+        "tracks": 3,
+        "segments": 2,
+        "video_paths_exist": true,
+        "audio_paths_exist": true,
+        "has_video_segment": true,
+        "has_audio_segment": true
+      }
+    },
+    {
+      "variant": "V09",
+      "draft_id": "dfd_cat_1795291511_ac431315",
+      "checks": {
+        "content_exists": true,
+        "video_materials": 1,
+        "audio_materials": 1,
+        "tracks": 3,
+        "segments": 2,
+        "video_paths_exist": true,
+        "audio_paths_exist": true,
+        "has_video_segment": true,
+        "has_audio_segment": true
+      }
+    },
+    {
+      "variant": "V10",
+      "draft_id": "dfd_cat_1795291512_f65edc5f",
+      "checks": {
+        "content_exists": true,
+        "video_materials": 1,
+        "audio_materials": 1,
+        "tracks": 3,
+        "segments": 2,
+        "video_paths_exist": true,
+        "audio_paths_exist": true,
+        "has_video_segment": true,
+        "has_audio_segment": true
+      }
+    }
+  ],
+  "failures": 0
+}

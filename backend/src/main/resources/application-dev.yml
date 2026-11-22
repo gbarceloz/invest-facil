@@ -11,6 +11,12 @@ app:
     expose-dev-tokens: ${EXPOSE_DEV_TOKENS:true}
   market:
     enabled: ${MARKET_ENABLED:true}
+  security:
+    guard:
+      # Exceção explícita de desenvolvimento: o banco local frequentemente usa
+      # postgres/superuser. O guard continua verificando e loga warnings, mas
+      # o profile prod sempre força strict=true, independentemente desta flag.
+      strict: false
 
 logging:
   level:

@@ -125,6 +125,11 @@ app:
     trust-proxy: ${TRUST_PROXY:false}
     trusted-proxies: ${TRUSTED_PROXIES:}
     mfa-key: ${APP_MFA_KEY:}
+    guard:
+      # V6 continua sendo o padrão para não quebrar o Lab antes da V7.
+      # Em produção, declare 7 quando a V7 estiver instalada
+      # (APP_SECURITY_GUARD_EXPECTED_VERSION=7).
+      expected-version: ${APP_SECURITY_GUARD_EXPECTED_VERSION:6}
 
   seed:
     content: ${SEED_CONTENT:true}
@@ -134,6 +139,11 @@ app:
     base-url: ${MARKET_BASE_URL:https://api.binance.com}
     fx-url: ${MARKET_FX_URL:https://api.frankfurter.app/latest?from=USD&to=BRL}
     cache-seconds: ${MARKET_CACHE_SECONDS:30}
+
+  bitcoin:
+    enabled: ${BITCOIN_MARKET_ENABLED:true}
+    base-url: ${BITCOIN_MARKET_BASE_URL:https://api.coingecko.com/api/v3}
+    cache-seconds: ${BITCOIN_MARKET_CACHE_SECONDS:120}
 
   rate-limit:
     enabled: ${RATE_LIMIT_ENABLED:true}

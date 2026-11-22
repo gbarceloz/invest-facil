@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeft, CheckCircle2, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowLeft, ShieldCheck, Sparkles } from "lucide-react";
 import { Logo } from "@/components/logo";
 
 export function AuthLayout({
@@ -12,62 +12,47 @@ export function AuthLayout({
   subtitle: string;
 }) {
   return (
-    <div className="min-h-screen lg:grid lg:grid-cols-[0.9fr_1.1fr]">
-      <aside className="relative hidden overflow-hidden border-r border-ink-500/60 bg-ink-900/60 p-10 lg:flex lg:flex-col">
-        <div className="pointer-events-none absolute inset-0 grid-lines opacity-30" />
+    <div className="min-h-screen bg-[#090909] lg:grid lg:grid-cols-2">
+      <aside className="relative hidden overflow-hidden border-r border-white/[0.07] bg-[#0d0d0d] p-10 lg:flex lg:flex-col">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(38rem_28rem_at_20%_70%,rgba(250,204,21,0.07),transparent_65%)]" />
         <div className="relative">
           <Logo />
-          <div className="mt-24 max-w-md">
-            <p className="eyebrow">Sua jornada começa aqui</p>
-            <h2 className="mt-4 text-4xl font-extrabold leading-tight tracking-tight">
-              Entenda o risco <span className="text-accent">antes</span> de arriscar.
+          <div className="mt-28 max-w-md">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-accent">Comece pelo próximo passo</p>
+            <h2 className="mt-5 text-[40px] font-medium leading-[1.08] tracking-[-0.045em] text-neutral-100">
+              Você não precisa saber tudo para começar.
             </h2>
-            <p className="mt-5 text-sm leading-7 text-muted">
-              Trilhas curtas, quizzes e simulações com dinheiro fictício. Sem promessas de
-              rentabilidade e sem pressão para investir.
+            <p className="mt-5 max-w-sm text-[13px] leading-6 text-neutral-400">
+              O Invest Fácil descobre seu nível e constrói uma jornada para você.
             </p>
           </div>
-          <ul className="mt-10 space-y-4">
-            {[
-              "Conteúdo em português, do zero ao primeiro passo.",
-              "XP por aula concluída e quiz aprovado — não por cliques.",
-              "Simulador educativo com taxa hipotética e aviso claro.",
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-3 text-sm text-neutral-300">
-                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
-                {item}
-              </li>
-            ))}
-          </ul>
         </div>
-        <div className="relative mt-auto flex items-center gap-2 text-xs text-neutral-400">
+        <div className="relative mt-auto flex items-center gap-2 text-[11px] text-neutral-500">
           <ShieldCheck className="h-4 w-4 text-accent" />
-          Seus dados são protegidos. Nenhuma operação real é executada.
+          Ambiente educacional seguro. Nenhuma operação real é executada.
         </div>
       </aside>
 
       <main className="flex min-h-screen flex-col">
         <div className="flex items-center justify-between p-5 lg:hidden">
           <Logo />
-          <Link href="/" className="btn-ghost text-xs">
+          <Link href="/" className="btn-ghost text-[11px]">
             <ArrowLeft className="h-4 w-4" /> Início
           </Link>
         </div>
         <div className="flex flex-1 items-center justify-center px-5 pb-14 pt-4 sm:px-8">
-          <div className="w-full max-w-md">
+          <div className="w-full max-w-sm">
             <div className="mb-8 hidden lg:block">
-              <Link href="/" className="inline-flex items-center gap-2 text-xs font-semibold text-muted transition hover:text-neutral-100">
-                <ArrowLeft className="h-4 w-4" /> Voltar ao início
+              <Link href="/" className="inline-flex items-center gap-2 text-[11px] font-medium text-neutral-500 transition hover:text-neutral-200">
+                <ArrowLeft className="h-4 w-4" /> Voltar
               </Link>
             </div>
-            <div className="card p-6 sm:p-8">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-accent">
-                <Sparkles className="h-3 w-3" /> Invest Fácil
-              </span>
-              <h1 className="mt-5 text-2xl font-extrabold tracking-tight">{title}</h1>
-              <p className="mt-2 text-sm leading-6 text-muted">{subtitle}</p>
-              <div className="mt-7">{children}</div>
-            </div>
+            <span className="inline-flex items-center gap-1.5 rounded-md border border-accent/25 bg-accent/[0.06] px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.16em] text-accent">
+              <Sparkles className="h-3 w-3" /> Invest Fácil
+            </span>
+            <h1 className="mt-5 text-[28px] font-medium tracking-[-0.035em] text-neutral-100">{title}</h1>
+            <p className="mt-2 text-[12px] leading-6 text-neutral-400">{subtitle}</p>
+            <div className="mt-7">{children}</div>
           </div>
         </div>
       </main>

@@ -1,0 +1,39 @@
+1
+00:00:00,000 --> 00:00:03,181
+R$ 100 parece pouco? Não é impressão.
+
+2
+00:00:03,331 --> 00:00:05,544
+Os preços se movem o tempo todo.
+
+3
+00:00:05,664 --> 00:00:08,086
+A nota continua com o mesmo número.
+
+4
+00:00:08,206 --> 00:00:12,191
+Mas compra menos café, menos pão, menos transporte.
+
+5
+00:00:12,331 --> 00:00:13,579
+Isso é inflação.
+
+6
+00:00:13,829 --> 00:00:17,950
+A alta generalizada dos preços corrói seu poder de compra.
+
+7
+00:00:18,070 --> 00:00:24,168
+Simulação: 5% ao ano. Em dez anos, cerca de R$ 61.
+
+8
+00:00:24,328 --> 00:00:27,646
+O número é o mesmo. O poder de compra, não.
+
+9
+00:00:27,886 --> 00:00:29,914
+Entender isso é o primeiro passo.
+
+10
+00:00:30,034 --> 00:00:33,185
+Siga para entender a inflação no próximo vídeo.

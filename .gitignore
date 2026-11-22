@@ -3,7 +3,54 @@ backend/target/
 frontend/.next/
 frontend/out/
 frontend/node_modules/
+frontend/test-results/
+frontend/playwright-report/
+frontend/blob-report/
+frontend/.playwright/
+video/node_modules/
+video/out/
+video/.remotion/
+video/auditions/piper-voices/
+video/auditions/voice-samples/v2-normalized/comparison.wav
 *.class
+*.tsbuildinfo
+__pycache__/
+*.pyc
+
+# Audiovisual production media (generated / large)
+# Keep runtime fonts, small manifests/JSON, SRT and text reports.
+video/projects/**/*.mp4
+video/projects/**/*.mov
+video/projects/**/*.webm
+video/projects/**/*.wav
+video/projects/**/*.mp3
+video/projects/**/*.m4a
+video/projects/**/*.aac
+video/projects/**/*.flac
+video/projects/**/frames-*/
+video/projects/**/*-frames/
+video/projects/**/_frames/
+video/projects/**/reaudit-frames/
+video/projects/**/final-audit-frames/
+video/projects/**/final24-audit-frames/
+video/projects/**/render/*.png
+!video/projects/investfacil-10-creative-variants/V*/render/contact-sheet.png
+!video/projects/investfacil-10-creative-variants/V*/render/frame0.png
+
+# Remotion public media: generated narration/music/SFX; preserve fonts/images.
+video/public/**/*.mp4
+video/public/**/*.mov
+video/public/**/*.webm
+video/public/**/*.wav
+video/public/**/*.mp3
+video/public/**/*.m4a
+video/public/**/*.aac
+video/public/**/*.flac
+
+# Voice audition media; metadata and VOICE_OPTIONS.md stay tracked/preserved.
+video/auditions/voice-samples/**/*.wav
+video/auditions/voice-samples/**/*.mp3
+video/auditions/voice-samples/**/*.m4a
 
 # Secrets - never commit
 .env

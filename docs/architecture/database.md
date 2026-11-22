@@ -1,6 +1,6 @@
 # Banco de dados — Invest Fácil
 
-**Status: V1–V5 implementadas e validadas em PostgreSQL 17 real (Testcontainers).**
+**Status: V1–V7 implementadas e validadas em PostgreSQL 17 real (Testcontainers).**
 Supabase remoto ainda não provisionado.
 
 ## 1. Flyway é a fonte única de DDL
@@ -15,6 +15,8 @@ Todo o schema nasce de migrations versionadas em
 | `V3__auth_mfa_simulator.sql` | MFA/bloqueio, família de refresh, `simulations`, URL externa de vídeo, índice anti-farm |
 | `V4__simulation_inflation.sql` | preserva a inflação hipotética no cenário salvo |
 | `V5__append_only_ledgers.sql` | revoga UPDATE/DELETE de `auth_event`, `xp_ledger` e `user_achievements` para o runtime |
+| `V6__user_rls.sql` | RLS por usuário, FORCE RLS, 68 policies `s24_*`, contexto transacional e guard de `users` |
+| `V7__database_function_hardening.sql` | search_path fixo nas 9 funções, EXECUTE mínimo, initplan e remoção da função legada apply_table_security |
 
 Hibernate roda com `ddl-auto=validate`: **valida, nunca cria/altere**. Não existe
 caminho alternativo de DDL (`supabase/migrations` duplicado é proibido).
@@ -56,7 +58,7 @@ CREATE UNIQUE INDEX ux_xp_once_per_lesson_reason
 
 Impede farm de XP repetindo a mesma aula/quiz, inclusive sob concorrência.
 
-## 3. Modelo lógico (V1–V5)
+## 3. Modelo lógico (V1–V7)
 
 ```mermaid
 erDiagram
@@ -91,16 +93,25 @@ Tabelas: `users`, `refresh_tokens`, `email_tokens`, `auth_event`, `categories`,
 | Papel | Tipo | Escopo |
 |---|---|---|
 | `investfacil_app` | NOLOGIN | DML em todas as tabelas |
-| `investfacil_migrate` | NOLOGIN | DDL (USAGE/CREATE) |
+| `investfacil_migrate` | LOGIN INHERIT | DDL (USAGE/CREATE), owner do schema |
 | `investfacil_test_guest` | NOLOGIN | `GRANT SELECT` de propósito, para provar RLS |
-| `investfacil_runtime` | LOGIN | membro de `investfacil_app`; senha fora do repositório |
+| `investfacil_runtime` | LOGIN INHERIT | membro de `investfacil_app`; senha fora do repositório |
 
 - `REVOKE ALL ON SCHEMA investfacil FROM PUBLIC/anon/authenticated`.
-- RLS habilitada em todas as tabelas; policy `app_rw` exclusiva do app.
+- RLS habilitada + FORCE RLS nas 18 tabelas; 68 policies `s24_*`; zero `app_rw`.
+- Funções V7 com search_path vazio e EXECUTE mínimo; o runtime herda investfacil_app; apply_table_security foi removida na V7.
+- `DatabaseSecurityGuard` valida V6/V7 e exige a versão declarada em `APP_SECURITY_GUARD_EXPECTED_VERSION`.
 - `flyway_schema_history` sem privilégio de runtime.
 - App não pode executar DDL (testado).
 - App não pode alterar/apagar ledgers de auditoria/XP (V5, testado).
 - Guest com SELECT vê 0 linhas (testado).
+
+### 4.1 V7 - hardening local (S2.8/R1)
+
+- Nove funções com search_path vazio; apply_table_security foi removida, sem assinatura residual.
+- EXECUTE: investfacil_app nos helpers e na trigger; investfacil_migrate nas nove; zero PUBLIC/anon/authenticated; apply_table_security removida.
+- Policy s24_users_register_insert usa subquery escalar para current_setting de app.flow (initplan).
+- A V7 foi aplicada apenas em Testcontainers/local; o Lab permanece em V6 nesta etapa.
 
 ## 5. Supabase
 
@@ -117,16 +128,14 @@ Tabelas: `users`, `refresh_tokens`, `email_tokens`, `auth_event`, `categories`,
   gerado por `scripts/generate-seed.mjs`.
 - O seed é aplicado por `ContentSeedService` de forma idempotente (só quando não
   há categorias) e não cria schema.
-- 8 categorias, 8 módulos, 19 aulas, 38 questões de quiz, 6 artigos e 7 conquistas.
+- 8 categorias, 12 módulos, 31 aulas, 62 questões de quiz, 6 artigos e 7 conquistas.
 - Conta demo é opcional (`APP_DEMO_ENABLED`, `DEMO_PASSWORD`); nunca há senha
   versionada.
 
 ## 7. Regras de evolução
 
-- Toda mudança é uma nova migration (V4, V5, ...); V1–V5 são imutáveis após
+- Toda mudança é uma nova migration (V4, V5, ...); V1–V7 são imutáveis após
   ambientes compartilhados.
-- Tabelas novas herdam privilégios via `ALTER DEFAULT PRIVILEGES` e recebem RLS +
-  policy (função `apply_table_security()` como referência, excluindo o histórico
-  do Flyway).
+- Tabelas novas herdam privilégios via ALTER DEFAULT PRIVILEGES; apply_table_security foi removida na V7 e não deve ser recriada. Novas tabelas exigem policies explícitas.
 - Índices e constraints pertencem à migration que cria a tabela.
 - Antes de migration destrutiva: backup/PITR e janela combinada.

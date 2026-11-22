@@ -1,0 +1,96 @@
+{
+  "variant": "V09",
+  "lines": [
+    {
+      "id": "L01",
+      "display": "Existe um imposto que ninguém votou.",
+      "tts": "Existe um imposto que ninguém votou.",
+      "start": 0.0,
+      "end": 2.317,
+      "duration": 2.317,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L02",
+      "display": "E você paga todos os dias.",
+      "tts": "E você paga todos os dias.",
+      "start": 2.437,
+      "end": 4.337,
+      "duration": 1.9,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L03",
+      "display": "Não é imposto literal. É inflação.",
+      "tts": "Não é imposto literal. É inflação.",
+      "start": 4.457,
+      "end": 7.343,
+      "duration": 2.886,
+      "pause_after_ms": 220
+    },
+    {
+      "id": "L04",
+      "display": "Ela não aparece na nota. Mas está embutida no preço.",
+      "tts": "Ela não aparece na nota. Mas está embutida no preço.",
+      "start": 7.563,
+      "end": 11.521,
+      "duration": 3.958,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L05",
+      "display": "Quando você compra pão, café ou transporte, ela está lá.",
+      "tts": "Quando você compra pão, café ou transporte, ela está lá.",
+      "start": 11.641,
+      "end": 15.434,
+      "duration": 3.793,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L06",
+      "display": "Os preços sobem e o dinheiro compra menos.",
+      "tts": "Os preços sobem e o dinheiro compra menos.",
+      "start": 15.554,
+      "end": 18.676,
+      "duration": 3.123,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L07",
+      "display": "Simulação de 5% ao ano: 61 em dez anos.",
+      "tts": "Simulação de cinco por cento ao ano: sessenta e um em dez anos.",
+      "start": 18.796,
+      "end": 23.312,
+      "duration": 4.516,
+      "pause_after_ms": 220
+    },
+    {
+      "id": "L08",
+      "display": "Não é sobre prever o futuro. É sobre entender o presente.",
+      "tts": "Não é sobre prever o futuro. É sobre entender o presente.",
+      "start": 23.532,
+      "end": 27.616,
+      "duration": 4.084,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L09",
+      "display": "É sobre olhar para o seu dinheiro e ver o que ele realmente compra.",
+      "tts": "É sobre olhar para o seu dinheiro e ver o que ele realmente compra.",
+      "start": 27.736,
+      "end": 31.53,
+      "duration": 3.794,
+      "pause_after_ms": 120
+    },
+    {
+      "id": "L10",
+      "display": "Invest Fácil. Entenda o dinheiro. Depois, o mercado. Siga o Invest Fácil.",
+      "tts": "Invest Fácil. Entenda o dinheiro. Depois, o mercado. Siga o Invest Fácil.",
+      "start": 31.65,
+      "end": 38.098,
+      "duration": 6.449,
+      "pause_after_ms": 0
+    }
+  ],
+  "placeholder": false
+}

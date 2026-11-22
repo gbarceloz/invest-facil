@@ -125,13 +125,7 @@ public class MarketService {
     }
 
     private MarketDtos.MarketResponse fallback() {
-        return new MarketDtos.MarketResponse(List.of(
-                new MarketDtos.AssetView("BTC", "Bitcoin", new BigDecimal("342180.40"),
-                        new BigDecimal("2.40"), new BigDecimal("0")),
-                new MarketDtos.AssetView("ETH", "Ethereum", new BigDecimal("18420.10"),
-                        new BigDecimal("1.80"), new BigDecimal("0")),
-                new MarketDtos.AssetView("SOL", "Solana", new BigDecimal("742.30"),
-                        new BigDecimal("-0.60"), new BigDecimal("0"))),
-                "UNAVAILABLE", Instant.now(), DISCLAIMER);
+        // Nunca devolver números fictícios como se fossem cotação atual.
+        return new MarketDtos.MarketResponse(List.of(), "UNAVAILABLE", Instant.now(), DISCLAIMER);
     }
 }

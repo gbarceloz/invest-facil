@@ -1,10 +1,13 @@
 package com.investfacil.api.auth;
 
 import com.investfacil.api.common.error.BusinessException;
+import com.investfacil.api.common.context.UserContext;
 import com.investfacil.api.common.security.CurrentUser;
 import com.investfacil.api.common.security.RefreshCookieService;
+import com.investfacil.api.common.security.TokenHasher;
 import com.investfacil.api.common.web.ClientIpResolver;
 import com.investfacil.api.config.AppProperties;
+import com.investfacil.api.users.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -30,19 +33,23 @@ public class AuthController {
     private final RefreshCookieService cookies;
     private final ClientIpResolver ipResolver;
     private final AppProperties properties;
+    private final UserContext context;
 
     public AuthController(AuthService authService, RefreshCookieService cookies,
-                          ClientIpResolver ipResolver, AppProperties properties) {
+                          ClientIpResolver ipResolver, AppProperties properties,
+                          UserContext context) {
         this.authService = authService;
         this.cookies = cookies;
         this.ipResolver = ipResolver;
         this.properties = properties;
+        this.context = context;
     }
 
     @PostMapping("/register")
     public ResponseEntity<AuthDtos.RegisterResponse> register(
             @Valid @RequestBody AuthDtos.RegisterRequest request,
             HttpServletRequest http) {
+        beginAuth(request.email(), "REGISTER");
         var result = authService.register(request, context(http));
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new AuthDtos.RegisterResponse(result.message(), result.devToken()));
@@ -52,6 +59,7 @@ public class AuthController {
     public AuthDtos.AuthResponse login(@Valid @RequestBody AuthDtos.LoginRequest request,
                                        HttpServletRequest http,
                                        HttpServletResponse response) {
+        beginAuth(request.email(), "LOGIN");
         return render(authService.login(request, context(http)), response);
     }
 
@@ -67,13 +75,21 @@ public class AuthController {
         if (raw == null) {
             throw BusinessException.unauthorized("Sessão não encontrada. Entre novamente.");
         }
+        context.clear();
+        context.setFlow("REFRESH");
+        context.setRefreshHash(TokenHasher.sha256Hex(raw));
         return render(authService.refresh(raw, context(http)), response);
     }
 
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(HttpServletRequest http, HttpServletResponse response,
                                        @AuthenticationPrincipal CurrentUser principal) {
-        authService.logout(cookies.read(http), principal != null ? principal.id() : null, context(http));
+        String raw = cookies.read(http);
+        context.setFlow("LOGOUT");
+        if (raw != null) {
+            context.setRefreshHash(TokenHasher.sha256Hex(raw));
+        }
+        authService.logout(raw, principal != null ? principal.id() : null, context(http));
         cookies.clear(response);
         return ResponseEntity.noContent().build();
     }
@@ -81,6 +97,7 @@ public class AuthController {
     @PostMapping("/verify-email")
     public AuthDtos.MessageResponse verifyEmail(
             @Valid @RequestBody AuthDtos.VerifyEmailRequest request) {
+        beginToken(request.token(), "EMAIL_VERIFY");
         authService.verifyEmail(request.token());
         return new AuthDtos.MessageResponse("E-mail confirmado. Sua conta está ativa.");
     }
@@ -88,6 +105,7 @@ public class AuthController {
     @PostMapping("/resend-verification")
     public AuthDtos.MessageResponse resendVerification(
             @Valid @RequestBody AuthDtos.ForgotPasswordRequest request) {
+        beginAuth(request.email(), "RESEND_VERIFICATION");
         authService.resendVerification(request.email());
         return new AuthDtos.MessageResponse(
                 "Se o e-mail estiver cadastrado, enviaremos as instruções.");
@@ -96,6 +114,7 @@ public class AuthController {
     @PostMapping("/forgot-password")
     public AuthDtos.MessageResponse forgotPassword(
             @Valid @RequestBody AuthDtos.ForgotPasswordRequest request) {
+        beginAuth(request.email(), "PASSWORD_RESET");
         authService.forgotPassword(request.email());
         return new AuthDtos.MessageResponse(
                 "Se o e-mail estiver cadastrado, enviaremos as instruções.");
@@ -105,6 +124,7 @@ public class AuthController {
     public AuthDtos.MessageResponse resetPassword(
             @Valid @RequestBody AuthDtos.ResetPasswordRequest request,
             HttpServletResponse response) {
+        beginToken(request.token(), "PASSWORD_RESET");
         authService.resetPassword(request.token(), request.password());
         cookies.clear(response);
         return new AuthDtos.MessageResponse(
@@ -115,6 +135,8 @@ public class AuthController {
     public AuthDtos.AuthResponse verifyMfa(@Valid @RequestBody AuthDtos.MfaVerifyRequest request,
                                            HttpServletRequest http,
                                            HttpServletResponse response) {
+        context.clear();
+        context.setFlow("MFA");
         return render(authService.verifyMfa(request, context(http)), response);
     }
 
@@ -197,5 +219,19 @@ public class AuthController {
     private AuthService.ClientContext context(HttpServletRequest http) {
         return new AuthService.ClientContext(
                 ipResolver.resolve(http), http.getHeader("User-Agent"));
+    }
+
+    private void beginAuth(String email, String flow) {
+        context.clear();
+        context.setAuthEmail(UserService.normalize(email));
+        context.setFlow(flow);
+    }
+
+    private void beginToken(String token, String flow) {
+        context.clear();
+        if (token != null && !token.isBlank()) {
+            context.setEmailTokenHash(TokenHasher.sha256Hex(token));
+        }
+        context.setFlow(flow);
     }
 }

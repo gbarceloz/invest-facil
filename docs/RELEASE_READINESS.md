@@ -3,12 +3,19 @@
 **Atualizado: 20/11/2026** · Branch local: `feat/mvp-completo`
 **Veredito:** pronto para demonstração local; **não** validado em produção.
 
+> **Atualização S2.8 (22/11/2026):** V1-V7 implementadas e 63 testes locais; a V6 está validada no Lab, mas a V7 ainda não foi aplicada remotamente. Ver docs/verification/S2.8/S2.8_DATABASE_FUNCTION_HARDENING_REPORT.md.
+
+> **Nota P0.4 (22/11/2026):** CI em todas as branches foi implementada em P0.2, mas não há
+> evidência de execução remota/branch protection. O P0.3 endureceu os 8 agentes locais;
+> riscos globais/MCP/shell continuam abertos. Deploy continua **NOT VERIFIED/NOT DEPLOYED**.
+> Fonte atual: `docs/engineering/SOURCE_REGISTRY.md`.
+
 ## 1. O que está implementado e verificado
 
 | Item | Evidência |
 |---|---|
 | Backend Spring Boot 3.5.6 / Java 21 / Maven | build local |
-| PostgreSQL 17 + Flyway V1–V5 | Testcontainers, banco limpo |
+| PostgreSQL 17 + Flyway V1–V7 | Testcontainers, banco limpo |
 | RLS deny-by-default, app sem DDL, ledgers append-only, guest vê 0 linhas | `FlywaySecurityIntegrationTest` 5/5 |
 | API fail-closed; públicos mínimos | `SecurityConfig`; 401 sem token no teste integrado |
 | JWT 15 min; refresh opaco com hash/rotação/reuso | `JwtServiceTest`, `MvpFlowIntegrationTest` |
@@ -16,15 +23,15 @@
 | MFA TOTP (segredo AES-GCM, anti-replay, setup com senha) | `TotpServiceTest` + teste manual de API (setup/enable → login → verify → replay 401 → disable) |
 | Reset de senha com invalidação de sessões | teste integrado: token de reset → nova senha → login |
 | Rate limit + IP sem confiar em XFF | `RateLimitFilter`, `ClientIpResolverTest` |
-| Conteúdo: 8 categorias, 8 módulos, 19 aulas, 38 questões, 6 artigos | seed + teste integrado |
+| Conteúdo: 8 categorias, 12 módulos, 31 aulas, 62 questões, 6 artigos | seed + teste integrado |
 | Progresso idempotente, quizzes, XP, níveis, conquistas | `MvpFlowIntegrationTest`; UI local |
 | Simulador de juros compostos + cenários salvos | `SimulatorServiceTest`; UI local |
-| Frontend Next.js 16, 16 páginas + not-found, build de produção | `npm run build` |
+| Frontend Next.js 16, 20 entradas de rota (19 app + not-found), build de produção | `npm run build` |
 | Integração real frontend↔backend | login, aula, quiz, simulador e perfil no browser |
 | CI, Dockerfile, Render/Vercel runbook | `.github/workflows/ci.yml`, `docs/DEPLOY.md`; imagem Docker buildada e health 200 |
 | Ausência de segredos versionados | `SecretsScanTest` 2/2 |
 
-**Testes:** 28 backend (0 falhas/0 skipped) + 6 frontend.
+**Testes:** 63 backend (0 falhas/0 skipped) + 6 frontend.
 
 ## 2. O que está implementado, mas NÃO verificado em ambiente real
 

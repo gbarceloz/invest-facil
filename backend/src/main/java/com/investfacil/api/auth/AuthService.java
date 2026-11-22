@@ -1,6 +1,7 @@
 package com.investfacil.api.auth;
 
 import com.investfacil.api.common.error.BusinessException;
+import com.investfacil.api.common.context.UserContext;
 import com.investfacil.api.common.security.JwtService;
 import com.investfacil.api.common.security.SecretCipher;
 import com.investfacil.api.common.security.TokenHasher;
@@ -44,12 +45,14 @@ public class AuthService {
     private final TotpService totp;
     private final AppProperties properties;
     private final PasswordEncoder encoder;
+    private final UserContext context;
     private final String dummyHash;
 
     public AuthService(UserService users, RefreshTokenRepository refreshTokens,
                        EmailTokenRepository emailTokens, AuthAuditService audit,
                        JwtService jwt, EmailService email, SecretCipher cipher,
-                       TotpService totp, AppProperties properties, PasswordEncoder encoder) {
+                       TotpService totp, AppProperties properties, PasswordEncoder encoder,
+                       UserContext context) {
         this.users = users;
         this.refreshTokens = refreshTokens;
         this.emailTokens = emailTokens;
@@ -60,6 +63,7 @@ public class AuthService {
         this.totp = totp;
         this.properties = properties;
         this.encoder = encoder;
+        this.context = context;
         this.dummyHash = encoder.encode(TokenHasher.randomToken());
     }
 
@@ -76,6 +80,7 @@ public class AuthService {
                     "Não foi possível concluir o cadastro com estes dados.");
         }
         User user = users.create(request.name(), normalized, request.password(), Role.USER, false);
+        bindUser(user);
         String verifyToken = issueEmailToken(user, EmailTokenType.EMAIL_VERIFY, Duration.ofHours(24));
         email.sendVerification(user, verifyToken);
         audit.record(user.getId(), "REGISTER", context.ip(), context.userAgent(), "created");
@@ -92,6 +97,7 @@ public class AuthService {
             audit.record(null, "LOGIN_FAIL", context.ip(), context.userAgent(), "unknown-email");
             throw BusinessException.unauthorized("E-mail ou senha inválidos.");
         }
+        bindUser(user);
         if (user.isLocked(Instant.now())) {
             audit.record(user.getId(), "LOGIN_FAIL", context.ip(), context.userAgent(), "locked");
             throw BusinessException.locked(
@@ -126,8 +132,10 @@ public class AuthService {
         } catch (JwtException | IllegalArgumentException ex) {
             throw BusinessException.unauthorized("Desafio de MFA inválido ou expirado.");
         }
+        bindUser(userId, null);
         User user = users.findById(userId)
                 .orElseThrow(() -> BusinessException.unauthorized("Desafio de MFA inválido."));
+        bindUser(user);
         if (user.isLocked(Instant.now())) {
             throw BusinessException.locked("Conta temporariamente bloqueada.");
         }
@@ -167,6 +175,7 @@ public class AuthService {
         RefreshToken current = refreshTokens
                 .findByTokenHashForUpdate(TokenHasher.sha256Hex(rawToken))
                 .orElseThrow(() -> BusinessException.unauthorized("Sessão inválida. Entre novamente."));
+        bindUser(current.getUserId(), null);
 
         Instant now = Instant.now();
         if (current.getRevokedAt() != null || current.getReplacedBy() != null) {
@@ -183,6 +192,7 @@ public class AuthService {
         }
         User user = users.findById(current.getUserId())
                 .orElseThrow(() -> BusinessException.unauthorized("Sessão inválida."));
+        bindUser(user);
         if (user.isLocked(now)) {
             refreshTokens.revokeFamily(current.getFamilyId(), now);
             throw BusinessException.locked("Conta temporariamente bloqueada.");
@@ -203,8 +213,9 @@ public class AuthService {
     public void logout(String rawToken, UUID userId, ClientContext context) {
         if (rawToken != null && !rawToken.isBlank()) {
             refreshTokens.findByTokenHash(TokenHasher.sha256Hex(rawToken)).ifPresent(token -> {
+                bindUser(token.getUserId(), null);
                 refreshTokens.revokeFamily(token.getFamilyId(), Instant.now());
-                audit.record(userId != null ? userId : token.getUserId(), "LOGOUT",
+                audit.record(token.getUserId(), "LOGOUT",
                         context.ip(), context.userAgent(), "family-revoked");
             });
         }
@@ -221,6 +232,7 @@ public class AuthService {
                         EmailTokenType.EMAIL_VERIFY)
                 .orElseThrow(() -> BusinessException.badRequest("TOKEN_INVALID",
                         "Link de verificação inválido."));
+        bindUser(token.getUserId(), null);
         if (token.getUsedAt() != null) {
             throw BusinessException.badRequest("TOKEN_USED",
                     "Este link já foi utilizado. Você pode entrar na sua conta.");
@@ -239,6 +251,7 @@ public class AuthService {
     @Transactional
     public void resendVerification(String emailAddress) {
         users.findByEmail(emailAddress).ifPresent(user -> {
+            bindUser(user);
             if (!user.isVerified()) {
                 String raw = issueEmailToken(user, EmailTokenType.EMAIL_VERIFY, Duration.ofHours(24));
                 email.sendVerification(user, raw);
@@ -249,6 +262,7 @@ public class AuthService {
     @Transactional
     public void forgotPassword(String emailAddress) {
         users.findByEmail(emailAddress).ifPresent(user -> {
+            bindUser(user);
             String raw = issueEmailToken(user, EmailTokenType.PASSWORD_RESET, Duration.ofHours(1));
             email.sendPasswordReset(user, raw);
             audit.record(user.getId(), "PASSWORD_RESET_REQUESTED", null, null, "email-sent");
@@ -262,6 +276,7 @@ public class AuthService {
                         EmailTokenType.PASSWORD_RESET)
                 .orElseThrow(() -> BusinessException.badRequest("TOKEN_INVALID",
                         "Link de redefinição inválido."));
+        bindUser(token.getUserId(), null);
         if (token.getUsedAt() != null) {
             throw BusinessException.badRequest("TOKEN_USED", "Este link já foi utilizado.");
         }
@@ -281,6 +296,7 @@ public class AuthService {
     @Transactional
     public void changePassword(UUID userId, String currentPassword, String newPassword,
                                ClientContext context) {
+        bindUser(userId, null);
         User user = users.require(userId);
         if (!users.matches(currentPassword, user.getPasswordHash())) {
             throw BusinessException.badRequest("INVALID_PASSWORD", "Senha atual incorreta.");
@@ -296,6 +312,7 @@ public class AuthService {
 
     @Transactional
     public AuthDtos.MfaSetupResponse setupMfa(UUID userId, String password) {
+        bindUser(userId, null);
         User user = users.require(userId);
         if (!users.matches(password, user.getPasswordHash())) {
             throw BusinessException.badRequest("INVALID_PASSWORD",
@@ -313,6 +330,7 @@ public class AuthService {
 
     @Transactional
     public void enableMfa(UUID userId, String code) {
+        bindUser(userId, null);
         User user = users.require(userId);
         if (user.getMfaSecret() == null) {
             throw BusinessException.badRequest("MFA_NOT_SETUP", "Inicie a configuração do MFA primeiro.");
@@ -328,6 +346,7 @@ public class AuthService {
 
     @Transactional
     public void disableMfa(UUID userId, String password, String code) {
+        bindUser(userId, null);
         User user = users.require(userId);
         if (!users.matches(password, user.getPasswordHash())) {
             throw BusinessException.badRequest("INVALID_PASSWORD", "Senha incorreta.");
@@ -352,6 +371,7 @@ public class AuthService {
     // ------------------------------------------------------------------
 
     public List<AuthDtos.SessionView> sessions(UUID userId, String currentRawToken) {
+        bindUser(userId, null);
         String currentHash = currentRawToken == null ? null : TokenHasher.sha256Hex(currentRawToken);
         return refreshTokens
                 .findByUserIdAndRevokedAtIsNullAndExpiresAtAfterOrderByCreatedAtDesc(userId, Instant.now())
@@ -365,6 +385,7 @@ public class AuthService {
 
     @Transactional
     public void revokeSession(UUID userId, UUID sessionId) {
+        bindUser(userId, null);
         int changed = refreshTokens.revokeOne(userId, sessionId, Instant.now());
         if (changed == 0) {
             throw BusinessException.notFound("Sessão não encontrada.");
@@ -374,11 +395,13 @@ public class AuthService {
 
     @Transactional
     public void revokeAllSessions(UUID userId) {
+        bindUser(userId, null);
         refreshTokens.revokeAllForUser(userId, Instant.now());
         audit.record(userId, "ALL_SESSIONS_REVOKED", null, null, "ok");
     }
 
     public UserDtos.UserView me(UUID userId) {
+        bindUser(userId, null);
         return UserDtos.UserView.from(users.require(userId));
     }
 
@@ -420,5 +443,16 @@ public class AuthService {
             return null;
         }
         return value.length() <= max ? value : value.substring(0, max);
+    }
+
+    private void bindUser(User user) {
+        if (user != null) {
+            bindUser(user.getId(), user.getRole().name());
+        }
+    }
+
+    private void bindUser(UUID userId, String role) {
+        context.setUser(userId, role);
+        context.applyToCurrentTransaction();
     }
 }

@@ -1,11 +1,18 @@
 # AUDITORIA GERAL — Invest Fácil
 
+> **Atualização S2.8 (22/11/2026):** relatório histórico. Estado atual: V1-V7, 63 testes, RLS per-user; a V7 é local e ainda não foi aplicada no Lab. Ver docs/verification/S2.8/S2.8_DATABASE_FUNCTION_HARDENING_REPORT.md.
+
 **Data:** 20/11/2026
 **Responsável:** Project Commander (agente principal), com revisões independentes
 **Deadline:** 12/12/2026 (Hack Brasil)
 **Método:** inspeção direta do workspace, Git/GitHub CLI, leitura de código e migrations,
 execução de builds/testes e navegação no protótipo Figma. Nenhum resultado abaixo foi
 inventado; quando algo não pôde ser verificado, está marcado como **NÃO VERIFICADO**.
+
+> **Nota P0.4 (22/11/2026):** relatório histórico de 20/11. Correções comprovadas:
+> 20 entradas de rota (19 app + not-found) e 8/12/31/62/6 no seed (categorias/módulos/
+> aulas/questões/artigos). CI passou a cobrir todas as branches em P0.2, mas execução
+> remota continua não verificada. Fonte atual: `CONTEXT_INDEX.md`.
 
 ---
 
@@ -16,7 +23,7 @@ inventado; quando algo não pôde ser verificado, está marcado como **NÃO VERI
 | Repositório GitHub | `github.com/gbarceloz/invest-facil` público, branch `main`, 2 commits |
 | Backend | Spring Boot 3.5.6 / Java 21; T1 promovida; MVP de auth, conteúdo, progresso, gamificação, simulador, vídeos e mercado implementado nesta sessão |
 | Banco | PostgreSQL 17, Flyway V1 (17 tabelas) + V2 (papéis/RLS) + V3 (MFA, famílias de refresh, simulações, índice anti-farm) + V4 (inflação) + V5 (ledgers append-only) |
-| Frontend | **não existia**; Next.js 16 + TypeScript + Tailwind criado nesta sessão, com 16 páginas + not-found |
+| Frontend | **não existia**; Next.js 16 + TypeScript + Tailwind criado nesta sessão, com 19 rotas de aplicação + not-found |
 | Figma | protótipo acessível em `join-lend-92404854.figma.site`; identidade dark/amarelo/Plus Jakarta Sans capturada |
 | Testes | backend: **28 testes** (unitários + integração PostgreSQL real via Testcontainers); frontend: **6 testes**; builds verdes |
 | Deploy | Dockerfile, `render.yaml`, CI e runbook prontos; **nenhum deploy remoto executado** (sem credenciais/autorização) |
@@ -63,7 +70,7 @@ Resultados:
 
 ### RBS (referência, não alterar)
 
-`C:\Users\gabri\Desafio-GC-RBS` foi apenas inspecionado com `git status`/`git log`.
+`<external-project>\Desafio-GC-RBS` foi apenas inspecionado com `git status`/`git log`.
 Ele já possuía modificações locais **antes** desta missão (arquivos em
 `backend/src/main/java/com/rbs/...`). Nenhum arquivo do RBS foi alterado por esta
 sessão. A referência foi usada apenas como inspiração de padrões (BCrypt, envelope
@@ -74,7 +81,7 @@ de erro, organização), não como base copiada.
 ## 3. Workspace local — o que existe de fato
 
 ```
-C:\Users\gabri\InvestFacil
+<repo>
 ├── backend/                 API Spring Boot (T1 + MVP desta sessão)
 │   ├── src/main/java/com/investfacil/api/
 │   │   ├── auth/            cadastro, login, refresh, MFA, e-mail, reset, sessões
@@ -209,13 +216,13 @@ do produto e um simulador de juros compostos (não uma carteira de trading). O
 | Verificação de e-mail/reset | **IMPLEMENTED**; envio real **NÃO VERIFICADO** | lógica + fallback de log; sem provedor configurado |
 | MFA TOTP | **TESTED (API)**; UI **NÃO VERIFICADA** ponta a ponta | unit TOTP + teste manual: setup → enable → login com desafio → verify → replay 401 → disable |
 | Rate limit | **VERIFIED** (unit/indireto) | filter; testes de IP; sem teste de carga |
-| Conteúdo educativo | **VERIFIED** | 8 categorias, 8 módulos, 19 aulas, 6 artigos no seed |
+| Conteúdo educativo | **VERIFIED** | 8 categorias, 12 módulos, 31 aulas, 62 questões, 6 artigos no seed |
 | Quizzes/progresso/XP | **VERIFIED** | teste integrado; idempotência |
 | Gamificação | **VERIFIED** | XP, níveis, 7 conquistas; teste integrado |
 | Simulador | **VERIFIED** | cálculo + endpoints + UI local |
 | Vídeos/Supabase Storage | **IMPLEMENTED / BLOCKED (externo)** | upload/URL assinada codificados; sem credenciais para testar upload real |
 | Mercado | **IMPLEMENTED / fallback** | Binance + câmbio; fallback estático rotulado |
-| Frontend | **VERIFIED (build)**; E2E manual local | 16 páginas + not-found; 6 testes; navegação real no browser |
+| Frontend | **VERIFIED (build)**; E2E manual local | 19 rotas de aplicação + not-found; 6 testes; navegação real no browser |
 | Deploy remoto | **NOT_STARTED** | sem credenciais; runbook pronto |
 | Imagem Docker | **VERIFIED (local)** | build multi-stage + container prod com health 200 e Flyway validado |
 | Documentação | **VERIFIED (parcial)** | este relatório + progresso + deploy + README |
@@ -247,7 +254,7 @@ do produto e um simulador de juros compostos (não uma carteira de trading). O
    comando simples. O perfil é documentado, não obrigatório.
 9. **`.next` corrompido** ao rodar `next build` concorrente com `next dev`. Não é
    bug de produto; o processo de dev foi reiniciado com cache limpo.
-10. **Conteúdo inicial vazio.** Criado seed idempotente com 19 aulas, 38 questões
+10. **Conteúdo inicial vazio.** Criado seed idempotente com 31 aulas, 62 questões
     de quiz, 6 artigos e 7 conquistas; sem promessas de rentabilidade.
 11. **MFA setup sem reautenticação.** A revisão independente apontou que um
     access token roubado poderia cadastrar um autenticador. Corrigido: setup
@@ -338,7 +345,7 @@ REST + cache, conforme arquitetura aprovada.
 
 ## 10. Dependências e ambiente
 
-- Java 21 (`C:\Users\gabri\.jdks\ms-21.0.12.1`), Maven 3.9.16 (wrapper local).
+- Java 21 (`%JAVA_HOME%`), Maven 3.9.16 (wrapper local).
 - Node 26.13, npm 11.20; Next 16.4.6 (correção de CVE), React 19.
 - Docker 29.8.2 em execução; PostgreSQL 17 em container local na porta 5433.
 - Testcontainers `postgres:17-alpine`.
@@ -359,7 +366,7 @@ mvn -B test -Pdocker-desktop-newapi
 # frontend
 cd frontend
 npm test        # 6 testes
-npm run build   # 16 páginas + not-found, build de produção OK
+npm run build   # 20 entradas de rota (19 app + not-found), build de produção OK
 ```
 
 Testes de backend incluem:

@@ -1,0 +1,44 @@
+{
+  "gate": 3,
+  "date": "2026-11-21",
+  "status": "documented",
+  "videos_produced": 0,
+  "human_approval": false,
+  "documents": 80,
+  "audits": {
+    "document_checks": 271,
+    "timeline_checks": 144,
+    "total": 415,
+    "failures": 0
+  },
+  "durations_seconds": {
+    "V01": 33,
+    "V02": 42,
+    "V03": 33,
+    "V04": 30,
+    "V05": 37,
+    "V06": 40,
+    "V07": 40,
+    "V08": 41,
+    "V09": 39,
+    "V10": 40
+  },
+  "timing_model": {
+    "speech_chars_per_second": 14.0,
+    "default_pause_ms": 120,
+    "intentional_pause_range_ms": [200, 300],
+    "measured_reference": "High Impact 01, Thalita -12%, ~14.1 speech chars/s"
+  },
+  "preliminary_finalists": ["V01", "V08", "V06"],
+  "reserve": "V02",
+  "ranking_method": "SCORING_TEMPLATE weights; technical criterion withheld; normalized over 95 points",
+  "not_proven": [
+    "real TTS duration",
+    "human listening",
+    "Remotion license eligibility",
+    "edge-tts commercial license",
+    "MP4 render",
+    "CapCut draft/export",
+    "retention or campaign metrics"
+  ]
+}

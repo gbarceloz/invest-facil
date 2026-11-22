@@ -1,8 +1,16 @@
 # QUALIDADE FINAL — Invest Fácil
 
-**Data:** 20/11/2026 · **Branch:** `feat/mvp-completo` · **Deadline:** 12/12/2026
+> **Atualização S2.8 (22/11/2026):** relatório histórico. Estado atual: V1-V7, 63 testes, RLS per-user; a V7 é local e ainda não foi aplicada no Lab. Ver docs/verification/S2.8/S2.8_DATABASE_FUNCTION_HARDENING_REPORT.md.
+
+**Data:** 21/11/2026 · **Branch:** `feat/mvp-completo` · **Deadline Hack Brasil:** 12/12/2026; 29/11/2026 sem fonte — UNKNOWN
 **Veredito:** **GO para demonstração local controlada**; **NO-GO para produção**
 até concluir os bloqueios externos (Supabase, Resend, Render, Vercel, vídeos).
+
+> **Nota P0.4 (22/11/2026):** relatório histórico de 21/11. Números atualizados com
+> evidência: 20 entradas de rota (19 app + not-found); 12 módulos, 31 aulas, 62 questões.
+> Os 10 MP4 do Gate 4 são pipeline Remotion separado dos pilotos CapCut 01/02; aprovação
+> humana e publicação continuam não concedidas. Fontes: `CONTEXT_INDEX.md` e
+> `SOURCE_REGISTRY.md`.
 
 ---
 
@@ -13,9 +21,9 @@ até concluir os bloqueios externos (Supabase, Resend, Render, Vercel, vídeos).
   reuso, logout, MFA TOTP, reset, sessões, RBAC e rate limit.
 - Conteúdo educativo, progresso, quizzes, XP/níveis/conquistas/streak,
   simulador e mercado informativo.
-- Frontend Next.js 16: 16 páginas + not-found, design responsivo e integração real.
+- Frontend Next.js 16: 20 entradas de rota (19 app + not-found), design responsivo e integração real.
 - Infra: Dockerfile, `render.yaml`, compose local, CI e runbooks.
-- Documentação: auditoria, progresso, 70 papéis, API, segurança, deploy, demo e pitch.
+- Documentação: auditoria, progresso, 70 papéis documentais, API, segurança, deploy, demo e pitch.
 
 ---
 
@@ -27,7 +35,7 @@ até concluir os bloqueios externos (Supabase, Resend, Render, Vercel, vídeos).
 | Flyway/RLS/append-only | 5/5 | `FlywaySecurityIntegrationTest` |
 | Jornada integrada | 1/1 | `MvpFlowIntegrationTest` (cadastro → bloqueio não verificado → verificação → login → aula → quiz → XP → simulador → refresh/reuso → reset) |
 | Frontend (Vitest) | **6/6** | `npm test` |
-| Build de produção Next.js | **sucesso**, 16 páginas + not-found | `npm run build` (Next 16.4.6) |
+| Build de produção Next.js | **sucesso**, 20 entradas de rota (19 app + not-found) | `npm run build` (Next 16.4.6) |
 | Dependências frontend | **0 vulnerabilidades** (`npm audit --omit=dev --audit-level=high`) | Next 16.4.6 + sharp 0.35.5 |
 | Login/aula/quiz/simulador/perfil no browser | **manual, sucesso** | navegação real em `localhost:3000` |
 | MFA (API) | setup com senha → enable → login desafiado → verify → replay 401 → disable | execução manual 20/11 |
@@ -133,13 +141,17 @@ logout, MFA e reset de senha.
 | Firebase Spark/Blaze | **Avaliado; não integrado** | `docs/FIREBASE_EVALUATION.md`; Storage exige Blaze/cartão; Hosting Spark é estático; Crashlytics não cobre web |
 | Firebase Storage × Supabase Storage | **Supabase mantido** | 1 GB/5 GB egress e 50 MB/arquivo no Free; Firebase só com Blaze |
 | CapCut MCP | **Conectado e testado** | 17 ferramentas; clone endurecido; `docs/CAPCUT_MCP_SETUP.md` |
-| Draft piloto | **Criado e validado** | `investfacil_piloto`: 33 s, 1080×1920, 3 slides + narração; `capcut_validate` ok |
-| Abertura visual da timeline | **Parcial** | projeto listado/reconhecido; captura da timeline prejudicada por modal/foco |
-| Exportação/upload de vídeo | **Pendente** | CapCut não tem CLI de export; Supabase sem credenciais |
-| Pipeline/templates | **Implementado** | `docs/CONTENT_PIPELINE.md`, `content/templates/**`, `content/pilots/01-volatilidade/**` |
+| VectCutAPI | **Instalado, endurecido e conectado** | 11 ferramentas; `vectcut-api connected`; `docs/VECTCUTAPI_INTEGRATION.md` |
+| Draft piloto 01 | **Criado e validado** | `investfacil_piloto`: 33 s, 1080×1920, 3 slides + narração; `capcut_validate` ok |
+| Draft piloto 02 | **Criado, validado e reaberto** | `if_piloto_diversificacao`: 51,1 s, 3 imagens, áudio e 12 legendas; `capcut_validate` ok |
+| Abertura visual da timeline | **Piloto 01 parcial; piloto 02 verificada pós-save** | 52 amostras cobrindo 0–51 s no CapCut 9.8; sem tela preta |
+| Exportação/upload de vídeo | **Pendente (manual)** | CapCut sem CLI; `scripts/verify-mp4.py` pronto; Supabase sem credenciais |
+| Status do piloto 02 | **CONCLUÍDO COM RESSALVAS** | falta exportar e verificar o MP4; escuta humana pendente |
+| Pipeline/templates | **Implementado** | `docs/CONTENT_PIPELINE.md`, `content/templates/**`, `content/pilots/01-volatilidade/**`, `content/pilots/02-diversificacao/**` |
 
 Nenhum cartão foi associado, nenhum plano Blaze foi habilitado e nenhum script
-remoto foi executado. O MCP é MIT, roda localmente e foi endurecido antes do uso.
+remoto foi executado. Os MCPs são open source, rodam localmente e foram
+endurecidos antes do uso; o VectCutAPI não tem upload remoto habilitado.
 
 ## 7. Bloqueios externos (não são falhas de código)
 
@@ -149,7 +161,7 @@ remoto foi executado. O MCP é MIT, roda localmente e foi endurecido antes do us
 | Resend/domínio | verificação/reset reais | configurar `MAIL_ENABLED=true`, API key, SPF/DKIM |
 | Render | backend público | criar serviço, envs, health, validar cookie Secure |
 | Vercel | frontend público | projeto + `API_PROXY_TARGET`, E2E no domínio |
-| Vídeos | demonstração de vídeo | arquivos ≤3 min + direitos; upload admin |
+| Vídeos | demonstração de vídeo | drafts 01/02 prontos; exportar MP4 ≤ 3 min/50 MB + direitos; upload admin |
 | Push/merge | publicação do código | autorização do proprietário |
 | Contato de segurança | documento público | e-mail real (placeholder mantido) |
 

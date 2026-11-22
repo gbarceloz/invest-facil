@@ -12,6 +12,8 @@ public interface LessonRepository extends JpaRepository<Lesson, UUID> {
 
     List<Lesson> findByModuleIdAndPublishedTrueOrderByDisplayOrderAsc(UUID moduleId);
 
+    Optional<Lesson> findBySlug(String slug);
+
     Optional<Lesson> findBySlugAndPublishedTrue(String slug);
 
     List<Lesson> findByPublishedTrueOrderByDisplayOrderAsc();

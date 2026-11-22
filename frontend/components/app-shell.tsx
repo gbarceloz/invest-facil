@@ -4,10 +4,10 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
+  Bitcoin,
   Calculator,
   ChevronRight,
   Flame,
-  GraduationCap,
   Home,
   Library,
   LineChart,
@@ -15,6 +15,7 @@ import {
   Search,
   Trophy,
   User as UserIcon,
+  X,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { AppDataProvider, useAppData } from "@/lib/app-data";
@@ -25,11 +26,14 @@ import { Alert, Spinner } from "./ui";
 
 const NAV = [
   { href: "/app", label: "Início", icon: Home, exact: true },
-  { href: "/app/aprender", label: "Aprender", icon: GraduationCap },
+  { href: "/app/mercado-financeiro", label: "Mercado financeiro", icon: LineChart },
+  { href: "/app/bitcoin", label: "Cripto", icon: Bitcoin },
+  { href: "/app/progresso", label: "Meu progresso", icon: Trophy },
+];
+
+const SECONDARY = [
   { href: "/app/biblioteca", label: "Biblioteca", icon: Library },
-  { href: "/app/mercado", label: "Mercado", icon: LineChart },
-  { href: "/app/simulador", label: "Simular", icon: Calculator },
-  { href: "/app/progresso", label: "Progresso", icon: Trophy },
+  { href: "/app/simulador", label: "Simulador", icon: Calculator },
   { href: "/app/perfil", label: "Perfil", icon: UserIcon },
 ];
 
@@ -43,12 +47,12 @@ function Sidebar() {
   const { gamification } = useAppData();
 
   return (
-    <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 flex-col overflow-y-auto border-r border-ink-500/60 bg-ink-900/80 px-4 py-6 backdrop-blur-xl lg:flex">
+    <aside className="fixed inset-y-0 left-0 z-30 hidden w-56 flex-col overflow-y-auto border-r border-white/[0.07] bg-[#090909] px-3 py-5 lg:flex">
       <div className="px-2">
         <Logo href="/app" />
       </div>
 
-      <nav className="mt-9 flex-1 space-y-1" aria-label="Navegação principal">
+      <nav className="mt-7 flex-1 space-y-1" aria-label="Navegação principal">
         {NAV.map((item) => {
           const Icon = item.icon;
           const active = isActive(pathname, item.href, item.exact);
@@ -58,25 +62,48 @@ function Sidebar() {
               href={item.href}
               aria-current={active ? "page" : undefined}
               className={cn(
-                "group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition",
+                "group flex items-center gap-3 rounded-lg px-3 py-2 text-[12px] font-medium transition",
                 active
-                  ? "bg-accent/10 text-accent"
-                  : "text-muted hover:bg-ink-700/70 hover:text-neutral-100",
+                  ? "bg-white/[0.06] text-neutral-100"
+                  : "text-neutral-500 hover:bg-white/[0.04] hover:text-neutral-200",
               )}
             >
               <Icon className={cn("h-[18px] w-[18px]", active ? "text-accent" : "text-neutral-500 group-hover:text-neutral-300")} />
               {item.label}
-              {item.label === "Aprender" && (
-                <span className="ml-auto rounded-md bg-accent/15 px-1.5 py-0.5 text-[10px] font-bold text-accent">
-                  XP
-                </span>
-              )}
             </Link>
           );
         })}
       </nav>
 
-      <div className="card mt-6 space-y-3 bg-gradient-to-b from-ink-700 to-ink-800 p-4">
+      <div className="mt-8 border-t border-white/10 pt-4">
+        <p className="px-3 pb-2 text-[10px] font-bold uppercase tracking-[0.18em] text-neutral-600">
+          Mais
+        </p>
+        <div className="space-y-1">
+          {SECONDARY.map((item) => {
+            const Icon = item.icon;
+            const active = isActive(pathname, item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={active ? "page" : undefined}
+                className={cn(
+                  "group flex items-center gap-3 rounded-xl px-3 py-2 text-xs font-semibold transition",
+                  active
+                    ? "bg-white/[0.05] text-accent"
+                    : "text-neutral-500 hover:bg-white/[0.04] hover:text-neutral-200",
+                )}
+              >
+                <Icon className="h-4 w-4" />
+                {item.label}
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="mt-6 space-y-2.5 rounded-xl border border-white/[0.07] bg-[#111111] p-3.5">
         <div className="flex items-center justify-between">
           <span className="text-[10px] font-bold uppercase tracking-widest text-muted">
             Nível {String(gamification?.level.number ?? 1).padStart(2, "0")}
@@ -109,14 +136,14 @@ function Topbar() {
   }
 
   return (
-    <header className="sticky top-0 z-20 border-b border-ink-500/60 bg-ink-950/80 backdrop-blur-xl">
-      <div className="flex h-16 items-center gap-3 px-4 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-20 border-b border-white/[0.07] bg-[#090909]/90 backdrop-blur-xl">
+      <div className="flex h-14 items-center gap-3 px-4 sm:px-6 lg:px-8">
         <div className="lg:hidden">
           <Logo href="/app" compact />
         </div>
 
         <form
-          className="hidden flex-1 items-center gap-2 rounded-xl border border-ink-500/80 bg-ink-800/80 px-3 py-2 text-sm text-muted focus-within:border-accent/50 sm:flex"
+          className="hidden max-w-md flex-1 items-center gap-2 rounded-lg border border-white/[0.08] bg-[#111111] px-3 py-2 text-[12px] text-neutral-500 focus-within:border-accent/30 sm:flex"
           role="search"
           onSubmit={(event) => {
             event.preventDefault();
@@ -130,7 +157,7 @@ function Topbar() {
           <input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Buscar aulas, termos e artigos…"
+            placeholder="Buscar aulas, termos e cripto…"
             className="w-full bg-transparent text-neutral-200 outline-none placeholder:text-neutral-600"
             aria-label="Buscar conteúdo"
           />
@@ -182,13 +209,13 @@ function Topbar() {
 
 function MobileNav() {
   const pathname = usePathname();
-  const items = [NAV[0], NAV[1], NAV[3], NAV[4], NAV[5]];
+  const items = NAV;
   return (
     <nav
       className="fixed inset-x-0 bottom-0 z-30 border-t border-ink-500/70 bg-ink-900/95 px-2 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl lg:hidden"
       aria-label="Navegação mobile"
     >
-      <div className="grid grid-cols-5">
+      <div className="grid grid-cols-4">
         {items.map((item) => {
           const Icon = item.icon;
           const active = isActive(pathname, item.href, item.exact);
@@ -209,6 +236,54 @@ function MobileNav() {
         })}
       </div>
     </nav>
+  );
+}
+
+function FocusedLessonShell({ children }: { children: React.ReactNode }) {
+  const { progress } = useAppData();
+  const router = useRouter();
+  const pathname = usePathname();
+  const isQuiz = pathname.startsWith("/app/aprender/quiz/");
+  const [quizProgress, setQuizProgress] = useState(0);
+
+  useEffect(() => {
+    if (!isQuiz) return;
+    const handler = (event: Event) => {
+      const value = (event as CustomEvent<number>).detail;
+      if (typeof value === "number") setQuizProgress(value);
+    };
+    window.addEventListener("quiz:progress", handler);
+    return () => window.removeEventListener("quiz:progress", handler);
+  }, [isQuiz]);
+
+  const flowProgress = isQuiz ? quizProgress : progress?.percent ?? 0;
+
+  return (
+    <div className="min-h-screen bg-[#090909]">
+      <header className="sticky top-0 z-20 border-b border-white/[0.07] bg-[#090909]/95 backdrop-blur-xl">
+        <div className="mx-auto flex h-14 max-w-4xl items-center gap-4 px-4 sm:px-6">
+          <button
+            type="button"
+            onClick={() => router.push("/app/mercado-financeiro")}
+            className="grid h-8 w-8 place-items-center rounded-md text-neutral-500 transition hover:bg-white/[0.05] hover:text-neutral-100"
+            aria-label="Fechar aula"
+          >
+            <X className="h-4 w-4" />
+          </button>
+          <div className="mx-auto w-full max-w-md">
+            <div className="mb-1 flex items-center justify-between text-[9px] text-neutral-500">
+              <span className="uppercase tracking-[0.16em]">{isQuiz ? "verificação de conhecimento" : "missão em andamento"}</span>
+              <span>{Math.round(flowProgress)}%</span>
+            </div>
+            <ProgressBar value={flowProgress} />
+          </div>
+          <span className="shrink-0 text-[10px] font-semibold text-accent">
+            {isQuiz ? "+50 XP" : "+100 XP"}
+          </span>
+        </div>
+      </header>
+      <main className="mx-auto w-full max-w-3xl px-4 py-9 sm:px-6 sm:py-12">{children}</main>
+    </div>
   );
 }
 
@@ -247,27 +322,36 @@ function Shell({ children }: { children: React.ReactNode }) {
     );
   }
 
+  const focusedLesson = pathname.startsWith("/app/aprender/aula/")
+    || pathname.startsWith("/app/aprender/quiz/");
+
   return (
     <AppDataProvider>
-      <a
-        href="#conteudo"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-accent focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-ink-950"
-      >
-        Pular para o conteúdo
-      </a>
-      <div className="min-h-screen">
-        <Sidebar />
-        <div className="lg:pl-64">
-          <Topbar />
-          <main
-            id="conteudo"
-            className="mx-auto w-full max-w-6xl px-4 pb-28 pt-6 sm:px-6 lg:px-8 lg:pb-12"
+      {focusedLesson ? (
+        <FocusedLessonShell>{children}</FocusedLessonShell>
+      ) : (
+        <>
+          <a
+            href="#conteudo"
+            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-accent focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-ink-950"
           >
-            {children}
-          </main>
-        </div>
-        <MobileNav />
-      </div>
+            Pular para o conteúdo
+          </a>
+          <div className="min-h-screen">
+            <Sidebar />
+            <div className="lg:pl-56">
+              <Topbar />
+              <main
+                id="conteudo"
+                className="mx-auto w-full max-w-5xl px-4 pb-28 pt-6 sm:px-6 lg:px-8 lg:pb-12"
+              >
+                {children}
+              </main>
+            </div>
+            <MobileNav />
+          </div>
+        </>
+      )}
     </AppDataProvider>
   );
 }

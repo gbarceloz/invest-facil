@@ -224,6 +224,28 @@ export interface MarketResponse {
   disclaimer: string;
 }
 
+export interface BitcoinPoint {
+  timestamp: number;
+  price: number;
+}
+
+export interface BitcoinMarketResponse {
+  asset: "Bitcoin";
+  source: string;
+  status: "FRESH" | "STALE" | "UNAVAILABLE";
+  updatedAt: string | null;
+  priceUsd: number | null;
+  priceBrl: number | null;
+  change24hPercent: number | null;
+  marketCapUsd: number | null;
+  marketCapBrl: number | null;
+  volume24hUsd: number | null;
+  volume24hBrl: number | null;
+  chart24h: BitcoinPoint[];
+  chart7d: BitcoinPoint[];
+  disclaimer: string;
+}
+
 export interface ScenarioInput {
   initialAmount: number;
   monthlyContribution: number;
