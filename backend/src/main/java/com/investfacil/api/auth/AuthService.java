@@ -252,10 +252,25 @@ public class AuthService {
     public void resendVerification(String emailAddress) {
         users.findByEmail(emailAddress).ifPresent(user -> {
             bindUser(user);
-            if (!user.isVerified()) {
-                String raw = issueEmailToken(user, EmailTokenType.EMAIL_VERIFY, Duration.ofHours(24));
-                email.sendVerification(user, raw);
+            if (user.isVerified()) {
+                return;
             }
+            Instant now = Instant.now();
+            int cooldown = Math.max(0, properties.getAuth().getVerificationResendSeconds());
+            EmailToken last = emailTokens
+                    .findFirstByUserIdAndTypeOrderByCreatedAtDesc(user.getId(),
+                            EmailTokenType.EMAIL_VERIFY)
+                    .orElse(null);
+            // Anti-abuso: não emite novo token/e-mail dentro do cooldown. A
+            // resposta HTTP é a mesma (anti-enumeração).
+            if (last != null && cooldown > 0
+                    && last.getCreatedAt().plusSeconds(cooldown).isAfter(now)) {
+                audit.record(user.getId(), "VERIFICATION_RESEND", null, null, "cooldown");
+                return;
+            }
+            String raw = issueEmailToken(user, EmailTokenType.EMAIL_VERIFY, Duration.ofHours(24));
+            email.sendVerification(user, raw);
+            audit.record(user.getId(), "VERIFICATION_RESEND", null, null, "sent");
         });
     }
 

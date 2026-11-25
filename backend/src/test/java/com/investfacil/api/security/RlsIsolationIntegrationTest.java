@@ -189,9 +189,9 @@ class RlsIsolationIntegrationTest {
     void seedContentAndAnonymousAccessRemainAvailable() throws Exception {
         // Sem contexto, conteúdo global é legível e dados privados são negados.
         assertEquals(8, count("select count(*) from investfacil.categories"));
-        assertEquals(12, count("select count(*) from investfacil.modules"));
-        assertEquals(31, count("select count(*) from investfacil.lessons"));
-        assertEquals(62, count("select count(*) from investfacil.quiz_questions"));
+        assertEquals(13, count("select count(*) from investfacil.modules"));
+        assertEquals(39, count("select count(*) from investfacil.lessons"));
+        assertEquals(86, count("select count(*) from investfacil.quiz_questions"));
         assertEquals(6, count("select count(*) from investfacil.articles"));
         assertEquals(7, count("select count(*) from investfacil.achievements"));
 
@@ -247,13 +247,21 @@ class RlsIsolationIntegrationTest {
         UUID lessonId = lessonId("por-que-educacao-financeira");
         mvc.perform(post("/api/v1/progress/lessons/" + lessonId)
                         .header("Authorization", bearer(user)))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.xpAwarded").value(50));
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.code").value("LESSON_NOT_READY"));
+
+        mvc.perform(post("/api/v1/progress/lessons/" + lessonId + "/video")
+                        .header("Authorization", bearer(user))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"watched\":true,\"positionSeconds\":120,\"durationSeconds\":120}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.watched").value(true));
 
         mvc.perform(get("/api/v1/progress/lessons/" + lessonId)
                         .header("Authorization", bearer(user)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.completed").value(true));
+                .andExpect(jsonPath("$.videoWatched").value(true))
+                .andExpect(jsonPath("$.completed").value(false));
 
         MvcResult quiz = mvc.perform(get("/api/v1/progress/lessons/" + lessonId + "/quiz")
                         .header("Authorization", bearer(user)))
@@ -269,7 +277,13 @@ class RlsIsolationIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(answers))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.percent").value(100));
+                .andExpect(jsonPath("$.percent").value(100))
+                .andExpect(jsonPath("$.lessonCompleted").value(true));
+
+        mvc.perform(post("/api/v1/progress/lessons/" + lessonId)
+                        .header("Authorization", bearer(user)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.alreadyCompleted").value(true));
 
         mvc.perform(post("/api/v1/simulator/scenarios")
                         .header("Authorization", bearer(user))
@@ -331,9 +345,7 @@ class RlsIsolationIntegrationTest {
         TestUser b = register("ab-b");
         UUID lessonId = lessonId("por-que-educacao-financeira");
 
-        mvc.perform(post("/api/v1/progress/lessons/" + lessonId)
-                        .header("Authorization", bearer(b)))
-                .andExpect(status().isCreated());
+        completeLessonViaVideoAndQuiz(b, lessonId);
 
         MvcResult saved = mvc.perform(post("/api/v1/simulator/scenarios")
                         .header("Authorization", bearer(b))
@@ -366,23 +378,7 @@ class RlsIsolationIntegrationTest {
         TestUser b = register("db-b");
         UUID lessonId = lessonId("por-que-educacao-financeira");
 
-        mvc.perform(post("/api/v1/progress/lessons/" + lessonId)
-                        .header("Authorization", bearer(b)))
-                .andExpect(status().isCreated());
-        MvcResult quiz = mvc.perform(get("/api/v1/progress/lessons/" + lessonId + "/quiz")
-                        .header("Authorization", bearer(b)))
-                .andExpect(status().isOk())
-                .andReturn();
-        JsonNode questions = json(quiz).get("questions");
-        mvc.perform(post("/api/v1/progress/lessons/" + lessonId + "/quiz")
-                        .header("Authorization", bearer(b))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"answers\":["
-                                + "{\"questionId\":\"" + questions.get(0).get("id").asText()
-                                + "\",\"selectedIndex\":1},"
-                                + "{\"questionId\":\"" + questions.get(1).get("id").asText()
-                                + "\",\"selectedIndex\":0}]}"))
-                .andExpect(status().isOk());
+        completeLessonViaVideoAndQuiz(b, lessonId);
         mvc.perform(post("/api/v1/simulator/scenarios")
                         .header("Authorization", bearer(b))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -697,11 +693,11 @@ class RlsIsolationIntegrationTest {
         assertEquals(0, adminJdbc.queryForObject(
                 "select count(*) from pg_tables where schemaname = 'investfacil'"
                         + " and tableowner = 'investfacil_runtime'", Integer.class));
-        assertEquals(18, adminJdbc.queryForObject(
+        assertEquals(23, adminJdbc.queryForObject(
                 "select count(*) from pg_tables where schemaname = 'investfacil'"
                         + " and tableowner = 'investfacil_migrate'"
                         + " and tablename <> 'flyway_schema_history'", Integer.class));
-        assertEquals(18, adminJdbc.queryForObject(
+        assertEquals(23, adminJdbc.queryForObject(
                 "select count(*) from pg_class c join pg_namespace n on n.oid = c.relnamespace"
                         + " where n.nspname = 'investfacil' and c.relkind = 'r'"
                         + " and c.relrowsecurity and c.relforcerowsecurity"
@@ -791,7 +787,7 @@ class RlsIsolationIntegrationTest {
                         + " where oid = to_regprocedure("
                         + " 'investfacil.apply_table_security()')::regprocedure",
                 Integer.class), "função legada deve ter sido removida");
-        assertEquals(7, adminJdbc.queryForObject(
+        assertEquals(8, adminJdbc.queryForObject(
                 "select count(*) from investfacil.flyway_schema_history"
                         + " where success = true and type = 'SQL'", Integer.class));
     }
@@ -812,6 +808,9 @@ class RlsIsolationIntegrationTest {
                 "select count(*) from pg_policies where schemaname = 'investfacil'"
                         + " and policyname like 's24_%'", Integer.class));
         assertEquals(18, adminJdbc.queryForObject(
+                "select count(*) from pg_policies where schemaname = 'investfacil'"
+                        + " and policyname like 'v8_%'", Integer.class));
+        assertEquals(23, adminJdbc.queryForObject(
                 "select count(*) from pg_class c join pg_namespace n on n.oid = c.relnamespace"
                         + " where n.nspname = 'investfacil' and c.relkind = 'r'"
                         + " and c.relrowsecurity and c.relforcerowsecurity"
@@ -873,7 +872,7 @@ class RlsIsolationIntegrationTest {
         future.setProperty("app.security.guard.expected-version", "99");
         IllegalStateException failure = assertThrows(IllegalStateException.class,
                 () -> new DatabaseSecurityGuard(dataSource, future).verify());
-        assertTrue(failure.getMessage().contains("newer than the V7"));
+        assertTrue(failure.getMessage().contains("newer than the V8"));
     }
 
     @Test
@@ -921,6 +920,29 @@ class RlsIsolationIntegrationTest {
                 adminJdbc.execute("ALTER FUNCTION " + function + " SET search_path = ''");
             }
         }
+    }
+
+    private void completeLessonViaVideoAndQuiz(TestUser user, UUID lessonId) throws Exception {
+        mvc.perform(post("/api/v1/progress/lessons/" + lessonId + "/video")
+                        .header("Authorization", bearer(user))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"watched\":true,\"positionSeconds\":120,\"durationSeconds\":120}"))
+                .andExpect(status().isOk());
+        MvcResult quiz = mvc.perform(get("/api/v1/progress/lessons/" + lessonId + "/quiz")
+                        .header("Authorization", bearer(user)))
+                .andExpect(status().isOk())
+                .andReturn();
+        JsonNode questions = json(quiz).get("questions");
+        mvc.perform(post("/api/v1/progress/lessons/" + lessonId + "/quiz")
+                        .header("Authorization", bearer(user))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"answers\":["
+                                + "{\"questionId\":\"" + questions.get(0).get("id").asText()
+                                + "\",\"selectedIndex\":1},"
+                                + "{\"questionId\":\"" + questions.get(1).get("id").asText()
+                                + "\",\"selectedIndex\":0}]}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.lessonCompleted").value(true));
     }
 
     private TestUser register(String prefix) throws Exception {

@@ -1,0 +1,6 @@
+# Módulo 01: 8 MP4 + posters + VTT somam ~127 MB e não cabem no deploy.
+# Em produção esses arquivos são servidos pelo Supabase Storage apontado por
+# NEXT_PUBLIC_VIDEO_BASE_URL. O build da Vercel falha de forma explícita se a
+# env não estiver definida (guard em next.config.ts), evitando publicar a aula
+# sem vídeo. O fallback local continua valendo em `npm run dev` e no build local.
+public/videos/module-01/

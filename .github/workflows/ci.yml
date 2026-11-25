@@ -117,6 +117,11 @@ jobs:
       - name: Capture exposed OpenAPI document
         working-directory: backend
         run: mvn -B -Dtest=OpenApiSnapshotIntegrationTest test
+      - name: Stage captured OpenAPI for artifact
+        if: always()
+        run: |
+          mkdir -p contract-report
+          cp backend/target/openapi-current.json contract-report/openapi-current.json
       - name: Assert OpenAPI capture ran
         run: python3 scripts/ci/assert-openapi-capture.py
       - name: Compare against versioned snapshot

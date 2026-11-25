@@ -2,11 +2,14 @@ package com.investfacil.api.users;
 
 import com.investfacil.api.common.error.BusinessException;
 import com.investfacil.api.config.AppProperties;
+import com.investfacil.api.gamification.StreakDayRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 import java.util.Optional;
@@ -18,12 +21,14 @@ public class UserService {
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
     private final AppProperties properties;
+    private final StreakDayRepository streakDays;
 
     public UserService(UserRepository repository, PasswordEncoder passwordEncoder,
-                       AppProperties properties) {
+                       AppProperties properties, StreakDayRepository streakDays) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
         this.properties = properties;
+        this.streakDays = streakDays;
     }
 
     @Transactional(readOnly = true)
@@ -59,17 +64,31 @@ public class UserService {
         user.setPasswordHash(passwordEncoder.encode(rawPassword));
         user.setRole(role);
         user.setVerified(verified);
+        user.setTimezone(defaultTimezone());
         return repository.save(user);
     }
 
     @Transactional
-    public User updateProfile(UUID id, String name, String avatarUrl) {
+    public User updateProfile(UUID id, String name, String avatarUrl, String timezone) {
         User user = require(id);
         if (name != null && !name.isBlank()) {
             user.setName(name.trim());
         }
         if (avatarUrl != null) {
             user.setAvatarUrl(avatarUrl.isBlank() ? null : avatarUrl.trim());
+        }
+        if (timezone != null) {
+            String validated = validateTimezone(timezone);
+            String current = user.getTimezone();
+            // F-05: depois do primeiro dia válido, mudar o fuso mudaria a data
+            // local e permitiria farmar streak. Bloqueia até nova regra de negócio.
+            if (current != null && !current.equals(validated)
+                    && streakDays.existsByUserId(id)) {
+                throw new BusinessException(HttpStatus.CONFLICT, "TIMEZONE_LOCKED",
+                        "O fuso horário não pode ser alterado após o primeiro dia de estudo, "
+                                + "para preservar a sequência.");
+            }
+            user.setTimezone(validated);
         }
         return repository.save(user);
     }
@@ -163,5 +182,24 @@ public class UserService {
 
     public static String normalize(String email) {
         return email == null ? "" : email.trim().toLowerCase(Locale.ROOT);
+    }
+
+    /** Valida um ID IANA da base tzdb; rejeita offsets e strings arbitrárias. */
+    public static String validateTimezone(String value) {
+        String candidate = value == null ? "" : value.trim();
+        if (candidate.isEmpty() || !ZoneId.getAvailableZoneIds().contains(candidate)) {
+            throw BusinessException.badRequest("INVALID_TIMEZONE",
+                    "Timezone inválido. Use um identificador IANA, como America/Sao_Paulo.");
+        }
+        return candidate;
+    }
+
+    private String defaultTimezone() {
+        String configured = properties.getQuiz().getDefaultTimezone();
+        try {
+            return validateTimezone(configured);
+        } catch (BusinessException ex) {
+            return "America/Sao_Paulo";
+        }
     }
 }

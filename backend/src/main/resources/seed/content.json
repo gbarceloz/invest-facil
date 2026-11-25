@@ -7,10 +7,330 @@
       "order": 1,
       "modules": [
         {
+          "slug": "entenda-o-dinheiro",
+          "title": "Entenda o dinheiro",
+          "description": "O que é dinheiro, por que ele tem valor, como surgiu e por que o tempo muda o que ele compra.",
+          "order": 1,
+          "lessons": [
+            {
+              "slug": "o-que-e-dinheiro",
+              "title": "O que é dinheiro?",
+              "estimatedMin": 2,
+              "order": 1,
+              "content": "## Dinheiro é uma ferramenta\n\nDinheiro é tudo o que uma sociedade aceita para **trocar por bens e serviços**. Ele resolve um problema prático: sem dinheiro, seria preciso encontrar alguém que quisesse exatamente o que você tem para oferecer.\n\n## As três funções\n\n- **Meio de troca:** permite comprar e vender sem escambo.\n- **Unidade de conta:** permite comparar o preço das coisas.\n- **Reserva de valor:** permite guardar poder de compra para o futuro.\n\nUma moeda pode cumprir bem uma função e falhar em outra. Entender isso ajuda a avaliar qualquer forma de dinheiro.\n\n> Dinheiro não é riqueza em si. É o instrumento que usamos para trocar e medir valor.",
+              "quiz": [
+                {
+                  "question": "Qual função do dinheiro permite comparar o preço de produtos diferentes?",
+                  "options": [
+                    "Meio de troca",
+                    "Unidade de conta",
+                    "Reserva de valor",
+                    "Cartão de crédito"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "Usar dinheiro para comprar pão é um exemplo de qual função?",
+                  "options": [
+                    "Meio de troca",
+                    "Unidade de conta",
+                    "Reserva de valor",
+                    "Investimento"
+                  ],
+                  "correctIndex": 0
+                },
+                {
+                  "question": "Guardar dinheiro para usar no futuro é um exemplo de qual função?",
+                  "options": [
+                    "Meio de troca",
+                    "Unidade de conta",
+                    "Reserva de valor",
+                    "Empréstimo"
+                  ],
+                  "correctIndex": 2
+                }
+              ]
+            },
+            {
+              "slug": "por-que-o-dinheiro-tem-valor",
+              "title": "Por que o dinheiro tem valor?",
+              "estimatedMin": 2,
+              "order": 2,
+              "content": "## Valor vem da confiança\n\nUma nota de papel vale pouco como papel. O que lhe dá valor é a **confiança** de que outras pessoas vão aceitá-la em troca de bens e serviços.\n\n## O que sustenta essa confiança\n\n- **Aceitação social:** todos esperam que os outros também aceitem.\n- **Escassez:** a quantidade disponível não cresce sem controle.\n- **Lastro institucional:** leis, Banco Central e estabilidade econômica.\n\n## Quando a confiança quebra\n\nSe as pessoas deixam de acreditar que o dinheiro será aceito, ele perde valor rapidamente. Escassez sozinha não basta: é preciso que alguém queira aquele dinheiro.\n\n> O valor do dinheiro é uma convenção social sustentada por confiança e instituições.",
+              "quiz": [
+                {
+                  "question": "O que dá valor a uma nota de dinheiro?",
+                  "options": [
+                    "O custo do papel usado",
+                    "A confiança de que ela será aceita",
+                    "A cor da nota",
+                    "O tamanho da nota"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "O que acontece se as pessoas perdem a confiança na moeda?",
+                  "options": [
+                    "Ela tende a perder valor",
+                    "Ela passa a valer mais",
+                    "O preço dos produtos cai sempre",
+                    "Nada muda"
+                  ],
+                  "correctIndex": 0
+                },
+                {
+                  "question": "Escassez, sozinha, garante que algo tenha valor?",
+                  "options": [
+                    "Sim, sempre",
+                    "Não, também é preciso demanda e aceitação",
+                    "Sim, se for dinheiro",
+                    "Não, porque escassez não existe"
+                  ],
+                  "correctIndex": 1
+                }
+              ]
+            },
+            {
+              "slug": "como-o-dinheiro-surgiu",
+              "title": "Como o dinheiro surgiu?",
+              "estimatedMin": 2,
+              "order": 3,
+              "content": "## Do escambo às moedas\n\nAntes do dinheiro, as trocas eram feitas por **escambo**. O problema é a dupla coincidência: eu preciso ter o que você quer e você precisa ter o que eu quero, ao mesmo tempo.\n\n## A evolução\n\n- **Mercadorias:** sal, gado e metais foram usados como dinheiro.\n- **Moedas:** metais preciosos ganharam peso e selo, facilitando a confiança.\n- **Papel-moeda:** representava metal guardado e depois passou a se sustentar na confiança.\n- **Dinheiro digital:** hoje a maior parte do dinheiro existe apenas em registros eletrônicos.\n\nCada etapa buscou resolver limitações da anterior: transporte, divisibilidade, durabilidade e confiança.\n\n> O dinheiro mudou de forma muitas vezes. A função de facilitar trocas permaneceu.",
+              "quiz": [
+                {
+                  "question": "Qual é o principal problema do escambo?",
+                  "options": [
+                    "O excesso de moedas",
+                    "A dificuldade de coincidir interesses entre as pessoas",
+                    "A inflação",
+                    "O pagamento de impostos"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "Por que metais preciosos foram usados como dinheiro?",
+                  "options": [
+                    "Por serem duráveis, divisíveis e amplamente aceitos",
+                    "Por serem fáceis de imprimir",
+                    "Por não terem nenhum valor",
+                    "Por serem oferecidos pelo governo"
+                  ],
+                  "correctIndex": 0
+                },
+                {
+                  "question": "O dinheiro digital se baseia principalmente em:",
+                  "options": [
+                    "Ouro guardado em cofres",
+                    "Notas físicas impressas",
+                    "Registros eletrônicos e confiança no sistema",
+                    "Trocas diretas de mercadorias"
+                  ],
+                  "correctIndex": 2
+                }
+              ]
+            },
+            {
+              "slug": "o-que-e-inflacao",
+              "title": "O que é inflação?",
+              "estimatedMin": 2,
+              "order": 4,
+              "content": "## Preços que sobem de forma generalizada\n\nInflação é o **aumento generalizado de preços** ao longo do tempo. Não é o preço de um produto isolado subindo: é o conjunto da economia ficando mais caro.\n\n## Como medimos\n\nNo Brasil, o índice oficial é o **IPCA**, que acompanha uma cesta de produtos e serviços. A sua inflação pessoal pode ser diferente, dependendo do que você consome.\n\n## O efeito prático\n\nCom a mesma renda, você compra menos. A inflação corrói o poder de compra, especialmente quando os salários não acompanham a alta dos preços.\n\n> Inflação não é apenas um número: é a quantidade de coisas que seu dinheiro deixa de comprar.",
+              "quiz": [
+                {
+                  "question": "O que é inflação?",
+                  "options": [
+                    "A queda do preço de um produto específico",
+                    "O aumento generalizado de preços",
+                    "Um imposto sobre investimentos",
+                    "A valorização garantida da moeda"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "Qual é o índice oficial de inflação ao consumidor no Brasil?",
+                  "options": [
+                    "IPCA",
+                    "Selic",
+                    "CDI",
+                    "Ibovespa"
+                  ],
+                  "correctIndex": 0
+                },
+                {
+                  "question": "Se os preços sobem e sua renda fica igual, você:",
+                  "options": [
+                    "Compra mais com o mesmo dinheiro",
+                    "Perde poder de compra",
+                    "Fica mais rico",
+                    "Não é afetado"
+                  ],
+                  "correctIndex": 1
+                }
+              ]
+            },
+            {
+              "slug": "por-que-100-hoje-nao-vale-o-mesmo-no-futuro",
+              "title": "Por que R$ 100 hoje não valem o mesmo no futuro?",
+              "estimatedMin": 2,
+              "order": 5,
+              "content": "## Dois efeitos do tempo\n\nR$ 100 hoje valem mais do que R$ 100 no futuro por dois motivos: a **inflação** reduz o que o dinheiro compra e o **custo de oportunidade** mostra que o dinheiro poderia render se fosse investido.\n\n## Nominal não é real\n\nSe um investimento rende 8% ao ano e a inflação é 5%, o ganho real é de aproximadamente 3%. Olhar só para o número nominal pode esconder uma perda de poder de compra.\n\n## O que isso muda\n\n- Comparar retornos com a inflação, não apenas entre produtos.\n- Entender que deixar dinheiro parado também tem custo.\n- Planejar objetivos com valores futuros, não só com o preço de hoje.\n\n> O tempo muda o valor do dinheiro. Ignorar isso é decidir com uma informação incompleta.",
+              "quiz": [
+                {
+                  "question": "Por que R$ 100 hoje valem mais do que R$ 100 no futuro?",
+                  "options": [
+                    "Porque o papel fica mais bonito",
+                    "Por causa da inflação e do custo de oportunidade",
+                    "Porque o governo garante o valor",
+                    "Porque o futuro é sempre incerto"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "Se um investimento rende 8% e a inflação é 5%, o ganho real aproximado é:",
+                  "options": [
+                    "13%",
+                    "8%",
+                    "3%",
+                    "5%"
+                  ],
+                  "correctIndex": 2
+                },
+                {
+                  "question": "Deixar dinheiro parado, sem render, em um ambiente de inflação:",
+                  "options": [
+                    "Reduz o poder de compra ao longo do tempo",
+                    "Aumenta o poder de compra",
+                    "Mantém o valor exatamente igual",
+                    "Elimina o risco"
+                  ],
+                  "correctIndex": 0
+                }
+              ]
+            },
+            {
+              "slug": "o-que-e-poder-de-compra",
+              "title": "O que é poder de compra?",
+              "estimatedMin": 2,
+              "order": 6,
+              "content": "## Quanto o dinheiro compra\n\nPoder de compra é a **quantidade de bens e serviços** que uma unidade de dinheiro consegue comprar. Não é o número na conta: é o que esse número permite adquirir.\n\n## Renda nominal e renda real\n\nSe seu salário sobe 5% e os preços sobem 10%, sua renda nominal aumentou, mas seu poder de compra caiu. A renda real mede o que você consegue comprar depois da inflação.\n\n## Como preservar\n\n- Acompanhar a inflação dos produtos que você consome.\n- Buscar retornos acima da inflação no longo prazo.\n- Evitar dívidas com juros que crescem mais que a sua renda.\n\n> Poder de compra é o teste real de qualquer decisão financeira.",
+              "quiz": [
+                {
+                  "question": "O que é poder de compra?",
+                  "options": [
+                    "O valor nominal do salário",
+                    "A quantidade de bens e serviços que o dinheiro compra",
+                    "O limite do cartão de crédito",
+                    "A taxa de juros do banco"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "Se os preços sobem 10% e seu salário não muda, seu poder de compra:",
+                  "options": [
+                    "Cai aproximadamente 10%",
+                    "Sobe 10%",
+                    "Permanece igual",
+                    "Dobra"
+                  ],
+                  "correctIndex": 0
+                },
+                {
+                  "question": "Qual estratégia ajuda a preservar o poder de compra no longo prazo?",
+                  "options": [
+                    "Guardar tudo em dinheiro parado",
+                    "Aumentar o consumo sempre",
+                    "Buscar retornos acima da inflação",
+                    "Ignorar os preços"
+                  ],
+                  "correctIndex": 2
+                }
+              ]
+            },
+            {
+              "slug": "o-que-sao-juros",
+              "title": "O que são juros?",
+              "estimatedMin": 2,
+              "order": 7,
+              "content": "## O preço do dinheiro no tempo\n\nJuros são a **remuneração pelo uso do dinheiro durante um período**. Quem empresta recebe juros; quem toma emprestado paga juros.\n\n## Por que eles existem\n\n- **Tempo:** abrir mão do dinheiro hoje tem um custo.\n- **Risco:** existe chance de o tomador não pagar.\n- **Inflação:** o valor devolvido precisa preservar o poder de compra.\n\n## Juros a favor e contra\n\nNos investimentos, os juros fazem o dinheiro crescer. Nas dívidas, fazem o valor devido crescer. Uma taxa alta pode transformar uma compra pequena em uma dívida grande.\n\n> Juros não são bons nem ruins por si. Dependem de que lado da operação você está.",
+              "quiz": [
+                {
+                  "question": "O que são juros?",
+                  "options": [
+                    "A remuneração pelo uso do dinheiro no tempo",
+                    "Um imposto obrigatório",
+                    "O preço de um produto",
+                    "Uma garantia do governo"
+                  ],
+                  "correctIndex": 0
+                },
+                {
+                  "question": "Quem paga juros em um empréstimo?",
+                  "options": [
+                    "Quem empresta o dinheiro",
+                    "Quem toma o dinheiro emprestado",
+                    "O Banco Central",
+                    "Ninguém"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "Por que uma dívida com juros altos pode crescer rápido?",
+                  "options": [
+                    "Porque o valor original diminui",
+                    "Porque os juros são sempre zero",
+                    "Porque os juros incidem sobre o valor devido ao longo do tempo",
+                    "Porque o banco perdoa a dívida"
+                  ],
+                  "correctIndex": 2
+                }
+              ]
+            },
+            {
+              "slug": "juros-simples-vs-compostos",
+              "title": "Juros simples vs. juros compostos",
+              "estimatedMin": 2,
+              "order": 8,
+              "content": "## Duas formas de calcular\n\nNos **juros simples**, a taxa incide sempre sobre o capital inicial. Nos **juros compostos**, a taxa incide sobre o capital mais os juros já acumulados — os “juros sobre juros”.\n\n## Um exemplo\n\nR$ 100 a 10% ao ano:\n\n- **Juros simples:** após 2 anos, R$ 120.\n- **Juros compostos:** após 2 anos, R$ 121.\n\nA diferença parece pequena no começo, mas cresce com o tempo. É por isso que começar cedo importa.\n\n## O outro lado\n\nOs juros compostos também trabalham contra você em dívidas. Quanto maior o prazo e a taxa, maior o efeito.\n\n> Tempo é o ingrediente que mais muda o resultado dos juros compostos.",
+              "quiz": [
+                {
+                  "question": "Nos juros simples, a taxa incide sobre:",
+                  "options": [
+                    "O capital inicial apenas",
+                    "O capital mais os juros acumulados",
+                    "A inflação do mês",
+                    "O salário do investidor"
+                  ],
+                  "correctIndex": 0
+                },
+                {
+                  "question": "Nos juros compostos, a taxa incide sobre:",
+                  "options": [
+                    "Apenas o capital inicial",
+                    "O capital mais os juros acumulados",
+                    "Apenas os juros do primeiro mês",
+                    "O valor dos impostos"
+                  ],
+                  "correctIndex": 1
+                },
+                {
+                  "question": "No longo prazo, qual tende a crescer mais, mantendo a mesma taxa?",
+                  "options": [
+                    "Juros simples",
+                    "Os dois crescem sempre igual",
+                    "Juros compostos",
+                    "Nenhum dos dois"
+                  ],
+                  "correctIndex": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
           "slug": "primeiros-passos",
           "title": "Primeiros passos",
           "description": "Orçamento, reserva de emergência e as decisões que vêm antes de qualquer investimento.",
-          "order": 1,
+          "order": 2,
           "lessons": [
             {
               "slug": "por-que-educacao-financeira",
@@ -105,7 +425,7 @@
           "slug": "entender-o-mercado",
           "title": "Entender o mercado",
           "description": "Inflação, Selic, CDI e uma leitura crítica das notícias e dos números.",
-          "order": 2,
+          "order": 3,
           "lessons": [
             {
               "slug": "inflacao-poder-de-compra",

@@ -16,6 +16,8 @@ export default function RegisterPage() {
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [created, setCreated] = useState<RegisterResponse | null>(null);
+  const [resendState, setResendState] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [resendMessage, setResendMessage] = useState<string | null>(null);
 
   function update(field: keyof typeof form, value: string) {
     setForm((current) => ({ ...current, [field]: value }));
@@ -47,6 +49,27 @@ export default function RegisterPage() {
     }
   }
 
+  async function resendVerification() {
+    const email = form.email.trim();
+    if (!email || resendState === "sending") return;
+    setResendState("sending");
+    setResendMessage(null);
+    try {
+      await api.post("/api/v1/auth/resend-verification", { email });
+      setResendMessage(
+        "Se este e-mail estiver cadastrado e pendente, um novo link de confirmação foi enviado.",
+      );
+      setResendState("sent");
+    } catch (err) {
+      setResendMessage(
+        err instanceof ApiError
+          ? err.message
+          : "Não foi possível reenviar agora. Tente novamente em instantes.",
+      );
+      setResendState("error");
+    }
+  }
+
   if (created) {
     return (
       <AuthLayout title="Conta criada" subtitle="Falta pouco para começar sua jornada.">
@@ -54,6 +77,37 @@ export default function RegisterPage() {
           <div className="flex items-start gap-3 rounded-lg border border-emerald-500/25 bg-emerald-500/10 p-4 text-[12px] leading-5 text-emerald-200">
             <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />
             <p>{created.message}</p>
+          </div>
+
+          <div className="rounded-lg border border-accent/25 bg-accent/[0.04] p-4 text-[12px] leading-5 text-neutral-300">
+            <p className="font-semibold text-accent">Verifique seu e-mail</p>
+            <p className="mt-1">
+              Enviamos um link de confirmação para{" "}
+              <strong className="break-all text-neutral-100">{form.email.trim()}</strong>. Confirme
+              antes de entrar: o login permanece bloqueado até a verificação.
+            </p>
+            <button
+              type="button"
+              onClick={() => void resendVerification()}
+              className="btn-secondary mt-3 px-3 py-1.5 text-[11px]"
+              disabled={resendState === "sending"}
+            >
+              {resendState === "sending" ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : null}
+              Reenviar e-mail
+            </button>
+            {resendMessage && (
+              <p
+                role="status"
+                aria-live="polite"
+                className={`mt-2 text-[11px] ${resendState === "error" ? "text-red-300" : "text-emerald-300"}`}
+              >
+                {resendMessage}
+              </p>
+            )}
+            <p className="mt-2 text-[10px] text-neutral-500">
+              Por segurança, a resposta é sempre a mesma. Aguarde 60 segundos entre reenvios — o
+              link anterior é invalidado.
+            </p>
           </div>
           {created.devVerificationToken && process.env.NODE_ENV !== "production" && (
             <div className="rounded-lg border border-accent/25 bg-accent/[0.04] p-4 text-[11px] leading-5 text-neutral-300">

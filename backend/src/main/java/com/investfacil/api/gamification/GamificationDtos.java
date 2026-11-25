@@ -1,6 +1,7 @@
 package com.investfacil.api.gamification;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,9 +20,15 @@ public final class GamificationDtos {
     public record XpEntry(int amount, String reason, UUID lessonId, Instant createdAt) {
     }
 
+    public record StreakView(int current, int best, LocalDate lastActivityDate,
+                             String timezone) {
+    }
+
     public record GamificationSummary(int xp, LevelView level, int xpToNextLevel,
                                       int progressPercent, int currentStreak, int bestStreak,
                                       int achievementsUnlocked, int achievementsTotal,
-                                      List<AchievementView> achievements) {
+                                      List<AchievementView> achievements,
+                                      int fichas, int fichasMax, int quizPassThresholdPercent,
+                                      StreakView streak) {
     }
 }

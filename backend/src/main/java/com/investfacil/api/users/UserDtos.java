@@ -16,7 +16,9 @@ public final class UserDtos {
             String name,
             @Size(max = 500, message = "A URL do avatar é muito longa.")
             @Pattern(regexp = "^$|^https://.*", message = "O avatar deve usar HTTPS.")
-            String avatarUrl
+            String avatarUrl,
+            @Size(max = 64, message = "O timezone é muito longo.")
+            String timezone
     ) {
     }
 
@@ -28,12 +30,13 @@ public final class UserDtos {
             boolean emailVerified,
             boolean mfaEnabled,
             String avatarUrl,
-            Instant createdAt
+            Instant createdAt,
+            String timezone
     ) {
         public static UserView from(User user) {
             return new UserView(user.getId(), user.getName(), user.getEmail(),
                     user.getRole().name(), user.isVerified(), user.isMfaEnabled(),
-                    user.getAvatarUrl(), user.getCreatedAt());
+                    user.getAvatarUrl(), user.getCreatedAt(), user.getTimezone());
         }
     }
 

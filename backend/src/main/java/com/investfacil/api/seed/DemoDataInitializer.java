@@ -73,7 +73,7 @@ public class DemoDataInitializer implements ApplicationRunner {
                 List<ContentCatalog.LessonRef> lessons = catalog.publishedLessons();
                 int limit = Math.min(4, lessons.size());
                 for (int i = 0; i < limit; i++) {
-                    progress.completeLesson(user.getId(), lessons.get(i).id());
+                    progress.completeLessonAsSeed(user.getId(), lessons.get(i).id());
                 }
                 log.info("Progresso de demonstração inicializado para {}", user.getEmail());
             }

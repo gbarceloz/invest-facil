@@ -136,15 +136,20 @@ class MvpFlowIntegrationTest {
                 .andReturn();
         String lessonId = json(lesson).get("id").asText();
 
-        // 7. Conclusão idempotente + XP
+        // 7. Conclusão legada é bloqueada sem vídeo + quiz (409 LESSON_NOT_READY)
         mvc.perform(post("/api/v1/progress/lessons/" + lessonId)
                         .header("Authorization", "Bearer " + access))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.xpAwarded").value(50));
-        mvc.perform(post("/api/v1/progress/lessons/" + lessonId)
-                        .header("Authorization", "Bearer " + access))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.code").value("LESSON_NOT_READY"))
+                .andExpect(jsonPath("$.details.videoWatched").value(false));
+
+        // 7.1 Vídeo assistido (90% da duração) — não conclui sozinho
+        mvc.perform(post("/api/v1/progress/lessons/" + lessonId + "/video")
+                        .header("Authorization", "Bearer " + access)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"watched\":true,\"positionSeconds\":120,\"durationSeconds\":120}"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.alreadyCompleted").value(true));
+                .andExpect(jsonPath("$.watched").value(true));
 
         // 8. Quiz da aula (gabarito não vem na consulta; aqui usamos os índices do seed)
         MvcResult quiz = mvc.perform(get("/api/v1/progress/lessons/" + lessonId + "/quiz")
@@ -162,7 +167,15 @@ class MvpFlowIntegrationTest {
                         .content(answers))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.percent").value(100))
-                .andExpect(jsonPath("$.passed").value(true));
+                .andExpect(jsonPath("$.passed").value(true))
+                .andExpect(jsonPath("$.lessonCompleted").value(true));
+
+        // 8.1 Legado agora é idempotente e confirma a conclusão já feita
+        mvc.perform(post("/api/v1/progress/lessons/" + lessonId)
+                        .header("Authorization", "Bearer " + access))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.alreadyCompleted").value(true))
+                .andExpect(jsonPath("$.xpAwarded").value(0));
 
         // 9. Resumo de progresso e gamificação
         mvc.perform(get("/api/v1/progress/summary").header("Authorization", "Bearer " + access))

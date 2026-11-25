@@ -13,6 +13,7 @@ import {
   LineChart,
   LogOut,
   Search,
+  Ticket,
   Trophy,
   User as UserIcon,
   X,
@@ -20,6 +21,7 @@ import {
 import { useAuth } from "@/lib/auth";
 import { AppDataProvider, useAppData } from "@/lib/app-data";
 import { cn, dayCount, initials } from "@/lib/format";
+import { resolveFichas, resolveStreak } from "@/lib/learning";
 import { Logo } from "./logo";
 import { ProgressBar } from "./progress";
 import { Alert, Spinner } from "./ui";
@@ -129,6 +131,8 @@ function Topbar() {
   const { gamification, error, reload } = useAppData();
   const router = useRouter();
   const [query, setQuery] = useState("");
+  const streak = resolveStreak(gamification);
+  const fichas = resolveFichas(gamification);
 
   async function handleLogout() {
     await logout();
@@ -164,9 +168,13 @@ function Topbar() {
         </form>
 
         <div className="ml-auto flex items-center gap-2 sm:gap-3">
-          <span className="pill hidden sm:inline-flex" title="Sequência de estudos">
-            <Flame className="h-3.5 w-3.5 text-accent" />
-            {dayCount(gamification?.currentStreak ?? 0)}
+          <span className="pill hidden sm:inline-flex" title="Sequência de estudos · dados do servidor">
+            <Flame className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
+            {dayCount(streak.current)}
+          </span>
+          <span className="pill hidden md:inline-flex" title="Fichas de quiz · saldo do servidor">
+            <Ticket className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
+            {fichas !== null ? `${fichas} fichas` : "fichas —"}
           </span>
           <span className="pill" title="XP acumulado">
             {gamification ? `${gamification.xp.toLocaleString("pt-BR")} XP` : "— XP"}
@@ -240,11 +248,13 @@ function MobileNav() {
 }
 
 function FocusedLessonShell({ children }: { children: React.ReactNode }) {
-  const { progress } = useAppData();
+  const { progress, gamification } = useAppData();
   const router = useRouter();
   const pathname = usePathname();
   const isQuiz = pathname.startsWith("/app/aprender/quiz/");
   const [quizProgress, setQuizProgress] = useState(0);
+  const streak = resolveStreak(gamification);
+  const fichas = resolveFichas(gamification);
 
   useEffect(() => {
     if (!isQuiz) return;
@@ -264,7 +274,7 @@ function FocusedLessonShell({ children }: { children: React.ReactNode }) {
         <div className="mx-auto flex h-14 max-w-4xl items-center gap-4 px-4 sm:px-6">
           <button
             type="button"
-            onClick={() => router.push("/app/mercado-financeiro")}
+            onClick={() => router.push("/app/aprender")}
             className="grid h-8 w-8 place-items-center rounded-md text-neutral-500 transition hover:bg-white/[0.05] hover:text-neutral-100"
             aria-label="Fechar aula"
           >
@@ -277,9 +287,16 @@ function FocusedLessonShell({ children }: { children: React.ReactNode }) {
             </div>
             <ProgressBar value={flowProgress} />
           </div>
-          <span className="shrink-0 text-[10px] font-semibold text-accent">
-            {isQuiz ? "+50 XP" : "+100 XP"}
-          </span>
+          <div className="flex shrink-0 items-center gap-1.5 text-[10px] font-semibold">
+            <span className="pill px-2 py-0.5" title="Fichas de quiz · saldo do servidor">
+              <Ticket className="h-3 w-3 text-accent" aria-hidden="true" />
+              {fichas ?? "—"}
+            </span>
+            <span className="pill hidden px-2 py-0.5 sm:inline-flex" title="Sequência · dados do servidor">
+              <Flame className="h-3 w-3 text-accent" aria-hidden="true" />
+              {dayCount(streak.current)}
+            </span>
+          </div>
         </div>
       </header>
       <main className="mx-auto w-full max-w-3xl px-4 py-9 sm:px-6 sm:py-12">{children}</main>

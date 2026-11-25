@@ -46,6 +46,10 @@ public class User {
     @Column(name = "avatar_url", length = 500)
     private String avatarUrl;
 
+    /** Timezone IANA usado para calcular datas de streak no servidor. */
+    @Column(nullable = false, length = 64)
+    private String timezone = "America/Sao_Paulo";
+
     @Column(name = "mfa_enabled", nullable = false)
     private boolean mfaEnabled = false;
 

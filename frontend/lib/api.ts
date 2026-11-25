@@ -106,8 +106,9 @@ export async function apiFetch<T>(
 
 export const api = {
   get: <T>(path: string) => apiFetch<T>(path),
-  post: <T>(path: string, body?: unknown) =>
+  post: <T>(path: string, body?: unknown, init: RequestInit = {}) =>
     apiFetch<T>(path, {
+      ...init,
       method: "POST",
       body: body === undefined ? undefined : JSON.stringify(body),
     }),

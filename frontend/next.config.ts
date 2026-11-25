@@ -1,5 +1,17 @@
 import type { NextConfig } from "next";
 
+const videoBaseUrl = process.env.NEXT_PUBLIC_VIDEO_BASE_URL?.trim();
+
+// `frontend/.vercelignore` exclui public/videos/module-01 (~127 MB) do deploy.
+// Na Vercel os vídeos vêm do Supabase Storage, então a env é obrigatória para
+// não publicar aulas sem mídia; localmente ela é opcional (assets em public).
+if (process.env.VERCEL === "1" && !videoBaseUrl) {
+  throw new Error(
+    "NEXT_PUBLIC_VIDEO_BASE_URL deve estar definida no deploy da Vercel: " +
+      ".vercelignore exclui public/videos/module-01 e os vídeos vêm do Storage.",
+  );
+}
+
 /**
  * O frontend conversa com /api no próprio domínio (rewrite), então o cookie
  * de refresh é first-party e SameSite=Strict funciona. Em produção, defina
@@ -24,7 +36,10 @@ const nextConfig: NextConfig = {
       `script-src 'self' 'unsafe-inline'${dev ? " 'unsafe-eval'" : ""}`,
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' data: https://fonts.gstatic.com",
-      "img-src 'self' data: blob:",
+      // Poster e vídeo podem vir do Supabase Storage (URL pública) quando
+      // NEXT_PUBLIC_VIDEO_BASE_URL está definida; por isso HTTPS é permitido.
+      "img-src 'self' data: blob: https:",
+      "media-src 'self' https: blob:",
       `connect-src 'self'${dev ? " ws://localhost:3000 http://localhost:3000" : ""}`,
       "frame-ancestors 'none'",
       "object-src 'none'",

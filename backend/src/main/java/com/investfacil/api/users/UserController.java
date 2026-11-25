@@ -28,6 +28,7 @@ public class UserController {
     public UserDtos.UserView update(@AuthenticationPrincipal CurrentUser principal,
                                     @Valid @RequestBody UserDtos.UpdateProfileRequest request) {
         return UserDtos.UserView.from(
-                userService.updateProfile(principal.id(), request.name(), request.avatarUrl()));
+                userService.updateProfile(principal.id(), request.name(), request.avatarUrl(),
+                        request.timezone()));
     }
 }
