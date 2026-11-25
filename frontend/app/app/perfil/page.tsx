@@ -71,20 +71,6 @@ export default function ProfilePage() {
     }
   }
 
-  async function resendVerification() {
-    if (!user) return;
-    setError(null);
-    setBusy("verify");
-    try {
-      await api.post("/api/v1/auth/resend-verification", { email: user.email });
-      setNotice("Se o e-mail estiver pendente, um novo link foi enviado.");
-    } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Não foi possível reenviar o e-mail.");
-    } finally {
-      setBusy(null);
-    }
-  }
-
   async function startMfa(event: React.FormEvent) {
     event.preventDefault();
     setError(null);
@@ -214,18 +200,6 @@ export default function ProfilePage() {
           <span className="inline-flex items-center gap-2">
             <CheckCircle2 className="h-4 w-4" /> {notice}
           </span>
-        </Alert>
-      )}
-
-      {!user.emailVerified && (
-        <Alert tone="warning" className="mb-4">
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <span>Seu e-mail ainda não foi confirmado. Confirme para garantir a recuperação da conta.</span>
-            <button type="button" onClick={resendVerification} className="btn-secondary px-3 py-1.5 text-[11px]" disabled={busy === "verify"}>
-              {busy === "verify" ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : null}
-              Reenviar e-mail
-            </button>
-          </div>
         </Alert>
       )}
 
