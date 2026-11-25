@@ -79,8 +79,6 @@ function LoginForm() {
     }
   }
 
-  if (loading) return <Spinner label="Verificando sessão" />;
-
   if (challenge) {
     return (
       <form onSubmit={handleMfa} className="space-y-4">
