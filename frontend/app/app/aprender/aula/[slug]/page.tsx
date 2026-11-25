@@ -21,7 +21,6 @@ import type {
   LessonDetail,
   LessonStatus,
   ModuleDetail,
-  VideoInfo,
   VideoProgressResponse,
 } from "@/lib/types";
 import {
@@ -57,17 +56,15 @@ function VideoPlaceholder() {
 function LessonVideo({
   slug,
   local,
-  video,
   checked,
   onEnded,
 }: {
   slug: string;
   local: Module01VideoAssets | null;
-  video: VideoInfo | null;
   checked: boolean;
   onEnded: (positionSeconds: number, durationSeconds: number) => void;
 }) {
-  const source = local?.mp4 ?? video?.url ?? null;
+  const source = local?.mp4 ?? null;
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
@@ -119,6 +116,7 @@ function LessonVideo({
         controls
         preload="metadata"
         playsInline
+        crossOrigin="anonymous"
         className="aspect-video w-full"
         src={source}
         poster={local?.poster}
@@ -154,7 +152,6 @@ export default function LessonPage() {
   const { progress, gamification, reload } = useAppData();
   const [lesson, setLesson] = useState<LessonDetail | null>(null);
   const [status, setStatus] = useState<LessonStatus | null>(null);
-  const [video, setVideo] = useState<VideoInfo | null>(null);
   const [videoChecked, setVideoChecked] = useState(false);
   const [watchedLocally, setWatchedLocally] = useState(false);
   const [registering, setRegistering] = useState(false);
@@ -171,7 +168,6 @@ export default function LessonPage() {
     let active = true;
     setLesson(null);
     setStatus(null);
-    setVideo(null);
     setVideoChecked(false);
     setWatchedLocally(false);
     setVideoWarning(null);
@@ -186,17 +182,15 @@ export default function LessonPage() {
         if (!active) return;
         setLesson(data);
 
-        const [statusResult, moduleResult, videoResult] = await Promise.allSettled([
+        const [statusResult, moduleResult] = await Promise.allSettled([
           api.get<LessonStatus>(`/api/v1/progress/lessons/${data.id}`),
           data.order > 1
             ? api.get<ModuleDetail>(`/api/v1/content/modules/${data.moduleSlug}`)
             : Promise.resolve(null),
-          api.get<VideoInfo>(`/api/v1/content/lessons/${slug}/video`),
         ]);
         if (!active) return;
 
         if (statusResult.status === "fulfilled") setStatus(statusResult.value);
-        setVideo(videoResult.status === "fulfilled" ? videoResult.value : null);
         setVideoChecked(true);
 
         if (data.order <= 1) {
@@ -320,7 +314,7 @@ export default function LessonPage() {
     );
   }
 
-  const hasVideo = video !== null;
+  const hasVideo = localVideo !== null;
   const panelTitle = completed
     ? "Aula concluída. O quiz está liberado."
     : canContinue
@@ -377,7 +371,6 @@ export default function LessonPage() {
       <LessonVideo
         slug={slug}
         local={localVideo}
-        video={video}
         checked={videoChecked || localVideo !== null}
         onEnded={(position, duration) => void registerVideo(position, duration)}
       />
