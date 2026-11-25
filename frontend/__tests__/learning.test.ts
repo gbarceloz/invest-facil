@@ -184,6 +184,20 @@ describe("vídeos do Módulo 01 (local e externo)", () => {
     });
   });
 
+  it("usa a revisão v9 da aula 01 somente no storage externo", () => {
+    vi.stubEnv(
+      "NEXT_PUBLIC_VIDEO_BASE_URL",
+      "https://projeto.supabase.co/storage/v1/object/public/module01-videos/module-01",
+    );
+    expect(module01VideoAssets("o-que-e-dinheiro")).toEqual({
+      mp4: "https://projeto.supabase.co/storage/v1/object/public/module01-videos/module-01/o-que-e-dinheiro-v9.mp4",
+      poster:
+        "https://projeto.supabase.co/storage/v1/object/public/module01-videos/module-01/o-que-e-dinheiro-v9.jpg",
+      captions:
+        "https://projeto.supabase.co/storage/v1/object/public/module01-videos/module-01/o-que-e-dinheiro-v9.vtt",
+    });
+  });
+
   it("aceita base externa sem barra final e com espaços", () => {
     vi.stubEnv("NEXT_PUBLIC_VIDEO_BASE_URL", "  https://cdn.exemplo.com/module-01  ");
     expect(module01VideoAssets("o-que-sao-juros")).toEqual({
