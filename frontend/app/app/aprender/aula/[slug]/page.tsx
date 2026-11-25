@@ -86,6 +86,12 @@ function LessonVideo({
 
   if (!source) return <VideoPlaceholder />;
 
+  if (failed && local) {
+    // Ambiente sem os arquivos locais (CI/preview sem Storage): mantém o
+    // placeholder editorial em vez de expor uma mensagem de infraestrutura.
+    return <VideoPlaceholder />;
+  }
+
   if (failed) {
     return (
       <div className="flex aspect-video flex-col items-center justify-center gap-3 rounded-xl border border-red-500/25 bg-red-500/[0.06] text-center">
