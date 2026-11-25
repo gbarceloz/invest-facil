@@ -37,17 +37,28 @@ function module01VideoBaseUrl(): string | null {
 }
 
 /**
+ * Revisões de asset no Storage. O nome canônico continua valendo para os
+ * arquivos locais e para as demais aulas; só a aula refeita ganha sufixo.
+ */
+const EXTERNAL_VIDEO_REVISION: Record<string, string> = {
+  "o-que-e-dinheiro": "v9",
+};
+
+/**
  * Assets de vídeo dos 8 slugs canônicos; não é endpoint da API.
  * Com `NEXT_PUBLIC_VIDEO_BASE_URL` definida (Storage/CDN), usa a base externa;
  * sem a env, mantém os arquivos locais de `frontend/public/videos/module-01`.
  */
 export function module01VideoAssets(slug: string): Module01VideoAssets | null {
   if (!(MODULE01_LESSON_SLUGS as readonly string[]).includes(slug)) return null;
-  const base = module01VideoBaseUrl() ?? "/videos/module-01";
+  const externalBase = module01VideoBaseUrl();
+  const base = externalBase ?? "/videos/module-01";
+  const revision = externalBase && EXTERNAL_VIDEO_REVISION[slug] ? `-${EXTERNAL_VIDEO_REVISION[slug]}` : "";
+  const asset = `${base}/${slug}${revision}`;
   return {
-    mp4: `${base}/${slug}.mp4`,
-    poster: `${base}/${slug}.jpg`,
-    captions: `${base}/${slug}.vtt`,
+    mp4: `${asset}.mp4`,
+    poster: `${asset}.jpg`,
+    captions: `${asset}.vtt`,
   };
 }
 
