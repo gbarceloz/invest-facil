@@ -14,8 +14,8 @@ import {
 } from "lucide-react";
 import { useAppData } from "@/lib/app-data";
 import { api } from "@/lib/api";
-import type { LessonDetail, LessonStatus, ModuleDetail } from "@/lib/types";
-import { deriveLessonStates, oneLineSummary, resolveFichas } from "@/lib/learning";
+import type { LessonStatus, ModuleDetail } from "@/lib/types";
+import { deriveLessonStates, resolveFichas } from "@/lib/learning";
 import { percent } from "@/lib/format";
 import { PageHeader } from "@/components/page";
 import { ProgressBar } from "@/components/progress";
@@ -28,16 +28,12 @@ export default function ModulePage() {
   const { progress, gamification } = useAppData();
   const [module, setModule] = useState<ModuleDetail | null>(null);
   const [statuses, setStatuses] = useState<Record<string, LessonStatus>>({});
-  const [summaries, setSummaries] = useState<Record<string, string>>({});
-  const [statusLoaded, setStatusLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let active = true;
     setModule(null);
     setStatuses({});
-    setSummaries({});
-    setStatusLoaded(false);
     setError(null);
 
     api
@@ -45,18 +41,11 @@ export default function ModulePage() {
       .then(async (data) => {
         if (!active) return;
         setModule(data);
-        const [statusResults, detailResults] = await Promise.all([
-          Promise.allSettled(
-            data.lessons.map((lesson) =>
-              api.get<LessonStatus>(`/api/v1/progress/lessons/${lesson.id}`),
-            ),
+        const statusResults = await Promise.allSettled(
+          data.lessons.map((lesson) =>
+            api.get<LessonStatus>(`/api/v1/progress/lessons/${lesson.id}`),
           ),
-          Promise.allSettled(
-            data.lessons.map((lesson) =>
-              api.get<LessonDetail>(`/api/v1/content/lessons/${lesson.slug}`),
-            ),
-          ),
-        ]);
+        );
         if (!active) return;
 
         const nextStatuses: Record<string, LessonStatus> = {};
@@ -66,15 +55,6 @@ export default function ModulePage() {
           }
         });
         setStatuses(nextStatuses);
-
-        const nextSummaries: Record<string, string> = {};
-        detailResults.forEach((result, index) => {
-          if (result.status === "fulfilled" && result.value) {
-            nextSummaries[data.lessons[index].id] = oneLineSummary(result.value.contentMd, 150);
-          }
-        });
-        setSummaries(nextSummaries);
-        setStatusLoaded(true);
       })
       .catch((err) => {
         if (active) setError(err instanceof Error ? err.message : "Módulo não encontrado.");
@@ -154,7 +134,6 @@ export default function ModulePage() {
         {module.lessons.map((lesson, index) => {
           const state = states[index];
           const status = statuses[lesson.id];
-          const description = summaries[lesson.id];
           const locked = state === "locked";
           const meta = (
             <>
@@ -206,12 +185,6 @@ export default function ModulePage() {
                   <p className="text-sm font-bold sm:text-base">{lesson.title}</p>
                   <LessonStateBadge state={state} />
                 </div>
-                <p className="mt-1 line-clamp-2 text-[11px] leading-5 text-neutral-500">
-                  {description ??
-                    (statusLoaded
-                      ? `Aula ${index + 1} do módulo, com vídeo e quiz.`
-                      : "Carregando descrição…")}
-                </p>
                 <div className="mt-1.5 flex flex-wrap items-center gap-3 text-[11px] text-muted">{meta}</div>
               </div>
               {locked ? (
