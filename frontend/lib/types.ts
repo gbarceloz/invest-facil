@@ -31,8 +31,6 @@ export interface LessonSummary {
   id: string;
   slug: string;
   title: string;
-  /** Descrição curta opcional. Quando o servidor não envia, a UI deriva do conteúdo. */
-  description?: string | null;
   estimatedMin: number;
   order: number;
   moduleId: string;

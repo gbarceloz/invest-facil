@@ -872,7 +872,7 @@ class RlsIsolationIntegrationTest {
         future.setProperty("app.security.guard.expected-version", "99");
         IllegalStateException failure = assertThrows(IllegalStateException.class,
                 () -> new DatabaseSecurityGuard(dataSource, future).verify());
-        assertTrue(failure.getMessage().contains("newer than the V7"));
+        assertTrue(failure.getMessage().contains("newer than the V8"));
     }
 
     @Test

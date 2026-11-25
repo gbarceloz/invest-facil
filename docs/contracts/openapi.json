@@ -337,12 +337,27 @@
             "format": "int32",
             "type": "integer"
           },
+          "fichas": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "fichasMax": {
+            "format": "int32",
+            "type": "integer"
+          },
           "level": {
             "$ref": "#/components/schemas/LevelView"
           },
           "progressPercent": {
             "format": "int32",
             "type": "integer"
+          },
+          "quizPassThresholdPercent": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "streak": {
+            "$ref": "#/components/schemas/StreakView"
           },
           "xp": {
             "format": "int32",
@@ -413,8 +428,49 @@
             "format": "int32",
             "type": "integer"
           },
+          "canStartQuiz": {
+            "type": "boolean"
+          },
           "completed": {
             "type": "boolean"
+          },
+          "fichas": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "fichasMax": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "passPercent": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "quizPassed": {
+            "type": "boolean"
+          },
+          "videoWatched": {
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "StreakView": {
+        "properties": {
+          "best": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "current": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "lastActivityDate": {
+            "format": "date",
+            "type": "string"
+          },
+          "timezone": {
+            "type": "string"
           }
         },
         "type": "object"
@@ -800,6 +856,20 @@
       },
       "QuizResult": {
         "properties": {
+          "fichas": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "fichasMax": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idempotentReplay": {
+            "type": "boolean"
+          },
+          "lessonCompleted": {
+            "type": "boolean"
+          },
           "level": {
             "type": "string"
           },
@@ -827,6 +897,9 @@
           "totalXp": {
             "format": "int32",
             "type": "integer"
+          },
+          "videoWatched": {
+            "type": "boolean"
           },
           "xpAwarded": {
             "format": "int32",
@@ -2203,6 +2276,98 @@
               "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/QuizResult"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "progress-controller"
+        ]
+      }
+    },
+    "/api/v1/progress/lessons/{lessonId}/video": {
+      "post": {
+        "operationId": "video",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "lessonId",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "watched": {
+                    "type": "boolean"
+                  },
+                  "positionSeconds": {
+                    "type": "integer",
+                    "format": "int32",
+                    "minimum": 0
+                  },
+                  "durationSeconds": {
+                    "type": "integer",
+                    "format": "int32",
+                    "minimum": 0
+                  }
+                },
+                "required": [
+                  "watched",
+                  "positionSeconds"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "lessonId": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "watched": {
+                      "type": "boolean"
+                    },
+                    "positionSeconds": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "durationSeconds": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "watchedAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "fichas": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "fichasMax": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "passPercent": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
                 }
               }
             },
