@@ -33,14 +33,15 @@ const nextConfig: NextConfig = {
     const dev = process.env.NODE_ENV === "development";
     const csp = [
       "default-src 'self'",
-      `script-src 'self' 'unsafe-inline'${dev ? " 'unsafe-eval'" : ""}`,
-      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      `script-src 'self' 'unsafe-inline' https://accounts.google.com${dev ? " 'unsafe-eval'" : ""}`,
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://accounts.google.com",
       "font-src 'self' data: https://fonts.gstatic.com",
       // Poster e vídeo podem vir do Supabase Storage (URL pública) quando
       // NEXT_PUBLIC_VIDEO_BASE_URL está definida; por isso HTTPS é permitido.
       "img-src 'self' data: blob: https:",
       "media-src 'self' https: blob:",
-      `connect-src 'self'${dev ? " ws://localhost:3000 http://localhost:3000" : ""}`,
+      `connect-src 'self' https://accounts.google.com${dev ? " ws://localhost:3000 http://localhost:3000" : ""}`,
+      "frame-src 'self' https://accounts.google.com",
       "frame-ancestors 'none'",
       "object-src 'none'",
       "base-uri 'self'",

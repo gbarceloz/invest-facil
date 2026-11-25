@@ -1,13 +1,14 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { loginRequest, logoutRequest, mfaVerifyRequest, restoreSession } from "./api";
+import { googleLoginRequest, loginRequest, logoutRequest, mfaVerifyRequest, restoreSession } from "./api";
 import type { LoginResponse, User } from "./types";
 
 interface AuthContextValue {
   user: User | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<{ mfaRequired: boolean; challengeToken?: string }>;
+  googleLogin: (credential: string) => Promise<void>;
   verifyMfa: (challengeToken: string, code: string) => Promise<void>;
   logout: () => Promise<void>;
   refreshUser: () => Promise<void>;
@@ -47,6 +48,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return { mfaRequired: false };
   }, []);
 
+  const googleLogin = useCallback(async (credential: string) => {
+    const data = await googleLoginRequest(credential);
+    setUser(data.user);
+  }, []);
+
   const verifyMfa = useCallback(async (challengeToken: string, code: string) => {
     const data = await mfaVerifyRequest(challengeToken, code);
     setUser(data.user);
@@ -67,8 +73,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const value = useMemo(
-    () => ({ user, loading, login, verifyMfa, logout, refreshUser, setUser }),
-    [user, loading, login, verifyMfa, logout, refreshUser],
+    () => ({ user, loading, login, googleLogin, verifyMfa, logout, refreshUser, setUser }),
+    [user, loading, login, googleLogin, verifyMfa, logout, refreshUser],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -34,15 +34,17 @@ public class AuthController {
     private final ClientIpResolver ipResolver;
     private final AppProperties properties;
     private final UserContext context;
+    private final GoogleTokenVerifier googleVerifier;
 
     public AuthController(AuthService authService, RefreshCookieService cookies,
                           ClientIpResolver ipResolver, AppProperties properties,
-                          UserContext context) {
+                          UserContext context, GoogleTokenVerifier googleVerifier) {
         this.authService = authService;
         this.cookies = cookies;
         this.ipResolver = ipResolver;
         this.properties = properties;
         this.context = context;
+        this.googleVerifier = googleVerifier;
     }
 
     @PostMapping("/register")
@@ -61,6 +63,17 @@ public class AuthController {
                                        HttpServletResponse response) {
         beginAuth(request.email(), "LOGIN");
         return render(authService.login(request, context(http)), response);
+    }
+
+    @PostMapping("/google")
+    public AuthDtos.AuthResponse google(@Valid @RequestBody AuthDtos.GoogleLoginRequest request,
+                                        HttpServletRequest http,
+                                        HttpServletResponse response) {
+        GoogleTokenVerifier.GoogleUser google = googleVerifier.verify(request.credential());
+        context.clear();
+        context.setAuthEmail(google.email());
+        context.setFlow("LOGIN");
+        return render(authService.googleLogin(google, context(http)), response);
     }
 
     @PostMapping("/refresh")

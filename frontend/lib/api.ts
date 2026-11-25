@@ -80,7 +80,9 @@ export async function apiFetch<T>(
     credentials: "include",
   });
 
-  const isAuthCall = path.includes("/auth/login") || path.includes("/auth/refresh");
+  const isAuthCall = path.includes("/auth/login")
+    || path.includes("/auth/google")
+    || path.includes("/auth/refresh");
   if (response.status === 401 && !isAuthCall && options.skipRefresh !== true && options.retry !== false) {
     const user = await refreshAccessToken();
     if (user) {
@@ -151,6 +153,19 @@ export async function loginRequest(email: string, password: string): Promise<Log
   if (!data.mfaRequired && data.accessToken) {
     accessToken = data.accessToken;
   }
+  return data;
+}
+
+export async function googleLoginRequest(credential: string): Promise<LoginResponse> {
+  const data = await apiFetch<LoginResponse>(
+    "/api/v1/auth/google",
+    {
+      method: "POST",
+      body: JSON.stringify({ credential }),
+    },
+    { skipRefresh: true },
+  );
+  if (data.accessToken) accessToken = data.accessToken;
   return data;
 }
 

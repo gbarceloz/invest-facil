@@ -406,18 +406,12 @@ class ExtendedIntegrationTest {
     private TestUser register(String prefix) throws Exception {
         String email = prefix + "-" + UUID.randomUUID() + "@example.com";
         String password = "Teste@123";
-        MvcResult registered = mvc.perform(post("/api/v1/auth/register")
+        mvc.perform(post("/api/v1/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {"name":"Usuário de Teste","email":"%s","password":"%s"}
                                 """.formatted(email, password)))
-                .andExpect(status().isCreated())
-                .andReturn();
-        String verify = json(registered).get("devVerificationToken").asText();
-        mvc.perform(post("/api/v1/auth/verify-email")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"token\":\"" + verify + "\"}"))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
         return login(email, password);
     }
 

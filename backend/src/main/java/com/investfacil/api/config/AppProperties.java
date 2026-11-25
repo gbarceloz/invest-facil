@@ -24,6 +24,7 @@ public class AppProperties {
     private Demo demo = new Demo();
     private Security security = new Security();
     private Seed seed = new Seed();
+    private Google google = new Google();
     private Market market = new Market();
     private Bitcoin bitcoin = new Bitcoin();
     private RateLimit rateLimit = new RateLimit();
@@ -106,6 +107,13 @@ public class AppProperties {
     @Setter
     public static class Seed {
         private boolean content = true;
+    }
+
+    @Getter
+    @Setter
+    public static class Google {
+        /** Client ID público do Google Identity Services; vazio desabilita o botão. */
+        private String clientId = "";
     }
 
     @Getter

@@ -1,6 +1,7 @@
 package com.investfacil.api.users;
 
 import com.investfacil.api.common.error.BusinessException;
+import com.investfacil.api.common.security.TokenHasher;
 import com.investfacil.api.config.AppProperties;
 import com.investfacil.api.gamification.StreakDayRepository;
 import org.springframework.http.HttpStatus;
@@ -66,6 +67,51 @@ public class UserService {
         user.setVerified(verified);
         user.setTimezone(defaultTimezone());
         return repository.save(user);
+    }
+
+    /**
+     * Cria uma conta originada do Google. A senha aleatória nunca é exposta:
+     * o acesso acontece pelo ID token do Google; um reset posterior pode
+     * definir uma senha local se o usuário quiser.
+     */
+    @Transactional
+    public User createGoogle(String name, String email, String avatarUrl, String googleSub) {
+        String normalized = normalize(email);
+        if (repository.existsByEmailIgnoreCase(normalized)) {
+            throw BusinessException.conflict("Não foi possível concluir o cadastro com estes dados.");
+        }
+        String displayName = name == null || name.isBlank()
+                ? normalized.substring(0, normalized.indexOf('@') > 0 ? normalized.indexOf('@') : normalized.length())
+                : name.trim();
+        if (displayName.length() > 120) {
+            displayName = displayName.substring(0, 120);
+        }
+        User user = new User();
+        user.setName(displayName);
+        user.setEmail(normalized);
+        user.setPasswordHash(passwordEncoder.encode(TokenHasher.randomToken()));
+        user.setRole(Role.USER);
+        user.setVerified(true);
+        user.setGoogleSub(googleSub);
+        user.setAvatarUrl(avatarUrl == null || avatarUrl.isBlank() ? null : avatarUrl.trim());
+        user.setTimezone(defaultTimezone());
+        return repository.save(user);
+    }
+
+    /** Vincula o sub do Google a uma conta local já existente, sem trocar o dono. */
+    @Transactional
+    public void linkGoogle(UUID id, String googleSub, String avatarUrl) {
+        User user = require(id);
+        if (user.getGoogleSub() != null && !user.getGoogleSub().equals(googleSub)) {
+            throw BusinessException.conflict(
+                    "Esta conta já está vinculada a outra identidade Google.");
+        }
+        user.setGoogleSub(googleSub);
+        if (avatarUrl != null && !avatarUrl.isBlank()) {
+            user.setAvatarUrl(avatarUrl.trim());
+        }
+        user.setVerified(true);
+        repository.save(user);
     }
 
     @Transactional

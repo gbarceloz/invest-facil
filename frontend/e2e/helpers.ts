@@ -22,13 +22,7 @@ export async function createVerifiedUser(
     data: { name: credentials.name, email: credentials.email, password: credentials.password },
   });
   expect(registered.status(), await registered.text()).toBe(201);
-  const body = (await registered.json()) as { devVerificationToken?: string };
-  expect(body.devVerificationToken).toBeTruthy();
-
-  const verified = await request.post(`${API_URL}/api/v1/auth/verify-email`, {
-    data: { token: body.devVerificationToken },
-  });
-  expect(verified.status(), await verified.text()).toBe(200);
+  // Cadastro aberto: a conta já nasce verificada, sem token de e-mail.
   return credentials;
 }
 
