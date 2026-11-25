@@ -461,6 +461,10 @@ class RlsIsolationIntegrationTest {
         assertThrows(SQLException.class, () -> updateAsUser(a.id(),
                 "update investfacil.refresh_tokens set user_id = '" + b.id()
                         + "' where user_id = '" + a.id() + "'"));
+        adminJdbc.update(
+                "insert into investfacil.email_tokens (user_id, type, token_hash, expires_at)"
+                        + " values (?, 'EMAIL_VERIFY', ?, now() + interval '1 day')",
+                a.id(), "rls-" + UUID.randomUUID());
         assertThrows(SQLException.class, () -> updateAsUser(a.id(),
                 "update investfacil.email_tokens set user_id = '" + b.id()
                         + "' where user_id = '" + a.id() + "'"));
@@ -787,7 +791,7 @@ class RlsIsolationIntegrationTest {
                         + " where oid = to_regprocedure("
                         + " 'investfacil.apply_table_security()')::regprocedure",
                 Integer.class), "função legada deve ter sido removida");
-        assertEquals(8, adminJdbc.queryForObject(
+        assertEquals(9, adminJdbc.queryForObject(
                 "select count(*) from investfacil.flyway_schema_history"
                         + " where success = true and type = 'SQL'", Integer.class));
     }
