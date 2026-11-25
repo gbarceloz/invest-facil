@@ -8,6 +8,7 @@ import { useAppData } from "@/lib/app-data";
 import { api } from "@/lib/api";
 import type { Category, SearchResults } from "@/lib/types";
 import { LevelCards } from "@/components/learning-track-list";
+import { ModuleSpotlight } from "@/components/module-lessons";
 import { ProgressBar } from "@/components/progress";
 import { PageHeader } from "@/components/page";
 import { Spinner } from "@/components/ui";
@@ -151,6 +152,7 @@ function AprenderContent() {
 
       <section className="space-y-2">
         <h2 className="text-[13px] font-semibold text-neutral-100">Mercado financeiro</h2>
+        <ModuleSpotlight />
         <LevelCards categories={financial} progress={progress} />
       </section>
 

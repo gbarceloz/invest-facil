@@ -1,4 +1,5 @@
 import { spawn, spawnSync, type ChildProcess } from "node:child_process";
+import { randomBytes } from "node:crypto";
 import { mkdirSync, openSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
@@ -9,6 +10,20 @@ const DB_CONTAINER = "investfacil-e2e-db";
 const DB_PORT = "55433";
 const API_PORT = "18081";
 const HEALTH_URL = `http://127.0.0.1:${API_PORT}/actuator/health`;
+
+/**
+ * Segredo JWT exclusivo da execução E2E.
+ * - Usa E2E_JWT_SECRET quando definido.
+ * - Caso contrário, gera um valor aleatório por execução.
+ * O valor nunca é logado, persistido ou incluído em relatório.
+ */
+function resolveE2eJwtSecret(): string {
+  const provided = process.env.E2E_JWT_SECRET?.trim();
+  if (provided) return provided;
+  return randomBytes(48).toString("base64");
+}
+
+const E2E_JWT_SECRET = resolveE2eJwtSecret();
 
 function log(message: string) {
   console.log(`[e2e] ${message}`);
@@ -124,10 +139,7 @@ function startBackend(): ChildProcess {
     SPRING_FLYWAY_URL: `jdbc:postgresql://localhost:${DB_PORT}/investfacil`,
     SPRING_FLYWAY_USER: "postgres",
     SPRING_FLYWAY_PASSWORD: "local",
-    JWT_SECRET: Buffer.from(
-      "investfacil-e2e-secret-0123456789-abcdefghijklmnopqrstuvwxyz",
-      "utf8",
-    ).toString("base64"),
+    JWT_SECRET: E2E_JWT_SECRET,
     EXPOSE_DEV_TOKENS: "true",
     COOKIE_SECURE: "false",
     RATE_LIMIT_ENABLED: "false",

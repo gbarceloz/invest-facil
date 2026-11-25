@@ -9,6 +9,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
+    "sync:module01-videos": "node scripts/sync-module01-videos.mjs",
     "e2e": "playwright test",
     "e2e:report": "playwright show-report"
   },

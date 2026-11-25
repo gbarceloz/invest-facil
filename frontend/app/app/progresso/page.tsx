@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ArrowRight, Award, BookOpen, Flame, Sparkles, Target, Trophy } from "lucide-react";
+import { ArrowRight, Award, BookOpen, Flame, Sparkles, Target, Ticket, Trophy } from "lucide-react";
 import { useAppData } from "@/lib/app-data";
 import { api } from "@/lib/api";
 import type { XpEntry } from "@/lib/types";
 import { XP_REASON_LABEL, dateShort, dayCount, relativeTime } from "@/lib/format";
+import { resolveFichas, resolveFichasMax, resolveStreak } from "@/lib/learning";
 import { LevelRing, ProgressBar } from "@/components/progress";
 import { PageHeader, Stat } from "@/components/page";
 import { Skeleton } from "@/components/ui";
@@ -29,8 +30,8 @@ export default function ProgressPage() {
     return (
       <div className="space-y-4">
         <Skeleton className="h-10 w-64" />
-        <div className="grid gap-3 sm:grid-cols-4">
-          {Array.from({ length: 4 }).map((_, index) => (
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+          {Array.from({ length: 5 }).map((_, index) => (
             <Skeleton key={index} className="h-28" />
           ))}
         </div>
@@ -40,6 +41,9 @@ export default function ProgressPage() {
   }
 
   const unlocked = gamification?.achievements.filter((achievement) => achievement.unlocked) ?? [];
+  const streak = resolveStreak(gamification, progress);
+  const fichas = resolveFichas(gamification);
+  const fichasMax = resolveFichasMax(gamification);
 
   return (
     <div className="mx-auto max-w-4xl">
@@ -56,10 +60,11 @@ export default function ProgressPage() {
         }
       />
 
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
         <Stat label="Conhecimento" value={`${progress?.quizAverage ?? 0}%`} hint="média nos quizzes" icon={<Target className="h-4 w-4" />} />
         <Stat label="Progresso" value={`${progress?.completedLessons ?? 0}/${progress?.totalLessons ?? 0}`} hint="aulas concluídas" icon={<BookOpen className="h-4 w-4" />} />
-        <Stat label="Consistência" value={dayCount(progress?.currentStreak ?? 0)} hint={`melhor: ${progress?.bestStreak ?? 0}`} icon={<Flame className="h-4 w-4" />} tone="accent" />
+        <Stat label="Consistência" value={dayCount(streak.current)} hint={`melhor: ${streak.best}`} icon={<Flame className="h-4 w-4" />} tone="accent" />
+        <Stat label="Fichas" value={fichas ?? "—"} hint={fichasMax !== null ? `de ${fichasMax} · tentativas de quiz` : "saldo do servidor"} icon={<Ticket className="h-4 w-4" />} />
         <Stat label="Conquistas" value={`${gamification?.achievementsUnlocked ?? 0}/${gamification?.achievementsTotal ?? 0}`} hint="desbloqueadas" icon={<Trophy className="h-4 w-4" />} />
       </div>
 
@@ -87,7 +92,7 @@ export default function ProgressPage() {
               <p className="text-[10px] uppercase tracking-wider text-muted">Quizzes</p>
             </div>
             <div>
-              <p className="text-[17px] font-medium">{gamification?.bestStreak ?? 0}</p>
+              <p className="text-[17px] font-medium">{streak.best}</p>
               <p className="text-[10px] uppercase tracking-wider text-muted">Melhor sequência</p>
             </div>
           </div>

@@ -9,6 +9,7 @@ import {
   Flame,
   Sparkles,
   Target,
+  Ticket,
   TrendingDown,
   TrendingUp,
   Trophy,
@@ -17,6 +18,7 @@ import { useAuth } from "@/lib/auth";
 import { useAppData } from "@/lib/app-data";
 import { api } from "@/lib/api";
 import { compactUsd, dateLong, dayCount, money, relativeTime, signedPercent, usd } from "@/lib/format";
+import { resolveFichas, resolveFichasMax, resolveStreak } from "@/lib/learning";
 import type { BitcoinMarketResponse } from "@/lib/types";
 import { ProgressBar } from "@/components/progress";
 import { Disclaimer, Skeleton } from "@/components/ui";
@@ -46,6 +48,9 @@ export default function DashboardPage() {
   const firstName = user?.name?.split(" ")[0] ?? "investidor";
   const next = progress?.nextLesson;
   const positive = (market?.change24hPercent ?? 0) >= 0;
+  const streak = resolveStreak(gamification, progress);
+  const fichas = resolveFichas(gamification);
+  const fichasMax = resolveFichasMax(gamification);
 
   return (
     <div className="mx-auto max-w-4xl space-y-5 pb-8">
@@ -56,12 +61,15 @@ export default function DashboardPage() {
             Olá, {firstName}. Continue sua jornada.
           </h1>
         </div>
-        <div className="flex items-center gap-3 text-[11px] text-neutral-500">
-          <span className="inline-flex items-center gap-1.5">
-            <Flame className="h-3.5 w-3.5 text-accent" /> {dayCount(gamification?.currentStreak ?? 0)}
+        <div className="flex flex-wrap items-center gap-2 text-[11px] text-neutral-500">
+          <span className="pill" title="Sequência de estudos · dados do servidor">
+            <Flame className="h-3.5 w-3.5 text-accent" aria-hidden="true" /> {dayCount(streak.current)}
           </span>
-          <span className="text-neutral-700">·</span>
-          <span>melhor sequência {gamification?.bestStreak ?? 0}</span>
+          <span className="pill" title="Fichas de quiz · saldo do servidor">
+            <Ticket className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
+            {fichas !== null ? `${fichas}${fichasMax !== null ? ` de ${fichasMax}` : ""} fichas` : "fichas —"}
+          </span>
+          <span className="text-[10px] text-neutral-500">melhor sequência {streak.best}</span>
         </div>
       </header>
 
@@ -150,6 +158,15 @@ export default function DashboardPage() {
               <p className="text-[16px] font-medium text-neutral-100">{gamification?.achievementsUnlocked ?? 0}</p>
               <p className="mt-0.5 text-[9px] uppercase tracking-[0.12em] text-neutral-500">conquistas</p>
             </div>
+          </div>
+          <div className="mt-4 flex items-center justify-between border-t border-white/[0.07] pt-3 text-[10px]">
+            <span className="inline-flex items-center gap-1.5 text-neutral-500">
+              <Ticket className="h-3 w-3 text-accent" aria-hidden="true" /> fichas de quiz
+            </span>
+            <span className="font-semibold text-neutral-200">
+              {fichas !== null ? fichas : "—"}
+              {fichasMax !== null ? ` de ${fichasMax}` : ""}
+            </span>
           </div>
         </section>
 

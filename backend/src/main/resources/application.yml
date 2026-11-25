@@ -99,6 +99,7 @@ app:
     max-failed-attempts: ${MAX_FAILED_ATTEMPTS:5}
     lock-minutes: ${LOCK_MINUTES:15}
     bcrypt-cost: ${BCRYPT_COST:10}
+    verification-resend-seconds: ${VERIFICATION_RESEND_SECONDS:60}
 
   mail:
     enabled: ${MAIL_ENABLED:false}
@@ -147,6 +148,11 @@ app:
 
   rate-limit:
     enabled: ${RATE_LIMIT_ENABLED:true}
+
+  quiz:
+    lives-initial: ${QUIZ_LIVES_INITIAL:3}
+    pass-threshold-percent: ${QUIZ_PASS_THRESHOLD_PERCENT:67}
+    default-timezone: ${APP_DEFAULT_TIMEZONE:America/Sao_Paulo}
 
 logging:
   level:

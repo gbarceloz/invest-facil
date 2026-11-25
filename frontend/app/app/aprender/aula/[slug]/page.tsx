@@ -8,58 +8,98 @@ import {
   BookOpen,
   CheckCircle2,
   Clock,
+  Flame,
   Loader2,
+  Lock,
   Sparkles,
+  Ticket,
   VideoOff,
 } from "lucide-react";
 import { useAppData } from "@/lib/app-data";
 import { api, ApiError } from "@/lib/api";
-import type { LessonDetail, LessonStatus, VideoInfo } from "@/lib/types";
+import type {
+  LessonDetail,
+  LessonStatus,
+  ModuleDetail,
+  VideoInfo,
+  VideoProgressResponse,
+} from "@/lib/types";
+import {
+  canContinueLesson,
+  module01VideoAssets,
+  oneLineSummary,
+  resolveFichas,
+  resolveStreak,
+  videoRegisterMessage,
+  type Module01VideoAssets,
+} from "@/lib/learning";
+import { dayCount } from "@/lib/format";
 import { Badge } from "@/components/page";
 import { Alert, Disclaimer, Spinner } from "@/components/ui";
 
-function oneLineSummary(markdown: string) {
-  const paragraph = markdown
-    .split(/\n\s*\n/)
-    .map((part) => part.replace(/^#+\s.*$/gm, "").replace(/[*_>`]/g, "").trim())
-    .find((part) => part.length > 40);
-  const text = (paragraph ?? markdown).replace(/\s+/g, " ").trim();
-  return text.length > 220 ? `${text.slice(0, 217)}…` : text;
+function VideoPlaceholder() {
+  return (
+    <div className="flex aspect-video flex-col items-center justify-center gap-3 rounded-xl border border-white/[0.07] bg-[#0d0d0d] text-center">
+      <div className="grid h-12 w-12 place-items-center rounded-full border border-white/10 bg-white/[0.03] text-neutral-500">
+        <VideoOff className="h-5 w-5" />
+      </div>
+      <div>
+        <p className="text-[13px] font-medium text-neutral-300">Vídeo em preparação</p>
+        <p className="mt-1 max-w-sm px-6 text-[11px] leading-5 text-neutral-500">
+          O vídeo é publicado após revisão editorial. O CONTINUAR será liberado quando ele estiver
+          disponível e você assistir até o fim.
+        </p>
+      </div>
+    </div>
+  );
 }
 
-function LessonVideo({ slug }: { slug: string }) {
-  const [video, setVideo] = useState<VideoInfo | null>(null);
+function LessonVideo({
+  slug,
+  local,
+  video,
+  checked,
+  onEnded,
+}: {
+  slug: string;
+  local: Module01VideoAssets | null;
+  video: VideoInfo | null;
+  checked: boolean;
+  onEnded: (positionSeconds: number, durationSeconds: number) => void;
+}) {
+  const source = local?.mp4 ?? video?.url ?? null;
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
-    let active = true;
-    api
-      .get<VideoInfo>(`/api/v1/content/lessons/${slug}/video`)
-      .then((data) => {
-        if (active) setVideo(data);
-      })
-      .catch(() => {
-        if (active) setFailed(true);
-      });
-    return () => {
-      active = false;
-    };
-  }, [slug]);
+    setFailed(false);
+  }, [source]);
 
-  if (!video && !failed) {
-    return <div className="aspect-video animate-pulse rounded-xl border border-white/[0.06] bg-[#111111]" />;
+  if (!checked && !local) {
+    return (
+      <div
+        className="aspect-video animate-pulse rounded-xl border border-white/[0.06] bg-[#111111]"
+        role="status"
+        aria-label="Carregando vídeo da aula"
+      />
+    );
   }
 
-  if (failed || !video) {
+  if (!source) return <VideoPlaceholder />;
+
+  if (failed) {
     return (
-      <div className="flex aspect-video flex-col items-center justify-center gap-3 rounded-xl border border-white/[0.07] bg-[#0d0d0d] text-center">
-        <div className="grid h-12 w-12 place-items-center rounded-full border border-white/10 bg-white/[0.03] text-neutral-500">
+      <div className="flex aspect-video flex-col items-center justify-center gap-3 rounded-xl border border-red-500/25 bg-red-500/[0.06] text-center">
+        <div className="grid h-12 w-12 place-items-center rounded-full border border-red-500/30 bg-red-500/10 text-red-300">
           <VideoOff className="h-5 w-5" />
         </div>
         <div>
-          <p className="text-[13px] font-medium text-neutral-300">Vídeo em preparação</p>
-          <p className="mt-1 max-w-sm px-6 text-[11px] leading-5 text-neutral-500">
-            O vídeo é publicado após revisão editorial. Conclua a aula para liberar o quiz.
+          <p className="text-[13px] font-medium text-red-200">
+            {local ? "Não foi possível carregar o vídeo local do Módulo 01." : "Não foi possível reproduzir o vídeo desta aula."}
+          </p>
+          <p className="mt-1 max-w-md px-6 text-[11px] leading-5 text-neutral-400">
+            {local
+              ? `Verifique se public/videos/module-01/${slug}.mp4 existe e rode o script de sincronização do Módulo 01.`
+              : "Tente recarregar a página. Se o problema continuar, o vídeo pode estar indisponível."}
           </p>
         </div>
       </div>
@@ -68,7 +108,33 @@ function LessonVideo({ slug }: { slug: string }) {
 
   return (
     <div className="overflow-hidden rounded-xl border border-white/[0.07] bg-black">
-      <video controls preload="metadata" className="aspect-video w-full" src={video.url}>
+      <video
+        key={source}
+        controls
+        preload="metadata"
+        playsInline
+        className="aspect-video w-full"
+        src={source}
+        poster={local?.poster}
+        aria-label="Vídeo da aula"
+        onError={() => setFailed(true)}
+        onEnded={(event) => {
+          const element = event.currentTarget;
+          const position = Number.isFinite(element.currentTime) ? element.currentTime : 0;
+          const duration = Number.isFinite(element.duration) ? element.duration : 0;
+          onEnded(position, duration);
+        }}
+      >
+        {local && (
+          <track
+            {...({ type: "text/vtt" } as Record<string, string>)}
+            kind="captions"
+            src={local.captions}
+            srcLang="pt-BR"
+            label="Português"
+            default
+          />
+        )}
         Seu navegador não suporta a reprodução de vídeo.
       </video>
     </div>
@@ -79,54 +145,124 @@ export default function LessonPage() {
   const params = useParams<{ slug: string }>();
   const router = useRouter();
   const slug = params.slug;
-  const { progress, reload } = useAppData();
+  const { progress, gamification, reload } = useAppData();
   const [lesson, setLesson] = useState<LessonDetail | null>(null);
   const [status, setStatus] = useState<LessonStatus | null>(null);
-  const [completing, setCompleting] = useState(false);
+  const [video, setVideo] = useState<VideoInfo | null>(null);
+  const [videoChecked, setVideoChecked] = useState(false);
+  const [watchedLocally, setWatchedLocally] = useState(false);
+  const [registering, setRegistering] = useState(false);
+  const [videoWarning, setVideoWarning] = useState<string | null>(null);
+  const [pendingVideo, setPendingVideo] = useState<{
+    positionSeconds: number;
+    durationSeconds: number;
+  } | null>(null);
+  const [locked, setLocked] = useState<boolean | null>(null);
+  const [previous, setPrevious] = useState<{ slug: string; title: string } | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let active = true;
     setLesson(null);
     setStatus(null);
+    setVideo(null);
+    setVideoChecked(false);
+    setWatchedLocally(false);
+    setVideoWarning(null);
+    setPendingVideo(null);
+    setLocked(null);
+    setPrevious(null);
     setError(null);
+
     api
       .get<LessonDetail>(`/api/v1/content/lessons/${slug}`)
       .then(async (data) => {
         if (!active) return;
         setLesson(data);
+
+        const [statusResult, moduleResult, videoResult] = await Promise.allSettled([
+          api.get<LessonStatus>(`/api/v1/progress/lessons/${data.id}`),
+          data.order > 1
+            ? api.get<ModuleDetail>(`/api/v1/content/modules/${data.moduleSlug}`)
+            : Promise.resolve(null),
+          api.get<VideoInfo>(`/api/v1/content/lessons/${slug}/video`),
+        ]);
+        if (!active) return;
+
+        if (statusResult.status === "fulfilled") setStatus(statusResult.value);
+        setVideo(videoResult.status === "fulfilled" ? videoResult.value : null);
+        setVideoChecked(true);
+
+        if (data.order <= 1) {
+          setLocked(false);
+          return;
+        }
+
+        const moduleData = moduleResult.status === "fulfilled" ? moduleResult.value : null;
+        const previousLesson =
+          moduleData?.lessons.find((item) => item.order === data.order - 1) ??
+          moduleData?.lessons[data.order - 2];
+        if (!previousLesson) {
+          // Sem a lista do módulo não há como provar o bloqueio no cliente.
+          setLocked(false);
+          return;
+        }
+        setPrevious({ slug: previousLesson.slug, title: previousLesson.title });
+
         try {
-          const lessonStatus = await api.get<LessonStatus>(`/api/v1/progress/lessons/${data.id}`);
-          if (active) setStatus(lessonStatus);
+          const previousStatus = await api.get<LessonStatus>(
+            `/api/v1/progress/lessons/${previousLesson.id}`,
+          );
+          if (active) setLocked(previousStatus.completed !== true);
         } catch {
-          // status é opcional; a aula continua acessível
+          if (!active) return;
+          // Progresso desconhecido: não bloqueia no cliente; o servidor decide.
+          setLocked(false);
         }
       })
       .catch((err) => {
         if (active) setError(err instanceof ApiError ? err.message : "Aula não encontrada.");
       });
+
     return () => {
       active = false;
     };
   }, [slug]);
 
-  const completed = status?.completed ?? progress?.completedLessonIds.includes(lesson?.id ?? "") ?? false;
+  const completedFromProgress = lesson
+    ? (progress?.completedLessonIds ?? []).includes(lesson.id)
+    : false;
+  const completed = status?.completed ?? completedFromProgress;
+  const videoWatched = watchedLocally || status?.videoWatched === true || completed;
+  const canContinue = canContinueLesson({ videoWatched, completed });
+  const fichas = resolveFichas(gamification, status?.fichas ?? null);
+  const streak = resolveStreak(gamification, progress);
+  const localVideo = module01VideoAssets(slug);
 
-  async function handleContinue() {
+  async function registerVideo(positionSeconds: number, durationSeconds: number) {
     if (!lesson) return;
-    if (completed) {
-      router.push(`/app/aprender/quiz/${slug}`);
-      return;
-    }
-    setCompleting(true);
-    setError(null);
+    setRegistering(true);
+    setVideoWarning(null);
+    setPendingVideo({ positionSeconds, durationSeconds });
     try {
-      await api.post(`/api/v1/progress/lessons/${lesson.id}`);
+      await api.post<VideoProgressResponse>(`/api/v1/progress/lessons/${lesson.id}/video`, {
+        watched: true,
+        positionSeconds: Math.max(0, Math.round(positionSeconds)),
+        durationSeconds: Math.max(0, Math.round(durationSeconds)),
+      });
+      setWatchedLocally(true);
+      setPendingVideo(null);
+      try {
+        const fresh = await api.get<LessonStatus>(`/api/v1/progress/lessons/${lesson.id}`);
+        setStatus(fresh);
+      } catch {
+        // `watchedLocally` mantém o CONTINUAR liberado para o evento já ocorrido.
+      }
       await reload();
-      router.push(`/app/aprender/quiz/${slug}`);
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Não foi possível concluir a aula.");
-      setCompleting(false);
+      setVideoWarning(videoRegisterMessage(err));
+    } finally {
+      setRegistering(false);
     }
   }
 
@@ -143,6 +279,57 @@ export default function LessonPage() {
 
   if (!lesson) return <Spinner label="Carregando aula" />;
 
+  if (locked === null) return <Spinner label="Verificando liberação da aula" />;
+
+  if (locked) {
+    return (
+      <div className="mx-auto max-w-xl">
+        <div className="card p-6 text-center sm:p-8">
+          <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-white/[0.05] text-neutral-300">
+            <Lock className="h-6 w-6" />
+          </div>
+          <p className="mt-5 text-[10px] font-semibold uppercase tracking-[0.16em] text-neutral-500">
+            Aula bloqueada
+          </p>
+          <h1 className="mt-2 text-[26px] font-medium tracking-[-0.035em] text-neutral-100">
+            Conclua a aula anterior primeiro.
+          </h1>
+          <p className="mt-3 text-[12px] leading-6 text-neutral-400">
+            A trilha é sequencial: cada aula prepara a próxima. Você poderá abrir esta aula assim que
+            concluir
+            {previous ? ` “${previous.title}”` : " a aula anterior"}.
+          </p>
+          <div className="mt-6 flex flex-col justify-center gap-2 sm:flex-row">
+            {previous && (
+              <Link href={`/app/aprender/aula/${previous.slug}`} className="btn-primary">
+                Ir para a aula anterior <ArrowRight className="h-4 w-4" />
+              </Link>
+            )}
+            <Link href="/app/aprender" className="btn-secondary">
+              Voltar ao mapa
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const hasVideo = video !== null;
+  const panelTitle = completed
+    ? "Aula concluída. O quiz está liberado."
+    : canContinue
+      ? "Vídeo concluído. O quiz está liberado."
+      : hasVideo
+        ? "Assista ao vídeo até o fim."
+        : "Vídeo em preparação.";
+  const panelHint = completed
+    ? "Você pode revisar o quiz e as aulas concluídas quando quiser."
+    : canContinue
+      ? "CONTINUAR abre as 3 perguntas da aula. Cada tentativa reprovada consome 1 ficha."
+      : hasVideo
+        ? "O botão CONTINUAR é liberado pelo evento de fim do vídeo — não existe atalho para marcar a aula como concluída antes disso."
+        : "O botão CONTINUAR será liberado quando o vídeo for publicado e você assistir até o fim.";
+
   return (
     <div className="space-y-6">
       <header>
@@ -152,35 +339,90 @@ export default function LessonPage() {
         <h1 className="mt-3 max-w-2xl text-[30px] font-medium leading-[1.15] tracking-[-0.04em] text-neutral-100 sm:text-[36px]">
           {lesson.title}
         </h1>
-        <div className="mt-4 flex flex-wrap items-center gap-3 text-[10px] text-neutral-500">
-          <span className="inline-flex items-center gap-1"><Clock className="h-3.5 w-3.5" /> {lesson.estimatedMin} min</span>
-          <span className="inline-flex items-center gap-1"><BookOpen className="h-3.5 w-3.5" /> {lesson.moduleTitle}</span>
+        <div className="mt-4 flex flex-wrap items-center gap-2 text-[10px] text-neutral-500">
+          <span className="inline-flex items-center gap-1">
+            <Clock className="h-3.5 w-3.5" /> {lesson.estimatedMin} min
+          </span>
+          <span className="inline-flex items-center gap-1">
+            <BookOpen className="h-3.5 w-3.5" /> {lesson.moduleTitle}
+          </span>
           {completed ? (
-            <Badge tone="success"><CheckCircle2 className="h-3 w-3" /> Concluída</Badge>
-          ) : (
-            <Badge tone="accent">+50 XP no quiz</Badge>
-          )}
+            <Badge tone="success">
+              <CheckCircle2 className="h-3 w-3" /> Concluída
+            </Badge>
+          ) : canContinue ? (
+            <Badge tone="accent">
+              <CheckCircle2 className="h-3 w-3" /> Vídeo assistido
+            </Badge>
+          ) : null}
+          <span className="pill" title="Fichas de quiz · saldo do servidor">
+            <Ticket className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
+            {fichas !== null ? `${fichas} fichas` : "fichas indisponíveis"}
+          </span>
+          <span className="pill" title="Sequência de estudos · dados do servidor">
+            <Flame className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
+            {dayCount(streak.current)}
+          </span>
         </div>
       </header>
 
       {error && <Alert>{error}</Alert>}
 
-      <LessonVideo slug={slug} />
+      <LessonVideo
+        slug={slug}
+        local={localVideo}
+        video={video}
+        checked={videoChecked || localVideo !== null}
+        onEnded={(position, duration) => void registerVideo(position, duration)}
+      />
+
+      {registering && (
+        <p className="flex items-center gap-2 text-[11px] text-neutral-400" role="status">
+          <Loader2 className="h-3.5 w-3.5 animate-spin text-accent" /> Registrando vídeo assistido…
+        </p>
+      )}
+      {videoWarning && (
+        <Alert tone="warning">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <span>{videoWarning}</span>
+            {pendingVideo && (
+              <button
+                type="button"
+                onClick={() => void registerVideo(pendingVideo.positionSeconds, pendingVideo.durationSeconds)}
+                className="btn-secondary px-3 py-1.5 text-[11px]"
+                disabled={registering}
+              >
+                {registering ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : null}
+                Tentar registrar novamente
+              </button>
+            )}
+          </div>
+        </Alert>
+      )}
+      {videoWatched && !registering && (
+        <p className="inline-flex items-center gap-1.5 text-[11px] text-emerald-300">
+          <CheckCircle2 className="h-3.5 w-3.5" /> Vídeo assistido
+          {status?.videoWatched === false ? " (registro local)" : ""}
+        </p>
+      )}
 
       <div className="flex flex-col gap-4 rounded-xl border border-white/[0.07] bg-[#111111] p-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <p className="text-[12px] font-medium text-neutral-200">
-            {completed ? "Aula concluída. O quiz está liberado." : "Assistiu à aula?"}
-          </p>
-          <p className="mt-1 text-[10px] leading-5 text-neutral-500">
-            {completed
-              ? "Você pode refazer o quiz quando quiser."
-              : "Marque como concluída para ir às perguntas. O vídeo fica nesta etapa; o quiz é separado."}
+          <p className="text-[12px] font-medium text-neutral-200">{panelTitle}</p>
+          <p id="continuar-ajuda" className="mt-1 max-w-xl text-[10px] leading-5 text-neutral-500">
+            {panelHint}
           </p>
         </div>
-        <button type="button" onClick={handleContinue} className="btn-primary shrink-0 text-[11px]" disabled={completing}>
-          {completing ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : null}
-          {completed ? "Ir para o quiz" : "Marcar como concluída"} <ArrowRight className="h-3.5 w-3.5" />
+        <button
+          type="button"
+          onClick={() => {
+            if (canContinue) router.push(`/app/aprender/quiz/${slug}`);
+          }}
+          className="btn-primary shrink-0 text-[11px]"
+          disabled={!canContinue || registering}
+          aria-describedby="continuar-ajuda"
+        >
+          {completed ? "Ir para o quiz" : "Continuar"} <ArrowRight className="h-3.5 w-3.5" />
         </button>
       </div>
 
@@ -191,7 +433,7 @@ export default function LessonPage() {
 
       <div className="flex items-center gap-2 text-[10px] text-neutral-500">
         <Sparkles className="h-3.5 w-3.5 text-accent" />
-        O quiz é uma etapa separada, liberada após a conclusão da aula.
+        O quiz é uma etapa separada, liberada após o vídeo. Fichas não regeneram sozinhas.
       </div>
       <Disclaimer className="text-[10px]" />
     </div>

@@ -27,6 +27,7 @@ public class AppProperties {
     private Market market = new Market();
     private Bitcoin bitcoin = new Bitcoin();
     private RateLimit rateLimit = new RateLimit();
+    private Quiz quiz = new Quiz();
 
     @Getter
     @Setter
@@ -55,6 +56,8 @@ public class AppProperties {
         private int maxFailedAttempts = 5;
         private int lockMinutes = 15;
         private int bcryptCost = 10;
+        /** Cooldown mínimo entre reenvios de verificação de e-mail. */
+        private int verificationResendSeconds = 60;
     }
 
     @Getter
@@ -126,5 +129,20 @@ public class AppProperties {
     @Setter
     public static class RateLimit {
         private boolean enabled = true;
+    }
+
+    /**
+     * Regras de quiz/gamificação aplicadas no servidor. Nenhum destes valores
+     * é aceito do cliente.
+     */
+    @Getter
+    @Setter
+    public static class Quiz {
+        /** Saldo inicial de fichas por usuário. */
+        private int livesInitial = 3;
+        /** Limiar de aprovação em percentual (default 67 = 2 de 3). */
+        private int passThresholdPercent = 67;
+        /** Timezone IANA padrão para cálculo de streak. */
+        private String defaultTimezone = "America/Sao_Paulo";
     }
 }

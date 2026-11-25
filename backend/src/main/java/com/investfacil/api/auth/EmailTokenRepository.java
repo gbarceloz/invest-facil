@@ -15,6 +15,9 @@ public interface EmailTokenRepository extends JpaRepository<EmailToken, UUID> {
 
     Optional<EmailToken> findByTokenHashAndType(String tokenHash, EmailTokenType type);
 
+    Optional<EmailToken> findFirstByUserIdAndTypeOrderByCreatedAtDesc(UUID userId,
+                                                                     EmailTokenType type);
+
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select t from EmailToken t where t.tokenHash = :hash and t.type = :type")
     Optional<EmailToken> findByTokenHashAndTypeForUpdate(@Param("hash") String hash,

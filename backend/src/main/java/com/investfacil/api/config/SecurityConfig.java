@@ -127,7 +127,7 @@ public class SecurityConfig {
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of(
                 "Authorization", "Content-Type", "X-Requested-With", "X-Refresh-Token",
-                "Accept", "Origin"));
+                "Idempotency-Key", "Accept", "Origin"));
         configuration.setExposedHeaders(List.of(
                 "X-RateLimit-Limit", "X-RateLimit-Remaining", "Retry-After"));
         configuration.setMaxAge(3600L);

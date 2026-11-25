@@ -297,24 +297,51 @@ class ExtendedIntegrationTest {
         TestUser user = register("gamification-user");
         UUID lessonId = lessonId("por-que-educacao-financeira");
 
+        // Conclusão legada não aceita mais pular vídeo + quiz.
         mvc.perform(post("/api/v1/progress/lessons/" + lessonId)
                         .header("Authorization", bearer(user)))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.xpAwarded").value(50))
-                .andExpect(jsonPath("$.totalXp").value(70))
-                .andExpect(jsonPath("$.level").value("Curioso"))
-                .andExpect(jsonPath("$.currentStreak").value(1));
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.code").value("LESSON_NOT_READY"));
 
+        mvc.perform(post("/api/v1/progress/lessons/" + lessonId + "/video")
+                        .header("Authorization", bearer(user))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"watched\":true,\"positionSeconds\":120,\"durationSeconds\":120}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.watched").value(true));
+
+        MvcResult quiz = mvc.perform(get("/api/v1/progress/lessons/" + lessonId + "/quiz")
+                        .header("Authorization", bearer(user)))
+                .andExpect(status().isOk())
+                .andReturn();
+        JsonNode questions = json(quiz).get("questions");
+        mvc.perform(post("/api/v1/progress/lessons/" + lessonId + "/quiz")
+                        .header("Authorization", bearer(user))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"answers\":["
+                                + "{\"questionId\":\"" + questions.get(0).get("id").asText()
+                                + "\",\"selectedIndex\":1},"
+                                + "{\"questionId\":\"" + questions.get(1).get("id").asText()
+                                + "\",\"selectedIndex\":0}]}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.passed").value(true))
+                .andExpect(jsonPath("$.lessonCompleted").value(true));
+
+        // 50 (aula) + 30 (quiz) + 20 (1ª aula) + 20 (1º quiz) = 120 XP
         mvc.perform(get("/api/v1/gamification/summary")
                         .header("Authorization", bearer(user)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.xp").value(70))
+                .andExpect(jsonPath("$.xp").value(120))
                 .andExpect(jsonPath("$.level.number").value(1))
                 .andExpect(jsonPath("$.level.name").value("Curioso"))
-                .andExpect(jsonPath("$.xpToNextLevel").value(230))
+                .andExpect(jsonPath("$.xpToNextLevel").value(180))
                 .andExpect(jsonPath("$.currentStreak").value(1))
                 .andExpect(jsonPath("$.bestStreak").value(1))
-                .andExpect(jsonPath("$.achievementsUnlocked").value(1));
+                .andExpect(jsonPath("$.achievementsUnlocked").value(2))
+                .andExpect(jsonPath("$.fichas").value(3))
+                .andExpect(jsonPath("$.fichasMax").value(3))
+                .andExpect(jsonPath("$.quizPassThresholdPercent").value(67))
+                .andExpect(jsonPath("$.streak.current").value(1));
 
         MvcResult achievements = mvc.perform(get("/api/v1/gamification/achievements")
                         .header("Authorization", bearer(user)))
@@ -328,11 +355,18 @@ class ExtendedIntegrationTest {
         }
         assertTrue(firstLessonUnlocked, "FIRST_LESSON deve estar desbloqueada após concluir a aula");
 
-        mvc.perform(get("/api/v1/gamification/xp")
+        MvcResult history = mvc.perform(get("/api/v1/gamification/xp")
                         .header("Authorization", bearer(user)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].amount").value(20))
-                .andExpect(jsonPath("$[1].amount").value(50));
+                .andReturn();
+        boolean hasLessonXp = false;
+        boolean hasQuizXp = false;
+        for (JsonNode entry : json(history)) {
+            hasLessonXp |= entry.get("amount").asInt() == 50;
+            hasQuizXp |= entry.get("amount").asInt() == 30;
+        }
+        assertTrue(hasLessonXp, "XP de aula (50) deve aparecer no histórico");
+        assertTrue(hasQuizXp, "XP de quiz (30) deve aparecer no histórico");
     }
 
     @Test

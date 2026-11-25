@@ -94,9 +94,7 @@ class OwnershipSecurityIntegrationTest {
         TestUser b = register("own-progress-b");
         UUID lessonId = lessonId();
 
-        mvc.perform(post("/api/v1/progress/lessons/" + lessonId)
-                        .header("Authorization", bearer(b)))
-                .andExpect(status().isCreated());
+        completeLessonViaVideoAndQuiz(b, lessonId);
 
         mvc.perform(get("/api/v1/progress/lessons/" + lessonId)
                         .header("Authorization", bearer(a)))
@@ -225,6 +223,29 @@ class OwnershipSecurityIntegrationTest {
                         .header("Authorization", bearer(b)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value(org.hamcrest.Matchers.not("Nome A Atualizado")));
+    }
+
+    private void completeLessonViaVideoAndQuiz(TestUser user, UUID lessonId) throws Exception {
+        mvc.perform(post("/api/v1/progress/lessons/" + lessonId + "/video")
+                        .header("Authorization", bearer(user))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"watched\":true,\"positionSeconds\":120,\"durationSeconds\":120}"))
+                .andExpect(status().isOk());
+        MvcResult quiz = mvc.perform(get("/api/v1/progress/lessons/" + lessonId + "/quiz")
+                        .header("Authorization", bearer(user)))
+                .andExpect(status().isOk())
+                .andReturn();
+        JsonNode questions = json(quiz).get("questions");
+        mvc.perform(post("/api/v1/progress/lessons/" + lessonId + "/quiz")
+                        .header("Authorization", bearer(user))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"answers\":["
+                                + "{\"questionId\":\"" + questions.get(0).get("id").asText()
+                                + "\",\"selectedIndex\":1},"
+                                + "{\"questionId\":\"" + questions.get(1).get("id").asText()
+                                + "\",\"selectedIndex\":0}]}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.lessonCompleted").value(true));
     }
 
     private TestUser register(String prefix) throws Exception {

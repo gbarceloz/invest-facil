@@ -52,17 +52,41 @@ class FlywaySecurityIntegrationTest {
     DataSource dataSource;
 
     @Test
-    void flywayAplicaV1aV7EmBancoLimpo() {
+    void flywayAplicaV1aV8EmBancoLimpo() {
         JdbcTemplate jdbc = new JdbcTemplate(dataSource);
         Integer migracoesOk = jdbc.queryForObject(
                 "SELECT count(*) FROM investfacil.flyway_schema_history WHERE success = true AND type = 'SQL'",
                 Integer.class);
-        assertEquals(7, migracoesOk, "V1-V7 devem ser aplicadas");
+        assertEquals(8, migracoesOk, "V1-V8 devem ser aplicadas");
 
         Integer tabelas = jdbc.queryForObject(
                 "SELECT count(*) FROM information_schema.tables WHERE table_schema = 'investfacil'",
                 Integer.class);
-        assertTrue(tabelas != null && tabelas >= 15, "Schema inicial completo");
+        assertTrue(tabelas != null && tabelas >= 23, "Schema inicial completo");
+
+        Integer tabelasV8 = jdbc.queryForObject("""
+                SELECT count(*) FROM information_schema.tables
+                 WHERE table_schema = 'investfacil'
+                   AND table_name IN ('user_streak_days', 'user_quiz_lives',
+                                      'quiz_lives_ledger', 'lesson_video_progress',
+                                      'quiz_submissions')
+                """, Integer.class);
+        assertEquals(5, tabelasV8, "V8 deve criar as 5 tabelas do Módulo 01");
+
+        Integer policiesV8 = jdbc.queryForObject("""
+                SELECT count(*) FROM pg_policies
+                 WHERE schemaname = 'investfacil' AND policyname LIKE 'v8_%'
+                """, Integer.class);
+        assertEquals(18, policiesV8, "V8 deve criar policies próprias (prefixo v8_)");
+
+        for (String table : java.util.List.of("user_streak_days", "user_quiz_lives",
+                "quiz_lives_ledger", "lesson_video_progress", "quiz_submissions")) {
+            Boolean granted = jdbc.queryForObject(
+                    "SELECT has_table_privilege('investfacil_app', ?, 'SELECT')",
+                    Boolean.class, "investfacil." + table);
+            assertTrue(Boolean.TRUE.equals(granted),
+                    "investfacil_app deve ler " + table);
+        }
     }
 
     @Test

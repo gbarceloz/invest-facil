@@ -31,6 +31,8 @@ export interface LessonSummary {
   id: string;
   slug: string;
   title: string;
+  /** Descrição curta opcional. Quando o servidor não envia, a UI deriva do conteúdo. */
+  description?: string | null;
   estimatedMin: number;
   order: number;
   moduleId: string;
@@ -116,6 +118,12 @@ export interface QuizResult {
   totalXp: number;
   level: string;
   results: QuizQuestionResult[];
+  /** Campos do Módulo 01 confirmados no contrato do backend. */
+  fichas: number;
+  fichasMax: number;
+  lessonCompleted: boolean;
+  idempotentReplay: boolean;
+  videoWatched: boolean;
 }
 
 export interface Level {
@@ -135,6 +143,13 @@ export interface Achievement {
   unlockedAt: string | null;
 }
 
+export interface StreakInfo {
+  current: number;
+  best: number;
+  lastActivityDate: string | null;
+  timezone: string;
+}
+
 export interface GamificationSummary {
   xp: number;
   level: Level;
@@ -145,6 +160,13 @@ export interface GamificationSummary {
   achievementsUnlocked: number;
   achievementsTotal: number;
   achievements: Achievement[];
+  /** Fichas de quiz (saldo autoritativo do servidor). */
+  fichas: number;
+  fichasMax: number;
+  /** Limiar de aprovação configurado no servidor. */
+  quizPassThresholdPercent: number;
+  /** Streak com fonte de verdade no servidor (Módulo 01). */
+  streak: StreakInfo;
 }
 
 export interface XpEntry {
@@ -199,6 +221,23 @@ export interface LessonStatus {
   completed: boolean;
   bestQuizPercent: number;
   attempts: number;
+  videoWatched: boolean;
+  quizPassed: boolean;
+  canStartQuiz: boolean;
+  fichas: number;
+  fichasMax: number;
+  passPercent: number;
+}
+
+export interface VideoProgressResponse {
+  lessonId: string;
+  watched: boolean;
+  positionSeconds: number;
+  durationSeconds: number;
+  watchedAt: string;
+  fichas: number;
+  fichasMax: number;
+  passPercent: number;
 }
 
 export interface CompleteLessonResponse {

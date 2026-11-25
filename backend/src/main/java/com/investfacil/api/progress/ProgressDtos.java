@@ -18,7 +18,9 @@ public final class ProgressDtos {
                                          String level, int currentStreak) {
     }
 
-    public record LessonStatus(boolean completed, int bestQuizPercent, int attempts) {
+    public record LessonStatus(boolean completed, int bestQuizPercent, int attempts,
+                               boolean videoWatched, boolean quizPassed, boolean canStartQuiz,
+                               int fichas, int fichasMax, int passPercent) {
     }
 
     public record CategoryProgress(UUID id, String slug, String name, int totalLessons,
@@ -40,6 +42,20 @@ public final class ProgressDtos {
                                   List<UUID> completedLessonIds,
                                   List<CategoryProgress> categories,
                                   List<RecentActivity> recent) {
+    }
+
+    public record VideoProgressRequest(
+            boolean watched,
+            @Min(value = 0, message = "Posição inválida.")
+            int positionSeconds,
+            @Min(value = 0, message = "Duração inválida.")
+            Integer durationSeconds
+    ) {
+    }
+
+    public record VideoProgressResponse(UUID lessonId, boolean watched, int positionSeconds,
+                                        Integer durationSeconds, Instant watchedAt,
+                                        int fichas, int fichasMax, int passPercent) {
     }
 
     public record QuizQuestionView(UUID id, int position, String question, List<String> options) {
@@ -65,6 +81,8 @@ public final class ProgressDtos {
 
     public record QuizResult(int score, int maxScore, int percent, boolean passed,
                              int xpAwarded, int totalXp, String level,
-                             List<QuestionResult> results) {
+                             List<QuestionResult> results,
+                             int fichas, int fichasMax, boolean lessonCompleted,
+                             boolean idempotentReplay, boolean videoWatched) {
     }
 }
