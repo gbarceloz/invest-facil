@@ -41,7 +41,7 @@ function module01VideoBaseUrl(): string | null {
  * arquivos locais e para as demais aulas; só a aula refeita ganha sufixo.
  */
 const EXTERNAL_VIDEO_REVISION: Record<string, string> = {
-  "o-que-e-dinheiro": "v9",
+  "o-que-e-dinheiro": "v10",
 };
 
 /**

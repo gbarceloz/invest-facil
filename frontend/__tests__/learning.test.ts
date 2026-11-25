@@ -184,17 +184,17 @@ describe("vídeos do Módulo 01 (local e externo)", () => {
     });
   });
 
-  it("usa a revisão v9 da aula 01 somente no storage externo", () => {
+  it("usa a revisão v10 da aula 01 somente no storage externo", () => {
     vi.stubEnv(
       "NEXT_PUBLIC_VIDEO_BASE_URL",
       "https://projeto.supabase.co/storage/v1/object/public/module01-videos/module-01",
     );
     expect(module01VideoAssets("o-que-e-dinheiro")).toEqual({
-      mp4: "https://projeto.supabase.co/storage/v1/object/public/module01-videos/module-01/o-que-e-dinheiro-v9.mp4",
+      mp4: "https://projeto.supabase.co/storage/v1/object/public/module01-videos/module-01/o-que-e-dinheiro-v10.mp4",
       poster:
-        "https://projeto.supabase.co/storage/v1/object/public/module01-videos/module-01/o-que-e-dinheiro-v9.jpg",
+        "https://projeto.supabase.co/storage/v1/object/public/module01-videos/module-01/o-que-e-dinheiro-v10.jpg",
       captions:
-        "https://projeto.supabase.co/storage/v1/object/public/module01-videos/module-01/o-que-e-dinheiro-v9.vtt",
+        "https://projeto.supabase.co/storage/v1/object/public/module01-videos/module-01/o-que-e-dinheiro-v10.vtt",
     });
   });
 
