@@ -53,9 +53,7 @@ export default function ModulePage() {
           ),
           Promise.allSettled(
             data.lessons.map((lesson) =>
-              lesson.description
-                ? Promise.resolve(null)
-                : api.get<LessonDetail>(`/api/v1/content/lessons/${lesson.slug}`),
+              api.get<LessonDetail>(`/api/v1/content/lessons/${lesson.slug}`),
             ),
           ),
         ]);
@@ -156,7 +154,7 @@ export default function ModulePage() {
         {module.lessons.map((lesson, index) => {
           const state = states[index];
           const status = statuses[lesson.id];
-          const description = lesson.description || summaries[lesson.id];
+          const description = summaries[lesson.id];
           const locked = state === "locked";
           const meta = (
             <>
