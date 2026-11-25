@@ -36,6 +36,9 @@ import { dayCount } from "@/lib/format";
 import { Badge } from "@/components/page";
 import { Alert, Disclaimer, Spinner } from "@/components/ui";
 
+/** Aulas com composição própria: legenda disponível, mas sem cobrir o desenho. */
+const CAPTIONS_OPT_IN = new Set(["o-que-e-dinheiro"]);
+
 function VideoPlaceholder() {
   return (
     <div className="flex aspect-video flex-col items-center justify-center gap-3 rounded-xl border border-white/[0.07] bg-[#0d0d0d] text-center">
@@ -136,6 +139,7 @@ function LessonVideo({
             src={local.captions}
             srcLang="pt-BR"
             label="Português"
+            default={!CAPTIONS_OPT_IN.has(slug)}
           />
         )}
         Seu navegador não suporta a reprodução de vídeo.
