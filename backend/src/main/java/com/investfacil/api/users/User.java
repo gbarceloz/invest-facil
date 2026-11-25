@@ -43,6 +43,10 @@ public class User {
     @Column(nullable = false)
     private boolean verified = false;
 
+    /** Subject imutável da conta Google (sub), quando o login social foi usado. */
+    @Column(name = "google_sub", length = 255)
+    private String googleSub;
+
     @Column(name = "avatar_url", length = 500)
     private String avatarUrl;
 

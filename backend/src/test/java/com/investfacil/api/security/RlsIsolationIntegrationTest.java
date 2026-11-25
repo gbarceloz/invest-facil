@@ -947,22 +947,12 @@ class RlsIsolationIntegrationTest {
 
     private TestUser register(String prefix) throws Exception {
         String email = prefix + "-" + UUID.randomUUID() + "@example.com";
-        MvcResult registered = mvc.perform(post("/api/v1/auth/register")
+        mvc.perform(post("/api/v1/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {"name":"Usuário RLS","email":"%s","password":"Teste@123"}
                                 """.formatted(email)))
-                .andExpect(status().isCreated())
-                .andReturn();
-        String verify = json(registered).get("devVerificationToken").asText();
-        assertEquals(1, adminJdbc.queryForObject(
-                "select count(*) from investfacil.email_tokens where token_hash = ?",
-                Integer.class, TokenHasher.sha256Hex(verify)),
-                "token de verificação deve existir no banco");
-        mvc.perform(post("/api/v1/auth/verify-email")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"token\":\"" + verify + "\"}"))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
         return login(email, "Teste@123");
     }
 

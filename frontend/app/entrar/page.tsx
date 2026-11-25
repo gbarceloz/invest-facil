@@ -5,21 +5,20 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { ArrowRight, KeyRound, Loader2, Mail } from "lucide-react";
 import { AuthLayout } from "@/components/auth-layout";
+import { GoogleSignIn } from "@/components/google-signin";
 import { Alert, Spinner } from "@/components/ui";
 import { useAuth } from "@/lib/auth";
-import { api, ApiError } from "@/lib/api";
+import { ApiError } from "@/lib/api";
 
 function LoginForm() {
   const router = useRouter();
   const params = useSearchParams();
-  const { user, loading, login, verifyMfa } = useAuth();
-  const [email, setEmail] = useState("");
+  const { user, loading, login, googleLogin, verifyMfa } = useAuth();
+  const [email, setEmail] = useState(() => params.get("email") ?? "");
   const [password, setPassword] = useState("");
   const [challenge, setChallenge] = useState<string | null>(null);
   const [code, setCode] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [needsVerification, setNeedsVerification] = useState(false);
-  const [resendMessage, setResendMessage] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
   const nextParam = params.get("next") ?? "";
@@ -44,23 +43,24 @@ function LoginForm() {
         router.replace(target);
       }
     } catch (err) {
-      if (err instanceof ApiError && err.code === "EMAIL_NOT_VERIFIED") {
-        setNeedsVerification(true);
-      }
       setError(err instanceof ApiError ? err.message : "Não foi possível entrar. Tente novamente.");
     } finally {
       setSubmitting(false);
     }
   }
 
-  async function resendVerification() {
+  async function handleGoogle(credential: string) {
     setError(null);
-    setResendMessage(null);
+    setSubmitting(true);
     try {
-      await api.post("/api/v1/auth/resend-verification", { email: email.trim() });
-      setResendMessage("Se o cadastro existir, um novo link de verificação foi enviado.");
+      await googleLogin(credential);
+      router.replace(target);
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Não foi possível reenviar o e-mail.");
+      setError(
+        err instanceof ApiError ? err.message : "Não foi possível entrar com o Google.",
+      );
+    } finally {
+      setSubmitting(false);
     }
   }
 
@@ -129,20 +129,7 @@ function LoginForm() {
   return (
     <form onSubmit={handlePassword} className="space-y-4">
       {error && <Alert>{error}</Alert>}
-      {needsVerification && (
-        <div className="rounded-xl border border-accent/25 bg-accent/5 p-3 text-xs text-neutral-300">
-          {resendMessage ? (
-            <p className="text-emerald-300">{resendMessage}</p>
-          ) : (
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <span>Precisa de um novo link de confirmação?</span>
-              <button type="button" onClick={resendVerification} className="font-bold text-accent hover:underline">
-                Reenviar e-mail
-              </button>
-            </div>
-          )}
-        </div>
-      )}
+      <GoogleSignIn onCredential={handleGoogle} text="signin_with" />
       <div>
         <label htmlFor="email" className="label">
           E-mail

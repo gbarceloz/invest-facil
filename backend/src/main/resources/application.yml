@@ -135,6 +135,9 @@ app:
   seed:
     content: ${SEED_CONTENT:true}
 
+  google:
+    client-id: ${GOOGLE_CLIENT_ID:}
+
   market:
     enabled: ${MARKET_ENABLED:true}
     base-url: ${MARKET_BASE_URL:https://api.binance.com}

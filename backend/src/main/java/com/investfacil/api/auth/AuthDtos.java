@@ -33,6 +33,12 @@ public final class AuthDtos {
     ) {
     }
 
+    public record GoogleLoginRequest(
+            @NotBlank(message = "Credencial do Google obrigatória.")
+            String credential
+    ) {
+    }
+
     public record LoginRequest(
             @NotBlank(message = "Informe seu e-mail.")
             @Email(message = "E-mail inválido.")

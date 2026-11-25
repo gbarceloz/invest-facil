@@ -89,31 +89,15 @@ class MvpFlowIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(8));
 
-        // 2. Cadastro
-        MvcResult register = mvc.perform(post("/api/v1/auth/register")
+        // 2. Cadastro aberto: a conta já nasce verificada, sem e-mail
+        mvc.perform(post("/api/v1/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {"name":"Aluno Teste","email":"%s","password":"Teste@123"}
                                 """.formatted(email)))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.devVerificationToken").isNotEmpty())
-                .andReturn();
-        String verifyToken = json(register).get("devVerificationToken").asText();
+                .andExpect(status().isCreated());
 
-        // 2.1 Login antes da verificação é bloqueado (não apenas "recomendado")
-        mvc.perform(post("/api/v1/auth/login")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"email\":\"" + email + "\",\"password\":\"Teste@123\"}"))
-                .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$.code").value("EMAIL_NOT_VERIFIED"));
-
-        // 3. Verificação de e-mail
-        mvc.perform(post("/api/v1/auth/verify-email")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"token\":\"" + verifyToken + "\"}"))
-                .andExpect(status().isOk());
-
-        // 4. Login
+        // 3. Login imediato, sem confirmação de e-mail
         MvcResult login = mvc.perform(post("/api/v1/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"email\":\"" + email + "\",\"password\":\"Teste@123\"}"))

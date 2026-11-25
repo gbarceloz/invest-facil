@@ -47,6 +47,7 @@ public class RateLimitFilter extends OncePerRequestFilter {
             new Rule("/api/v1/auth/forgot-password", 15, 3600),
             new Rule("/api/v1/auth/reset-password", 20, 3600),
             new Rule("/api/v1/auth/login", 30, 300),
+            new Rule("/api/v1/auth/google", 30, 300),
             new Rule("/api/v1/auth/mfa/verify", 20, 300),
             new Rule("/api/v1/auth/refresh", 120, 300),
             new Rule("/api/v1/auth", 180, 300),

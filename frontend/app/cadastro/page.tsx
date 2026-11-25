@@ -1,23 +1,26 @@
 ﻿"use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 import { AuthLayout } from "@/components/auth-layout";
+import { GoogleSignIn } from "@/components/google-signin";
 import { Alert } from "@/components/ui";
+import { useAuth } from "@/lib/auth";
 import { ApiError, api } from "@/lib/api";
 import type { RegisterResponse } from "@/lib/types";
 
 const PASSWORD_RULE = "Use ao menos 8 caracteres, com letras e números.";
 
 export default function RegisterPage() {
+  const router = useRouter();
+  const { googleLogin } = useAuth();
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [accepted, setAccepted] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [created, setCreated] = useState<RegisterResponse | null>(null);
-  const [resendState, setResendState] = useState<"idle" | "sending" | "sent" | "error">("idle");
-  const [resendMessage, setResendMessage] = useState<string | null>(null);
 
   function update(field: keyof typeof form, value: string) {
     setForm((current) => ({ ...current, [field]: value }));
@@ -49,30 +52,28 @@ export default function RegisterPage() {
     }
   }
 
-  async function resendVerification() {
-    const email = form.email.trim();
-    if (!email || resendState === "sending") return;
-    setResendState("sending");
-    setResendMessage(null);
+  async function handleGoogle(credential: string) {
+    if (!accepted) {
+      setError("Aceite os Termos de Uso e a Política de Privacidade para continuar.");
+      return;
+    }
+    setError(null);
+    setSubmitting(true);
     try {
-      await api.post("/api/v1/auth/resend-verification", { email });
-      setResendMessage(
-        "Se este e-mail estiver cadastrado e pendente, um novo link de confirmação foi enviado.",
-      );
-      setResendState("sent");
+      await googleLogin(credential);
+      router.replace("/app");
     } catch (err) {
-      setResendMessage(
-        err instanceof ApiError
-          ? err.message
-          : "Não foi possível reenviar agora. Tente novamente em instantes.",
+      setError(
+        err instanceof ApiError ? err.message : "Não foi possível criar sua conta com o Google.",
       );
-      setResendState("error");
+    } finally {
+      setSubmitting(false);
     }
   }
 
   if (created) {
     return (
-      <AuthLayout title="Conta criada" subtitle="Falta pouco para começar sua jornada.">
+      <AuthLayout title="Conta criada" subtitle="Seu acesso já está liberado.">
         <div className="space-y-5">
           <div className="flex items-start gap-3 rounded-lg border border-emerald-500/25 bg-emerald-500/10 p-4 text-[12px] leading-5 text-emerald-200">
             <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />
@@ -80,53 +81,19 @@ export default function RegisterPage() {
           </div>
 
           <div className="rounded-lg border border-accent/25 bg-accent/[0.04] p-4 text-[12px] leading-5 text-neutral-300">
-            <p className="font-semibold text-accent">Verifique seu e-mail</p>
+            <p className="font-semibold text-accent">Sem confirmação de e-mail</p>
             <p className="mt-1">
-              Enviamos um link de confirmação para{" "}
-              <strong className="break-all text-neutral-100">{form.email.trim()}</strong>. Confirme
-              antes de entrar: o login permanece bloqueado até a verificação.
-            </p>
-            <button
-              type="button"
-              onClick={() => void resendVerification()}
-              className="btn-secondary mt-3 px-3 py-1.5 text-[11px]"
-              disabled={resendState === "sending"}
-            >
-              {resendState === "sending" ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : null}
-              Reenviar e-mail
-            </button>
-            {resendMessage && (
-              <p
-                role="status"
-                aria-live="polite"
-                className={`mt-2 text-[11px] ${resendState === "error" ? "text-red-300" : "text-emerald-300"}`}
-              >
-                {resendMessage}
-              </p>
-            )}
-            <p className="mt-2 text-[10px] text-neutral-500">
-              Por segurança, a resposta é sempre a mesma. Aguarde 60 segundos entre reenvios — o
-              link anterior é invalidado.
+              A conta <strong className="break-all text-neutral-100">{form.email.trim()}</strong> já
+              está ativa. Entre com a senha que você acabou de criar.
             </p>
           </div>
-          {created.devVerificationToken && process.env.NODE_ENV !== "production" && (
-            <div className="rounded-lg border border-accent/25 bg-accent/[0.04] p-4 text-[11px] leading-5 text-neutral-300">
-              <p className="font-semibold text-accent">Modo desenvolvimento</p>
-              <p className="mt-1">
-                O provedor de e-mail não está configurado. Use o link abaixo para confirmar a conta
-                agora:
-              </p>
-              <Link
-                href={`/verificar-email?token=${encodeURIComponent(created.devVerificationToken)}`}
-                className="mt-2 inline-flex font-semibold text-accent underline underline-offset-4"
-              >
-                Confirmar meu e-mail
-              </Link>
-            </div>
-          )}
+
           <div className="flex flex-col gap-2">
-            <Link href="/entrar" className="btn-primary w-full">
-              Ir para o login <ArrowRight className="h-4 w-4" />
+            <Link
+              href={`/entrar?email=${encodeURIComponent(form.email.trim())}`}
+              className="btn-primary w-full"
+            >
+              Entrar na minha conta <ArrowRight className="h-4 w-4" />
             </Link>
             <Link href="/" className="btn-ghost w-full text-[11px]">
               Voltar ao início
@@ -144,6 +111,7 @@ export default function RegisterPage() {
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && <Alert>{error}</Alert>}
+        <GoogleSignIn onCredential={handleGoogle} text="signup_with" />
         <div>
           <label htmlFor="name" className="label">
             Nome

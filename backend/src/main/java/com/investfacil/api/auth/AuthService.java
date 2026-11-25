@@ -79,14 +79,14 @@ public class AuthService {
             throw BusinessException.conflict(
                     "Não foi possível concluir o cadastro com estes dados.");
         }
-        User user = users.create(request.name(), normalized, request.password(), Role.USER, false);
+        // Cadastro aberto: a conta já nasce verificada. Não há e-mail
+        // transacional nem bloqueio de login por confirmação.
+        User user = users.create(request.name(), normalized, request.password(), Role.USER, true);
         bindUser(user);
-        String verifyToken = issueEmailToken(user, EmailTokenType.EMAIL_VERIFY, Duration.ofHours(24));
-        email.sendVerification(user, verifyToken);
         audit.record(user.getId(), "REGISTER", context.ip(), context.userAgent(), "created");
         return new RegistrationResult(
-                "Cadastro criado. Confira seu e-mail para confirmar a conta.",
-                properties.getAuth().isExposeDevTokens() ? verifyToken : null);
+                "Conta criada. Você já pode entrar com seu e-mail e senha.",
+                null);
     }
 
     public AuthResult login(AuthDtos.LoginRequest request, ClientContext context) {
@@ -108,11 +108,6 @@ public class AuthService {
             audit.record(user.getId(), "LOGIN_FAIL", context.ip(), context.userAgent(), "bad-password");
             throw BusinessException.unauthorized("E-mail ou senha inválidos.");
         }
-        if (!user.isVerified()) {
-            audit.record(user.getId(), "LOGIN_FAIL", context.ip(), context.userAgent(), "email-not-verified");
-            throw new BusinessException(org.springframework.http.HttpStatus.FORBIDDEN,
-                    "EMAIL_NOT_VERIFIED", "Confirme seu e-mail antes de entrar.");
-        }
         if (user.isMfaEnabled()) {
             String challenge = jwt.createMfaChallenge(user.getId());
             audit.record(user.getId(), "LOGIN_MFA_CHALLENGE", context.ip(), context.userAgent(), "totp");
@@ -121,6 +116,48 @@ public class AuthService {
         AuthResult result = issueTokens(user, context, null);
         users.registerSuccessfulLogin(user.getId());
         audit.record(user.getId(), "LOGIN_OK", context.ip(), context.userAgent(), "password");
+        return result;
+    }
+
+    /**
+     * Login e cadastro com Google. O e-mail do ID token já vem verificado pelo
+     * Google; a conta local é criada no mesmo fluxo REGISTER da V6.
+     */
+    @Transactional
+    public AuthResult googleLogin(GoogleTokenVerifier.GoogleUser google, ClientContext client) {
+        String email = UserService.normalize(google.email());
+        context.clear();
+        context.setAuthEmail(email);
+        context.setFlow("LOGIN");
+        context.applyToCurrentTransaction();
+
+        User user = users.findByEmail(email).orElse(null);
+        if (user == null) {
+            context.setFlow("REGISTER");
+            context.applyToCurrentTransaction();
+            user = users.createGoogle(google.name(), email, google.picture(), google.sub());
+            bindUser(user);
+            audit.record(user.getId(), "REGISTER", client.ip(), client.userAgent(), "google");
+        } else {
+            if (user.getGoogleSub() != null && !user.getGoogleSub().equals(google.sub())) {
+                audit.record(user.getId(), "LOGIN_FAIL", client.ip(), client.userAgent(),
+                        "google-sub-mismatch");
+                throw BusinessException.conflict(
+                        "Esta conta já está vinculada a outra identidade Google.");
+            }
+            bindUser(user);
+            users.linkGoogle(user.getId(), google.sub(), google.picture());
+        }
+
+        bindUser(user);
+        if (user.isLocked(Instant.now())) {
+            audit.record(user.getId(), "LOGIN_FAIL", client.ip(), client.userAgent(), "locked");
+            throw BusinessException.locked(
+                    "Conta temporariamente bloqueada após tentativas inválidas. Tente novamente mais tarde.");
+        }
+        AuthResult result = issueTokens(user, client, null);
+        users.registerSuccessfulLogin(user.getId());
+        audit.record(user.getId(), "LOGIN_OK", client.ip(), client.userAgent(), "google");
         return result;
     }
 
@@ -138,10 +175,6 @@ public class AuthService {
         bindUser(user);
         if (user.isLocked(Instant.now())) {
             throw BusinessException.locked("Conta temporariamente bloqueada.");
-        }
-        if (!user.isVerified()) {
-            throw new BusinessException(org.springframework.http.HttpStatus.FORBIDDEN,
-                    "EMAIL_NOT_VERIFIED", "Confirme seu e-mail antes de entrar.");
         }
         if (!user.isMfaEnabled() || user.getMfaSecret() == null) {
             throw BusinessException.unauthorized("MFA não está ativo para esta conta.");
