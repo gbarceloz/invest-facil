@@ -136,7 +136,6 @@ function LessonVideo({
             src={local.captions}
             srcLang="pt-BR"
             label="Português"
-            default
           />
         )}
         Seu navegador não suporta a reprodução de vídeo.
