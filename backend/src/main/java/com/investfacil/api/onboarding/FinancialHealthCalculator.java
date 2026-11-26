@@ -140,9 +140,20 @@ public class FinancialHealthCalculator {
     }
 
     private ScoreFactorView savingsFactor(Long incomeCents, Long monthlySavingsCents) {
-        if (incomeCents == null || incomeCents <= 0 || monthlySavingsCents == null) {
+        if (monthlySavingsCents == null) {
             return unanswered("savingsRate", "Capacidade de poupar", SAVINGS_WEIGHT,
-                    "Informe renda e capacidade de poupança para calcular.");
+                    "Informe quanto sobra para guardar para calcular.");
+        }
+        if (incomeCents == null || incomeCents <= 0) {
+            // O fluxo curto pergunta apenas a sobra mensal. Sem renda, não é
+            // possível medir a proporção; pontuamos o hábito de separar um valor
+            // sem inventar uma renda.
+            int points = monthlySavingsCents > 0 ? 12 : 0;
+            String detail = monthlySavingsCents > 0
+                    ? "Você já separa um valor mensal; informe a renda para medir a proporção."
+                    : "Sem sobra mensal informada.";
+            return new ScoreFactorView("savingsRate", "Capacidade de poupar", true,
+                    points, SAVINGS_WEIGHT, detail);
         }
         double rate = monthlySavingsCents * 100.0 / incomeCents;
         int points = rate >= 20 ? 25 : rate >= 10 ? 20 : rate >= 5 ? 14 : rate > 0 ? 8 : 0;

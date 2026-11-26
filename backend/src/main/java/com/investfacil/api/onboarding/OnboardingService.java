@@ -5,6 +5,8 @@ import com.investfacil.api.onboarding.OnboardingDtos.AnswersView;
 import com.investfacil.api.onboarding.OnboardingDtos.CompleteRequest;
 import com.investfacil.api.onboarding.OnboardingDtos.FinancialHealthView;
 import com.investfacil.api.onboarding.OnboardingDtos.ProfileView;
+import com.investfacil.api.onboarding.OnboardingTypes.FinancialSituation;
+import com.investfacil.api.onboarding.OnboardingTypes.Goal;
 import com.investfacil.api.onboarding.OnboardingTypes.HealthBand;
 import com.investfacil.api.onboarding.OnboardingTypes.Opportunity;
 import com.investfacil.api.onboarding.OnboardingTypes.SpendingTrigger;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -80,8 +83,13 @@ public class OnboardingService {
     }
 
     private void apply(OnboardingProfile profile, AnswersRequest answers) {
-        profile.setGoal(answers.goal());
-        profile.setFinancialSituation(answers.financialSituation());
+        List<Goal> goals = normalizeMulti(answers.goals(), answers.goal(), 5);
+        List<FinancialSituation> situations = normalizeMulti(
+                answers.financialSituations(), answers.financialSituation(), 4);
+        profile.setGoal(goals.get(0));
+        profile.setGoals(goals.stream().map(Enum::name).toList());
+        profile.setFinancialSituation(situations.get(0));
+        profile.setFinancialSituations(situations.stream().map(Enum::name).toList());
         profile.setIncomeCents(answers.incomeCents());
         profile.setSavingsCapacityCents(answers.savingsCapacityCents());
         profile.setEssentialExpensesCents(answers.essentialExpensesCents());
@@ -109,10 +117,37 @@ public class OnboardingService {
         return triggers.stream().distinct().map(Enum::name).toList();
     }
 
+    /**
+     * Deduplica a multi-escolha e garante que a escolha primária (compatível com
+     * as colunas singulares) seja o primeiro item.
+     */
+    private static <T> List<T> normalizeMulti(List<T> values, T primary, int max) {
+        List<T> result = new ArrayList<>();
+        result.add(primary);
+        if (values != null) {
+            for (T value : values) {
+                if (!result.contains(value)) {
+                    result.add(value);
+                }
+            }
+        }
+        return List.copyOf(result.subList(0, Math.min(result.size(), max)));
+    }
+
     private ProfileView view(User user, OnboardingProfile profile) {
+        List<Goal> goals = profile.getGoals() == null || profile.getGoals().isEmpty()
+                ? List.of(profile.getGoal())
+                : profile.getGoals().stream().map(Goal::valueOf).toList();
+        List<FinancialSituation> situations = profile.getFinancialSituations() == null
+                || profile.getFinancialSituations().isEmpty()
+                ? List.of(profile.getFinancialSituation())
+                : profile.getFinancialSituations().stream().map(FinancialSituation::valueOf).toList();
+
         AnswersRequest answers = new AnswersRequest(
                 profile.getGoal(),
+                goals,
                 profile.getFinancialSituation(),
+                situations,
                 profile.getIncomeCents(),
                 profile.getSavingsCapacityCents(),
                 profile.getEssentialExpensesCents(),
@@ -125,7 +160,9 @@ public class OnboardingService {
                 profile.getStudyTime());
         AnswersView answersView = new AnswersView(
                 profile.getGoal(),
+                goals,
                 profile.getFinancialSituation(),
+                situations,
                 profile.getIncomeCents(),
                 profile.getSavingsCapacityCents(),
                 profile.getEssentialExpensesCents(),

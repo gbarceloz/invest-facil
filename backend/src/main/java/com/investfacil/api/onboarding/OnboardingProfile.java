@@ -46,9 +46,17 @@ public class OnboardingProfile {
     @Column(nullable = false, length = 40)
     private Goal goal;
 
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(nullable = false, columnDefinition = "jsonb")
+    private List<String> goals = new ArrayList<>();
+
     @Enumerated(EnumType.STRING)
     @Column(name = "financial_situation", nullable = false, length = 40)
     private FinancialSituation financialSituation;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "financial_situations", nullable = false, columnDefinition = "jsonb")
+    private List<String> financialSituations = new ArrayList<>();
 
     @Column(name = "income_cents")
     private Long incomeCents;

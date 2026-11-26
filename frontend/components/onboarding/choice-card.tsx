@@ -9,6 +9,7 @@ export function ChoiceCard({
   label,
   description,
   index = 0,
+  multiple = false,
   className,
 }: {
   selected: boolean;
@@ -16,6 +17,7 @@ export function ChoiceCard({
   label: string;
   description?: string;
   index?: number;
+  multiple?: boolean;
   className?: string;
 }) {
   return (
@@ -39,7 +41,8 @@ export function ChoiceCard({
       </span>
       <span
         className={cn(
-          "mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full border transition",
+          "mt-0.5 grid h-5 w-5 shrink-0 place-items-center border transition",
+          multiple ? "rounded-md" : "rounded-full",
           selected
             ? "border-accent bg-accent text-ink-950"
             : "border-white/20 text-transparent group-hover:border-white/35",
