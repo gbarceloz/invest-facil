@@ -414,14 +414,11 @@ export default function OnboardingPage() {
             <div className="flex items-start gap-2">
               <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
               <span>
-                Você já tem um perfil calculado. Ajuste o que quiser: ao salvar, o painel é
-                atualizado com as novas respostas.
+                Você já tem um perfil calculado. Conclua as 7 perguntas e vincule a conta para
+                atualizar o painel com as novas respostas.
               </span>
             </div>
             <div className="flex shrink-0 gap-2">
-              <Link href="/app" className="btn-secondary px-3 py-1.5 text-[10px]">
-                Ver painel
-              </Link>
               <button type="button" onClick={restart} className="btn-ghost px-2 py-1.5 text-[10px]">
                 Recomeçar
               </button>
