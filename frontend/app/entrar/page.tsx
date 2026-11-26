@@ -174,7 +174,7 @@ function LoginForm() {
       </button>
       <p className="text-center text-xs text-muted">
         Ainda não tem conta?{" "}
-        <Link href="/cadastro" className="font-bold text-accent hover:underline">
+        <Link href="/comecar" className="font-bold text-accent hover:underline">
           Criar agora
         </Link>
       </p>

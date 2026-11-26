@@ -63,6 +63,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -486,6 +487,59 @@ class RlsIsolationIntegrationTest {
     }
 
     @Test
+    void onboardingProfilesAreIsolatedByRls() throws Exception {
+        TestUser a = register("onboarding-rls-a");
+        TestUser b = register("onboarding-rls-b");
+
+        mvc.perform(put("/api/v1/onboarding/me")
+                        .header("Authorization", bearer(a))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(onboardingBody("Aluno A")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.completed").value(true))
+                .andExpect(jsonPath("$.health.score").value(80));
+
+        mvc.perform(put("/api/v1/onboarding/me")
+                        .header("Authorization", bearer(b))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(onboardingBody("Aluno B")))
+                .andExpect(status().isOk());
+
+        assertEquals(1, countAsUser(a.id(),
+                "select count(*) from investfacil.onboarding_profiles"));
+        assertEquals(1, countAsUser(b.id(),
+                "select count(*) from investfacil.onboarding_profiles"));
+        assertEquals(0, countAsUser(a.id(),
+                "select count(*) from investfacil.onboarding_profiles where user_id = '"
+                        + b.id() + "'"));
+        assertEquals(0, count("select count(*) from investfacil.onboarding_profiles"),
+                "sem contexto o runtime não deve ver perfis");
+
+        // INSERT cross-user é bloqueado pelo WITH CHECK.
+        assertThrows(SQLException.class, () -> updateAsUser(a.id(),
+                "insert into investfacil.onboarding_profiles"
+                        + " (user_id, goal, financial_situation, emergency_reserve,"
+                        + " high_interest_debt, learning_preference, knowledge_level,"
+                        + " spending_triggers, study_days, study_time)"
+                        + " values ('" + b.id() + "','INVEST','CAN_SAVE','NONE','NONE',"
+                        + "'MIX','BASIC','[\"NONE\"]'::jsonb,'[\"MON\"]'::jsonb,'19:00')"));
+
+        // UPDATE cross-user não encontra linha; DELETE não é concedido.
+        assertEquals(0, updateAsUser(a.id(),
+                "update investfacil.onboarding_profiles set health_score = 0"
+                        + " where user_id = '" + b.id() + "'"));
+        assertThrows(SQLException.class, () -> updateAsUser(a.id(),
+                "delete from investfacil.onboarding_profiles where user_id = '"
+                        + a.id() + "'"));
+
+        // A resposta autenticada continua sendo a do próprio usuário.
+        mvc.perform(get("/api/v1/onboarding/me")
+                        .header("Authorization", bearer(b)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("Aluno B"));
+    }
+
+    @Test
     void adminAndSeedPoliciesAreExplicit() throws Exception {
         TestUser user = register("admin-policy-user");
         List<UUID> lessons = jdbc().query(
@@ -697,11 +751,11 @@ class RlsIsolationIntegrationTest {
         assertEquals(0, adminJdbc.queryForObject(
                 "select count(*) from pg_tables where schemaname = 'investfacil'"
                         + " and tableowner = 'investfacil_runtime'", Integer.class));
-        assertEquals(23, adminJdbc.queryForObject(
+        assertEquals(24, adminJdbc.queryForObject(
                 "select count(*) from pg_tables where schemaname = 'investfacil'"
                         + " and tableowner = 'investfacil_migrate'"
                         + " and tablename <> 'flyway_schema_history'", Integer.class));
-        assertEquals(23, adminJdbc.queryForObject(
+        assertEquals(24, adminJdbc.queryForObject(
                 "select count(*) from pg_class c join pg_namespace n on n.oid = c.relnamespace"
                         + " where n.nspname = 'investfacil' and c.relkind = 'r'"
                         + " and c.relrowsecurity and c.relforcerowsecurity"
@@ -791,7 +845,7 @@ class RlsIsolationIntegrationTest {
                         + " where oid = to_regprocedure("
                         + " 'investfacil.apply_table_security()')::regprocedure",
                 Integer.class), "função legada deve ter sido removida");
-        assertEquals(10, adminJdbc.queryForObject(
+        assertEquals(11, adminJdbc.queryForObject(
                 "select count(*) from investfacil.flyway_schema_history"
                         + " where success = true and type = 'SQL'", Integer.class));
     }
@@ -814,7 +868,10 @@ class RlsIsolationIntegrationTest {
         assertEquals(18, adminJdbc.queryForObject(
                 "select count(*) from pg_policies where schemaname = 'investfacil'"
                         + " and policyname like 'v8_%'", Integer.class));
-        assertEquals(23, adminJdbc.queryForObject(
+        assertEquals(4, adminJdbc.queryForObject(
+                "select count(*) from pg_policies where schemaname = 'investfacil'"
+                        + " and policyname like 'onb_%'", Integer.class));
+        assertEquals(24, adminJdbc.queryForObject(
                 "select count(*) from pg_class c join pg_namespace n on n.oid = c.relnamespace"
                         + " where n.nspname = 'investfacil' and c.relkind = 'r'"
                         + " and c.relrowsecurity and c.relforcerowsecurity"
@@ -947,6 +1004,18 @@ class RlsIsolationIntegrationTest {
                                 + "\",\"selectedIndex\":0}]}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.lessonCompleted").value(true));
+    }
+
+    private String onboardingBody(String name) {
+        return """
+                {"name":"%s","answers":{
+                  "goal":"INVEST","financialSituation":"CAN_SAVE",
+                  "incomeCents":1000000,"savingsCapacityCents":100000,
+                  "essentialExpensesCents":500000,
+                  "emergencyReserve":"ONE_TO_3","highInterestDebt":"NONE",
+                  "learningPreference":"MIX","knowledgeLevel":"BASIC",
+                  "spendingTriggers":["NONE"],"studyDays":["MON"],"studyTime":"19:00"}}
+                """.formatted(name);
     }
 
     private TestUser register(String prefix) throws Exception {

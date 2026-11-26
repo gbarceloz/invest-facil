@@ -352,3 +352,74 @@ export interface ApiErrorBody {
   message: string;
   details?: Record<string, string> | null;
 }
+
+export type OnboardingGoal = "DEBT" | "INVEST" | "MULTIPLY" | "ORGANIZE" | "WEALTH";
+export type FinancialSituation = "IN_DEBT" | "FROM_ZERO" | "CAN_SAVE" | "INVESTOR";
+export type EmergencyReserve =
+  | "NONE"
+  | "LESS_THAN_1"
+  | "ONE_TO_3"
+  | "THREE_TO_6"
+  | "MORE_THAN_6"
+  | "PREFER_NOT";
+export type HighInterestDebt =
+  | "NONE"
+  | "CREDIT_CARD"
+  | "OVERDRAFT"
+  | "LOANS"
+  | "MULTIPLE"
+  | "PREFER_NOT";
+export type LearningPreference = "VIDEOS" | "TEXTS" | "PRACTICE" | "MIX";
+export type KnowledgeLevel = "ZERO" | "BASIC" | "INTERMEDIATE" | "ADVANCED";
+export type SpendingTrigger =
+  | "DELIVERY"
+  | "SHOPPING"
+  | "SOCIAL"
+  | "SUBSCRIPTIONS"
+  | "IMPULSE"
+  | "NONE";
+export type StudyDay = "MON" | "TUE" | "WED" | "THU" | "FRI" | "SAT" | "SUN";
+
+export interface OnboardingAnswers {
+  goal: OnboardingGoal;
+  financialSituation: FinancialSituation;
+  incomeCents: number | null;
+  savingsCapacityCents: number | null;
+  essentialExpensesCents: number | null;
+  emergencyReserve: EmergencyReserve;
+  highInterestDebt: HighInterestDebt;
+  learningPreference: LearningPreference;
+  knowledgeLevel: KnowledgeLevel;
+  spendingTriggers: SpendingTrigger[];
+  studyDays: StudyDay[];
+  studyTime: string;
+}
+
+export interface ScoreFactor {
+  key: string;
+  label: string;
+  answered: boolean;
+  points: number;
+  maxPoints: number;
+  detail: string;
+}
+
+export interface FinancialHealth {
+  score: number | null;
+  band: "SEM_DADOS" | "ATENCAO" | "CONSTRUINDO" | "ORGANIZANDO" | "CONSOLIDADO";
+  bandLabel: string;
+  opportunity: string;
+  opportunityLabel: string;
+  recommendation: string;
+  monthlySavingsCents: number | null;
+  emergencyFundGoalCents: number | null;
+  factors: ScoreFactor[];
+}
+
+export interface OnboardingProfile {
+  completed: boolean;
+  name?: string;
+  answers?: OnboardingAnswers;
+  health?: FinancialHealth;
+  completedAt?: string;
+}

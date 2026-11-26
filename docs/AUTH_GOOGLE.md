@@ -63,6 +63,11 @@ frontend está presente; o backend valida `aud` contra o Client ID configurado.
 
 ## 4. Cadastro por e-mail
 
-O cadastro por e-mail não envia mensagem e não exige confirmação. A conta já
-nasce `verified=true`; o usuário entra imediatamente com e-mail e senha. O
-Resend deixa de ser necessário para o fluxo principal.
+O cadastro por e-mail cria a conta com `verified=false`, emite o token oficial
+de confirmação (24 h) e chama `EmailService.sendVerification`. Com
+`MAIL_ENABLED`/`RESEND_API_KEY` configurados, o link chega por e-mail; em
+desenvolvimento, o token é devolvido em `devVerificationToken` para o onboarding
+confirmar automaticamente. O login continua liberado mesmo sem confirmação
+(decisão da V9), para não bloquear o usuário quando o provedor de e-mail não
+está configurado; a conta passa a `verified=true` quando o link oficial é
+aberto.

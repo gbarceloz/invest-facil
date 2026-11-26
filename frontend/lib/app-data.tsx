@@ -3,11 +3,12 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { api } from "./api";
 import { useAuth } from "./auth";
-import type { GamificationSummary, ProgressSummary } from "./types";
+import type { GamificationSummary, OnboardingProfile, ProgressSummary } from "./types";
 
 interface AppDataContextValue {
   gamification: GamificationSummary | null;
   progress: ProgressSummary | null;
+  onboarding: OnboardingProfile | null;
   loading: boolean;
   error: string | null;
   reload: () => Promise<void>;
@@ -19,6 +20,7 @@ export function AppDataProvider({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
   const [gamification, setGamification] = useState<GamificationSummary | null>(null);
   const [progress, setProgress] = useState<ProgressSummary | null>(null);
+  const [onboarding, setOnboarding] = useState<OnboardingProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -26,12 +28,16 @@ export function AppDataProvider({ children }: { children: React.ReactNode }) {
     if (!user) return;
     try {
       setError(null);
-      const [g, p] = await Promise.all([
+      const [g, p, o] = await Promise.all([
         api.get<GamificationSummary>("/api/v1/gamification/summary"),
         api.get<ProgressSummary>("/api/v1/progress/summary"),
+        api
+          .get<OnboardingProfile>("/api/v1/onboarding/me")
+          .catch(() => null),
       ]);
       setGamification(g);
       setProgress(p);
+      setOnboarding(o);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Não foi possível carregar seus dados.");
     } finally {
@@ -47,8 +53,8 @@ export function AppDataProvider({ children }: { children: React.ReactNode }) {
   }, [user, reload]);
 
   const value = useMemo(
-    () => ({ gamification, progress, loading, error, reload }),
-    [gamification, progress, loading, error, reload],
+    () => ({ gamification, progress, onboarding, loading, error, reload }),
+    [gamification, progress, onboarding, loading, error, reload],
   );
 
   return <AppDataContext.Provider value={value}>{children}</AppDataContext.Provider>;

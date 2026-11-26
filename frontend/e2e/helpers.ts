@@ -22,7 +22,14 @@ export async function createVerifiedUser(
     data: { name: credentials.name, email: credentials.email, password: credentials.password },
   });
   expect(registered.status(), await registered.text()).toBe(201);
-  // Cadastro aberto: a conta já nasce verificada, sem token de e-mail.
+  // Em dev o backend expõe o token oficial; confirma antes de usar a conta.
+  const body = (await registered.json()) as { devVerificationToken?: string | null };
+  if (body.devVerificationToken) {
+    const verified = await request.post(`${API_URL}/api/v1/auth/verify-email`, {
+      data: { token: body.devVerificationToken },
+    });
+    expect(verified.status(), await verified.text()).toBe(200);
+  }
   return credentials;
 }
 
@@ -31,18 +38,8 @@ export async function loginThroughUi(page: Page, credentials: TestCredentials) {
   await page.getByLabel("E-mail").fill(credentials.email);
   await page.getByLabel("Senha", { exact: true }).fill(credentials.password);
   await page.getByRole("button", { name: /^Entrar/ }).click();
-  await expect(page).toHaveURL(/\/app$/);
+  await expect(page).toHaveURL(/\/app(\?|$)/);
   await expect(page.getByRole("heading", { name: /Olá,/ })).toBeVisible();
-}
-
-export async function registerThroughUi(page: Page, credentials: TestCredentials) {
-  await page.goto("/cadastro");
-  await page.getByLabel("Nome", { exact: true }).fill(credentials.name);
-  await page.getByLabel("E-mail").fill(credentials.email);
-  await page.getByLabel("Senha", { exact: true }).fill(credentials.password);
-  await page.getByRole("checkbox").check();
-  await page.getByRole("button", { name: /Criar conta/ }).click();
-  await expect(page.getByRole("heading", { name: "Conta criada" })).toBeVisible();
 }
 
 export function uniqueCredentials(prefix: string): TestCredentials {

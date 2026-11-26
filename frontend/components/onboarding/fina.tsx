@@ -1,0 +1,85 @@
+"use client";
+
+import Image from "next/image";
+import { cn } from "@/lib/format";
+
+export type FinaPose = "wave" | "think" | "coin" | "jump" | "book" | "run" | "worried";
+
+const SRC: Record<FinaPose, string> = {
+  wave: "/brand/fina/fina-wave.png",
+  think: "/brand/fina/fina-think.png",
+  coin: "/brand/fina/fina-coin.png",
+  jump: "/brand/fina/fina-jump.png",
+  book: "/brand/fina/fina-book.png",
+  run: "/brand/fina/fina-run.png",
+  worried: "/brand/fina/fina-worried-head.png",
+};
+
+const SIZE: Record<FinaPose, { width: number; height: number }> = {
+  wave: { width: 389, height: 548 },
+  think: { width: 323, height: 355 },
+  coin: { width: 426, height: 618 },
+  jump: { width: 395, height: 570 },
+  book: { width: 422, height: 534 },
+  run: { width: 388, height: 556 },
+  worried: { width: 303, height: 290 },
+};
+
+export function Fina({
+  pose = "wave",
+  className,
+  size = 72,
+  priority = false,
+  animated = true,
+}: {
+  pose?: FinaPose;
+  className?: string;
+  size?: number;
+  priority?: boolean;
+  animated?: boolean;
+}) {
+  const dimensions = SIZE[pose];
+  return (
+    <Image
+      src={SRC[pose]}
+      alt=""
+      aria-hidden="true"
+      width={dimensions.width}
+      height={dimensions.height}
+      priority={priority}
+      sizes={`${size}px`}
+      className={cn(
+        "select-none object-contain drop-shadow-[0_10px_24px_rgba(0,0,0,0.45)]",
+        animated && "fina-bob",
+        className,
+      )}
+      style={{ width: size, height: "auto" }}
+    />
+  );
+}
+
+export function AssistantBubble({
+  children,
+  pose = "wave",
+  className,
+  animate = true,
+}: {
+  children: React.ReactNode;
+  pose?: FinaPose;
+  className?: string;
+  animate?: boolean;
+}) {
+  return (
+    <div className={cn("flex items-start gap-3", animate && "onb-enter", className)}>
+      <div className="relative mt-1 shrink-0">
+        <span className="absolute inset-x-1 bottom-1 h-8 rounded-full bg-accent/15 blur-xl" aria-hidden="true" />
+        <div className="relative grid h-14 w-14 place-items-center overflow-hidden rounded-2xl border border-accent/15 bg-[#121212]">
+          <Fina pose={pose} size={52} />
+        </div>
+      </div>
+      <div className="min-w-0 flex-1 rounded-2xl rounded-tl-md border border-white/[0.08] bg-[#141414] px-4 py-3.5 text-[14px] leading-6 text-neutral-200 shadow-[0_16px_40px_-28px_rgba(0,0,0,0.9)]">
+        {children}
+      </div>
+    </div>
+  );
+}
