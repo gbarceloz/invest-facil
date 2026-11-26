@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type CredentialResponse = { credential?: string };
 
@@ -22,6 +22,7 @@ type GoogleIdentity = {
       logo_alignment?: string;
     },
   ) => void;
+  prompt?: () => void;
 };
 
 declare global {
@@ -35,8 +36,10 @@ const CLIENT_ID =
   "13778080906-ijof2kbic70817sngcs783ga24b7pgqf.apps.googleusercontent.com";
 
 /**
- * Botão oficial do Google Identity Services. Sem client ID configurado, o
- * componente não renderiza nada; o login por e-mail continua funcionando.
+ * Botão oficial do Google Identity Services. Se o script carregar mas não
+ * conseguir renderizar (origem não autorizada, bloqueio de terceiros etc.),
+ * mostramos um botão alternativo para o usuário ao menos ver a opção e
+ * receber uma orientação clara para usar o e-mail.
  */
 export function GoogleSignIn({
   onCredential,
@@ -48,6 +51,8 @@ export function GoogleSignIn({
   const container = useRef<HTMLDivElement>(null);
   const callback = useRef(onCredential);
   callback.current = onCredential;
+  const [unavailable, setUnavailable] = useState(false);
+  const [notice, setNotice] = useState<string | null>(null);
 
   useEffect(() => {
     if (!CLIENT_ID) return;
@@ -72,6 +77,11 @@ export function GoogleSignIn({
         width: 320,
         logo_alignment: "left",
       });
+      window.setTimeout(() => {
+        if (!cancelled && container.current?.childElementCount) {
+          setUnavailable(false);
+        }
+      }, 300);
     };
 
     const existing = document.querySelector<HTMLScriptElement>("script[data-google-gsi]");
@@ -89,17 +99,44 @@ export function GoogleSignIn({
       document.head.appendChild(script);
     }
 
+    const fallbackTimer = window.setTimeout(() => {
+      if (!cancelled && !container.current?.childElementCount) {
+        setUnavailable(true);
+      }
+    }, 2500);
+
     return () => {
       cancelled = true;
+      window.clearTimeout(fallbackTimer);
       existing?.removeEventListener("load", render);
     };
   }, [text]);
 
   if (!CLIENT_ID) return null;
 
+  function handleFallback() {
+    setNotice(null);
+    if (window.google?.accounts?.id?.prompt) {
+      window.google.accounts.id.prompt();
+      setNotice("Se o Google não abrir, use o e-mail abaixo.");
+    } else {
+      setNotice("Google indisponível neste domínio. Use o e-mail abaixo.");
+    }
+  }
+
   return (
     <div className="space-y-4">
       <div ref={container} className="flex min-h-[40px] justify-center" />
+      {unavailable && (
+        <button type="button" onClick={handleFallback} className="btn-secondary w-full text-[12px]">
+          Continuar com Google
+        </button>
+      )}
+      {notice && (
+        <p className="text-center text-[10px] leading-4 text-neutral-500" role="status">
+          {notice}
+        </p>
+      )}
       <div className="flex items-center gap-3">
         <span className="h-px flex-1 bg-white/10" />
         <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-neutral-500">
