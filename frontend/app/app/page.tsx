@@ -105,10 +105,10 @@ export default function DashboardPage() {
             {health ? (
               <>
                 <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-neutral-500">
-                  Próximo passo · {health.bandLabel}
+                  Plano personalizado · {health.bandLabel}
                 </p>
                 <h2 className="mt-2 text-[26px] font-medium tracking-[-0.04em] text-neutral-100 sm:text-[30px]">
-                  Comece por {health.opportunityLabel.toLowerCase()}.
+                  Seu próximo passo: {health.opportunityLabel.toLowerCase()}.
                 </h2>
                 <p className="mt-2 max-w-lg text-[12px] leading-6 text-neutral-400">
                   {health.recommendation}

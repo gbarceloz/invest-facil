@@ -417,7 +417,9 @@ export default function OnboardingPage() {
     );
   }
 
-  const pastSteps = phase === "questions" ? Array.from({ length: step }, (_, index) => index) : [];
+  const pastSteps = phase === "questions"
+    ? Array.from({ length: step }, (_, index) => index).slice(-3)
+    : [];
 
   return (
     <div className="onb-stage flex min-h-screen flex-col">
