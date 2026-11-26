@@ -61,7 +61,7 @@ function FichasBlocked({
       <p className="mt-3 text-[12px] leading-6 text-neutral-400">
         {completed
           ? "Sua aula está concluída e continua disponível para revisão. Com 0 fichas, não é possível iniciar outra tentativa de quiz."
-          : "Cada tentativa reprovada consome 1 ficha."}{" "}
+          : "Se você não atingir a nota mínima, cada nova tentativa consome 1 ficha."}{" "}
         O saldo atual é <strong className="text-neutral-200">{fichas ?? 0}</strong>
         {fichasMax !== null ? ` de ${fichasMax}` : ""}. Fichas não regeneram sozinhas, e não há
         recuperação por anúncio ou Premium enquanto não existir integração real.
@@ -375,7 +375,7 @@ export default function QuizPage() {
           {!passed && (
             <p id="retry-ajuda" className="mt-3 text-[10px] leading-5 text-neutral-500">
               {retryAllowed
-                ? `Cada nova tentativa reprovada consome 1 ficha. Restam ${remainingFichas ?? "—"}.`
+                ? `Se a próxima tentativa não atingir a nota mínima, ela consome 1 ficha. Restam ${remainingFichas ?? "—"}.`
                 : "Você usou a última ficha nesta tentativa. Continue revisando a aula; novas tentativas exigem saldo no servidor."}
             </p>
           )}
@@ -430,7 +430,7 @@ export default function QuizPage() {
   return (
     <div className="mx-auto max-w-2xl">
       <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-accent">
-        Agora prove que entendeu
+        Hora de praticar
       </p>
       <div className="mt-3 flex items-center justify-between gap-4">
         <h1
@@ -450,7 +450,7 @@ export default function QuizPage() {
             : "fichas indisponíveis"}
         </span>
         <span>
-          Acerte {passPercent}% para concluir. Cada tentativa reprovada consome 1 ficha.
+          Obtenha pelo menos {passPercent}% para concluir. Cada tentativa abaixo da nota mínima consome 1 ficha.
         </span>
       </div>
 
@@ -536,7 +536,7 @@ export default function QuizPage() {
 
       <div className="mt-8 flex items-center gap-2 text-[10px] text-neutral-600">
         <CheckCircle2 className="h-3.5 w-3.5 text-accent" />
-        Acerte {passPercent}% para ganhar XP. O quiz não é uma recomendação de investimento.
+        Obtenha pelo menos {passPercent}% para ganhar XP. Este quiz é educativo e não constitui recomendação de investimento.
       </div>
     </div>
   );

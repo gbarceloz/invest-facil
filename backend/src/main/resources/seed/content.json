@@ -20,7 +20,7 @@
               "content": "## Dinheiro é uma ferramenta\n\nDinheiro é tudo o que uma sociedade aceita para **trocar por bens e serviços**. Ele resolve um problema prático: sem dinheiro, seria preciso encontrar alguém que quisesse exatamente o que você tem para oferecer.\n\n## As três funções\n\n- **Meio de troca:** permite comprar e vender sem escambo.\n- **Unidade de conta:** permite comparar o preço das coisas.\n- **Reserva de valor:** permite guardar poder de compra para o futuro.\n\nUma moeda pode cumprir bem uma função e falhar em outra. Entender isso ajuda a avaliar qualquer forma de dinheiro.\n\n> Dinheiro não é riqueza em si. É o instrumento que usamos para trocar e medir valor.",
               "quiz": [
                 {
-                  "question": "Qual função do dinheiro permite comparar o preço de produtos diferentes?",
+                  "question": "Uma pessoa pesquisa o preço de três celulares diferentes e usa os valores para decidir qual cabe no orçamento. Qual função do dinheiro está sendo usada nessa comparação?",
                   "options": [
                     "Meio de troca",
                     "Unidade de conta",
@@ -30,7 +30,7 @@
                   "correctIndex": 1
                 },
                 {
-                  "question": "Usar dinheiro para comprar pão é um exemplo de qual função?",
+                  "question": "No mercado, você paga R$ 8 por um pão e leva o produto na hora, sem oferecer outra mercadoria em troca. Esse pagamento é um exemplo de qual função do dinheiro?",
                   "options": [
                     "Meio de troca",
                     "Unidade de conta",
@@ -40,7 +40,7 @@
                   "correctIndex": 0
                 },
                 {
-                  "question": "Guardar dinheiro para usar no futuro é um exemplo de qual função?",
+                  "question": "Uma pessoa separa parte do salário na poupança para usar daqui a dois anos, preservando poder de compra para uma necessidade futura. Qual função do dinheiro está sendo exercida?",
                   "options": [
                     "Meio de troca",
                     "Unidade de conta",
