@@ -153,9 +153,9 @@ export default function OnboardingPage() {
     const questions: { text: string; pose: FinaPose }[] = [
       { text: "Oi! Eu sou a Fina. Como você quer ser chamado(a)?", pose: "wave" },
       { text: "Qual é o seu objetivo?", pose: "wave" },
-      { text: "Como está sua situação hoje?", pose: "think" },
-      { text: "Quanto entra e quanto sai por mês?", pose: "think" },
-      { text: "Como estão sua reserva e suas dívidas?", pose: "think" },
+      { text: "Como está sua situação hoje?", pose: "book" },
+      { text: "Quanto entra e quanto sai por mês?", pose: "coin" },
+      { text: "Como estão sua reserva e suas dívidas?", pose: "coin" },
       { text: "Como você aprende melhor?", pose: "book" },
       { text: "Quando você consegue estudar?", pose: "run" },
     ];
@@ -428,7 +428,7 @@ export default function OnboardingPage() {
 
         {phase === "calculating" ? (
           <div className="onb-fade flex flex-col items-center py-16 text-center">
-            <Fina pose="think" size={150} priority />
+            <Fina pose="book" size={150} priority />
             <p className="mt-7 text-[17px] font-medium tracking-[-0.02em] text-neutral-100">
               Calculando seu ponto de partida…
             </p>

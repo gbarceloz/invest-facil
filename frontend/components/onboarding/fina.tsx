@@ -3,26 +3,26 @@
 import Image from "next/image";
 import { cn } from "@/lib/format";
 
-export type FinaPose = "wave" | "think" | "coin" | "jump" | "book" | "run" | "worried";
+/**
+ * Apenas poses com o desenho completo. Os assets "think" e "worried-head" têm
+ * recorte no topo e não devem ser usados como avatar.
+ */
+export type FinaPose = "wave" | "coin" | "jump" | "book" | "run";
 
 const SRC: Record<FinaPose, string> = {
   wave: "/brand/fina/fina-wave.png",
-  think: "/brand/fina/fina-think.png",
   coin: "/brand/fina/fina-coin.png",
   jump: "/brand/fina/fina-jump.png",
   book: "/brand/fina/fina-book.png",
   run: "/brand/fina/fina-run.png",
-  worried: "/brand/fina/fina-worried-head.png",
 };
 
 const SIZE: Record<FinaPose, { width: number; height: number }> = {
   wave: { width: 389, height: 548 },
-  think: { width: 323, height: 355 },
   coin: { width: 426, height: 618 },
   jump: { width: 395, height: 570 },
   book: { width: 422, height: 534 },
   run: { width: 388, height: 556 },
-  worried: { width: 303, height: 290 },
 };
 
 export function Fina({
