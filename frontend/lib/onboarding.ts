@@ -39,7 +39,7 @@ export const EMPTY_DRAFT: OnboardingDraft = {
   highInterestDebt: null,
   learningPreference: null,
   knowledgeLevel: null,
-  spendingTriggers: [],
+  spendingTriggers: ["NONE"],
   studyDays: [],
   studyTime: "19:00",
 };
@@ -118,7 +118,7 @@ export const DAY_OPTIONS: Option<StudyDay>[] = [
 
 export const TIME_OPTIONS = ["07:00", "12:00", "18:00", "19:00", "20:00", "21:00"];
 
-export const QUESTION_COUNT = 13;
+export const QUESTION_COUNT = 8;
 
 export function toAnswers(draft: OnboardingDraft): OnboardingAnswers | null {
   if (
@@ -128,7 +128,6 @@ export function toAnswers(draft: OnboardingDraft): OnboardingAnswers | null {
     !draft.highInterestDebt ||
     !draft.learningPreference ||
     !draft.knowledgeLevel ||
-    draft.spendingTriggers.length === 0 ||
     draft.studyDays.length === 0 ||
     !draft.studyTime
   ) {
@@ -144,7 +143,7 @@ export function toAnswers(draft: OnboardingDraft): OnboardingAnswers | null {
     highInterestDebt: draft.highInterestDebt,
     learningPreference: draft.learningPreference,
     knowledgeLevel: draft.knowledgeLevel,
-    spendingTriggers: draft.spendingTriggers,
+    spendingTriggers: draft.spendingTriggers.length > 0 ? draft.spendingTriggers : ["NONE"],
     studyDays: draft.studyDays,
     studyTime: draft.studyTime,
   };

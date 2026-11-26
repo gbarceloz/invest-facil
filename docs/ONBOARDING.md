@@ -1,28 +1,30 @@
 # Onboarding conversacional
 
-O cadastro tradicional foi substituído por um onboarding em 13 etapas com a
-Fina, a raposa do Invest Fácil. O fluxo coleta o mínimo necessário para montar
-um plano pessoal, calcula um índice educativo no backend e só então pede
-autenticação para persistir o perfil e revelar o dashboard.
+O cadastro tradicional foi substituído por um onboarding curto com a Fina, a
+raposa do Invest Fácil. O fluxo coleta o mínimo necessário para montar um plano
+pessoal, calcula um índice educativo no backend e só então pede autenticação
+para persistir o perfil e revelar o dashboard.
 
 ## Fluxo
+
+São **7 perguntas + revisão**:
 
 1. Nome
 2. Objetivo
 3. Situação financeira
-4. Renda mensal (opcional)
-5. Capacidade de poupança (opcional)
-6. Despesas essenciais (opcional)
-7. Reserva de emergência
-8. Dívidas com juros altos
-9. Preferência de aprendizado
-10. Nível de conhecimento
-11. Gatilhos de gasto
-12. Dias e horário de estudo
-13. Revisão
+4. Renda, sobra e despesas essenciais (opcionais)
+5. Reserva de emergência e dívidas com juros altos
+6. Preferência de aprendizado e nível de conhecimento
+7. Dias e horário de estudo
+8. Revisão
 
-Depois da revisão: cálculo no servidor, revelação do índice, gate de
-autenticação (Google ou e-mail) e dashboard personalizado.
+Depois da revisão: cálculo no servidor, resultado e uma **etapa de acesso
+explícita**. Nessa etapa o usuário vê Google e e-mail; se já estiver logado,
+pode continuar com a conta atual ou usar outra conta. Só então o dashboard
+personalizado é revelado.
+
+Os gatilhos de gasto permanecem no modelo (default `["NONE"]`), mas deixaram de
+ser uma pergunta para encurtar o fluxo.
 
 - Entrada: `/comecar`
 - CTA da home: **Começar agora** (`/comecar`)
@@ -49,7 +51,8 @@ Migration `V11__onboarding_profiles.sql`, tabela
 
 - `user_id` é a chave primária e referencia `users` com `ON DELETE CASCADE`.
 - Respostas obrigatórias: objetivo, situação, reserva, dívidas, aprendizado,
-  conhecimento, gatilhos, dias e horário.
+  conhecimento, dias e horário. `spending_triggers` permanece no contrato com
+  default `["NONE"]` (o fluxo curto não pergunta mais os gatilhos).
 - Valores monetários em centavos (`bigint`), nulos quando a pessoa escolhe não
   informar.
 - `spending_triggers` e `study_days` são `jsonb` (arrays de strings).

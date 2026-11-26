@@ -169,7 +169,7 @@ Em CI/outra máquina, use `mvn -B verify` (sem o perfil local). O perfil
 `docker-desktop-newapi` é um workaround do Docker Desktop 29 desta máquina.
 
 ```powershell
-# Frontend — 37 testes unitários + typecheck/build + 7 jornadas E2E
+# Frontend — 38 testes unitários + typecheck/build + 7 jornadas E2E
 cd frontend
 npm test
 npm run build
