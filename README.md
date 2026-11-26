@@ -159,7 +159,7 @@ cookie de refresh é first-party.
 ## Testes
 
 ```powershell
-# Backend — 28 testes, incluindo PostgreSQL real via Testcontainers
+# Backend — 79 testes, incluindo PostgreSQL real via Testcontainers e onboarding
 cd backend
 $env:DOCKER_HOST="tcp://127.0.0.1:2375"
 mvn -B test -Pdocker-desktop-newapi
@@ -169,7 +169,7 @@ Em CI/outra máquina, use `mvn -B verify` (sem o perfil local). O perfil
 `docker-desktop-newapi` é um workaround do Docker Desktop 29 desta máquina.
 
 ```powershell
-# Frontend — 6 testes + build de produção
+# Frontend — 37 testes unitários + typecheck/build + 7 jornadas E2E
 cd frontend
 npm test
 npm run build
@@ -177,9 +177,10 @@ npm run build
 
 Cobertura funcional dos testes:
 
-- cadastro → verificação → login → conteúdo → conclusão idempotente → quiz →
-  XP → simulador → rotação de refresh → detecção de reuso;
-- migrations + RLS + privilégios de banco;
+- onboarding conversacional → cálculo do índice → autenticação → dashboard;
+- cadastro → login → conteúdo → conclusão idempotente → quiz → XP → simulador →
+  rotação de refresh → detecção de reuso;
+- migrations + RLS + privilégios de banco, incluindo `onboarding_profiles`;
 - TOTP (vetor RFC 6238), JWT, validação, simulador, resolução de IP;
 - envelope de erro sem vazamento; ausência de segredos versionados.
 
@@ -189,7 +190,9 @@ Cobertura funcional dos testes:
 
 - API **fail-closed**; públicos: health, Swagger, catálogo, auth pública e
   cálculo do simulador.
-- Login exige e-mail verificado; reenvio de verificação disponível.
+- Cadastro por e-mail emite a verificação oficial (24 h) e mantém o login
+  liberado enquanto o provedor de e-mail não estiver configurado; reenvio
+  disponível.
 - Access JWT 15 min; refresh opaco com hash SHA-256, rotação e revogação de
   família em caso de reuso.
 - MFA TOTP com segredo criptografado (AES-GCM), proteção contra replay e setup

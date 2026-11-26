@@ -71,3 +71,14 @@ confirmar automaticamente. O login continua liberado mesmo sem confirmação
 (decisão da V9), para não bloquear o usuário quando o provedor de e-mail não
 está configurado; a conta passa a `verified=true` quando o link oficial é
 aberto.
+
+## 5. Diagnóstico do GSI
+
+- `The given origin is not allowed for the given client ID`: a origem atual não
+  está em **Authorized JavaScript origins**. Adicione
+  `https://invest-facil-beige.vercel.app` (e `http://localhost:3000`) e aguarde
+  a propagação.
+- `access_denied` / `org_internal`: o app está em **Testing**. Cadastre o
+  e-mail como test user ou publique o consent screen.
+- O backend valida o ID token pelo JWKS; erros de origem são do navegador e não
+  chegam à API.

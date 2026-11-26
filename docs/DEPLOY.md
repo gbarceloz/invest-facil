@@ -46,10 +46,17 @@ Vercel (Next.js)  --/api rewrite-->  Render (Spring Boot)  -->  Supabase Postgre
 2. Preencha as variáveis do `render.yaml` (as marcadas `sync: false`).
 3. Gere `JWT_SECRET` (48 bytes Base64) e `APP_MFA_KEY` (32 bytes Base64) no
    painel. Não reutilize valores locais.
-4. `EXPOSE_DEV_TOKENS=false`, `MAIL_ENABLED=true` e `RESEND_API_KEY` em
-   produção. Sem isso, links de verificação não são enviados.
+4. `EXPOSE_DEV_TOKENS=false`, `MAIL_ENABLED=true`, `RESEND_API_KEY`,
+   `MAIL_FROM` e `FRONTEND_BASE_URL` (URL pública do Vercel) em produção. Sem
+   o provedor, a conta é criada como não verificada e o login continua liberado
+   (decisão da V9); o link oficial só chega quando o Resend está configurado.
 5. `CORS_ALLOWED_ORIGINS` pode ficar com o domínio do Vercel; o proxy torna o
    tráfego same-origin, mas a configuração explícita evita liberar `*`.
+   No Google Cloud Console, adicione `https://invest-facil-beige.vercel.app`
+   (e as origens locais de desenvolvimento) em **Authorized JavaScript
+   origins** do OAuth Client. Sem isso o GSI responde
+   `The given origin is not allowed for the given client ID`; se o app estiver
+   em Testing, cadastre test users ou publique o consent screen.
 6. Valide:
    - `GET /actuator/health` → `UP`.
    - `GET /v3/api-docs` → 200.
@@ -69,8 +76,9 @@ Vercel (Next.js)  --/api rewrite-->  Render (Spring Boot)  -->  Supabase Postgre
 2. Configure `API_PROXY_TARGET=https://<seu-servico>.onrender.com`.
 3. Build `npm run build`; output Next.js padrão.
 4. O rewrite `/api/:path*` mantém cookies e evita CORS no navegador.
-5. Teste o fluxo completo: cadastro → verificação (e-mail) → login → aula →
-   quiz → simulador → logout.
+5. Teste o fluxo completo: onboarding → cálculo do índice → autenticação →
+   dashboard → aula → quiz → simulador → logout. Confirme também
+   `/api/v1/onboarding/estimate` (público) e `/api/v1/onboarding/me` (JWT).
 
 ## 5. Vídeos
 
