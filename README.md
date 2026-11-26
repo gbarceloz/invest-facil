@@ -159,7 +159,7 @@ cookie de refresh é first-party.
 ## Testes
 
 ```powershell
-# Backend — 80 testes, incluindo PostgreSQL real via Testcontainers e onboarding
+# Backend — 81 testes, incluindo PostgreSQL real via Testcontainers e onboarding
 cd backend
 $env:DOCKER_HOST="tcp://127.0.0.1:2375"
 mvn -B test -Pdocker-desktop-newapi

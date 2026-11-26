@@ -113,6 +113,9 @@ Quatro pilares, com pesos fixos:
 - O fluxo curto pergunta apenas a sobra mensal. Sem renda, a capacidade de
   poupar entra com 12/25 e o detalhe explica que falta a renda para medir a
   proporção; despesas essenciais ficam sem resposta e saem do denominador.
+- Na interface, o pilar de dívidas aparece como **“Sem dívidas”** em verde
+  quando a resposta é `NONE`; os demais estados mostram o tipo de dívida. A
+  recomendação de reserva reconhece explicitamente quem não tem dívidas.
 - Economia mensal: usa a capacidade de poupança informada; se ausente, deriva
   de `renda - despesas essenciais` quando esses dados existirem.
 - Meta de reserva: `6 × despesas essenciais` quando as despesas existem; no
