@@ -81,7 +81,7 @@ export function GoogleSignIn({
       existing.addEventListener("load", render, { once: true });
     } else {
       const script = document.createElement("script");
-      script.src = "https://accounts.google.com/gsi/client";
+      script.src = "https://accounts.google.com/gsi/client?hl=pt-BR";
       script.async = true;
       script.defer = true;
       script.dataset.googleGsi = "true";
