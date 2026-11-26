@@ -155,7 +155,7 @@ export default function OnboardingPage() {
       { text: "Oi! Eu sou a Fina. Como você quer ser chamado(a)?", pose: "wave" },
       { text: "Qual é o seu objetivo?", pose: "wave" },
       { text: "Como está sua situação hoje?", pose: "think" },
-      { text: "Quanto entra e quanto sai por mês?", pose: "coin" },
+      { text: "Quanto entra e quanto sai por mês?", pose: "think" },
       { text: "Como estão sua reserva e suas dívidas?", pose: "think" },
       { text: "Como você aprende melhor?", pose: "book" },
       { text: "Quando você consegue estudar?", pose: "run" },
@@ -581,7 +581,7 @@ export default function OnboardingPage() {
               <Typewriter text={question.text} />
             </AssistantBubble>
 
-            <div className="onb-enter space-y-3 sm:pl-[68px]">
+            <div className="onb-enter space-y-3 sm:pl-[76px]">
               {step === 0 && (
                 <div>
                   <label htmlFor="onb-name" className="label">

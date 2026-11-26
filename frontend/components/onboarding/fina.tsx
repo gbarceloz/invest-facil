@@ -73,8 +73,8 @@ export function AssistantBubble({
     <div className={cn("flex items-start gap-3", animate && "onb-enter", className)}>
       <div className="relative mt-1 shrink-0">
         <span className="absolute inset-x-1 bottom-1 h-8 rounded-full bg-accent/15 blur-xl" aria-hidden="true" />
-        <div className="relative grid h-14 w-14 place-items-center rounded-2xl border border-accent/15 bg-[#121212] p-1.5">
-          <Fina pose={pose} size={44} />
+        <div className="relative grid h-16 w-16 place-items-center rounded-2xl border border-accent/15 bg-[#121212] p-1.5">
+          <Fina pose={pose} size={50} />
         </div>
       </div>
       <div className="min-w-0 flex-1 rounded-2xl rounded-tl-md border border-white/[0.08] bg-[#141414] px-4 py-3.5 text-[14px] leading-6 text-neutral-200 shadow-[0_16px_40px_-28px_rgba(0,0,0,0.9)]">
