@@ -22,6 +22,17 @@ para este fluxo; basta um **OAuth Client ID** do tipo **Web application**.
 Não é preciso configurar URI de redirecionamento para o botão GIS; o fluxo
 retorna o ID token diretamente ao navegador.
 
+O Client ID público configurado neste projeto é:
+
+```text
+13778080906-ijof2kbic70817sngcs783ga24b7pgqf.apps.googleusercontent.com
+```
+
+Ele está como fallback em `frontend/components/google-signin.tsx` e
+`backend/src/main/resources/application.yml`. As variáveis de ambiente
+`NEXT_PUBLIC_GOOGLE_CLIENT_ID` e `GOOGLE_CLIENT_ID` continuam tendo prioridade
+e podem ser usadas para trocar de projeto sem alterar o código.
+
 ## 2. Configurar os deploys
 
 **Vercel** (Production e Preview):
