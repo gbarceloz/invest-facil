@@ -7,6 +7,7 @@ import {
   loadDraft,
   moneyCents,
   parseBrlToCents,
+  QUESTION_COUNT,
   saveDraft,
   toAnswers,
 } from "@/lib/onboarding";
@@ -45,7 +46,7 @@ describe("onboarding draft", () => {
     expect(restored).not.toBeNull();
     expect(restored?.draft.name).toBe("Marina");
     expect(restored?.draft.goal).toBe("INVEST");
-    expect(restored?.step).toBe(12);
+    expect(restored?.step).toBe(QUESTION_COUNT - 1);
     expect(window.localStorage.getItem(DRAFT_KEY)).toContain("version");
   });
 
@@ -78,5 +79,22 @@ describe("onboarding draft", () => {
     expect(answers?.goal).toBe("INVEST");
     expect(answers?.incomeCents).toBeNull();
     expect(answers?.studyTime).toBe("19:00");
+  });
+
+  it("defaults spending triggers to NONE when the short flow omits them", () => {
+    const complete = {
+      ...EMPTY_DRAFT,
+      name: "Marina",
+      goal: "INVEST" as const,
+      financialSituation: "CAN_SAVE" as const,
+      emergencyReserve: "ONE_TO_3" as const,
+      highInterestDebt: "NONE" as const,
+      learningPreference: "MIX" as const,
+      knowledgeLevel: "BASIC" as const,
+      spendingTriggers: [],
+      studyDays: ["MON" as const],
+      studyTime: "19:00",
+    };
+    expect(toAnswers(complete)?.spendingTriggers).toEqual(["NONE"]);
   });
 });

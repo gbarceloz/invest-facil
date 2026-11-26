@@ -9,12 +9,14 @@ export function CurrencyField({
   onChange,
   autoFocus = false,
   label,
+  hint = "Use vírgula para centavos. Ex.: 1.500,00",
 }: {
   id: string;
   value: number | null;
   onChange: (cents: number | null) => void;
   autoFocus?: boolean;
   label: string;
+  hint?: string | null;
 }) {
   const [text, setText] = useState(() => centsToBrlInput(value));
   const [focused, setFocused] = useState(false);
@@ -25,7 +27,7 @@ export function CurrencyField({
 
   return (
     <div>
-      <label htmlFor={id} className="sr-only">
+      <label htmlFor={id} className="label">
         {label}
       </label>
       <div className="onb-input-shell flex items-center gap-2 rounded-xl px-3.5 py-3">
@@ -52,9 +54,7 @@ export function CurrencyField({
           className="w-full bg-transparent text-[18px] font-medium tracking-[-0.01em] text-neutral-50 outline-none placeholder:text-neutral-600"
         />
       </div>
-      <p className="mt-1.5 text-[10px] text-neutral-600">
-        Use vírgula para centavos. Ex.: 1.500,00
-      </p>
+      {hint && <p className="mt-1.5 text-[10px] text-neutral-600">{hint}</p>}
     </div>
   );
 }

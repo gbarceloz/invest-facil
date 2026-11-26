@@ -14,12 +14,14 @@ type Mode = "register" | "login";
 export function AuthGate({
   name,
   onAuthenticated,
+  initialMode = "register",
 }: {
   name: string;
   onAuthenticated: () => Promise<void>;
+  initialMode?: Mode;
 }) {
   const { login, googleLogin, verifyMfa } = useAuth();
-  const [mode, setMode] = useState<Mode>("register");
+  const [mode, setMode] = useState<Mode>(initialMode);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [accepted, setAccepted] = useState(false);

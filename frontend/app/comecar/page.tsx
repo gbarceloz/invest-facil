@@ -35,7 +35,6 @@ import {
   RESERVE_OPTIONS,
   SITUATION_OPTIONS,
   TIME_OPTIONS,
-  TRIGGER_OPTIONS,
   clearDraft,
   loadDraft,
   moneyCents,
@@ -44,14 +43,11 @@ import {
   type OnboardingDraft,
   type Option,
 } from "@/lib/onboarding";
-import type {
-  FinancialHealth,
-  OnboardingProfile,
-  SpendingTrigger,
-  StudyDay,
-} from "@/lib/types";
+import type { FinancialHealth, OnboardingProfile, StudyDay } from "@/lib/types";
 
 const REVIEW_STEP = QUESTION_COUNT - 1;
+
+type Phase = "questions" | "calculating" | "result" | "auth";
 
 function labelOf<T extends string>(options: Option<T>[], value: T | null | undefined): string {
   if (!value) return "Não informado";
@@ -74,12 +70,12 @@ function firstNameOf(name: string): string {
 
 export default function OnboardingPage() {
   const router = useRouter();
-  const { user, loading: authLoading } = useAuth();
+  const { user, loading: authLoading, logout } = useAuth();
   const [draft, setDraft] = useState<OnboardingDraft>(EMPTY_DRAFT);
   const [step, setStep] = useState(0);
   const [hydrated, setHydrated] = useState(false);
   const [restoredDraft, setRestoredDraft] = useState(false);
-  const [phase, setPhase] = useState<"questions" | "calculating" | "result">("questions");
+  const [phase, setPhase] = useState<Phase>("questions");
   const [health, setHealth] = useState<FinancialHealth | null>(null);
   const [existingCompleted, setExistingCompleted] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -154,65 +150,23 @@ export default function OnboardingPage() {
 
   const firstName = firstNameOf(draft.name);
 
-  const question = useMemo(() => {
+  const question = useMemo<{ text: string; pose: FinaPose }>(() => {
     const questions: { text: string; pose: FinaPose }[] = [
-      {
-        text: "Oi! Eu sou a Fina, sua guia por aqui. Antes de montar seu plano, como você quer ser chamado(a)?",
-        pose: "wave",
-      },
-      {
-        text: `Prazer, ${firstName}. O que você mais quer resolver agora?`,
-        pose: "wave",
-      },
-      {
-        text: "E como está sua situação financeira hoje? Isso muda o ponto de partida, não o seu potencial.",
-        pose: "think",
-      },
-      {
-        text: "Quanto entra, em média, por mês na sua casa? Pode pular se preferir não informar.",
-        pose: "coin",
-      },
-      {
-        text: "Quanto sobra, em média, para guardar por mês? Se preferir, eu calculo pela renda menos as despesas.",
-        pose: "coin",
-      },
-      {
-        text: "E quanto vai para as despesas essenciais — moradia, comida, transporte e contas básicas?",
-        pose: "think",
-      },
-      {
-        text: "Se você parasse de receber hoje, por quantos meses sua reserva cobriria o essencial?",
-        pose: "think",
-      },
-      {
-        text: "Você tem dívidas com juros altos, como cartão de crédito, cheque especial ou empréstimo?",
-        pose: "worried",
-      },
-      {
-        text: "Como você aprende melhor? Vou usar isso para sugerir o formato das aulas.",
-        pose: "book",
-      },
-      {
-        text: "Quanto você já sabe sobre investimentos? Sem julgamento: isso ajusta a linguagem, não a sua capacidade.",
-        pose: "book",
-      },
-      {
-        text: "O que mais costuma furar seu orçamento? Pode escolher mais de um.",
-        pose: "think",
-      },
-      {
-        text: "Quando você consegue estudar? Escolha os dias e um horário que caibam na sua rotina.",
-        pose: "run",
-      },
-      {
-        text: "Revisei tudo. Se estiver certo, eu calculo seu ponto de partida e monto o próximo passo.",
-        pose: "jump",
-      },
+      { text: "Oi! Eu sou a Fina. Como você quer ser chamado(a)?", pose: "wave" },
+      { text: "Qual é o seu objetivo?", pose: "wave" },
+      { text: "Como está sua situação hoje?", pose: "think" },
+      { text: "Quanto entra e quanto sai por mês?", pose: "coin" },
+      { text: "Como estão sua reserva e suas dívidas?", pose: "think" },
+      { text: "Como você aprende melhor?", pose: "book" },
+      { text: "Quando você consegue estudar?", pose: "run" },
+      { text: "Confira suas respostas.", pose: "jump" },
     ];
     return questions[step] ?? questions[0];
-  }, [step, firstName]);
+  }, [step]);
 
-  const progress = phase === "result" ? 100 : Math.round(((step + 1) / QUESTION_COUNT) * 100);
+  const progress = phase === "questions"
+    ? Math.round(((step + 1) / QUESTION_COUNT) * 100)
+    : 100;
 
   const canContinue = useMemo(() => {
     switch (step) {
@@ -223,20 +177,12 @@ export default function OnboardingPage() {
       case 2:
         return draft.financialSituation !== null;
       case 3:
-      case 4:
-      case 5:
         return true;
+      case 4:
+        return draft.emergencyReserve !== null && draft.highInterestDebt !== null;
+      case 5:
+        return draft.learningPreference !== null && draft.knowledgeLevel !== null;
       case 6:
-        return draft.emergencyReserve !== null;
-      case 7:
-        return draft.highInterestDebt !== null;
-      case 8:
-        return draft.learningPreference !== null;
-      case 9:
-        return draft.knowledgeLevel !== null;
-      case 10:
-        return draft.spendingTriggers.length > 0;
-      case 11:
         return draft.studyDays.length > 0 && draft.studyTime.length > 0;
       default:
         return true;
@@ -248,20 +194,14 @@ export default function OnboardingPage() {
       case 0:
         return "Digite seu nome para continuar.";
       case 1:
-        return "Escolha o que você mais quer resolver agora.";
+        return "Escolha seu objetivo.";
       case 2:
         return "Escolha a opção que mais se parece com sua situação.";
+      case 4:
+        return "Escolha uma opção de reserva e uma de dívida.";
+      case 5:
+        return "Escolha como você aprende e seu nível de conhecimento.";
       case 6:
-        return "Escolha uma opção de reserva (pode ser “prefiro não informar”).";
-      case 7:
-        return "Escolha uma opção de dívida (pode ser “prefiro não informar”).";
-      case 8:
-        return "Escolha como você aprende melhor.";
-      case 9:
-        return "Escolha seu nível de conhecimento.";
-      case 10:
-        return "Escolha ao menos um gatilho.";
-      case 11:
         return "Escolha ao menos um dia e um horário.";
       default:
         return "Responda para continuar.";
@@ -270,21 +210,6 @@ export default function OnboardingPage() {
 
   function update<K extends keyof OnboardingDraft>(key: K, value: OnboardingDraft[K]) {
     setDraft((current) => ({ ...current, [key]: value }));
-    setError(null);
-  }
-
-  function toggleTrigger(value: SpendingTrigger) {
-    setDraft((current) => {
-      const has = current.spendingTriggers.includes(value);
-      let next: SpendingTrigger[];
-      if (value === "NONE") {
-        next = has ? [] : ["NONE"];
-      } else {
-        const withoutNone = current.spendingTriggers.filter((item) => item !== "NONE");
-        next = has ? withoutNone.filter((item) => item !== value) : [...withoutNone, value];
-      }
-      return { ...current, spendingTriggers: next };
-    });
     setError(null);
   }
 
@@ -317,7 +242,7 @@ export default function OnboardingPage() {
         api.post<FinancialHealth>("/api/v1/onboarding/estimate", answers),
         reduced
           ? Promise.resolve()
-          : new Promise((resolve) => window.setTimeout(resolve, 850)),
+          : new Promise((resolve) => window.setTimeout(resolve, 750)),
       ]);
       setHealth(result);
       setPhase("result");
@@ -347,8 +272,14 @@ export default function OnboardingPage() {
   function goBack() {
     setError(null);
     setCalcError(null);
-    if (phase !== "questions") {
+    setSaveError(null);
+    if (phase === "auth") {
+      setPhase("result");
+      return;
+    }
+    if (phase === "result") {
       setPhase("questions");
+      setStep(REVIEW_STEP);
       return;
     }
     if (step === 0) {
@@ -390,6 +321,11 @@ export default function OnboardingPage() {
     }
   }
 
+  async function handleLogout() {
+    setSaveError(null);
+    await logout();
+  }
+
   function restart() {
     clearDraft();
     setDraft({ ...EMPTY_DRAFT, name: user?.name ?? "" });
@@ -407,6 +343,7 @@ export default function OnboardingPage() {
     setStep(target);
     setError(null);
     setCalcError(null);
+    setSaveError(null);
   }
 
   if (!hydrated) {
@@ -418,8 +355,17 @@ export default function OnboardingPage() {
   }
 
   const pastSteps = phase === "questions"
-    ? Array.from({ length: step }, (_, index) => index).slice(-3)
+    ? Array.from({ length: step }, (_, index) => index).slice(-2)
     : [];
+
+  const phaseLabel =
+    phase === "calculating"
+      ? "Calculando"
+      : phase === "result"
+        ? "Resultado"
+        : phase === "auth"
+          ? "Acesso"
+          : `Etapa ${step + 1} de ${QUESTION_COUNT}`;
 
   return (
     <div className="onb-stage flex min-h-screen flex-col">
@@ -440,9 +386,7 @@ export default function OnboardingPage() {
               </Link>
             )}
             <span className="text-neutral-700">·</span>
-            <span className="tabular-nums">
-              {phase === "result" ? "100%" : `Etapa ${step + 1} de ${QUESTION_COUNT}`}
-            </span>
+            <span className="tabular-nums">{phaseLabel}</span>
           </div>
         </div>
         <div className="mx-auto w-full max-w-2xl px-4 pb-3 sm:px-6">
@@ -488,7 +432,7 @@ export default function OnboardingPage() {
               Calculando seu ponto de partida…
             </p>
             <p className="mt-2 max-w-xs text-[11px] leading-5 text-neutral-500">
-              Cruzando reserva, dívidas, capacidade de poupança e despesas essenciais.
+              Cruzando reserva, dívidas, poupança e despesas essenciais.
             </p>
             <div className="mt-6 h-1.5 w-56 overflow-hidden rounded-full bg-white/[0.07]">
               <div className="onb-glow h-full w-full bg-gradient-to-r from-transparent via-accent to-transparent" />
@@ -498,7 +442,7 @@ export default function OnboardingPage() {
           <div className="space-y-5">
             <AssistantBubble pose="jump" animate>
               <Typewriter
-                text={`Pronto, ${firstName}. Este é o seu ponto de partida — não uma sentença. O plano abaixo usa só o que você respondeu.`}
+                text={`Pronto, ${firstName}. Este é o seu ponto de partida — não uma sentença.`}
               />
             </AssistantBubble>
 
@@ -516,56 +460,21 @@ export default function OnboardingPage() {
             </p>
 
             <section className="onb-enter rounded-2xl border border-white/[0.08] bg-[#111111] p-5 sm:p-6">
-              {user ? (
-                <>
-                  <div className="flex items-start gap-3">
-                    <div className="grid h-10 w-10 place-items-center rounded-full border border-emerald-400/25 bg-emerald-400/10 text-emerald-300">
-                      <Check className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <h2 className="text-[15px] font-semibold text-neutral-100">
-                        Sessão ativa como {user.email}
-                      </h2>
-                      <p className="mt-1 text-[11px] leading-5 text-neutral-500">
-                        Salve para vincular este perfil à sua conta e abrir o painel personalizado.
-                      </p>
-                    </div>
-                  </div>
-                  {saveError && (
-                    <p className="mt-3 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-[11px] text-red-200">
-                      {saveError}
-                    </p>
-                  )}
-                  <button
-                    type="button"
-                    onClick={handleSaveClick}
-                    disabled={saving}
-                    className="btn-primary mt-4 w-full"
-                  >
-                    {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-                    Salvar e abrir meu painel <ArrowRight className="h-4 w-4" />
-                  </button>
-                </>
-              ) : (
-                <>
-                  <div className="mb-4">
-                    <p className="eyebrow">Último passo</p>
-                    <h2 className="mt-2 text-[19px] font-medium tracking-[-0.03em] text-neutral-100">
-                      Entre para guardar seu resultado
-                    </h2>
-                    <p className="mt-1.5 text-[11px] leading-5 text-neutral-500">
-                      Seu rascunho continua aqui. Depois de entrar ou criar a conta, salvamos o
-                      perfil e abrimos o painel.
-                    </p>
-                  </div>
-                  {saveError && (
-                    <p className="mb-3 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-[11px] text-red-200">
-                      {saveError}
-                    </p>
-                  )}
-                  <AuthGate name={draft.name} onAuthenticated={saveAndOpen} />
-                </>
-              )}
+              <p className="eyebrow">Último passo</p>
+              <h2 className="mt-2 text-[19px] font-medium tracking-[-0.03em] text-neutral-100">
+                Salve seu plano
+              </h2>
+              <p className="mt-1.5 text-[11px] leading-5 text-neutral-500">
+                Entre com o Google ou e-mail para guardar o resultado e abrir o painel
+                personalizado. Seu rascunho continua aqui.
+              </p>
+              <button
+                type="button"
+                onClick={() => setPhase("auth")}
+                className="btn-primary mt-4 w-full"
+              >
+                Salvar meu plano <ArrowRight className="h-4 w-4" />
+              </button>
             </section>
 
             <div className="flex flex-wrap items-center justify-center gap-3 pb-4">
@@ -583,6 +492,73 @@ export default function OnboardingPage() {
                 <RotateCcw className="h-3.5 w-3.5" /> Recomeçar
               </button>
             </div>
+          </div>
+        ) : phase === "auth" ? (
+          <div className="space-y-5">
+            <AssistantBubble pose="wave" animate>
+              <Typewriter
+                text={
+                  user
+                    ? `Sessão ativa como ${user.email}. Confirme para salvar ou entre com outra conta.`
+                    : "Para guardar seu plano, entre com o Google ou e-mail."
+                }
+              />
+            </AssistantBubble>
+
+            {user && (
+              <section className="onb-enter rounded-2xl border border-emerald-400/20 bg-emerald-400/[0.04] p-5">
+                <div className="flex items-start gap-3">
+                  <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-emerald-400/25 bg-emerald-400/10 text-emerald-300">
+                    <Check className="h-5 w-5" />
+                  </div>
+                  <div className="min-w-0">
+                    <h2 className="text-[14px] font-semibold text-neutral-100">Sessão ativa</h2>
+                    <p className="mt-0.5 break-all text-[11px] leading-5 text-neutral-400">
+                      {user.email}
+                    </p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleSaveClick}
+                  disabled={saving}
+                  className="btn-primary mt-4 w-full"
+                >
+                  {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+                  Continuar com esta conta <ArrowRight className="h-4 w-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => void handleLogout()}
+                  className="btn-ghost mt-2 w-full text-[10px]"
+                >
+                  Usar outra conta
+                </button>
+              </section>
+            )}
+
+            <section className="onb-enter rounded-2xl border border-white/[0.08] bg-[#111111] p-5 sm:p-6">
+              {user && (
+                <div className="mb-4 flex items-center gap-3">
+                  <span className="h-px flex-1 bg-white/10" />
+                  <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-neutral-500">
+                    ou entre com outra conta
+                  </span>
+                  <span className="h-px flex-1 bg-white/10" />
+                </div>
+              )}
+              {saveError && (
+                <p className="mb-3 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-[11px] text-red-200">
+                  {saveError}
+                </p>
+              )}
+              <AuthGate
+                key={user ? "logged" : "anon"}
+                name={draft.name}
+                initialMode={user ? "login" : "register"}
+                onAuthenticated={saveAndOpen}
+              />
+            </section>
           </div>
         ) : (
           <div className="space-y-4">
@@ -658,120 +634,114 @@ export default function OnboardingPage() {
               )}
 
               {step === 3 && (
-                <MoneyStep
-                  id="onb-income"
-                  label="Renda mensal"
-                  value={draft.incomeCents}
-                  onChange={(value) => update("incomeCents", value)}
-                  onSkip={() => {
-                    update("incomeCents", null);
-                    setStep((current) => current + 1);
-                  }}
-                />
+                <div className="space-y-4">
+                  <CurrencyField
+                    id="onb-income"
+                    label="Renda mensal"
+                    value={draft.incomeCents}
+                    onChange={(value) => update("incomeCents", value)}
+                    autoFocus
+                    hint={null}
+                  />
+                  <CurrencyField
+                    id="onb-savings"
+                    label="Quanto sobra para guardar"
+                    value={draft.savingsCapacityCents}
+                    onChange={(value) => update("savingsCapacityCents", value)}
+                    hint={null}
+                  />
+                  <CurrencyField
+                    id="onb-expenses"
+                    label="Despesas essenciais"
+                    value={draft.essentialExpensesCents}
+                    onChange={(value) => update("essentialExpensesCents", value)}
+                    hint={null}
+                  />
+                  <p className="text-[10px] leading-4 text-neutral-600">
+                    Pode preencher só o que souber. Use vírgula para centavos.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      update("incomeCents", null);
+                      update("savingsCapacityCents", null);
+                      update("essentialExpensesCents", null);
+                      setStep((current) => current + 1);
+                    }}
+                    className="text-[11px] font-medium text-neutral-500 underline decoration-white/20 underline-offset-4 transition hover:text-neutral-200"
+                  >
+                    Prefiro não informar agora
+                  </button>
+                </div>
               )}
 
               {step === 4 && (
-                <MoneyStep
-                  id="onb-savings"
-                  label="Quanto sobra por mês"
-                  value={draft.savingsCapacityCents}
-                  onChange={(value) => update("savingsCapacityCents", value)}
-                  onSkip={() => {
-                    update("savingsCapacityCents", null);
-                    setStep((current) => current + 1);
-                  }}
-                  hint="Se você deixar em branco, uso renda menos despesas essenciais quando os dois estiverem preenchidos."
-                />
+                <div className="space-y-5">
+                  <div>
+                    <p className="mb-2 text-[11px] font-semibold text-neutral-300">
+                      Reserva de emergência
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {RESERVE_OPTIONS.map((option) => (
+                        <PillChoice
+                          key={option.value}
+                          selected={draft.emergencyReserve === option.value}
+                          onClick={() => update("emergencyReserve", option.value)}
+                          label={option.label}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <p className="mb-2 text-[11px] font-semibold text-neutral-300">
+                      Dívidas com juros altos
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {DEBT_OPTIONS.map((option) => (
+                        <PillChoice
+                          key={option.value}
+                          selected={draft.highInterestDebt === option.value}
+                          onClick={() => update("highInterestDebt", option.value)}
+                          label={option.label}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
               )}
 
               {step === 5 && (
-                <MoneyStep
-                  id="onb-expenses"
-                  label="Despesas essenciais por mês"
-                  value={draft.essentialExpensesCents}
-                  onChange={(value) => update("essentialExpensesCents", value)}
-                  onSkip={() => {
-                    update("essentialExpensesCents", null);
-                    setStep((current) => current + 1);
-                  }}
-                />
+                <div className="space-y-5">
+                  <div>
+                    <p className="mb-2 text-[11px] font-semibold text-neutral-300">Formato</p>
+                    <div className="flex flex-wrap gap-2">
+                      {LEARNING_OPTIONS.map((option) => (
+                        <PillChoice
+                          key={option.value}
+                          selected={draft.learningPreference === option.value}
+                          onClick={() => update("learningPreference", option.value)}
+                          label={option.label}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <p className="mb-2 text-[11px] font-semibold text-neutral-300">Conhecimento</p>
+                    <div className="flex flex-wrap gap-2">
+                      {KNOWLEDGE_OPTIONS.map((option) => (
+                        <PillChoice
+                          key={option.value}
+                          selected={draft.knowledgeLevel === option.value}
+                          onClick={() => update("knowledgeLevel", option.value)}
+                          label={option.label}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
               )}
 
               {step === 6 && (
-                <div className="grid gap-2 sm:grid-cols-2">
-                  {RESERVE_OPTIONS.map((option, index) => (
-                    <ChoiceCard
-                      key={option.value}
-                      selected={draft.emergencyReserve === option.value}
-                      onClick={() => update("emergencyReserve", option.value)}
-                      label={option.label}
-                      index={index}
-                    />
-                  ))}
-                </div>
-              )}
-
-              {step === 7 && (
-                <div className="grid gap-2 sm:grid-cols-2">
-                  {DEBT_OPTIONS.map((option, index) => (
-                    <ChoiceCard
-                      key={option.value}
-                      selected={draft.highInterestDebt === option.value}
-                      onClick={() => update("highInterestDebt", option.value)}
-                      label={option.label}
-                      index={index}
-                    />
-                  ))}
-                </div>
-              )}
-
-              {step === 8 && (
-                <div className="grid gap-2 sm:grid-cols-2">
-                  {LEARNING_OPTIONS.map((option, index) => (
-                    <ChoiceCard
-                      key={option.value}
-                      selected={draft.learningPreference === option.value}
-                      onClick={() => update("learningPreference", option.value)}
-                      label={option.label}
-                      index={index}
-                    />
-                  ))}
-                </div>
-              )}
-
-              {step === 9 && (
-                <div className="grid gap-2 sm:grid-cols-2">
-                  {KNOWLEDGE_OPTIONS.map((option, index) => (
-                    <ChoiceCard
-                      key={option.value}
-                      selected={draft.knowledgeLevel === option.value}
-                      onClick={() => update("knowledgeLevel", option.value)}
-                      label={option.label}
-                      index={index}
-                    />
-                  ))}
-                </div>
-              )}
-
-              {step === 10 && (
-                <div>
-                  <div className="flex flex-wrap gap-2">
-                    {TRIGGER_OPTIONS.map((option) => (
-                      <PillChoice
-                        key={option.value}
-                        selected={draft.spendingTriggers.includes(option.value)}
-                        onClick={() => toggleTrigger(option.value)}
-                        label={option.label}
-                      />
-                    ))}
-                  </div>
-                  <p className="mt-2 text-[10px] text-neutral-600">
-                    “Nenhum em especial” é exclusivo. Você pode escolher mais de um dos demais.
-                  </p>
-                </div>
-              )}
-
-              {step === 11 && (
                 <div className="space-y-4">
                   <div>
                     <p className="mb-2 text-[11px] font-semibold text-neutral-300">Dias</p>
@@ -815,7 +785,7 @@ export default function OnboardingPage() {
                 </div>
               )}
 
-              {step === 12 && <ReviewPanel draft={draft} onEdit={editStep} />}
+              {step === REVIEW_STEP && <ReviewPanel draft={draft} onEdit={editStep} />}
 
               {error && (
                 <p className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-[11px] text-red-200">
@@ -840,14 +810,26 @@ export default function OnboardingPage() {
               type="button"
               onClick={goBack}
               className="btn-ghost px-3 text-[12px]"
-              aria-label={phase === "result" ? "Voltar para a revisão" : "Voltar uma etapa"}
+              aria-label={
+                phase === "auth"
+                  ? "Voltar para o resultado"
+                  : phase === "result"
+                    ? "Voltar para a revisão"
+                    : "Voltar uma etapa"
+              }
             >
-              <ArrowLeft className="h-4 w-4" /> {phase === "result" ? "Revisão" : "Voltar"}
+              <ArrowLeft className="h-4 w-4" />{" "}
+              {phase === "auth" ? "Resultado" : phase === "result" ? "Revisão" : "Voltar"}
             </button>
             {phase === "result" ? (
               <div className="flex items-center gap-2 text-[10px] text-neutral-500">
                 <ShieldCheck className="h-3.5 w-3.5 text-accent/70" aria-hidden="true" />
                 Resultado calculado no servidor
+              </div>
+            ) : phase === "auth" ? (
+              <div className="flex items-center gap-2 text-[10px] text-neutral-500">
+                <Lock className="h-3.5 w-3.5 text-accent/70" aria-hidden="true" />
+                Rascunho preservado
               </div>
             ) : (
               <button
@@ -874,36 +856,6 @@ export default function OnboardingPage() {
   );
 }
 
-function MoneyStep({
-  id,
-  label,
-  value,
-  onChange,
-  onSkip,
-  hint,
-}: {
-  id: string;
-  label: string;
-  value: number | null;
-  onChange: (cents: number | null) => void;
-  onSkip: () => void;
-  hint?: string;
-}) {
-  return (
-    <div className="space-y-3">
-      <CurrencyField id={id} label={label} value={value} onChange={onChange} autoFocus />
-      {hint && <p className="text-[10px] leading-4 text-neutral-600">{hint}</p>}
-      <button
-        type="button"
-        onClick={onSkip}
-        className="text-[11px] font-medium text-neutral-500 underline decoration-white/20 underline-offset-4 transition hover:text-neutral-200"
-      >
-        Prefiro não informar agora
-      </button>
-    </div>
-  );
-}
-
 function ReviewPanel({
   draft,
   onEdit,
@@ -915,18 +867,37 @@ function ReviewPanel({
     { label: "Nome", value: draft.name.trim() || "Não informado", step: 0 },
     { label: "Objetivo", value: labelOf(GOAL_OPTIONS, draft.goal), step: 1 },
     { label: "Situação", value: labelOf(SITUATION_OPTIONS, draft.financialSituation), step: 2 },
-    { label: "Renda mensal", value: moneyCents(draft.incomeCents), step: 3 },
-    { label: "Sobra por mês", value: moneyCents(draft.savingsCapacityCents), step: 4 },
-    { label: "Despesas essenciais", value: moneyCents(draft.essentialExpensesCents), step: 5 },
-    { label: "Reserva", value: labelOf(RESERVE_OPTIONS, draft.emergencyReserve), step: 6 },
-    { label: "Dívidas caras", value: labelOf(DEBT_OPTIONS, draft.highInterestDebt), step: 7 },
-    { label: "Aprendizado", value: labelOf(LEARNING_OPTIONS, draft.learningPreference), step: 8 },
-    { label: "Conhecimento", value: labelOf(KNOWLEDGE_OPTIONS, draft.knowledgeLevel), step: 9 },
-    { label: "Gatilhos", value: labelsOf(TRIGGER_OPTIONS, draft.spendingTriggers), step: 10 },
+    {
+      label: "Renda e despesas",
+      value: [
+        draft.incomeCents != null ? `Renda ${moneyCents(draft.incomeCents)}` : null,
+        draft.savingsCapacityCents != null ? `Sobra ${moneyCents(draft.savingsCapacityCents)}` : null,
+        draft.essentialExpensesCents != null ? `Despesas ${moneyCents(draft.essentialExpensesCents)}` : null,
+      ]
+        .filter(Boolean)
+        .join(" · ") || "Prefiro não informar",
+      step: 3,
+    },
+    {
+      label: "Reserva e dívidas",
+      value: `${labelOf(RESERVE_OPTIONS, draft.emergencyReserve)} · ${labelOf(
+        DEBT_OPTIONS,
+        draft.highInterestDebt,
+      )}`,
+      step: 4,
+    },
+    {
+      label: "Aprendizado",
+      value: `${labelOf(LEARNING_OPTIONS, draft.learningPreference)} · ${labelOf(
+        KNOWLEDGE_OPTIONS,
+        draft.knowledgeLevel,
+      )}`,
+      step: 5,
+    },
     {
       label: "Rotina",
       value: `${labelsOf(DAY_OPTIONS, draft.studyDays)} · ${draft.studyTime}`,
-      step: 11,
+      step: 6,
     },
   ];
 
@@ -967,18 +938,13 @@ function ReviewPanel({
 function questionText(step: number): string {
   const texts = [
     "Como você quer ser chamado(a)?",
-    "Qual é o seu objetivo agora?",
-    "Como está sua situação financeira hoje?",
-    "Quanto entra por mês na sua casa?",
-    "Quanto sobra para guardar por mês?",
-    "Quanto vai para as despesas essenciais?",
-    "Por quantos meses sua reserva cobriria o essencial?",
-    "Você tem dívidas com juros altos?",
-    "Como você aprende melhor?",
-    "Quanto você já sabe sobre investimentos?",
-    "O que mais costuma furar seu orçamento?",
-    "Quando você consegue estudar?",
-    "Vamos revisar suas respostas?",
+    "Qual é o seu objetivo?",
+    "Como está sua situação?",
+    "Quanto entra e quanto sai?",
+    "Reserva e dívidas?",
+    "Como você aprende?",
+    "Quando você estuda?",
+    "Revisão",
   ];
   return texts[step] ?? texts[0];
 }
@@ -991,23 +957,25 @@ function answerText(step: number, draft: OnboardingDraft): string {
       return labelOf(GOAL_OPTIONS, draft.goal);
     case 2:
       return labelOf(SITUATION_OPTIONS, draft.financialSituation);
-    case 3:
-      return moneyCents(draft.incomeCents);
+    case 3: {
+      const parts = [
+        draft.incomeCents != null ? `Renda ${moneyCents(draft.incomeCents)}` : null,
+        draft.savingsCapacityCents != null ? `Sobra ${moneyCents(draft.savingsCapacityCents)}` : null,
+        draft.essentialExpensesCents != null ? `Despesas ${moneyCents(draft.essentialExpensesCents)}` : null,
+      ].filter(Boolean);
+      return parts.length ? parts.join(" · ") : "Prefiro não informar";
+    }
     case 4:
-      return moneyCents(draft.savingsCapacityCents);
+      return `${labelOf(RESERVE_OPTIONS, draft.emergencyReserve)} · ${labelOf(
+        DEBT_OPTIONS,
+        draft.highInterestDebt,
+      )}`;
     case 5:
-      return moneyCents(draft.essentialExpensesCents);
+      return `${labelOf(LEARNING_OPTIONS, draft.learningPreference)} · ${labelOf(
+        KNOWLEDGE_OPTIONS,
+        draft.knowledgeLevel,
+      )}`;
     case 6:
-      return labelOf(RESERVE_OPTIONS, draft.emergencyReserve);
-    case 7:
-      return labelOf(DEBT_OPTIONS, draft.highInterestDebt);
-    case 8:
-      return labelOf(LEARNING_OPTIONS, draft.learningPreference);
-    case 9:
-      return labelOf(KNOWLEDGE_OPTIONS, draft.knowledgeLevel);
-    case 10:
-      return labelsOf(TRIGGER_OPTIONS, draft.spendingTriggers);
-    case 11:
       return `${labelsOf(DAY_OPTIONS, draft.studyDays)} · ${draft.studyTime}`;
     default:
       return "—";

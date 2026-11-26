@@ -24,27 +24,16 @@ test.describe("Jornada B — onboarding conversacional", () => {
     await page.getByRole("button", { name: /^Continuar/ }).click();
 
     await page.getByLabel("Renda mensal").fill("5000");
-    await page.getByRole("button", { name: /^Continuar/ }).click();
-
-    await page.getByLabel("Quanto sobra por mês").fill("800");
-    await page.getByRole("button", { name: /^Continuar/ }).click();
-
-    await page.getByLabel("Despesas essenciais por mês").fill("3000");
+    await page.getByLabel("Quanto sobra para guardar").fill("800");
+    await page.getByLabel("Despesas essenciais").fill("3000");
     await page.getByRole("button", { name: /^Continuar/ }).click();
 
     await page.getByRole("button", { name: "De 1 a 3 meses", exact: true }).click();
-    await page.getByRole("button", { name: /^Continuar/ }).click();
-
     await page.getByRole("button", { name: "Não tenho dívidas caras", exact: true }).click();
     await page.getByRole("button", { name: /^Continuar/ }).click();
 
     await page.getByRole("button", { name: "Um pouco de cada", exact: true }).click();
-    await page.getByRole("button", { name: /^Continuar/ }).click();
-
     await page.getByRole("button", { name: "Sei o básico", exact: true }).click();
-    await page.getByRole("button", { name: /^Continuar/ }).click();
-
-    await page.getByRole("button", { name: "Delivery", exact: true }).click();
     await page.getByRole("button", { name: /^Continuar/ }).click();
 
     await page.getByRole("button", { name: "Seg", exact: true }).click();
@@ -57,6 +46,10 @@ test.describe("Jornada B — onboarding conversacional", () => {
     await expect(page.getByText(/Seu próximo passo:/)).toBeVisible({ timeout: 15_000 });
     await expect(page.getByRole("img", { name: /Índice de saúde financeira/ })).toBeVisible();
     await expect(page.getByText(/Como o índice foi formado/)).toBeVisible();
+
+    // O gate de autenticação é uma etapa explícita depois do resultado.
+    await page.getByRole("button", { name: /Salvar meu plano/ }).click();
+    await expect(page.getByText(/Para guardar seu plano, entre com o Google ou e-mail/)).toBeVisible();
 
     await page.getByLabel("E-mail").fill(email);
     await page.getByLabel("Senha", { exact: true }).fill(password);
