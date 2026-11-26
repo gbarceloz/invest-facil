@@ -2,6 +2,7 @@ package com.investfacil.api.onboarding;
 
 import com.investfacil.api.onboarding.OnboardingDtos.AnswersRequest;
 import com.investfacil.api.onboarding.OnboardingDtos.FinancialHealthView;
+import com.investfacil.api.onboarding.OnboardingDtos.ScoreFactorView;
 import com.investfacil.api.onboarding.OnboardingTypes.EmergencyReserve;
 import com.investfacil.api.onboarding.OnboardingTypes.FinancialSituation;
 import com.investfacil.api.onboarding.OnboardingTypes.Goal;
@@ -101,6 +102,23 @@ class FinancialHealthCalculatorTest {
     }
 
     @Test
+    void shouldScoreSavingsHabitWithoutIncome() {
+        FinancialHealthView health = calculator.calculate(answers(
+                null, 100_000L, null, EmergencyReserve.ONE_TO_3,
+                HighInterestDebt.NONE, KnowledgeLevel.BASIC));
+
+        assertEquals(65, health.score());
+        assertEquals("APRENDER_BASE", health.opportunity());
+        ScoreFactorView savings = health.factors().stream()
+                .filter(f -> f.key().equals("savingsRate"))
+                .findFirst()
+                .orElseThrow();
+        assertTrue(savings.answered());
+        assertEquals(12, savings.points());
+        assertTrue(savings.detail().contains("informe a renda"));
+    }
+
+    @Test
     void shouldApplySavingsRateTierAndRoundHalfUp() {
         FinancialHealthView health = calculator.calculate(answers(
                 1_000_000L, 50_000L, null, EmergencyReserve.ONE_TO_3,
@@ -126,7 +144,9 @@ class FinancialHealthCalculatorTest {
                                    KnowledgeLevel knowledge) {
         return new AnswersRequest(
                 Goal.INVEST,
+                List.of(Goal.INVEST),
                 FinancialSituation.FROM_ZERO,
+                List.of(FinancialSituation.FROM_ZERO),
                 income,
                 savings,
                 expenses,

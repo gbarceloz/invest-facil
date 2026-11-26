@@ -17,19 +17,21 @@ test.describe("Jornada B — onboarding conversacional", () => {
     await page.getByLabel("Seu nome").fill("Marina Teste");
     await page.getByRole("button", { name: /^Continuar/ }).click();
 
+    // Objetivo e situação são multi-escolha.
     await page.getByRole("button", { name: /Começar a investir/ }).click();
+    await page.getByRole("button", { name: /Construir patrimônio/ }).click();
     await page.getByRole("button", { name: /^Continuar/ }).click();
 
+    await page.getByRole("button", { name: /Começando do zero/ }).first().click();
     await page.getByRole("button", { name: /Consigo guardar um pouco/ }).click();
     await page.getByRole("button", { name: /^Continuar/ }).click();
 
-    await page.getByLabel("Renda mensal").fill("5000");
+    // O fluxo curto pergunta apenas quanto sobra para guardar.
     await page.getByLabel("Quanto sobra para guardar").fill("800");
-    await page.getByLabel("Despesas essenciais").fill("3000");
     await page.getByRole("button", { name: /^Continuar/ }).click();
 
     await page.getByRole("button", { name: "De 1 a 3 meses", exact: true }).click();
-    await page.getByRole("button", { name: "Não tenho dívidas caras", exact: true }).click();
+    await page.getByRole("button", { name: "Não tenho dívidas", exact: true }).click();
     await page.getByRole("button", { name: /^Continuar/ }).click();
 
     await page.getByRole("button", { name: "Um pouco de cada", exact: true }).click();
@@ -48,6 +50,11 @@ test.describe("Jornada B — onboarding conversacional", () => {
       .getByRole("img", { name: /Índice de saúde financeira/ })
       .getAttribute("aria-label");
     expect(resultScore).toBeTruthy();
+
+    // A revisão opcional preserva as escolhas múltiplas.
+    await page.getByText("Revisar respostas").click();
+    await expect(page.getByText(/Começar a investir.*Construir patrimônio/)).toBeVisible();
+    await expect(page.getByText(/Começando do zero.*Consigo guardar um pouco/)).toBeVisible();
 
     // O vínculo de conta é a etapa 8, obrigatória depois do perfil pronto.
     await expect(page.getByText("Etapa 8 · vínculo obrigatório")).toBeVisible();

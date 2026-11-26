@@ -33,8 +33,12 @@ public final class OnboardingDtos {
     public record AnswersRequest(
             @NotNull(message = "Escolha um objetivo.")
             Goal goal,
+            @Size(min = 1, max = 5, message = "Escolha entre 1 e 5 objetivos.")
+            List<@NotNull(message = "Objetivo inválido.") Goal> goals,
             @NotNull(message = "Informe sua situação financeira.")
             FinancialSituation financialSituation,
+            @Size(min = 1, max = 4, message = "Escolha entre 1 e 4 situações.")
+            List<@NotNull(message = "Situação inválida.") FinancialSituation> financialSituations,
             @PositiveOrZero(message = "A renda não pode ser negativa.")
             @Max(value = 100_000_000_000L, message = "Valor acima do limite suportado.")
             Long incomeCents,
@@ -100,7 +104,9 @@ public final class OnboardingDtos {
 
     public record AnswersView(
             Goal goal,
+            List<Goal> goals,
             FinancialSituation financialSituation,
+            List<FinancialSituation> financialSituations,
             Long incomeCents,
             Long savingsCapacityCents,
             Long essentialExpensesCents,

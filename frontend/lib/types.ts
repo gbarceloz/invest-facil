@@ -382,7 +382,9 @@ export type StudyDay = "MON" | "TUE" | "WED" | "THU" | "FRI" | "SAT" | "SUN";
 
 export interface OnboardingAnswers {
   goal: OnboardingGoal;
+  goals: OnboardingGoal[];
   financialSituation: FinancialSituation;
+  financialSituations: FinancialSituation[];
   incomeCents: number | null;
   savingsCapacityCents: number | null;
   essentialExpensesCents: number | null;

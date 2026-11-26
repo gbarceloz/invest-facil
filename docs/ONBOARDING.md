@@ -10,10 +10,10 @@ para persistir o perfil e revelar o dashboard.
 São **7 perguntas + perfil pronto + vínculo de conta**:
 
 1. Nome
-2. Objetivo
-3. Situação financeira
-4. Renda, sobra e despesas essenciais (opcionais)
-5. Reserva de emergência e dívidas com juros altos
+2. Objetivos (multi-escolha)
+3. Situações financeiras (multi-escolha)
+4. Quanto sobra para guardar por mês (opcional)
+5. Reserva de emergência e dívidas com juros altos (inclui “Não tenho dívidas”)
 6. Preferência de aprendizado e nível de conhecimento
 7. Dias e horário de estudo
 
@@ -54,21 +54,28 @@ ser uma pergunta para encurtar o fluxo.
 | `GET` | `/api/v1/onboarding/me` | JWT | Perfil do usuário; `completed: false` quando ainda não existe. |
 | `PUT` | `/api/v1/onboarding/me` | JWT | Cria/atualiza o perfil, recalcula o índice e atualiza o nome. |
 
-O cliente nunca envia nota, faixa, oportunidade ou valores derivados. O backend
-recalcula tudo a partir das respostas e grava apenas o necessário.
+`goals` e `financialSituations` são listas multi-escolha; `goal` e
+`financialSituation` continuam no contrato como a primeira escolha (coluna
+singular de compatibilidade). O cliente nunca envia nota, faixa, oportunidade ou
+valores derivados. O backend recalcula tudo a partir das respostas e grava
+apenas o necessário.
 
 ## Modelo de dados
 
-Migration `V11__onboarding_profiles.sql`, tabela
+Migrations `V11__onboarding_profiles.sql` e
+`V12__onboarding_multi_choice.sql`, tabela
 `investfacil.onboarding_profiles`:
 
 - `user_id` é a chave primária e referencia `users` com `ON DELETE CASCADE`.
-- Respostas obrigatórias: objetivo, situação, reserva, dívidas, aprendizado,
-  conhecimento, dias e horário. `spending_triggers` permanece no contrato com
-  default `["NONE"]` (o fluxo curto não pergunta mais os gatilhos).
+- Respostas obrigatórias: objetivo(s), situação(ões), reserva, dívidas,
+  aprendizado, conhecimento, dias e horário. `spending_triggers` permanece no
+  contrato com default `["NONE"]` (o fluxo curto não pergunta mais os gatilhos).
 - Valores monetários em centavos (`bigint`), nulos quando a pessoa escolhe não
-  informar.
-- `spending_triggers` e `study_days` são `jsonb` (arrays de strings).
+  informar. O fluxo curto pergunta apenas a sobra mensal; renda e despesas
+  ficam nulas e não são usadas no cálculo.
+- `goals`, `financial_situations`, `spending_triggers` e `study_days` são
+  `jsonb` (arrays de strings). As colunas singulares guardam a primeira escolha
+  para compatibilidade.
 - Indicadores persistidos para auditoria: `health_score`, `health_band`,
   `opportunity`, `recommendation`, `monthly_savings_goal_cents`,
   `emergency_fund_goal_cents`.
@@ -95,7 +102,7 @@ Quatro pilares, com pesos fixos:
 | --- | --- | --- |
 | Reserva de emergência | 30 | sem reserva 0; <1 mês 6; 1–3 meses 15; 3–6 meses 24; >6 meses 30 |
 | Dívidas caras | 25 | nenhuma 25; empréstimos 12; cartão 6; cheque especial 4; várias 0 |
-| Capacidade de poupar | 25 | ≥20% da renda 25; ≥10% 20; ≥5% 14; >0% 8; 0% 0 |
+| Capacidade de poupar | 25 | com renda: ≥20% 25; ≥10% 20; ≥5% 14; >0% 8; 0% 0. Sem renda: separa valor >0 → 12; zero → 0 |
 | Despesas essenciais | 20 | ≤50% da renda 20; ≤70% 15; ≤85% 8; ≤100% 4; >100% 0 |
 
 - “Prefiro não informar” não vira zero: o pilar sai do denominador.
@@ -103,15 +110,20 @@ Quatro pilares, com pesos fixos:
 - Sem nenhum pilar respondido, a nota é `null` e a faixa é `SEM_DADOS`.
 - Faixas: 0–39 `ATENCAO`, 40–59 `CONSTRUINDO`, 60–79 `ORGANIZANDO`,
   80–100 `CONSOLIDADO`.
+- O fluxo curto pergunta apenas a sobra mensal. Sem renda, a capacidade de
+  poupar entra com 12/25 e o detalhe explica que falta a renda para medir a
+  proporção; despesas essenciais ficam sem resposta e saem do denominador.
 - Economia mensal: usa a capacidade de poupança informada; se ausente, deriva
-  de `renda - despesas essenciais`. Sem os dois dados, fica `null`.
-- Meta de reserva: `6 × despesas essenciais` quando as despesas existem.
+  de `renda - despesas essenciais` quando esses dados existirem.
+- Meta de reserva: `6 × despesas essenciais` quando as despesas existem; no
+  fluxo curto pode ficar `null`.
 
 Prioridade da oportunidade (determinística):
 
 1. Cartão, cheque especial ou várias dívidas → `QUITAR_DIVIDA`
 2. Sem reserva ou menos de 1 mês → `MONTAR_RESERVA`
-3. Poupança abaixo de 10% da renda → `AUMENTAR_POUPANCA`
+3. Poupança abaixo de 10% da renda, quando a renda é conhecida →
+   `AUMENTAR_POUPANCA`
 4. Conhecimento zero/básico → `APRENDER_BASE`
 5. Caso contrário → `INVESTIR_COM_CRITERIO`
 

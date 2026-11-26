@@ -40,14 +40,34 @@ describe("onboarding draft", () => {
   });
 
   it("round-trips a draft and clamps an invalid step", () => {
-    const draft = { ...EMPTY_DRAFT, name: "Marina", goal: "INVEST" as const };
+    const draft = { ...EMPTY_DRAFT, name: "Marina", goals: ["INVEST" as const] };
     saveDraft(99, draft);
     const restored = loadDraft();
     expect(restored).not.toBeNull();
     expect(restored?.draft.name).toBe("Marina");
-    expect(restored?.draft.goal).toBe("INVEST");
+    expect(restored?.draft.goals).toEqual(["INVEST"]);
     expect(restored?.step).toBe(LAST_QUESTION_STEP);
     expect(window.localStorage.getItem(DRAFT_KEY)).toContain("version");
+  });
+
+  it("migrates a legacy single-choice draft to multi-choice", () => {
+    window.localStorage.setItem(
+      DRAFT_KEY,
+      JSON.stringify({
+        version: 1,
+        step: 0,
+        draft: {
+          name: "Marina",
+          goal: "INVEST",
+          financialSituation: "CAN_SAVE",
+          spendingTriggers: [],
+        },
+      }),
+    );
+    const restored = loadDraft();
+    expect(restored?.draft.goals).toEqual(["INVEST"]);
+    expect(restored?.draft.financialSituations).toEqual(["CAN_SAVE"]);
+    expect(restored?.draft.spendingTriggers).toEqual(["NONE"]);
   });
 
   it("ignores malformed storage and clears safely", () => {
@@ -64,8 +84,8 @@ describe("onboarding draft", () => {
     const complete = {
       ...EMPTY_DRAFT,
       name: "Marina",
-      goal: "INVEST" as const,
-      financialSituation: "CAN_SAVE" as const,
+      goals: ["INVEST" as const],
+      financialSituations: ["CAN_SAVE" as const],
       emergencyReserve: "ONE_TO_3" as const,
       highInterestDebt: "NONE" as const,
       learningPreference: "MIX" as const,
@@ -77,16 +97,38 @@ describe("onboarding draft", () => {
     const answers = toAnswers(complete);
     expect(answers).not.toBeNull();
     expect(answers?.goal).toBe("INVEST");
+    expect(answers?.financialSituation).toBe("CAN_SAVE");
     expect(answers?.incomeCents).toBeNull();
     expect(answers?.studyTime).toBe("19:00");
+  });
+
+  it("preserves multiple goals and situations", () => {
+    const complete = {
+      ...EMPTY_DRAFT,
+      name: "Marina",
+      goals: ["INVEST" as const, "WEALTH" as const],
+      financialSituations: ["FROM_ZERO" as const, "CAN_SAVE" as const],
+      emergencyReserve: "ONE_TO_3" as const,
+      highInterestDebt: "NONE" as const,
+      learningPreference: "MIX" as const,
+      knowledgeLevel: "BASIC" as const,
+      spendingTriggers: ["NONE" as const],
+      studyDays: ["MON" as const],
+      studyTime: "19:00",
+    };
+    const answers = toAnswers(complete);
+    expect(answers?.goal).toBe("INVEST");
+    expect(answers?.goals).toEqual(["INVEST", "WEALTH"]);
+    expect(answers?.financialSituation).toBe("FROM_ZERO");
+    expect(answers?.financialSituations).toEqual(["FROM_ZERO", "CAN_SAVE"]);
   });
 
   it("defaults spending triggers to NONE when the short flow omits them", () => {
     const complete = {
       ...EMPTY_DRAFT,
       name: "Marina",
-      goal: "INVEST" as const,
-      financialSituation: "CAN_SAVE" as const,
+      goals: ["INVEST" as const],
+      financialSituations: ["CAN_SAVE" as const],
       emergencyReserve: "ONE_TO_3" as const,
       highInterestDebt: "NONE" as const,
       learningPreference: "MIX" as const,

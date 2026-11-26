@@ -115,7 +115,19 @@ export default function OnboardingPage() {
         if (!active) return;
         if (profile.completed) setExistingCompleted(true);
         if (profile.completed && profile.answers && !restoredDraft) {
-          setDraft({ ...profile.answers, name: profile.name ?? user.name });
+          const answers = profile.answers;
+          setDraft({
+            ...answers,
+            // O fluxo curto não pergunta renda nem despesas; não usamos valores
+            // antigos escondidos no cálculo.
+            incomeCents: null,
+            essentialExpensesCents: null,
+            goals: answers.goals?.length ? answers.goals : [answers.goal],
+            financialSituations: answers.financialSituations?.length
+              ? answers.financialSituations
+              : [answers.financialSituation],
+            name: profile.name ?? user.name,
+          });
           setHealth(profile.health ?? null);
         } else {
           setDraft((current) =>
@@ -154,7 +166,7 @@ export default function OnboardingPage() {
       { text: "Oi! Eu sou a Fina. Como você quer ser chamado(a)?", pose: "wave" },
       { text: "Qual é o seu objetivo?", pose: "wave" },
       { text: "Como está sua situação hoje?", pose: "book" },
-      { text: "Quanto entra e quanto sai por mês?", pose: "coin" },
+      { text: "Quanto sobra para guardar por mês?", pose: "coin" },
       { text: "Como estão sua reserva e suas dívidas?", pose: "coin" },
       { text: "Como você aprende melhor?", pose: "book" },
       { text: "Quando você consegue estudar?", pose: "run" },
@@ -171,9 +183,9 @@ export default function OnboardingPage() {
       case 0:
         return draft.name.trim().length >= 2;
       case 1:
-        return draft.goal !== null;
+        return draft.goals.length > 0;
       case 2:
-        return draft.financialSituation !== null;
+        return draft.financialSituations.length > 0;
       case 3:
         return true;
       case 4:
@@ -208,6 +220,32 @@ export default function OnboardingPage() {
 
   function update<K extends keyof OnboardingDraft>(key: K, value: OnboardingDraft[K]) {
     setDraft((current) => ({ ...current, [key]: value }));
+    setError(null);
+  }
+
+  function toggleGoal(value: OnboardingDraft["goals"][number]) {
+    setDraft((current) => {
+      const has = current.goals.includes(value);
+      return {
+        ...current,
+        goals: has
+          ? current.goals.filter((item) => item !== value)
+          : [...current.goals, value],
+      };
+    });
+    setError(null);
+  }
+
+  function toggleSituation(value: OnboardingDraft["financialSituations"][number]) {
+    setDraft((current) => {
+      const has = current.financialSituations.includes(value);
+      return {
+        ...current,
+        financialSituations: has
+          ? current.financialSituations.filter((item) => item !== value)
+          : [...current.financialSituations, value],
+      };
+    });
     setError(null);
   }
 
@@ -636,11 +674,12 @@ export default function OnboardingPage() {
                   {GOAL_OPTIONS.map((option, index) => (
                     <ChoiceCard
                       key={option.value}
-                      selected={draft.goal === option.value}
-                      onClick={() => update("goal", option.value)}
+                      selected={draft.goals.includes(option.value)}
+                      onClick={() => toggleGoal(option.value)}
                       label={option.label}
                       description={option.description}
                       index={index}
+                      multiple
                     />
                   ))}
                 </div>
@@ -651,11 +690,12 @@ export default function OnboardingPage() {
                   {SITUATION_OPTIONS.map((option, index) => (
                     <ChoiceCard
                       key={option.value}
-                      selected={draft.financialSituation === option.value}
-                      onClick={() => update("financialSituation", option.value)}
+                      selected={draft.financialSituations.includes(option.value)}
+                      onClick={() => toggleSituation(option.value)}
                       label={option.label}
                       description={option.description}
                       index={index}
+                      multiple
                     />
                   ))}
                 </div>
@@ -664,36 +704,16 @@ export default function OnboardingPage() {
               {step === 3 && (
                 <div className="space-y-4">
                   <CurrencyField
-                    id="onb-income"
-                    label="Renda mensal"
-                    value={draft.incomeCents}
-                    onChange={(value) => update("incomeCents", value)}
-                    autoFocus
-                    hint={null}
-                  />
-                  <CurrencyField
                     id="onb-savings"
                     label="Quanto sobra para guardar"
                     value={draft.savingsCapacityCents}
                     onChange={(value) => update("savingsCapacityCents", value)}
-                    hint={null}
+                    autoFocus
                   />
-                  <CurrencyField
-                    id="onb-expenses"
-                    label="Despesas essenciais"
-                    value={draft.essentialExpensesCents}
-                    onChange={(value) => update("essentialExpensesCents", value)}
-                    hint={null}
-                  />
-                  <p className="text-[10px] leading-4 text-neutral-600">
-                    Pode preencher só o que souber. Use vírgula para centavos.
-                  </p>
                   <button
                     type="button"
                     onClick={() => {
-                      update("incomeCents", null);
                       update("savingsCapacityCents", null);
-                      update("essentialExpensesCents", null);
                       setStep((current) => current + 1);
                     }}
                     className="text-[11px] font-medium text-neutral-500 underline decoration-white/20 underline-offset-4 transition hover:text-neutral-200"
@@ -890,17 +910,17 @@ function ReviewPanel({
 }) {
   const rows: { label: string; value: string; step: number }[] = [
     { label: "Nome", value: draft.name.trim() || "Não informado", step: 0 },
-    { label: "Objetivo", value: labelOf(GOAL_OPTIONS, draft.goal), step: 1 },
-    { label: "Situação", value: labelOf(SITUATION_OPTIONS, draft.financialSituation), step: 2 },
+    { label: "Objetivos", value: labelsOf(GOAL_OPTIONS, draft.goals), step: 1 },
     {
-      label: "Renda e despesas",
-      value: [
-        draft.incomeCents != null ? `Renda ${moneyCents(draft.incomeCents)}` : null,
-        draft.savingsCapacityCents != null ? `Sobra ${moneyCents(draft.savingsCapacityCents)}` : null,
-        draft.essentialExpensesCents != null ? `Despesas ${moneyCents(draft.essentialExpensesCents)}` : null,
-      ]
-        .filter(Boolean)
-        .join(" · ") || "Prefiro não informar",
+      label: "Situações",
+      value: labelsOf(SITUATION_OPTIONS, draft.financialSituations),
+      step: 2,
+    },
+    {
+      label: "Quanto sobra para guardar",
+      value: draft.savingsCapacityCents != null
+        ? moneyCents(draft.savingsCapacityCents)
+        : "Prefiro não informar",
       step: 3,
     },
     {
@@ -931,7 +951,7 @@ function ReviewPanel({
       <div className="flex items-center justify-between border-b border-white/[0.07] px-4 py-3">
         <p className="text-[11px] font-semibold text-neutral-200">Seu resumo</p>
         <span className="text-[9px] uppercase tracking-[0.12em] text-neutral-600">
-          revise antes de calcular
+          ajuste se precisar
         </span>
       </div>
       <ul className="divide-y divide-white/[0.05]">
@@ -965,7 +985,7 @@ function questionText(step: number): string {
     "Como você quer ser chamado(a)?",
     "Qual é o seu objetivo?",
     "Como está sua situação?",
-    "Quanto entra e quanto sai?",
+    "Quanto sobra para guardar?",
     "Reserva e dívidas?",
     "Como você aprende?",
     "Quando você estuda?",
@@ -978,17 +998,13 @@ function answerText(step: number, draft: OnboardingDraft): string {
     case 0:
       return draft.name.trim() || "—";
     case 1:
-      return labelOf(GOAL_OPTIONS, draft.goal);
+      return labelsOf(GOAL_OPTIONS, draft.goals);
     case 2:
-      return labelOf(SITUATION_OPTIONS, draft.financialSituation);
-    case 3: {
-      const parts = [
-        draft.incomeCents != null ? `Renda ${moneyCents(draft.incomeCents)}` : null,
-        draft.savingsCapacityCents != null ? `Sobra ${moneyCents(draft.savingsCapacityCents)}` : null,
-        draft.essentialExpensesCents != null ? `Despesas ${moneyCents(draft.essentialExpensesCents)}` : null,
-      ].filter(Boolean);
-      return parts.length ? parts.join(" · ") : "Prefiro não informar";
-    }
+      return labelsOf(SITUATION_OPTIONS, draft.financialSituations);
+    case 3:
+      return draft.savingsCapacityCents != null
+        ? moneyCents(draft.savingsCapacityCents)
+        : "Prefiro não informar";
     case 4:
       return `${labelOf(RESERVE_OPTIONS, draft.emergencyReserve)} · ${labelOf(
         DEBT_OPTIONS,

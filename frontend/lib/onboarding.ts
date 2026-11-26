@@ -14,8 +14,8 @@ export const DRAFT_KEY = "investfacil:onboarding:draft:v1";
 
 export interface OnboardingDraft {
   name: string;
-  goal: OnboardingGoal | null;
-  financialSituation: FinancialSituation | null;
+  goals: OnboardingGoal[];
+  financialSituations: FinancialSituation[];
   incomeCents: number | null;
   savingsCapacityCents: number | null;
   essentialExpensesCents: number | null;
@@ -30,8 +30,8 @@ export interface OnboardingDraft {
 
 export const EMPTY_DRAFT: OnboardingDraft = {
   name: "",
-  goal: null,
-  financialSituation: null,
+  goals: [],
+  financialSituations: [],
   incomeCents: null,
   savingsCapacityCents: null,
   essentialExpensesCents: null,
@@ -75,7 +75,7 @@ export const RESERVE_OPTIONS: Option<EmergencyReserve>[] = [
 ];
 
 export const DEBT_OPTIONS: Option<HighInterestDebt>[] = [
-  { value: "NONE", label: "Não tenho dívidas caras" },
+  { value: "NONE", label: "Não tenho dívidas" },
   { value: "CREDIT_CARD", label: "Cartão de crédito" },
   { value: "OVERDRAFT", label: "Cheque especial" },
   { value: "LOANS", label: "Empréstimos" },
@@ -124,8 +124,8 @@ export const LAST_QUESTION_STEP = QUESTION_COUNT - 2;
 
 export function toAnswers(draft: OnboardingDraft): OnboardingAnswers | null {
   if (
-    !draft.goal ||
-    !draft.financialSituation ||
+    draft.goals.length === 0 ||
+    draft.financialSituations.length === 0 ||
     !draft.emergencyReserve ||
     !draft.highInterestDebt ||
     !draft.learningPreference ||
@@ -136,8 +136,10 @@ export function toAnswers(draft: OnboardingDraft): OnboardingAnswers | null {
     return null;
   }
   return {
-    goal: draft.goal,
-    financialSituation: draft.financialSituation,
+    goal: draft.goals[0],
+    goals: draft.goals,
+    financialSituation: draft.financialSituations[0],
+    financialSituations: draft.financialSituations,
     incomeCents: draft.incomeCents,
     savingsCapacityCents: draft.savingsCapacityCents,
     essentialExpensesCents: draft.essentialExpensesCents,
@@ -162,12 +164,29 @@ export function loadDraft(): { step: number; draft: OnboardingDraft } | null {
       draft?: Partial<OnboardingDraft>;
     };
     if (parsed.version !== 1 || !parsed.draft) return null;
+    const legacy = parsed.draft as Partial<OnboardingDraft> & {
+      goal?: OnboardingGoal;
+      financialSituation?: FinancialSituation;
+    };
+    const goals = Array.isArray(parsed.draft.goals)
+      ? parsed.draft.goals
+      : legacy.goal
+        ? [legacy.goal]
+        : [];
+    const financialSituations = Array.isArray(parsed.draft.financialSituations)
+      ? parsed.draft.financialSituations
+      : legacy.financialSituation
+        ? [legacy.financialSituation]
+        : [];
     const draft: OnboardingDraft = {
       ...EMPTY_DRAFT,
       ...parsed.draft,
+      goals,
+      financialSituations,
       spendingTriggers: Array.isArray(parsed.draft.spendingTriggers)
+        && parsed.draft.spendingTriggers.length > 0
         ? parsed.draft.spendingTriggers
-        : [],
+        : ["NONE"],
       studyDays: Array.isArray(parsed.draft.studyDays) ? parsed.draft.studyDays : [],
     };
     const step = typeof parsed.step === "number"

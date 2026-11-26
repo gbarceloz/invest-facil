@@ -57,7 +57,7 @@ class FlywaySecurityIntegrationTest {
         Integer migracoesOk = jdbc.queryForObject(
                 "SELECT count(*) FROM investfacil.flyway_schema_history WHERE success = true AND type = 'SQL'",
                 Integer.class);
-        assertEquals(11, migracoesOk, "V1-V11 devem ser aplicadas");
+        assertEquals(12, migracoesOk, "V1-V12 devem ser aplicadas");
 
         Integer tabelas = jdbc.queryForObject(
                 "SELECT count(*) FROM information_schema.tables WHERE table_schema = 'investfacil'",

@@ -1168,9 +1168,27 @@
             "type" : "string",
             "enum" : [ "DEBT", "INVEST", "MULTIPLY", "ORGANIZE", "WEALTH" ]
           },
+          "goals" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "enum" : [ "DEBT", "INVEST", "MULTIPLY", "ORGANIZE", "WEALTH" ]
+            },
+            "maxItems" : 5,
+            "minItems" : 1
+          },
           "financialSituation" : {
             "type" : "string",
             "enum" : [ "IN_DEBT", "FROM_ZERO", "CAN_SAVE", "INVESTOR" ]
+          },
+          "financialSituations" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "enum" : [ "IN_DEBT", "FROM_ZERO", "CAN_SAVE", "INVESTOR" ]
+            },
+            "maxItems" : 4,
+            "minItems" : 1
           },
           "incomeCents" : {
             "type" : "integer",
@@ -1250,9 +1268,23 @@
             "type" : "string",
             "enum" : [ "DEBT", "INVEST", "MULTIPLY", "ORGANIZE", "WEALTH" ]
           },
+          "goals" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "enum" : [ "DEBT", "INVEST", "MULTIPLY", "ORGANIZE", "WEALTH" ]
+            }
+          },
           "financialSituation" : {
             "type" : "string",
             "enum" : [ "IN_DEBT", "FROM_ZERO", "CAN_SAVE", "INVESTOR" ]
+          },
+          "financialSituations" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "enum" : [ "IN_DEBT", "FROM_ZERO", "CAN_SAVE", "INVESTOR" ]
+            }
           },
           "incomeCents" : {
             "type" : "integer",

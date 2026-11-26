@@ -106,6 +106,9 @@ class OnboardingIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.completed").value(true))
                 .andExpect(jsonPath("$.answers.emergencyReserve").value("MORE_THAN_6"))
+                .andExpect(jsonPath("$.answers.goals.length()").value(2))
+                .andExpect(jsonPath("$.answers.goals[1]").value("WEALTH"))
+                .andExpect(jsonPath("$.answers.financialSituations.length()").value(2))
                 .andExpect(jsonPath("$.health.score").value(100))
                 .andExpect(jsonPath("$.health.opportunity").value("INVESTIR_COM_CRITERIO"));
 
@@ -190,7 +193,9 @@ class OnboardingIntegrationTest {
     private String answersJson(boolean strong) {
         if (strong) {
             return """
-                    {"goal":"INVEST","financialSituation":"CAN_SAVE",
+                    {"goal":"INVEST","goals":["INVEST","WEALTH"],
+                     "financialSituation":"CAN_SAVE",
+                     "financialSituations":["CAN_SAVE","INVESTOR"],
                      "incomeCents":1000000,"savingsCapacityCents":250000,
                      "essentialExpensesCents":400000,
                      "emergencyReserve":"MORE_THAN_6","highInterestDebt":"NONE",
