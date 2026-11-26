@@ -30,7 +30,9 @@ declare global {
   }
 }
 
-const CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID?.trim() ?? "";
+const CLIENT_ID =
+  process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID?.trim() ||
+  "13778080906-ijof2kbic70817sngcs783ga24b7pgqf.apps.googleusercontent.com";
 
 /**
  * Botão oficial do Google Identity Services. Sem client ID configurado, o

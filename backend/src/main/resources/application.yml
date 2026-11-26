@@ -136,7 +136,7 @@ app:
     content: ${SEED_CONTENT:true}
 
   google:
-    client-id: ${GOOGLE_CLIENT_ID:}
+    client-id: ${GOOGLE_CLIENT_ID:13778080906-ijof2kbic70817sngcs783ga24b7pgqf.apps.googleusercontent.com}
 
   market:
     enabled: ${MARKET_ENABLED:true}
