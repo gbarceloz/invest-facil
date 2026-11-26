@@ -68,7 +68,7 @@ public class FinancialHealthCalculator {
                 bandLabel(band),
                 opportunity.name(),
                 opportunityLabel(opportunity),
-                recommendation(opportunity),
+                recommendation(opportunity, answers.highInterestDebt()),
                 monthlySavings,
                 emergencyGoal,
                 List.copyOf(factors));
@@ -127,15 +127,23 @@ public class FinancialHealthCalculator {
             case MULTIPLE -> 0;
             case PREFER_NOT -> 0;
         };
+        String label = switch (debt) {
+            case NONE -> "Sem dívidas";
+            case LOANS -> "Empréstimos";
+            case CREDIT_CARD -> "Dívida no cartão";
+            case OVERDRAFT -> "Cheque especial";
+            case MULTIPLE -> "Várias dívidas";
+            case PREFER_NOT -> "Dívidas";
+        };
         String detail = switch (debt) {
-            case NONE -> "Sem dívidas de juros altos.";
+            case NONE -> "Você marcou que não tem dívidas de juros altos.";
             case LOANS -> "Empréstimos com juros altos.";
             case CREDIT_CARD -> "Dívida de cartão de crédito.";
             case OVERDRAFT -> "Cheque especial em uso.";
             case MULTIPLE -> "Várias dívidas de juros altos.";
             case PREFER_NOT -> "";
         };
-        return new ScoreFactorView("debt", "Dívidas caras", true,
+        return new ScoreFactorView("debt", label, true,
                 points, DEBT_WEIGHT, detail);
     }
 
@@ -241,14 +249,18 @@ public class FinancialHealthCalculator {
         };
     }
 
-    private String recommendation(Opportunity opportunity) {
+    private String recommendation(Opportunity opportunity, HighInterestDebt debt) {
         return switch (opportunity) {
             case QUITAR_DIVIDA ->
                     "Priorize quitar dívidas de cartão de crédito, cheque especial ou "
                             + "empréstimos com juros altos antes de investir. Comparar o custo "
                             + "da dívida com o retorno esperado de um investimento é o primeiro passo.";
-            case MONTAR_RESERVA ->
-                    "Comece pela reserva de emergência. Ela evita que imprevistos virem "
+            case MONTAR_RESERVA -> debt == HighInterestDebt.NONE
+                    ? "Você não tem dívidas de juros altos, então esse é um bom momento para "
+                            + "montar sua reserva de emergência. Ela evita que imprevistos virem "
+                            + "dívidas e dá tempo para decidir com calma. Uma referência comum é "
+                            + "acumular de 3 a 6 meses de despesas essenciais."
+                    : "Comece pela reserva de emergência. Ela evita que imprevistos virem "
                             + "dívidas e dá tempo para decidir com calma. Uma referência comum é "
                             + "acumular de 3 a 6 meses de despesas essenciais.";
             case AUMENTAR_POUPANCA ->

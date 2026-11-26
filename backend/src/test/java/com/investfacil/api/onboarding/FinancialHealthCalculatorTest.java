@@ -102,6 +102,25 @@ class FinancialHealthCalculatorTest {
     }
 
     @Test
+    void shouldCelebrateNoDebtWhenReserveIsTheNextStep() {
+        FinancialHealthView health = calculator.calculate(answers(
+                null, null, null, EmergencyReserve.NONE,
+                HighInterestDebt.NONE, KnowledgeLevel.BASIC));
+
+        assertEquals(45, health.score());
+        assertEquals("CONSTRUINDO", health.band());
+        assertEquals("MONTAR_RESERVA", health.opportunity());
+        assertTrue(health.recommendation().startsWith("Você não tem dívidas"));
+        ScoreFactorView debt = health.factors().stream()
+                .filter(f -> f.key().equals("debt"))
+                .findFirst()
+                .orElseThrow();
+        assertEquals("Sem dívidas", debt.label());
+        assertEquals(25, debt.points());
+        assertEquals(25, debt.maxPoints());
+    }
+
+    @Test
     void shouldScoreSavingsHabitWithoutIncome() {
         FinancialHealthView health = calculator.calculate(answers(
                 null, 100_000L, null, EmergencyReserve.ONE_TO_3,

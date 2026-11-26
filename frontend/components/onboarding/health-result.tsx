@@ -165,7 +165,16 @@ export function FinancialHealthPanel({
                 <li key={factor.key}>
                   <div className="flex items-baseline justify-between gap-3">
                     <span className="text-[11px] font-medium text-neutral-300">{factor.label}</span>
-                    <span className="shrink-0 text-[10px] tabular-nums text-neutral-500">
+                    <span
+                      className={cn(
+                        "shrink-0 text-[10px] tabular-nums",
+                        factor.answered && factor.points === factor.maxPoints
+                          ? "text-emerald-300"
+                          : factor.answered && factor.points === 0
+                            ? "text-red-300"
+                            : "text-neutral-500",
+                      )}
+                    >
                       {factor.answered ? `${factor.points}/${factor.maxPoints}` : "não informado"}
                     </span>
                   </div>
@@ -173,7 +182,13 @@ export function FinancialHealthPanel({
                     <div
                       className={cn(
                         "h-full rounded-full transition-[width] duration-700 ease-out",
-                        factor.answered ? "bg-accent" : "bg-neutral-700",
+                        factor.answered
+                          ? factor.points === factor.maxPoints
+                            ? "bg-emerald-400"
+                            : factor.points === 0
+                              ? "bg-red-400/70"
+                              : "bg-accent"
+                          : "bg-neutral-700",
                       )}
                       style={{ width: `${percent}%` }}
                     />
