@@ -5,9 +5,9 @@ import {
   centsToBrlInput,
   clearDraft,
   loadDraft,
+  LAST_QUESTION_STEP,
   moneyCents,
   parseBrlToCents,
-  QUESTION_COUNT,
   saveDraft,
   toAnswers,
 } from "@/lib/onboarding";
@@ -46,7 +46,7 @@ describe("onboarding draft", () => {
     expect(restored).not.toBeNull();
     expect(restored?.draft.name).toBe("Marina");
     expect(restored?.draft.goal).toBe("INVEST");
-    expect(restored?.step).toBe(QUESTION_COUNT - 1);
+    expect(restored?.step).toBe(LAST_QUESTION_STEP);
     expect(window.localStorage.getItem(DRAFT_KEY)).toContain("version");
   });
 

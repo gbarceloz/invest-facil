@@ -105,7 +105,9 @@ class OnboardingIntegrationTest {
                         .header("Authorization", "Bearer " + firstToken))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.completed").value(true))
-                .andExpect(jsonPath("$.answers.emergencyReserve").value("MORE_THAN_6"));
+                .andExpect(jsonPath("$.answers.emergencyReserve").value("MORE_THAN_6"))
+                .andExpect(jsonPath("$.health.score").value(100))
+                .andExpect(jsonPath("$.health.opportunity").value("INVESTIR_COM_CRITERIO"));
 
         // Atualização idempotente: recalcula e mantém um único perfil.
         mvc.perform(put("/api/v1/onboarding/me")
