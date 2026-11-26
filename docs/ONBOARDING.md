@@ -7,7 +7,7 @@ para persistir o perfil e revelar o dashboard.
 
 ## Fluxo
 
-São **7 perguntas + revisão**:
+São **7 perguntas + perfil pronto + vínculo de conta**:
 
 1. Nome
 2. Objetivo
@@ -16,12 +16,25 @@ São **7 perguntas + revisão**:
 5. Reserva de emergência e dívidas com juros altos
 6. Preferência de aprendizado e nível de conhecimento
 7. Dias e horário de estudo
-8. Revisão
 
-Depois da revisão: cálculo no servidor, resultado e uma **etapa de acesso
-explícita**. Nessa etapa o usuário vê Google e e-mail; se já estiver logado,
-pode continuar com a conta atual ou usar outra conta. Só então o dashboard
-personalizado é revelado.
+Depois da pergunta 7: cálculo no servidor e tela **“Seu perfil está pronto”**,
+com o índice e uma revisão opcional das respostas. A **etapa 8** é o vínculo
+obrigatório de conta: o usuário vê Google e e-mail; se já estiver logado, pode
+continuar com a conta atual ou usar outra conta. Só depois da confirmação de
+persistência o dashboard é revelado.
+
+### Verificação de persistência
+
+O cliente não confia apenas no `PUT`. Depois de salvar, chama
+`GET /api/v1/onboarding/me` e só navega para o dashboard quando:
+
+- `completed = true`;
+- `health` existe;
+- o score confirmado é igual ao score calculado exibido antes do vínculo.
+
+Se a confirmação falhar, a etapa 8 mostra erro e o dashboard não abre. O
+`OnboardingIntegrationTest` cobre o mesmo caminho no backend (PUT → GET →
+score/answers persistidos).
 
 Os gatilhos de gasto permanecem no modelo (default `["NONE"]`), mas deixaram de
 ser uma pergunta para encurtar o fluxo.

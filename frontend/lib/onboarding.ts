@@ -119,6 +119,8 @@ export const DAY_OPTIONS: Option<StudyDay>[] = [
 export const TIME_OPTIONS = ["07:00", "12:00", "18:00", "19:00", "20:00", "21:00"];
 
 export const QUESTION_COUNT = 8;
+/** Última pergunta de dados; a etapa 8 é o vínculo de conta. */
+export const LAST_QUESTION_STEP = QUESTION_COUNT - 2;
 
 export function toAnswers(draft: OnboardingDraft): OnboardingAnswers | null {
   if (
@@ -169,7 +171,7 @@ export function loadDraft(): { step: number; draft: OnboardingDraft } | null {
       studyDays: Array.isArray(parsed.draft.studyDays) ? parsed.draft.studyDays : [],
     };
     const step = typeof parsed.step === "number"
-      ? Math.min(Math.max(parsed.step, 0), QUESTION_COUNT - 1)
+      ? Math.min(Math.max(parsed.step, 0), LAST_QUESTION_STEP)
       : 0;
     return { step, draft };
   } catch {

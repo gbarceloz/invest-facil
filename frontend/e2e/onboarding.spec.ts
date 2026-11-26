@@ -38,17 +38,21 @@ test.describe("Jornada B — onboarding conversacional", () => {
 
     await page.getByRole("button", { name: "Seg", exact: true }).click();
     await page.getByRole("button", { name: "Qua", exact: true }).click();
-    await page.getByRole("button", { name: /^Continuar/ }).click();
-
-    await expect(page.getByText("Seu resumo")).toBeVisible();
     await page.getByRole("button", { name: /Calcular meu perfil/ }).click();
 
-    await expect(page.getByText(/Seu próximo passo:/)).toBeVisible({ timeout: 15_000 });
-    await expect(page.getByRole("img", { name: /Índice de saúde financeira/ })).toBeVisible();
-    await expect(page.getByText(/Como o índice foi formado/)).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Seu perfil está pronto" })).toBeVisible({
+      timeout: 15_000,
+    });
+    await expect(page.getByText(/Seu próximo passo:/)).toBeVisible();
+    const resultScore = await page
+      .getByRole("img", { name: /Índice de saúde financeira/ })
+      .getAttribute("aria-label");
+    expect(resultScore).toBeTruthy();
 
-    // O gate de autenticação é uma etapa explícita depois do resultado.
-    await page.getByRole("button", { name: /Salvar meu plano/ }).click();
+    // O vínculo de conta é a etapa 8, obrigatória depois do perfil pronto.
+    await expect(page.getByText("Etapa 8 · vínculo obrigatório")).toBeVisible();
+    await page.getByRole("button", { name: /Vincular minha conta/ }).click();
+    await expect(page.getByText("Etapa 8 de 8")).toBeVisible();
     await expect(page.getByText(/Para guardar seu plano, entre com o Google ou e-mail/)).toBeVisible();
 
     await page.getByLabel("E-mail").fill(email);
@@ -62,6 +66,12 @@ test.describe("Jornada B — onboarding conversacional", () => {
     await expect(page.getByRole("link", { name: /Começar a estudar/i })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Saúde financeira" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Sua trilha" })).toBeVisible();
+
+    // O score do dashboard vem do perfil persistido e precisa ser o mesmo do cálculo.
+    const dashboardScore = await page
+      .getByRole("img", { name: /Índice de saúde financeira/ })
+      .getAttribute("aria-label");
+    expect(dashboardScore).toBe(resultScore);
 
     // O perfil fica no servidor: ao voltar ao onboarding, o banner aparece.
     await page.goto("/comecar");

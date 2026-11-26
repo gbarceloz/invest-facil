@@ -30,6 +30,7 @@ import {
   EMPTY_DRAFT,
   GOAL_OPTIONS,
   KNOWLEDGE_OPTIONS,
+  LAST_QUESTION_STEP,
   LEARNING_OPTIONS,
   QUESTION_COUNT,
   RESERVE_OPTIONS,
@@ -45,9 +46,7 @@ import {
 } from "@/lib/onboarding";
 import type { FinancialHealth, OnboardingProfile, StudyDay } from "@/lib/types";
 
-const REVIEW_STEP = QUESTION_COUNT - 1;
-
-type Phase = "questions" | "calculating" | "result" | "auth";
+type Phase = "questions" | "calculating" | "profile" | "auth";
 
 function labelOf<T extends string>(options: Option<T>[], value: T | null | undefined): string {
   if (!value) return "Não informado";
@@ -159,14 +158,13 @@ export default function OnboardingPage() {
       { text: "Como estão sua reserva e suas dívidas?", pose: "think" },
       { text: "Como você aprende melhor?", pose: "book" },
       { text: "Quando você consegue estudar?", pose: "run" },
-      { text: "Confira suas respostas.", pose: "jump" },
     ];
     return questions[step] ?? questions[0];
   }, [step]);
 
-  const progress = phase === "questions"
-    ? Math.round(((step + 1) / QUESTION_COUNT) * 100)
-    : 100;
+  const progress = phase === "auth"
+    ? 100
+    : Math.round(((Math.min(step, LAST_QUESTION_STEP) + 1) / QUESTION_COUNT) * 100);
 
   const canContinue = useMemo(() => {
     switch (step) {
@@ -245,7 +243,7 @@ export default function OnboardingPage() {
           : new Promise((resolve) => window.setTimeout(resolve, 750)),
       ]);
       setHealth(result);
-      setPhase("result");
+      setPhase("profile");
     } catch (err) {
       setPhase("questions");
       setCalcError(
@@ -262,11 +260,11 @@ export default function OnboardingPage() {
       setError(validationMessage());
       return;
     }
-    if (step === REVIEW_STEP) {
+    if (step === LAST_QUESTION_STEP) {
       void calculate();
       return;
     }
-    setStep((current) => Math.min(current + 1, REVIEW_STEP));
+    setStep((current) => Math.min(current + 1, LAST_QUESTION_STEP));
   }
 
   function goBack() {
@@ -274,12 +272,12 @@ export default function OnboardingPage() {
     setCalcError(null);
     setSaveError(null);
     if (phase === "auth") {
-      setPhase("result");
+      setPhase("profile");
       return;
     }
-    if (phase === "result") {
+    if (phase === "profile") {
       setPhase("questions");
-      setStep(REVIEW_STEP);
+      setStep(LAST_QUESTION_STEP);
       return;
     }
     if (step === 0) {
@@ -297,10 +295,18 @@ export default function OnboardingPage() {
     setSaving(true);
     setSaveError(null);
     try {
-      await api.put<OnboardingProfile>("/api/v1/onboarding/me", {
+      const saved = await api.put<OnboardingProfile>("/api/v1/onboarding/me", {
         name: draft.name.trim(),
         answers,
       });
+      const verified = await api.get<OnboardingProfile>("/api/v1/onboarding/me");
+      if (!verified.completed || !verified.health || verified.health.score !== saved.health?.score) {
+        throw new ApiError(
+          500,
+          "PROFILE_NOT_VERIFIED",
+          "Não foi possível confirmar seu perfil no servidor. Tente novamente.",
+        );
+      }
       clearDraft();
       router.replace("/app?revelar=1");
     } finally {
@@ -361,10 +367,10 @@ export default function OnboardingPage() {
   const phaseLabel =
     phase === "calculating"
       ? "Calculando"
-      : phase === "result"
-        ? "Resultado"
+      : phase === "profile"
+        ? "Perfil pronto"
         : phase === "auth"
-          ? "Acesso"
+          ? `Etapa ${QUESTION_COUNT} de ${QUESTION_COUNT}`
           : `Etapa ${step + 1} de ${QUESTION_COUNT}`;
 
   return (
@@ -374,9 +380,7 @@ export default function OnboardingPage() {
           <Logo href="/" compact />
           <div className="flex items-center gap-2 text-[11px] text-neutral-500">
             {user ? (
-              <Link href="/app" className="font-medium text-neutral-300 transition hover:text-accent">
-                Meu painel
-              </Link>
+              <span className="font-medium text-neutral-400">Sessão ativa</span>
             ) : (
               <Link
                 href="/entrar?next=/comecar"
@@ -438,13 +442,31 @@ export default function OnboardingPage() {
               <div className="onb-glow h-full w-full bg-gradient-to-r from-transparent via-accent to-transparent" />
             </div>
           </div>
-        ) : phase === "result" && health ? (
+        ) : phase === "profile" && health ? (
           <div className="space-y-5">
             <AssistantBubble pose="jump" animate>
               <Typewriter
-                text={`Pronto, ${firstName}. Este é o seu ponto de partida — não uma sentença.`}
+                text={`Seu perfil está pronto, ${firstName}. Veja seu ponto de partida.`}
               />
             </AssistantBubble>
+
+            <section className="onb-enter rounded-2xl border border-emerald-400/20 bg-emerald-400/[0.04] p-5">
+              <div className="flex items-start gap-3">
+                <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-emerald-400/25 bg-emerald-400/10 text-emerald-300">
+                  <Check className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="eyebrow">Perfil calculado</p>
+                  <h2 className="mt-1 text-[22px] font-medium tracking-[-0.03em] text-neutral-100">
+                    Seu perfil está pronto
+                  </h2>
+                  <p className="mt-1 text-[11px] leading-5 text-neutral-400">
+                    O servidor calculou seu índice com as respostas das 7 etapas. Agora falta
+                    apenas vincular sua conta para salvar.
+                  </p>
+                </div>
+              </div>
+            </section>
 
             <section className="onb-enter rounded-2xl border border-white/[0.08] bg-[#111111] p-5 sm:p-6">
               <FinancialHealthPanel health={health} />
@@ -459,21 +481,30 @@ export default function OnboardingPage() {
               .
             </p>
 
+            <details className="rounded-xl border border-white/[0.08] bg-[#111111] px-4 py-3">
+              <summary className="cursor-pointer list-none text-[11px] font-semibold text-neutral-300">
+                Revisar respostas
+              </summary>
+              <div className="mt-3">
+                <ReviewPanel draft={draft} onEdit={editStep} />
+              </div>
+            </details>
+
             <section className="onb-enter rounded-2xl border border-white/[0.08] bg-[#111111] p-5 sm:p-6">
-              <p className="eyebrow">Último passo</p>
+              <p className="eyebrow">Etapa 8 · vínculo obrigatório</p>
               <h2 className="mt-2 text-[19px] font-medium tracking-[-0.03em] text-neutral-100">
-                Salve seu plano
+                Vincule sua conta
               </h2>
               <p className="mt-1.5 text-[11px] leading-5 text-neutral-500">
-                Entre com o Google ou e-mail para guardar o resultado e abrir o painel
-                personalizado. Seu rascunho continua aqui.
+                Entre com o Google ou e-mail para salvar este perfil. O painel só abre depois
+                que o servidor confirmar que o perfil foi persistido.
               </p>
               <button
                 type="button"
                 onClick={() => setPhase("auth")}
                 className="btn-primary mt-4 w-full"
               >
-                Salvar meu plano <ArrowRight className="h-4 w-4" />
+                Vincular minha conta <ArrowRight className="h-4 w-4" />
               </button>
             </section>
 
@@ -482,7 +513,7 @@ export default function OnboardingPage() {
                 type="button"
                 onClick={() => {
                   setPhase("questions");
-                  setStep(REVIEW_STEP);
+                  setStep(0);
                 }}
                 className="btn-ghost text-[11px]"
               >
@@ -785,8 +816,6 @@ export default function OnboardingPage() {
                 </div>
               )}
 
-              {step === REVIEW_STEP && <ReviewPanel draft={draft} onEdit={editStep} />}
-
               {error && (
                 <p className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-[11px] text-red-200">
                   {error}
@@ -812,19 +841,18 @@ export default function OnboardingPage() {
               className="btn-ghost px-3 text-[12px]"
               aria-label={
                 phase === "auth"
-                  ? "Voltar para o resultado"
-                  : phase === "result"
-                    ? "Voltar para a revisão"
+                  ? "Voltar para o perfil"
+                  : phase === "profile"
+                    ? "Voltar para a última pergunta"
                     : "Voltar uma etapa"
               }
             >
-              <ArrowLeft className="h-4 w-4" />{" "}
-              {phase === "auth" ? "Resultado" : phase === "result" ? "Revisão" : "Voltar"}
+              <ArrowLeft className="h-4 w-4" /> {phase === "auth" ? "Perfil" : "Voltar"}
             </button>
-            {phase === "result" ? (
+            {phase === "profile" ? (
               <div className="flex items-center gap-2 text-[10px] text-neutral-500">
                 <ShieldCheck className="h-3.5 w-3.5 text-accent/70" aria-hidden="true" />
-                Resultado calculado no servidor
+                Perfil calculado no servidor
               </div>
             ) : phase === "auth" ? (
               <div className="flex items-center gap-2 text-[10px] text-neutral-500">
@@ -838,7 +866,7 @@ export default function OnboardingPage() {
                 disabled={!canContinue}
                 className="btn-primary min-w-[132px] px-5 text-[12px]"
               >
-                {step === REVIEW_STEP ? (
+                {step === LAST_QUESTION_STEP ? (
                   <>
                     <Sparkles className="h-4 w-4" /> Calcular meu perfil
                   </>
@@ -944,7 +972,6 @@ function questionText(step: number): string {
     "Reserva e dívidas?",
     "Como você aprende?",
     "Quando você estuda?",
-    "Revisão",
   ];
   return texts[step] ?? texts[0];
 }
