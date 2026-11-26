@@ -82,8 +82,8 @@ public class ContentSeedService {
             throw new IllegalStateException("Falha ao carregar seed/content.json", ex);
         }
 
-        // Sincroniza por slug: preserva IDs e histórico, atualiza textos por
-        // posição e cria apenas o que falta. Nunca apaga conteúdo.
+        // Sincroniza por slug: preserva IDs, progresso e quizzes já existentes,
+        // cria apenas o que falta e atualiza textos/ordenação. Nunca apaga conteúdo.
         Map<String, Category> categoryBySlug = new HashMap<>();
         for (SeedCategory seedCategory : data.categories()) {
             Category category = categories.findBySlug(seedCategory.slug()).orElseGet(Category::new);
@@ -105,6 +105,7 @@ public class ContentSeedService {
 
                 for (SeedLesson seedLesson : seedModule.lessons()) {
                     Lesson lesson = lessons.findBySlug(seedLesson.slug()).orElseGet(Lesson::new);
+                    boolean isNew = lesson.getId() == null;
                     lesson.setModuleId(module.getId());
                     lesson.setSlug(seedLesson.slug());
                     lesson.setTitle(seedLesson.title());
@@ -114,20 +115,18 @@ public class ContentSeedService {
                     lesson.setPublished(true);
                     lessons.save(lesson);
 
-                    List<QuizQuestion> existingQuestions =
-                            questions.findByLessonIdOrderByPositionAsc(lesson.getId());
-                    int position = 1;
-                    for (SeedQuestion seedQuestion : seedLesson.quiz()) {
-                        QuizQuestion question = position <= existingQuestions.size()
-                                ? existingQuestions.get(position - 1)
-                                : new QuizQuestion();
-                        question.setLessonId(lesson.getId());
-                        question.setPosition(position++);
-                        question.setQuestion(seedQuestion.question());
-                        question.setOptions(seedQuestion.options().stream()
-                                .map(QuizOption::new).toList());
-                        question.setCorrectIndex(seedQuestion.correctIndex());
-                        questions.save(question);
+                    if (isNew) {
+                        int position = 1;
+                        for (SeedQuestion seedQuestion : seedLesson.quiz()) {
+                            QuizQuestion question = new QuizQuestion();
+                            question.setLessonId(lesson.getId());
+                            question.setPosition(position++);
+                            question.setQuestion(seedQuestion.question());
+                            question.setOptions(seedQuestion.options().stream()
+                                    .map(QuizOption::new).toList());
+                            question.setCorrectIndex(seedQuestion.correctIndex());
+                            questions.save(question);
+                        }
                     }
                 }
             }

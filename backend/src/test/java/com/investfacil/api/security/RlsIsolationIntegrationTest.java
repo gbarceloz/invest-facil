@@ -791,7 +791,7 @@ class RlsIsolationIntegrationTest {
                         + " where oid = to_regprocedure("
                         + " 'investfacil.apply_table_security()')::regprocedure",
                 Integer.class), "função legada deve ter sido removida");
-        assertEquals(9, adminJdbc.queryForObject(
+        assertEquals(10, adminJdbc.queryForObject(
                 "select count(*) from investfacil.flyway_schema_history"
                         + " where success = true and type = 'SQL'", Integer.class));
     }
