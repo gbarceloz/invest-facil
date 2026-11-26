@@ -234,6 +234,7 @@ Arquivos: `render.yaml`, `backend/Dockerfile`, `docker-compose.yml`,
 | [`docs/AGENTES_70.md`](docs/AGENTES_70.md) | 70 papéis documentais (não são 70 agentes executáveis) |
 | [`docs/DEMO_SCRIPT.md`](docs/DEMO_SCRIPT.md) | roteiro de 8–10 min + plano B |
 | [`docs/APRESENTACAO.md`](docs/APRESENTACAO.md) | pitch, narrativa, critérios, Q&A |
+| [`docs/ONBOARDING.md`](docs/ONBOARDING.md) | fluxo conversacional, índice financeiro, API e RLS |
 | [`docs/DEPLOY.md`](docs/DEPLOY.md) | runbook de produção |
 | [`docs/QUALIDADE_FINAL.md`](docs/QUALIDADE_FINAL.md) | relatório final de qualidade e veredito |
 | [`docs/FIREBASE_EVALUATION.md`](docs/FIREBASE_EVALUATION.md) | avaliação Firebase Spark/Blaze e decisão |

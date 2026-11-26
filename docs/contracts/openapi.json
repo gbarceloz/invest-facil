@@ -4,15 +4,31 @@
     "bearerAuth" : [ ]
   } ],
   "paths" : {
-    "/api/v1/auth/google" : {
-      "post" : {
-        "tags" : [ "auth-controller" ],
-        "operationId" : "google",
+    "/api/v1/onboarding/me" : {
+      "get" : {
+        "tags" : [ "onboarding-controller" ],
+        "operationId" : "onboardingProfile",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProfileView"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "onboarding-controller" ],
+        "operationId" : "completeOnboarding",
         "requestBody" : {
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/GoogleLoginRequest"
+                "$ref" : "#/components/schemas/CompleteRequest"
               }
             }
           },
@@ -24,7 +40,7 @@
             "content" : {
               "*/*" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/AuthResponse"
+                  "$ref" : "#/components/schemas/ProfileView"
                 }
               }
             }
@@ -258,6 +274,34 @@
               "*/*" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/QuizResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/onboarding/estimate" : {
+      "post" : {
+        "tags" : [ "onboarding-controller" ],
+        "operationId" : "estimate",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/AnswersRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FinancialHealthView"
                 }
               }
             }
@@ -527,6 +571,34 @@
             "application/json" : {
               "schema" : {
                 "$ref" : "#/components/schemas/LoginRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AuthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/google" : {
+      "post" : {
+        "tags" : [ "auth-controller" ],
+        "operationId" : "google",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/GoogleLoginRequest"
               }
             }
           },
@@ -1089,16 +1161,228 @@
   },
   "components" : {
     "schemas" : {
-    "GoogleLoginRequest" : {
-      "type" : "object",
-      "properties" : {
-        "credential" : {
-          "type" : "string",
-          "minLength" : 1
+      "AnswersRequest" : {
+        "type" : "object",
+        "properties" : {
+          "goal" : {
+            "type" : "string",
+            "enum" : [ "DEBT", "INVEST", "MULTIPLY", "ORGANIZE", "WEALTH" ]
+          },
+          "financialSituation" : {
+            "type" : "string",
+            "enum" : [ "IN_DEBT", "FROM_ZERO", "CAN_SAVE", "INVESTOR" ]
+          },
+          "incomeCents" : {
+            "type" : "integer",
+            "format" : "int64",
+            "maximum" : 100000000000
+          },
+          "savingsCapacityCents" : {
+            "type" : "integer",
+            "format" : "int64",
+            "maximum" : 100000000000
+          },
+          "essentialExpensesCents" : {
+            "type" : "integer",
+            "format" : "int64",
+            "maximum" : 100000000000
+          },
+          "emergencyReserve" : {
+            "type" : "string",
+            "enum" : [ "NONE", "LESS_THAN_1", "ONE_TO_3", "THREE_TO_6", "MORE_THAN_6", "PREFER_NOT" ]
+          },
+          "highInterestDebt" : {
+            "type" : "string",
+            "enum" : [ "NONE", "CREDIT_CARD", "OVERDRAFT", "LOANS", "MULTIPLE", "PREFER_NOT" ]
+          },
+          "learningPreference" : {
+            "type" : "string",
+            "enum" : [ "VIDEOS", "TEXTS", "PRACTICE", "MIX" ]
+          },
+          "knowledgeLevel" : {
+            "type" : "string",
+            "enum" : [ "ZERO", "BASIC", "INTERMEDIATE", "ADVANCED" ]
+          },
+          "spendingTriggers" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "enum" : [ "DELIVERY", "SHOPPING", "SOCIAL", "SUBSCRIPTIONS", "IMPULSE", "NONE" ]
+            },
+            "maxItems" : 6,
+            "minItems" : 1
+          },
+          "studyDays" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "enum" : [ "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN" ]
+            },
+            "maxItems" : 7,
+            "minItems" : 1
+          },
+          "studyTime" : {
+            "type" : "string",
+            "minLength" : 1,
+            "pattern" : "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+          }
+        },
+        "required" : [ "emergencyReserve", "financialSituation", "goal", "highInterestDebt", "knowledgeLevel", "learningPreference", "spendingTriggers", "studyDays", "studyTime" ]
+      },
+      "CompleteRequest" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "maxLength" : 120,
+            "minLength" : 2
+          },
+          "answers" : {
+            "$ref" : "#/components/schemas/AnswersRequest"
+          }
+        },
+        "required" : [ "answers", "name" ]
+      },
+      "AnswersView" : {
+        "type" : "object",
+        "properties" : {
+          "goal" : {
+            "type" : "string",
+            "enum" : [ "DEBT", "INVEST", "MULTIPLY", "ORGANIZE", "WEALTH" ]
+          },
+          "financialSituation" : {
+            "type" : "string",
+            "enum" : [ "IN_DEBT", "FROM_ZERO", "CAN_SAVE", "INVESTOR" ]
+          },
+          "incomeCents" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "savingsCapacityCents" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "essentialExpensesCents" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "emergencyReserve" : {
+            "type" : "string",
+            "enum" : [ "NONE", "LESS_THAN_1", "ONE_TO_3", "THREE_TO_6", "MORE_THAN_6", "PREFER_NOT" ]
+          },
+          "highInterestDebt" : {
+            "type" : "string",
+            "enum" : [ "NONE", "CREDIT_CARD", "OVERDRAFT", "LOANS", "MULTIPLE", "PREFER_NOT" ]
+          },
+          "learningPreference" : {
+            "type" : "string",
+            "enum" : [ "VIDEOS", "TEXTS", "PRACTICE", "MIX" ]
+          },
+          "knowledgeLevel" : {
+            "type" : "string",
+            "enum" : [ "ZERO", "BASIC", "INTERMEDIATE", "ADVANCED" ]
+          },
+          "spendingTriggers" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "studyDays" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "studyTime" : {
+            "type" : "string"
+          }
         }
       },
-      "required" : [ "credential" ]
-    },
+      "FinancialHealthView" : {
+        "type" : "object",
+        "properties" : {
+          "score" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "band" : {
+            "type" : "string"
+          },
+          "bandLabel" : {
+            "type" : "string"
+          },
+          "opportunity" : {
+            "type" : "string"
+          },
+          "opportunityLabel" : {
+            "type" : "string"
+          },
+          "recommendation" : {
+            "type" : "string"
+          },
+          "monthlySavingsCents" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "emergencyFundGoalCents" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "factors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ScoreFactorView"
+            }
+          }
+        }
+      },
+      "ProfileView" : {
+        "type" : "object",
+        "properties" : {
+          "completed" : {
+            "type" : "boolean"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "answers" : {
+            "$ref" : "#/components/schemas/AnswersView"
+          },
+          "health" : {
+            "$ref" : "#/components/schemas/FinancialHealthView"
+          },
+          "completedAt" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }
+      },
+      "ScoreFactorView" : {
+        "type" : "object",
+        "properties" : {
+          "key" : {
+            "type" : "string"
+          },
+          "label" : {
+            "type" : "string"
+          },
+          "answered" : {
+            "type" : "boolean"
+          },
+          "points" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "maxPoints" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "detail" : {
+            "type" : "string"
+          }
+        }
+      },
       "SaveScenarioRequest" : {
         "type" : "object",
         "properties" : {
@@ -1607,6 +1891,16 @@
           }
         },
         "required" : [ "email", "password" ]
+      },
+      "GoogleLoginRequest" : {
+        "type" : "object",
+        "properties" : {
+          "credential" : {
+            "type" : "string",
+            "minLength" : 1
+          }
+        },
+        "required" : [ "credential" ]
       },
       "ChangePasswordRequest" : {
         "type" : "object",

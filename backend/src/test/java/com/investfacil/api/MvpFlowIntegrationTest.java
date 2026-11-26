@@ -89,7 +89,7 @@ class MvpFlowIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(8));
 
-        // 2. Cadastro aberto: a conta já nasce verificada, sem e-mail
+        // 2. Cadastro emite o token oficial; a conta nasce não verificada.
         mvc.perform(post("/api/v1/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
@@ -97,13 +97,13 @@ class MvpFlowIntegrationTest {
                                 """.formatted(email)))
                 .andExpect(status().isCreated());
 
-        // 3. Login imediato, sem confirmação de e-mail
+        // 3. Login segue liberado (V9); a confirmação é registrada no link.
         MvcResult login = mvc.perform(post("/api/v1/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"email\":\"" + email + "\",\"password\":\"Teste@123\"}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.accessToken").isNotEmpty())
-                .andExpect(jsonPath("$.user.emailVerified").value(true))
+                .andExpect(jsonPath("$.user.emailVerified").value(false))
                 .andReturn();
         JsonNode auth = json(login);
         String access = auth.get("accessToken").asText();

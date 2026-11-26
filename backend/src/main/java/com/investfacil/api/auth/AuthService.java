@@ -79,14 +79,18 @@ public class AuthService {
             throw BusinessException.conflict(
                     "Não foi possível concluir o cadastro com estes dados.");
         }
-        // Cadastro aberto: a conta já nasce verificada. Não há e-mail
-        // transacional nem bloqueio de login por confirmação.
-        User user = users.create(request.name(), normalized, request.password(), Role.USER, true);
+        // A conta nasce não verificada e recebe o token oficial de confirmação.
+        // O login continua liberado (decisão da V9) para não bloquear usuários
+        // quando o provedor de e-mail não está configurado; a verificação é
+        // registrada assim que o link oficial é aberto.
+        User user = users.create(request.name(), normalized, request.password(), Role.USER, false);
         bindUser(user);
+        String rawToken = issueEmailToken(user, EmailTokenType.EMAIL_VERIFY, Duration.ofHours(24));
+        email.sendVerification(user, rawToken);
         audit.record(user.getId(), "REGISTER", context.ip(), context.userAgent(), "created");
         return new RegistrationResult(
-                "Conta criada. Você já pode entrar com seu e-mail e senha.",
-                null);
+                "Conta criada. Enviamos um link de confirmação para o seu e-mail.",
+                properties.getAuth().isExposeDevTokens() ? rawToken : null);
     }
 
     public AuthResult login(AuthDtos.LoginRequest request, ClientContext context) {

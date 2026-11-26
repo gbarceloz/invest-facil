@@ -150,7 +150,11 @@ test.describe("Jornada B — vídeo, quiz e fichas do Módulo 01", () => {
 
     await page.goto(`/app/aprender/aula/${LESSON_SLUG}`);
     await expect(page.getByRole("heading", { name: "O que é dinheiro?" })).toBeVisible();
-    await expect(page.getByText("Vídeo em preparação")).toBeVisible();
+    // Com o asset local publicado o player aparece; em ambiente sem o arquivo,
+    // o componente cai no placeholder editorial.
+    await expect(
+      page.getByLabel(/Vídeo da aula/).or(page.getByText("Vídeo em preparação")),
+    ).toBeVisible();
 
     // Vídeo já registrado como assistido no servidor (mock): CONTINUAR liberado.
     const continueButton = page.getByRole("button", { name: /^Continuar/ });

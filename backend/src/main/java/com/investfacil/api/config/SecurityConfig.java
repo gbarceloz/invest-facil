@@ -73,6 +73,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/content/**", "/api/v1/market/**",
                                 "/api/v1/bitcoin/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/simulator/calculate").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/onboarding/estimate").permitAll()
                         .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/**").authenticated()
                         .anyRequest().authenticated())

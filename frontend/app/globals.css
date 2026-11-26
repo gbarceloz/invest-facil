@@ -147,3 +147,147 @@ body {
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
+
+/* ---------------------------------------------------------------------------
+   Onboarding conversacional
+   --------------------------------------------------------------------------- */
+
+@keyframes onb-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes onb-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes onb-pop {
+  0% {
+    transform: scale(0.96);
+  }
+  60% {
+    transform: scale(1.015);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes fina-bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-0.6deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(0.6deg);
+  }
+}
+
+@keyframes onb-glow {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes onb-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.onb-enter {
+  animation: onb-fade-up 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.onb-fade {
+  animation: onb-fade-in 0.4s ease-out both;
+}
+
+.onb-pop {
+  animation: onb-pop 0.26s ease-out;
+}
+
+.fina-bob {
+  animation: fina-bob 4.5s ease-in-out infinite;
+  transform-origin: 50% 100%;
+}
+
+.onb-glow {
+  animation: onb-glow 5s ease-in-out infinite;
+}
+
+.onb-caret {
+  animation: onb-blink 1s step-end infinite;
+}
+
+.onb-card {
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    background-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.onb-card:hover {
+  transform: translateY(-1px);
+}
+
+.onb-card[data-selected="true"] {
+  border-color: rgba(250, 204, 21, 0.65);
+  background-color: rgba(250, 204, 21, 0.07);
+  box-shadow: 0 0 0 1px rgba(250, 204, 21, 0.18);
+}
+
+.onb-progress {
+  transition: width 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.onb-stage {
+  background-image:
+    radial-gradient(40rem 30rem at 50% -10%, rgba(250, 204, 21, 0.09), transparent 65%),
+    radial-gradient(30rem 24rem at 100% 100%, rgba(250, 204, 21, 0.04), transparent 70%);
+}
+
+.onb-input-shell {
+  background:
+    linear-gradient(#0d0d0d, #0d0d0d) padding-box,
+    linear-gradient(120deg, rgba(250, 204, 21, 0.55), rgba(255, 255, 255, 0.08)) border-box;
+  border: 1px solid transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .onb-enter,
+  .onb-fade,
+  .onb-pop,
+  .fina-bob,
+  .onb-glow,
+  .onb-caret {
+    animation: none !important;
+  }
+  .onb-card,
+  .onb-progress {
+    transition: none !important;
+  }
+}

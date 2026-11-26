@@ -42,7 +42,9 @@ public class DatabaseSecurityGuard implements ApplicationRunner {
             "user_achievements", "simulations",
             // V8 — Módulo 01
             "user_streak_days", "user_quiz_lives", "quiz_lives_ledger",
-            "lesson_video_progress", "quiz_submissions");
+            "lesson_video_progress", "quiz_submissions",
+            // V11 — onboarding
+            "onboarding_profiles");
 
     /**
      * Funções endurecidas pela V7. A presença de search_path fixo em todas é o
@@ -77,7 +79,9 @@ public class DatabaseSecurityGuard implements ApplicationRunner {
             "s24_video_select", "s24_video_admin_insert", "s24_video_admin_update",
             "s24_migration_all",
             "v8_streak_select", "v8_lives_select", "v8_lives_ledger_select",
-            "v8_video_select", "v8_submissions_select");
+            "v8_video_select", "v8_submissions_select",
+            "onb_profile_select", "onb_profile_insert", "onb_profile_update",
+            "onb_profile_migration_all");
 
     private static final Map<String, Integer> EXPECTED_APP_POLICY_COUNTS = Map.ofEntries(
             Map.entry("users", 5),
@@ -103,7 +107,8 @@ public class DatabaseSecurityGuard implements ApplicationRunner {
             Map.entry("user_quiz_lives", 3),
             Map.entry("quiz_lives_ledger", 2),
             Map.entry("lesson_video_progress", 3),
-            Map.entry("quiz_submissions", 3));
+            Map.entry("quiz_submissions", 3),
+            Map.entry("onboarding_profiles", 3));
 
     private final JdbcTemplate jdbc;
     private final Environment environment;
@@ -278,20 +283,22 @@ public class DatabaseSecurityGuard implements ApplicationRunner {
         Integer tablesWithPolicies = jdbc.queryForObject("""
                 select count(distinct tablename) from pg_policies
                  where schemaname = 'investfacil'
-                   and (policyname like 's24_%' or policyname like 'v8_%')
+                   and (policyname like 's24_%' or policyname like 'v8_%'
+                        or policyname like 'onb_%')
                 """, Integer.class);
         if (tablesWithPolicies == null || tablesWithPolicies != ALL_APP_TABLES.size()) {
-            violations.add("V6/V8 policies missing on one or more application tables");
+            violations.add("V6/V8/V11 policies missing on one or more application tables");
         }
 
         Integer migrationPolicies = jdbc.queryForObject("""
                 select count(*) from pg_policies
                  where schemaname = 'investfacil'
                    and (policyname = 's24_migration_all'
-                        or policyname like 'v8_%_migration_all')
+                        or policyname like 'v8_%_migration_all'
+                        or policyname like 'onb_%_migration_all')
                 """, Integer.class);
         if (migrationPolicies == null || migrationPolicies != ALL_APP_TABLES.size()) {
-            violations.add("V6/V8 migration policy missing on one or more application tables");
+            violations.add("V6/V8/V11 migration policy missing on one or more application tables");
         }
 
         Map<String, Integer> actualPolicyCounts = new HashMap<>();
@@ -299,9 +306,11 @@ public class DatabaseSecurityGuard implements ApplicationRunner {
                 select tablename, count(*) as total
                   from pg_policies
                  where schemaname = 'investfacil'
-                   and (policyname like 's24_%' or policyname like 'v8_%')
+                   and (policyname like 's24_%' or policyname like 'v8_%'
+                        or policyname like 'onb_%')
                    and policyname <> 's24_migration_all'
                    and policyname not like 'v8_%_migration_all'
+                   and policyname not like 'onb_%_migration_all'
                  group by tablename
                 """)) {
             actualPolicyCounts.put((String) row.get("tablename"),
@@ -332,7 +341,8 @@ public class DatabaseSecurityGuard implements ApplicationRunner {
                                      'user_progress','quiz_attempts','quiz_attempt_answers',
                                      'xp_ledger','user_achievements','simulations',
                                      'user_streak_days','user_quiz_lives','quiz_lives_ledger',
-                                     'lesson_video_progress','quiz_submissions')
+                                     'lesson_video_progress','quiz_submissions',
+                                     'onboarding_profiles')
                    and policyname not like '%_migration_all'
                    and (coalesce(qual, '') = 'true' or coalesce(with_check, '') = 'true')
                 """, Integer.class);
@@ -411,6 +421,11 @@ public class DatabaseSecurityGuard implements ApplicationRunner {
         expectTable(violations, "quiz_submissions", "INSERT", true);
         expectTable(violations, "quiz_submissions", "UPDATE", true);
         expectTable(violations, "quiz_submissions", "DELETE", false);
+
+        expectTable(violations, "onboarding_profiles", "SELECT", true);
+        expectTable(violations, "onboarding_profiles", "INSERT", true);
+        expectTable(violations, "onboarding_profiles", "UPDATE", true);
+        expectTable(violations, "onboarding_profiles", "DELETE", false);
 
         expectTable(violations, "lesson_articles", "SELECT", false);
         expectTable(violations, "lesson_articles", "INSERT", false);

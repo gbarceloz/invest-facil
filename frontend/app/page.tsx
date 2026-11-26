@@ -55,8 +55,8 @@ export default function LandingPage() {
             <Link href="/entrar" className="hidden text-[12px] font-medium text-neutral-300 transition hover:text-neutral-50 sm:block">
               Entrar
             </Link>
-            <Link href="/cadastro" className="btn-primary">
-              Começar agora
+            <Link href="/comecar" className="btn-primary uppercase tracking-[0.06em]">
+              COMEÇAR AGORA
             </Link>
           </div>
         </div>
@@ -81,13 +81,19 @@ export default function LandingPage() {
                 entender o mercado de verdade.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Link href="/cadastro" className="btn-primary px-5 py-3 text-sm">
+                <Link href="/comecar" className="btn-primary px-5 py-3 text-sm">
                   Começar minha jornada <ArrowRight className="h-4 w-4" />
                 </Link>
                 <a href="#modulos" className="btn-secondary px-5 py-3 text-sm">
                   Explorar o mercado
                 </a>
               </div>
+              <p className="mt-4 text-[11px] text-neutral-500">
+                Já tenho uma conta?{" "}
+                <Link href="/entrar" className="font-semibold text-accent hover:underline">
+                  Entrar
+                </Link>
+              </p>
               <p className="mt-6 inline-flex items-center gap-2 text-[11px] text-neutral-500">
                 <ShieldCheck className="h-4 w-4 text-accent" />
                 Conteúdo educacional. Sem promessas. Sem dinheiro real.
@@ -264,7 +270,7 @@ export default function LandingPage() {
             <p className="mx-auto mt-3 max-w-lg text-[13px] leading-6 text-neutral-400">
               Pode ser uma aula de quatro minutos sobre inflação, uma introdução ao Bitcoin ou um quiz.
             </p>
-            <Link href="/cadastro" className="btn-primary mt-6 px-5 py-3 text-sm">
+            <Link href="/comecar" className="btn-primary mt-6 px-5 py-3 text-sm">
               Criar minha conta gratuita <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
@@ -283,7 +289,7 @@ export default function LandingPage() {
           </div>
           <div className="flex flex-wrap gap-x-6 gap-y-2 text-[11px] text-neutral-500">
             <Link href="/entrar" className="hover:text-neutral-100">Entrar</Link>
-            <Link href="/cadastro" className="hover:text-neutral-100">Criar conta</Link>
+            <Link href="/comecar" className="hover:text-neutral-100">Criar conta</Link>
             <a href="#modulos" className="hover:text-neutral-100">Módulos</a>
             <a href="#como-funciona" className="hover:text-neutral-100">Como funciona</a>
           </div>
