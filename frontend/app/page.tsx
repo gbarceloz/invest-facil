@@ -13,7 +13,16 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { Logo } from "@/components/logo";
-import { HeroBackdrop, Reveal, ScrollProgress } from "@/components/scroll-effects";
+import { JourneyTimeline, type JourneyStep } from "@/components/journey-timeline";
+import {
+  Counter,
+  HeroBackdrop,
+  Marquee,
+  Reveal,
+  ScrollProgress,
+  SplitText,
+  Stagger,
+} from "@/components/scroll-effects";
 import { Disclaimer } from "@/components/ui";
 
 const JOURNEY = [
@@ -22,29 +31,42 @@ const JOURNEY = [
   { label: "Bitcoin", state: "locked" },
 ];
 
-const STEPS = [
+const STEPS: JourneyStep[] = [
   {
-    number: "01",
-    title: "Escolha seu ponto de partida",
-    description: "Mercado financeiro ou Bitcoin. Duas trilhas claras, sem menus infinitos.",
+    title: "Responda 7 perguntas",
+    description:
+      "Objetivos, situações e quanto sobra por mês. Sem renda, sem extrato e sem julgamento.",
   },
   {
-    number: "02",
+    title: "Receba seu perfil",
+    description:
+      "Um retrato honesto do seu momento financeiro, com o que já está saudável e o que merece atenção.",
+  },
+  {
     title: "Aprenda em sequência",
-    description: "Aulas curtas, exemplos visuais e quizzes que verificam entendimento.",
+    description:
+      "Aulas curtas, exemplos visuais e quizzes que verificam entendimento — não cliques.",
   },
   {
-    number: "03",
-    title: "Acompanhe o que importa",
-    description: "Progresso, próximos passos e conceitos conectados — sem gamificação vazia.",
+    title: "Simule sem risco",
+    description:
+      "Decisões com dinheiro fictício para entender o efeito de cada escolha antes de arriscar o seu.",
   },
 ];
+
+const STATS = [
+  { value: 2, pad: 2, suffix: "", label: "módulos completos" },
+  { value: 100, pad: 0, suffix: "%", label: "gratuito, sem cartão" },
+  { value: 0, pad: 2, suffix: "", label: "promessas de retorno" },
+];
+
+const TOPICS = ["Inflação", "Selic", "Renda fixa", "Ações", "ETFs", "Bitcoin", "Blockchain", "Custódia", "Risco", "Liquidez"];
 
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#090909]">
       <ScrollProgress />
-      <header className="border-b border-white/[0.07]">
+      <header className="sticky top-0 z-50 border-b border-white/[0.07] bg-[#090909]/75 backdrop-blur-xl">
         <div className="flex h-16 w-full items-center px-5 sm:px-8">
           <Logo />
         </div>
@@ -55,31 +77,41 @@ export default function LandingPage() {
           <HeroBackdrop />
           <div className="pointer-events-none absolute inset-0 opacity-[0.16] [background-image:linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:72px_72px] [mask-image:radial-gradient(ellipse_at_70%_20%,black,transparent_70%)]" />
           <div className="relative mx-auto grid w-full max-w-[1240px] items-center gap-12 px-5 pb-16 pt-14 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:pb-20 lg:pt-20">
-            <div className="hero-enter">
-              <span className="inline-flex items-center gap-2 rounded-md border border-accent/25 bg-accent/[0.06] px-3 py-1.5 text-[10px] font-semibold text-accent">
-                <Sparkles className="h-3 w-3" /> Educação financeira para iniciantes
-              </span>
-              <h1 className="mt-6 max-w-[720px] text-balance text-[44px] font-medium leading-[1.04] tracking-[-0.045em] text-neutral-100 sm:text-[58px] lg:text-[66px]">
-                Aprenda a investir
+            <div>
+              <Reveal variant="down" delay={40}>
+                <span className="inline-flex items-center gap-2 rounded-md border border-accent/25 bg-accent/[0.06] px-3 py-1.5 text-[10px] font-semibold text-accent">
+                  <Sparkles className="h-3 w-3" /> Educação financeira para iniciantes
+                </span>
+              </Reveal>
+              <h1 className="mt-6 max-w-[760px] text-[44px] font-medium leading-[1.04] tracking-[-0.045em] text-neutral-100 sm:text-[58px] lg:text-[66px]">
+                <SplitText text="Aprenda a investir" delay={80} step={55} />
                 <br />
-                <span className="text-accent">antes de colocar seu dinheiro em risco.</span>
+                <span className="text-accent">
+                  <SplitText text="antes de colocar seu dinheiro em risco." delay={190} step={38} />
+                </span>
               </h1>
-              <p className="mt-6 max-w-[600px] text-[15px] leading-7 text-neutral-400">
-                Aulas rápidas, desafios interativos e simulações com dinheiro fictício para você
-                entender o mercado de verdade.
-              </p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Link href="/comecar" className="btn-primary px-5 py-3 text-sm">
-                  Começar minha jornada <ArrowRight className="h-4 w-4" />
-                </Link>
-                <a href="#modulos" className="btn-secondary px-5 py-3 text-sm">
-                  Explorar o mercado
-                </a>
-              </div>
-              <p className="mt-6 inline-flex items-center gap-2 text-[11px] text-neutral-500">
-                <ShieldCheck className="h-4 w-4 text-accent" />
-                Conteúdo educacional. Sem promessas. Sem dinheiro real.
-              </p>
+              <Reveal variant="up" delay={260}>
+                <p className="mt-6 max-w-[600px] text-[15px] leading-7 text-neutral-400">
+                  Aulas rápidas, desafios interativos e simulações com dinheiro fictício para você
+                  entender o mercado de verdade.
+                </p>
+              </Reveal>
+              <Reveal variant="up" delay={340}>
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                  <Link href="/comecar" className="btn-primary px-5 py-3 text-sm">
+                    Começar minha jornada <ArrowRight className="h-4 w-4" />
+                  </Link>
+                  <a href="#modulos" className="btn-secondary px-5 py-3 text-sm">
+                    Explorar o mercado
+                  </a>
+                </div>
+              </Reveal>
+              <Reveal variant="up" delay={420}>
+                <p className="mt-6 inline-flex items-center gap-2 text-[11px] text-neutral-500">
+                  <ShieldCheck className="h-4 w-4 text-accent" />
+                  Conteúdo educacional. Sem promessas. Sem dinheiro real.
+                </p>
+              </Reveal>
             </div>
 
             <Reveal
@@ -87,7 +119,7 @@ export default function LandingPage() {
               delay={120}
               className="relative mx-auto w-full max-w-[540px] lg:mx-0 lg:justify-self-end"
             >
-              <div className="relative z-10 ml-auto w-[56%] rounded-xl border border-white/10 bg-[#121212]/90 p-4 shadow-2xl backdrop-blur">
+              <div className="float-y relative z-10 ml-auto w-[56%] rounded-xl border border-white/10 bg-[#121212]/90 p-4 shadow-2xl backdrop-blur">
                 <div className="flex items-start gap-3">
                   <div className="grid h-9 w-9 place-items-center rounded-lg bg-accent/10 text-accent">
                     <BookIcon />
@@ -96,7 +128,9 @@ export default function LandingPage() {
                     <p className="text-[9px] font-semibold uppercase tracking-[0.16em] text-neutral-500">Próxima missão</p>
                     <p className="mt-1 truncate text-[13px] font-semibold text-neutral-100">O que é Bitcoin?</p>
                   </div>
-                  <span className="ml-auto shrink-0 text-[10px] font-semibold text-accent">+100 XP</span>
+                  <span className="ml-auto shrink-0 text-[10px] font-semibold text-accent">
+                    <Counter value={100} prefix="+" suffix=" XP" />
+                  </span>
                 </div>
               </div>
 
@@ -141,22 +175,22 @@ export default function LandingPage() {
 
                 <div className="mt-8">
                   <div className="flex items-center justify-between text-[10px] text-neutral-500">
-                    <span>2 de 6</span>
+                    <span><Counter value={2} /> de 6</span>
                     <span>missões concluídas</span>
                   </div>
                   <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/10">
-                    <div className="h-full w-1/3 rounded-full bg-accent" />
+                    <div className="hero-progress h-full rounded-full bg-accent" />
                   </div>
                 </div>
               </div>
 
-              <div className="absolute -bottom-6 -left-8 rounded-xl border border-white/10 bg-[#141414]/95 px-4 py-3 shadow-xl backdrop-blur">
+              <div className="float-y-delayed absolute -bottom-6 -left-8 rounded-xl border border-white/10 bg-[#141414]/95 px-4 py-3 shadow-xl backdrop-blur">
                 <div className="flex items-center gap-3">
                   <span className="grid h-8 w-8 place-items-center rounded-lg bg-accent/10 text-accent">
                     <TrendingUp className="h-4 w-4" />
                   </span>
                   <div>
-                    <p className="text-[13px] font-semibold text-neutral-100">7 dias</p>
+                    <p className="text-[13px] font-semibold text-neutral-100"><Counter value={7} /> dias</p>
                     <p className="text-[10px] text-neutral-500">sequência de estudos</p>
                   </div>
                 </div>
@@ -165,44 +199,73 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section id="como-funciona" className="border-y border-white/[0.06] bg-[#0c0c0c]">
-          <div className="container-page py-16 text-center sm:py-20">
-            <Reveal variant="up">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">Como funciona</p>
-              <h2 className="mx-auto mt-4 max-w-2xl text-balance text-[32px] font-medium tracking-[-0.04em] text-neutral-100 sm:text-[42px]">
-                Um próximo passo claro. Sempre.
-              </h2>
-              <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-neutral-400">
-                Do primeiro conceito à primeira decisão simulada, você aprende no seu ritmo — com
-                quizzes que verificam entendimento, não cliques.
-              </p>
-            </Reveal>
+        <Marquee items={TOPICS} />
 
-            <div className="mt-12 grid gap-4 text-left md:grid-cols-3">
-              {STEPS.map((step, index) => (
-                <Reveal
-                  key={step.number}
-                  variant="up"
-                  delay={index * 90}
-                  className="h-full"
-                >
-                  <div className="h-full rounded-xl border border-white/[0.07] bg-[#111111] p-6 transition duration-300 hover:-translate-y-0.5 hover:border-accent/20 hover:bg-[#141414]">
-                    <span className="text-[10px] font-semibold tracking-[0.16em] text-accent">{step.number}</span>
-                    <h3 className="mt-5 text-[15px] font-semibold text-neutral-100">{step.title}</h3>
-                    <p className="mt-2 text-[12px] leading-6 text-neutral-400">{step.description}</p>
+        <section className="relative overflow-hidden">
+          <div className="container-page py-20 text-center sm:py-28">
+            <Reveal variant="fade">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-accent">Nosso ponto de partida</p>
+            </Reveal>
+            <h2 className="mx-auto mt-6 max-w-4xl text-[38px] font-medium leading-[1.06] tracking-[-0.045em] text-neutral-100 sm:text-[62px]">
+              <SplitText text="Investir não é apostar." step={50} />
+              <br />
+              <span className="text-accent">
+                <SplitText text="É entender o jogo." delay={140} step={50} />
+              </span>
+            </h2>
+            <p className="mx-auto mt-7 max-w-2xl text-[14px] leading-7 text-neutral-400 sm:text-[15px]">
+              <SplitText
+                text="Sem promessas de retorno, sem pressa e sem dinheiro real. Só clareza, um conceito por vez."
+                delay={260}
+                step={18}
+              />
+            </p>
+          </div>
+
+          <div className="container-page pb-20 sm:pb-28">
+            <Reveal variant="up" delay={80}>
+              <div className="grid gap-px overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.06] sm:grid-cols-3">
+                {STATS.map((stat) => (
+                  <div key={stat.label} className="bg-[#0d0d0d] px-6 py-9 text-center">
+                    <p className="text-[42px] font-medium leading-none tracking-[-0.05em] text-neutral-100">
+                      <Counter value={stat.value} pad={stat.pad} suffix={stat.suffix} />
+                    </p>
+                    <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-neutral-500">
+                      {stat.label}
+                    </p>
                   </div>
-                </Reveal>
-              ))}
-            </div>
+                ))}
+              </div>
+            </Reveal>
           </div>
         </section>
 
-        <section id="modulos" className="container-page py-16 sm:py-20">
+        <section id="como-funciona" className="scroll-mt-24 border-y border-white/[0.06] bg-[#0c0c0c]">
+          <div className="container-page grid gap-12 py-20 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16 lg:py-28">
+            <div className="lg:sticky lg:top-28 lg:self-start">
+              <Reveal variant="fade">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-accent">Como funciona</p>
+              </Reveal>
+              <h2 className="mt-4 text-[32px] font-medium leading-[1.08] tracking-[-0.04em] text-neutral-100 sm:text-[44px]">
+                <SplitText text="Do primeiro clique à primeira decisão." step={42} />
+              </h2>
+              <Reveal variant="up" delay={180}>
+                <p className="mt-6 max-w-md text-sm leading-6 text-neutral-400">
+                  Quatro passos, sem atalhos e sem gamificação vazia. Você entende o conceito antes de
+                  avançar — e vê sua evolução a cada etapa.
+                </p>
+              </Reveal>
+            </div>
+            <JourneyTimeline steps={STEPS} />
+          </div>
+        </section>
+
+        <section id="modulos" className="container-page scroll-mt-24 py-16 sm:py-24">
           <Reveal variant="up" className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">Dois módulos</p>
-              <h2 className="mt-3 text-balance text-[30px] font-medium tracking-[-0.04em] text-neutral-100 sm:text-[38px]">
-                O que você precisa entender, na ordem certa.
+              <h2 className="mt-3 max-w-xl text-balance text-[30px] font-medium tracking-[-0.04em] text-neutral-100 sm:text-[38px]">
+                <SplitText text="O que você precisa entender, na ordem certa." step={30} />
               </h2>
             </div>
             <p className="max-w-sm text-[12px] leading-6 text-neutral-500">
@@ -213,65 +276,71 @@ export default function LandingPage() {
 
           <div className="mt-9 grid gap-4 lg:grid-cols-2">
             <Reveal variant="up" delay={80} className="h-full">
-            <Link href="/app/mercado-financeiro" className="group flex h-full flex-col rounded-xl border border-white/[0.08] bg-[#111111] p-6 transition duration-300 hover:-translate-y-1 hover:border-accent/25 hover:bg-[#141414] hover:shadow-[0_18px_40px_-24px_rgba(0,0,0,0.9)]">
-              <div className="flex items-start justify-between">
-                <div className="grid h-10 w-10 place-items-center rounded-lg bg-accent/10 text-accent">
-                  <LineChart className="h-5 w-5" />
+              <Link href="/app/mercado-financeiro" className="group flex h-full flex-col rounded-xl border border-white/[0.08] bg-[#111111] p-6 transition duration-300 hover:-translate-y-1 hover:border-accent/25 hover:bg-[#141414] hover:shadow-[0_18px_40px_-24px_rgba(0,0,0,0.9)]">
+                <div className="flex items-start justify-between">
+                  <div className="grid h-10 w-10 place-items-center rounded-lg bg-accent/10 text-accent">
+                    <LineChart className="h-5 w-5" />
+                  </div>
+                  <ChevronRight className="h-4 w-4 text-neutral-600 transition group-hover:text-accent" />
                 </div>
-                <ChevronRight className="h-4 w-4 text-neutral-600 transition group-hover:text-accent" />
-              </div>
-              <p className="mt-6 text-[10px] font-semibold uppercase tracking-[0.16em] text-accent">Módulo 01</p>
-              <h3 className="mt-2 text-[24px] font-medium tracking-[-0.03em] text-neutral-100">Mercado financeiro</h3>
-              <p className="mt-2 text-[12px] leading-6 text-neutral-400">
-                Inflação, Selic, renda fixa, ações, ETFs e risco. A base para entender o sistema — não
-                para seguir dicas.
-              </p>
-              <div className="mt-5 flex flex-wrap gap-2">
-                {["Inflação", "Selic", "Renda fixa", "Ações", "ETFs"].map((topic) => (
-                  <span key={topic} className="rounded-md border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[10px] text-neutral-400">{topic}</span>
-                ))}
-              </div>
-            </Link>
+                <p className="mt-6 text-[10px] font-semibold uppercase tracking-[0.16em] text-accent">Módulo 01</p>
+                <h3 className="mt-2 text-[24px] font-medium tracking-[-0.03em] text-neutral-100">Mercado financeiro</h3>
+                <p className="mt-2 text-[12px] leading-6 text-neutral-400">
+                  Inflação, Selic, renda fixa, ações, ETFs e risco. A base para entender o sistema — não
+                  para seguir dicas.
+                </p>
+                <Stagger step={50} className="mt-5 flex flex-wrap gap-2">
+                  {["Inflação", "Selic", "Renda fixa", "Ações", "ETFs"].map((topic) => (
+                    <span key={topic} className="rounded-md border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[10px] text-neutral-400">{topic}</span>
+                  ))}
+                </Stagger>
+              </Link>
             </Reveal>
 
             <Reveal variant="up" delay={160} className="h-full">
-            <Link href="/app/bitcoin" className="group flex h-full flex-col rounded-xl border border-white/[0.08] bg-[#111111] p-6 transition duration-300 hover:-translate-y-1 hover:border-accent/25 hover:bg-[#141414] hover:shadow-[0_18px_40px_-24px_rgba(0,0,0,0.9)]">
-              <div className="flex items-start justify-between">
-                <div className="grid h-10 w-10 place-items-center rounded-lg bg-accent/10 text-accent">
-                  <Bitcoin className="h-5 w-5" />
+              <Link href="/app/bitcoin" className="group flex h-full flex-col rounded-xl border border-white/[0.08] bg-[#111111] p-6 transition duration-300 hover:-translate-y-1 hover:border-accent/25 hover:bg-[#141414] hover:shadow-[0_18px_40px_-24px_rgba(0,0,0,0.9)]">
+                <div className="flex items-start justify-between">
+                  <div className="grid h-10 w-10 place-items-center rounded-lg bg-accent/10 text-accent">
+                    <Bitcoin className="h-5 w-5" />
+                  </div>
+                  <ChevronRight className="h-4 w-4 text-neutral-600 transition group-hover:text-accent" />
                 </div>
-                <ChevronRight className="h-4 w-4 text-neutral-600 transition group-hover:text-accent" />
-              </div>
-              <p className="mt-6 text-[10px] font-semibold uppercase tracking-[0.16em] text-accent">Módulo 02</p>
-              <h3 className="mt-2 text-[24px] font-medium tracking-[-0.03em] text-neutral-100">Bitcoin</h3>
-              <p className="mt-2 text-[12px] leading-6 text-neutral-400">
-                A tecnologia, a escassez e a custódia explicadas do zero. O mercado como contexto
-                educacional, com dados reais e sem promessas.
-              </p>
-              <div className="mt-5 flex flex-wrap gap-2">
-                {["Blockchain", "21 milhões", "Mineração", "Carteiras", "Volatilidade"].map((topic) => (
-                  <span key={topic} className="rounded-md border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[10px] text-neutral-400">{topic}</span>
-                ))}
-              </div>
-            </Link>
+                <p className="mt-6 text-[10px] font-semibold uppercase tracking-[0.16em] text-accent">Módulo 02</p>
+                <h3 className="mt-2 text-[24px] font-medium tracking-[-0.03em] text-neutral-100">Bitcoin</h3>
+                <p className="mt-2 text-[12px] leading-6 text-neutral-400">
+                  A tecnologia, a escassez e a custódia explicadas do zero. O mercado como contexto
+                  educacional, com dados reais e sem promessas.
+                </p>
+                <Stagger step={50} className="mt-5 flex flex-wrap gap-2">
+                  {["Blockchain", "21 milhões", "Mineração", "Carteiras", "Volatilidade"].map((topic) => (
+                    <span key={topic} className="rounded-md border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[10px] text-neutral-400">{topic}</span>
+                  ))}
+                </Stagger>
+              </Link>
             </Reveal>
           </div>
         </section>
 
         <section className="container-page pb-20 text-center">
           <Reveal variant="zoom">
-          <div className="mx-auto max-w-2xl rounded-xl border border-white/[0.07] bg-[#111111] px-6 py-10">
-            <CircleDollarSign className="mx-auto h-6 w-6 text-accent" />
-            <h2 className="mt-4 text-balance text-[28px] font-medium tracking-[-0.04em] text-neutral-100">
-              Seu primeiro passo não precisa ser um investimento.
-            </h2>
-            <p className="mx-auto mt-3 max-w-lg text-[13px] leading-6 text-neutral-400">
-              Pode ser uma aula de quatro minutos sobre inflação, uma introdução ao Bitcoin ou um quiz.
-            </p>
-            <Link href="/comecar" className="btn-primary mt-6 px-5 py-3 text-sm">
-              Criar minha conta gratuita <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
+            <div className="relative mx-auto max-w-2xl overflow-hidden rounded-xl border border-white/[0.07] bg-[#111111] px-6 py-10">
+              <div
+                aria-hidden="true"
+                className="onb-glow pointer-events-none absolute -inset-24 bg-[radial-gradient(24rem_12rem_at_50%_0%,rgba(250,204,21,0.14),transparent_70%)]"
+              />
+              <div className="relative">
+                <CircleDollarSign className="mx-auto h-6 w-6 text-accent" />
+                <h2 className="mt-4 text-balance text-[28px] font-medium tracking-[-0.04em] text-neutral-100">
+                  <SplitText text="Seu primeiro passo não precisa ser um investimento." step={30} />
+                </h2>
+                <p className="mx-auto mt-3 max-w-lg text-[13px] leading-6 text-neutral-400">
+                  Pode ser uma aula de quatro minutos sobre inflação, uma introdução ao Bitcoin ou um quiz.
+                </p>
+                <Link href="/comecar" className="btn-primary mt-6 px-5 py-3 text-sm">
+                  Criar minha conta gratuita <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </div>
           </Reveal>
           <Disclaimer className="mx-auto mt-8 max-w-2xl text-[11px]" />
         </section>
