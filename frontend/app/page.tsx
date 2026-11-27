@@ -52,25 +52,25 @@ export default function LandingPage() {
         <section id="aprender" className="relative overflow-hidden bg-[#090909]">
           <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
             <div
-              className="absolute left-1/2 top-1/2 h-[125%] w-[125%] -translate-x-1/2 -translate-y-1/2 bg-cover bg-center opacity-45 blur-xl"
+              className="absolute inset-0 bg-contain bg-center bg-no-repeat opacity-40 blur-xl"
               style={{ backgroundImage: "url('/brand/hero-smartphone.jpg')" }}
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#090909] via-[#090909]/25 to-[#090909]" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#090909] via-[#090909]/20 to-[#090909]" />
             <div className="absolute inset-0 bg-[radial-gradient(46rem_30rem_at_50%_50%,transparent,rgba(9,9,9,0.2))]" />
           </div>
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(60rem_42rem_at_75%_15%,rgba(250,204,21,0.07),transparent_65%)]" />
           <div className="pointer-events-none absolute inset-0 opacity-[0.16] [background-image:linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:72px_72px] [mask-image:radial-gradient(ellipse_at_70%_20%,black,transparent_70%)]" />
-          <div className="relative grid w-full items-center gap-12 px-5 pb-16 pt-14 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:pb-20 lg:pt-20">
-            <div className="animate-fade-up justify-self-start">
+          <div className="relative mx-auto grid w-full max-w-[1240px] items-center gap-12 px-5 pb-16 pt-14 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:pb-20 lg:pt-20">
+            <div className="animate-fade-up">
               <span className="inline-flex items-center gap-2 rounded-md border border-accent/25 bg-accent/[0.06] px-3 py-1.5 text-[10px] font-semibold text-accent">
                 <Sparkles className="h-3 w-3" /> Educação financeira para iniciantes
               </span>
-              <h1 className="mt-6 max-w-[720px] text-[44px] font-medium leading-[1.04] tracking-[-0.045em] text-neutral-100 sm:text-[58px] lg:text-[62px]">
+              <h1 className="mt-6 max-w-[720px] text-[44px] font-medium leading-[1.04] tracking-[-0.045em] text-neutral-100 sm:text-[58px] lg:text-[66px]">
                 Aprenda a investir
                 <br />
                 <span className="text-accent">antes de colocar seu dinheiro em risco.</span>
               </h1>
-              <p className="mt-6 max-w-[520px] text-[15px] leading-7 text-neutral-400">
+              <p className="mt-6 max-w-[600px] text-[15px] leading-7 text-neutral-400">
                 Aulas rápidas, desafios interativos e simulações com dinheiro fictício para você
                 entender o mercado de verdade.
               </p>
@@ -82,12 +82,6 @@ export default function LandingPage() {
                   Explorar o mercado
                 </a>
               </div>
-              <p className="mt-4 text-[11px] text-neutral-500">
-                Já tenho uma conta?{" "}
-                <Link href="/entrar" className="font-semibold text-accent hover:underline">
-                  Entrar
-                </Link>
-              </p>
               <p className="mt-6 inline-flex items-center gap-2 text-[11px] text-neutral-500">
                 <ShieldCheck className="h-4 w-4 text-accent" />
                 Conteúdo educacional. Sem promessas. Sem dinheiro real.
@@ -97,7 +91,7 @@ export default function LandingPage() {
             <div className="relative mx-auto w-full max-w-[540px] animate-fade-up lg:mx-0 lg:justify-self-end">
               <div className="absolute -inset-10 rounded-full bg-accent/[0.06] blur-3xl" aria-hidden="true" />
 
-              <div className="relative ml-auto w-[74%] rounded-xl border border-white/10 bg-[#121212]/90 p-4 shadow-2xl backdrop-blur">
+              <div className="relative z-10 ml-auto w-[56%] rounded-xl border border-white/10 bg-[#121212]/90 p-4 shadow-2xl backdrop-blur">
                 <div className="flex items-start gap-3">
                   <div className="grid h-9 w-9 place-items-center rounded-lg bg-accent/10 text-accent">
                     <BookIcon />
@@ -110,7 +104,7 @@ export default function LandingPage() {
                 </div>
               </div>
 
-              <div className="relative mt-4 rounded-2xl border border-white/10 bg-[#111111]/95 p-6 shadow-2xl sm:p-7">
+              <div className="relative -mt-4 rounded-2xl border border-white/10 bg-[#111111]/95 p-6 shadow-2xl sm:p-7">
                 <div className="flex items-center gap-1.5">
                   <span className="h-1.5 w-1.5 rounded-full bg-white/20" />
                   <span className="h-1.5 w-1.5 rounded-full bg-white/20" />
@@ -160,7 +154,7 @@ export default function LandingPage() {
                 </div>
               </div>
 
-              <div className="absolute -bottom-5 left-0 rounded-xl border border-white/10 bg-[#141414]/95 px-4 py-3 shadow-xl backdrop-blur">
+              <div className="absolute -bottom-6 -left-8 rounded-xl border border-white/10 bg-[#141414]/95 px-4 py-3 shadow-xl backdrop-blur">
                 <div className="flex items-center gap-3">
                   <span className="grid h-8 w-8 place-items-center rounded-lg bg-accent/10 text-accent">
                     <TrendingUp className="h-4 w-4" />
