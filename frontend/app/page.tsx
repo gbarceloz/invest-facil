@@ -52,7 +52,7 @@ export default function LandingPage() {
         <section id="aprender" className="relative overflow-hidden bg-[#090909]">
           <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
             <div
-              className="absolute inset-0 bg-contain bg-center bg-no-repeat opacity-60 blur-[12px] brightness-[1.12] contrast-[1.05]"
+              className="absolute inset-0 bg-contain bg-center bg-no-repeat opacity-60 blur-[6px] brightness-[1.12] contrast-[1.05]"
               style={{ backgroundImage: "url('/brand/hero-smartphone.jpg')" }}
             />
             <div className="absolute inset-0 bg-gradient-to-r from-[#090909] via-[#090909]/10 to-[#090909]" />
