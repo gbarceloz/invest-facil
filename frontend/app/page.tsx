@@ -49,11 +49,19 @@ export default function LandingPage() {
       </header>
 
       <main>
-        <section id="aprender" className="relative overflow-hidden">
+        <section id="aprender" className="relative overflow-hidden bg-[#090909]">
+          <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+            <div
+              className="absolute left-1/2 top-1/2 h-[125%] w-[125%] -translate-x-1/2 -translate-y-1/2 bg-cover bg-center opacity-40 blur-2xl"
+              style={{ backgroundImage: "url('/brand/hero-smartphone.jpg')" }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#090909] via-[#090909]/40 to-[#090909]" />
+            <div className="absolute inset-0 bg-[radial-gradient(46rem_30rem_at_50%_50%,transparent,rgba(9,9,9,0.3))]" />
+          </div>
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(60rem_42rem_at_75%_15%,rgba(250,204,21,0.07),transparent_65%)]" />
           <div className="pointer-events-none absolute inset-0 opacity-[0.16] [background-image:linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:72px_72px] [mask-image:radial-gradient(ellipse_at_70%_20%,black,transparent_70%)]" />
-          <div className="container-page relative grid items-center gap-12 pb-16 pt-14 lg:grid-cols-[1.1fr_0.9fr] lg:pb-20 lg:pt-20">
-            <div className="animate-fade-up">
+          <div className="relative grid w-full items-center gap-12 px-5 pb-16 pt-14 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:pb-20 lg:pt-20">
+            <div className="animate-fade-up justify-self-start">
               <span className="inline-flex items-center gap-2 rounded-md border border-accent/25 bg-accent/[0.06] px-3 py-1.5 text-[10px] font-semibold text-accent">
                 <Sparkles className="h-3 w-3" /> Educação financeira para iniciantes
               </span>
