@@ -13,6 +13,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { Logo } from "@/components/logo";
+import { HeroBackdrop, Reveal, ScrollProgress } from "@/components/scroll-effects";
 import { Disclaimer } from "@/components/ui";
 
 const JOURNEY = [
@@ -42,6 +43,7 @@ const STEPS = [
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#090909]">
+      <ScrollProgress />
       <header className="border-b border-white/[0.07]">
         <div className="flex h-16 w-full items-center px-5 sm:px-8">
           <Logo />
@@ -50,21 +52,14 @@ export default function LandingPage() {
 
       <main>
         <section id="aprender" className="relative overflow-hidden bg-[#090909]">
-          <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-            <div
-              className="absolute inset-0 bg-contain bg-center bg-no-repeat opacity-60 blur-[4px] brightness-[1.12] contrast-[1.05]"
-              style={{ backgroundImage: "url('/brand/hero-smartphone.jpg')" }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#090909] via-[#090909]/10 to-[#090909]" />
-            <div className="absolute inset-0 bg-[radial-gradient(46rem_30rem_at_50%_50%,transparent,rgba(9,9,9,0.1))]" />
-          </div>
+          <HeroBackdrop />
           <div className="pointer-events-none absolute inset-0 opacity-[0.16] [background-image:linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:72px_72px] [mask-image:radial-gradient(ellipse_at_70%_20%,black,transparent_70%)]" />
           <div className="relative mx-auto grid w-full max-w-[1240px] items-center gap-12 px-5 pb-16 pt-14 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:pb-20 lg:pt-20">
-            <div className="animate-fade-up">
+            <div className="hero-enter">
               <span className="inline-flex items-center gap-2 rounded-md border border-accent/25 bg-accent/[0.06] px-3 py-1.5 text-[10px] font-semibold text-accent">
                 <Sparkles className="h-3 w-3" /> Educação financeira para iniciantes
               </span>
-              <h1 className="mt-6 max-w-[720px] text-[44px] font-medium leading-[1.04] tracking-[-0.045em] text-neutral-100 sm:text-[58px] lg:text-[66px]">
+              <h1 className="mt-6 max-w-[720px] text-balance text-[44px] font-medium leading-[1.04] tracking-[-0.045em] text-neutral-100 sm:text-[58px] lg:text-[66px]">
                 Aprenda a investir
                 <br />
                 <span className="text-accent">antes de colocar seu dinheiro em risco.</span>
@@ -87,7 +82,11 @@ export default function LandingPage() {
               </p>
             </div>
 
-            <div className="relative mx-auto w-full max-w-[540px] animate-fade-up lg:mx-0 lg:justify-self-end">
+            <Reveal
+              variant="right"
+              delay={120}
+              className="relative mx-auto w-full max-w-[540px] lg:mx-0 lg:justify-self-end"
+            >
               <div className="relative z-10 ml-auto w-[56%] rounded-xl border border-white/10 bg-[#121212]/90 p-4 shadow-2xl backdrop-blur">
                 <div className="flex items-start gap-3">
                   <div className="grid h-9 w-9 place-items-center rounded-lg bg-accent/10 text-accent">
@@ -162,38 +161,47 @@ export default function LandingPage() {
                   </div>
                 </div>
               </div>
-            </div>
+            </Reveal>
           </div>
         </section>
 
         <section id="como-funciona" className="border-y border-white/[0.06] bg-[#0c0c0c]">
           <div className="container-page py-16 text-center sm:py-20">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">Como funciona</p>
-            <h2 className="mx-auto mt-4 max-w-2xl text-[32px] font-medium tracking-[-0.04em] text-neutral-100 sm:text-[42px]">
-              Um próximo passo claro. Sempre.
-            </h2>
-            <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-neutral-400">
-              Do primeiro conceito à primeira decisão simulada, você aprende no seu ritmo — com
-              quizzes que verificam entendimento, não cliques.
-            </p>
+            <Reveal variant="up">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">Como funciona</p>
+              <h2 className="mx-auto mt-4 max-w-2xl text-balance text-[32px] font-medium tracking-[-0.04em] text-neutral-100 sm:text-[42px]">
+                Um próximo passo claro. Sempre.
+              </h2>
+              <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-neutral-400">
+                Do primeiro conceito à primeira decisão simulada, você aprende no seu ritmo — com
+                quizzes que verificam entendimento, não cliques.
+              </p>
+            </Reveal>
 
             <div className="mt-12 grid gap-4 text-left md:grid-cols-3">
-              {STEPS.map((step) => (
-                <div key={step.number} className="rounded-xl border border-white/[0.07] bg-[#111111] p-6">
-                  <span className="text-[10px] font-semibold tracking-[0.16em] text-accent">{step.number}</span>
-                  <h3 className="mt-5 text-[15px] font-semibold text-neutral-100">{step.title}</h3>
-                  <p className="mt-2 text-[12px] leading-6 text-neutral-400">{step.description}</p>
-                </div>
+              {STEPS.map((step, index) => (
+                <Reveal
+                  key={step.number}
+                  variant="up"
+                  delay={index * 90}
+                  className="h-full"
+                >
+                  <div className="h-full rounded-xl border border-white/[0.07] bg-[#111111] p-6 transition duration-300 hover:-translate-y-0.5 hover:border-accent/20 hover:bg-[#141414]">
+                    <span className="text-[10px] font-semibold tracking-[0.16em] text-accent">{step.number}</span>
+                    <h3 className="mt-5 text-[15px] font-semibold text-neutral-100">{step.title}</h3>
+                    <p className="mt-2 text-[12px] leading-6 text-neutral-400">{step.description}</p>
+                  </div>
+                </Reveal>
               ))}
             </div>
           </div>
         </section>
 
         <section id="modulos" className="container-page py-16 sm:py-20">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <Reveal variant="up" className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">Dois módulos</p>
-              <h2 className="mt-3 text-[30px] font-medium tracking-[-0.04em] text-neutral-100 sm:text-[38px]">
+              <h2 className="mt-3 text-balance text-[30px] font-medium tracking-[-0.04em] text-neutral-100 sm:text-[38px]">
                 O que você precisa entender, na ordem certa.
               </h2>
             </div>
@@ -201,10 +209,11 @@ export default function LandingPage() {
               Nada de dez categorias ou gráficos decorativos. Cada módulo tem uma promessa simples:
               explicar bem.
             </p>
-          </div>
+          </Reveal>
 
           <div className="mt-9 grid gap-4 lg:grid-cols-2">
-            <Link href="/app/mercado-financeiro" className="group rounded-xl border border-white/[0.08] bg-[#111111] p-6 transition hover:border-accent/25">
+            <Reveal variant="up" delay={80} className="h-full">
+            <Link href="/app/mercado-financeiro" className="group flex h-full flex-col rounded-xl border border-white/[0.08] bg-[#111111] p-6 transition duration-300 hover:-translate-y-1 hover:border-accent/25 hover:bg-[#141414] hover:shadow-[0_18px_40px_-24px_rgba(0,0,0,0.9)]">
               <div className="flex items-start justify-between">
                 <div className="grid h-10 w-10 place-items-center rounded-lg bg-accent/10 text-accent">
                   <LineChart className="h-5 w-5" />
@@ -223,8 +232,10 @@ export default function LandingPage() {
                 ))}
               </div>
             </Link>
+            </Reveal>
 
-            <Link href="/app/bitcoin" className="group rounded-xl border border-white/[0.08] bg-[#111111] p-6 transition hover:border-accent/25">
+            <Reveal variant="up" delay={160} className="h-full">
+            <Link href="/app/bitcoin" className="group flex h-full flex-col rounded-xl border border-white/[0.08] bg-[#111111] p-6 transition duration-300 hover:-translate-y-1 hover:border-accent/25 hover:bg-[#141414] hover:shadow-[0_18px_40px_-24px_rgba(0,0,0,0.9)]">
               <div className="flex items-start justify-between">
                 <div className="grid h-10 w-10 place-items-center rounded-lg bg-accent/10 text-accent">
                   <Bitcoin className="h-5 w-5" />
@@ -243,13 +254,15 @@ export default function LandingPage() {
                 ))}
               </div>
             </Link>
+            </Reveal>
           </div>
         </section>
 
         <section className="container-page pb-20 text-center">
+          <Reveal variant="zoom">
           <div className="mx-auto max-w-2xl rounded-xl border border-white/[0.07] bg-[#111111] px-6 py-10">
             <CircleDollarSign className="mx-auto h-6 w-6 text-accent" />
-            <h2 className="mt-4 text-[28px] font-medium tracking-[-0.04em] text-neutral-100">
+            <h2 className="mt-4 text-balance text-[28px] font-medium tracking-[-0.04em] text-neutral-100">
               Seu primeiro passo não precisa ser um investimento.
             </h2>
             <p className="mx-auto mt-3 max-w-lg text-[13px] leading-6 text-neutral-400">
@@ -259,6 +272,7 @@ export default function LandingPage() {
               Criar minha conta gratuita <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
+          </Reveal>
           <Disclaimer className="mx-auto mt-8 max-w-2xl text-[11px]" />
         </section>
       </main>
