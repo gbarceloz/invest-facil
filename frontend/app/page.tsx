@@ -41,7 +41,7 @@ const STEPS = [
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[#090909]">
       <header className="border-b border-white/[0.07]">
         <div className="flex h-16 w-full items-center px-5 sm:px-8">
           <Logo />
@@ -58,7 +58,6 @@ export default function LandingPage() {
             <div className="absolute inset-0 bg-gradient-to-r from-[#090909] via-[#090909]/10 to-[#090909]" />
             <div className="absolute inset-0 bg-[radial-gradient(46rem_30rem_at_50%_50%,transparent,rgba(9,9,9,0.1))]" />
           </div>
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(60rem_42rem_at_75%_15%,rgba(250,204,21,0.07),transparent_65%)]" />
           <div className="pointer-events-none absolute inset-0 opacity-[0.16] [background-image:linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:72px_72px] [mask-image:radial-gradient(ellipse_at_70%_20%,black,transparent_70%)]" />
           <div className="relative mx-auto grid w-full max-w-[1240px] items-center gap-12 px-5 pb-16 pt-14 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:pb-20 lg:pt-20">
             <div className="animate-fade-up">
@@ -89,8 +88,6 @@ export default function LandingPage() {
             </div>
 
             <div className="relative mx-auto w-full max-w-[540px] animate-fade-up lg:mx-0 lg:justify-self-end">
-              <div className="absolute -inset-10 rounded-full bg-accent/[0.06] blur-3xl" aria-hidden="true" />
-
               <div className="relative z-10 ml-auto w-[56%] rounded-xl border border-white/10 bg-[#121212]/90 p-4 shadow-2xl backdrop-blur">
                 <div className="flex items-start gap-3">
                   <div className="grid h-9 w-9 place-items-center rounded-lg bg-accent/10 text-accent">
