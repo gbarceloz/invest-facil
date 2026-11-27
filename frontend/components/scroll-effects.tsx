@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/format";
 
 type RevealVariant = "up" | "down" | "left" | "right" | "zoom" | "fade";
@@ -12,26 +12,15 @@ function reducedMotion() {
 }
 
 /**
- * Revela o conteúdo quando ele entra na viewport. O estado inicial fica no
- * HTML (data-visible=false), então não há salto de layout; o observer só
- * troca o atributo. Com movimento reduzido, o conteúdo aparece direto.
+ * Observa o elemento e informa quando ele entra na viewport. Com movimento
+ * reduzido — ou sem IntersectionObserver — considera visível de imediato.
  */
-export function Reveal({
-  children,
-  variant = "up",
-  delay = 0,
-  className,
-  once = true,
+function useInView<T extends HTMLElement>(
   threshold = 0.12,
-}: {
-  children: React.ReactNode;
-  variant?: RevealVariant;
-  delay?: number;
-  className?: string;
-  once?: boolean;
-  threshold?: number;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
+  rootMargin = "0px 0px -8% 0px",
+  once = true,
+) {
+  const ref = useRef<T>(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -50,11 +39,36 @@ export function Reveal({
           setVisible(false);
         }
       },
-      { threshold, rootMargin: "0px 0px -8% 0px" },
+      { threshold, rootMargin },
     );
     observer.observe(node);
     return () => observer.disconnect();
-  }, [once, threshold]);
+  }, [once, threshold, rootMargin]);
+
+  return { ref, visible };
+}
+
+/**
+ * Revela o conteúdo quando ele entra na viewport. O estado inicial fica no
+ * HTML (data-visible=false), então não há salto de layout; o observer só
+ * troca o atributo.
+ */
+export function Reveal({
+  children,
+  variant = "up",
+  delay = 0,
+  className,
+  once = true,
+  threshold = 0.12,
+}: {
+  children: React.ReactNode;
+  variant?: RevealVariant;
+  delay?: number;
+  className?: string;
+  once?: boolean;
+  threshold?: number;
+}) {
+  const { ref, visible } = useInView<HTMLDivElement>(threshold, "0px 0px -8% 0px", once);
 
   return (
     <div
@@ -65,6 +79,157 @@ export function Reveal({
       className={cn(className)}
     >
       {children}
+    </div>
+  );
+}
+
+/**
+ * Título que "carrega" palavra por palavra, cada uma subindo de dentro de uma
+ * máscara. O atraso entre palavras é controlado por `step`.
+ */
+export function SplitText({
+  text,
+  className,
+  delay = 0,
+  step = 45,
+}: {
+  text: string;
+  className?: string;
+  delay?: number;
+  step?: number;
+}) {
+  const { ref, visible } = useInView<HTMLSpanElement>(0.2, "0px 0px -6% 0px");
+  const words = text.split(" ");
+
+  return (
+    <span
+      ref={ref}
+      data-split
+      data-visible={visible ? "true" : "false"}
+      className={cn("inline", className)}
+    >
+      {words.map((word, index) => (
+        <Fragment key={`${word}-${index}`}>
+          <span className="split-word">
+            <span
+              style={{ "--i": index, "--base": `${delay}ms`, "--step": `${step}ms` } as React.CSSProperties}
+            >
+              {word}
+            </span>
+          </span>
+          {index < words.length - 1 ? " " : null}
+        </Fragment>
+      ))}
+    </span>
+  );
+}
+
+/**
+ * Aplica uma entrada escalonada aos filhos diretos quando o grupo entra na
+ * viewport. Os atrasos são definidos via CSS (`--step` + nth-child).
+ */
+export function Stagger({
+  children,
+  className,
+  step = 60,
+  threshold = 0.3,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  step?: number;
+  threshold?: number;
+}) {
+  const { ref, visible } = useInView<HTMLDivElement>(threshold);
+
+  return (
+    <div
+      ref={ref}
+      data-stagger
+      data-visible={visible ? "true" : "false"}
+      style={{ "--step": `${step}ms` } as React.CSSProperties}
+      className={cn(className)}
+    >
+      {children}
+    </div>
+  );
+}
+
+/**
+ * Número que conta de zero até o valor quando aparece na tela.
+ */
+export function Counter({
+  value,
+  pad = 0,
+  prefix = "",
+  suffix = "",
+  duration = 1200,
+  className,
+}: {
+  value: number;
+  pad?: number;
+  prefix?: string;
+  suffix?: string;
+  duration?: number;
+  className?: string;
+}) {
+  const { ref, visible } = useInView<HTMLSpanElement>(0.5);
+  // O SSR entrega o valor final (correto sem JavaScript); a contagem só
+  // começa quando o número entra na viewport.
+  const [display, setDisplay] = useState(value);
+  const started = useRef(false);
+
+  useEffect(() => {
+    if (!visible || started.current) return;
+    started.current = true;
+    if (reducedMotion()) {
+      setDisplay(value);
+      return;
+    }
+    setDisplay(0);
+    let frame = 0;
+    const start = performance.now();
+    const tick = (now: number) => {
+      const progress = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setDisplay(Math.round(value * eased));
+      if (progress < 1) frame = window.requestAnimationFrame(tick);
+    };
+    frame = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frame);
+  }, [visible, value, duration]);
+
+  return (
+    <span ref={ref} className={cn(className)}>
+      {prefix}
+      {String(display).padStart(pad, "0")}
+      {suffix}
+    </span>
+  );
+}
+
+/**
+ * Faixa horizontal infinita com os temas da plataforma. Decorativa: o mesmo
+ * conteúdo aparece de forma acessível na seção de módulos.
+ */
+export function Marquee({ items }: { items: string[] }) {
+  const row = [...items, ...items];
+
+  return (
+    <div
+      className="marquee relative overflow-hidden border-y border-white/[0.07] bg-[#0b0b0b] py-4"
+      aria-hidden="true"
+    >
+      <div className="marquee-track items-center">
+        {row.map((item, index) => (
+          <span
+            key={`${item}-${index}`}
+            className="flex shrink-0 items-center gap-8 pr-8 text-[10px] font-semibold uppercase tracking-[0.24em] text-neutral-500"
+          >
+            {item}
+            <span className="h-1 w-1 rotate-45 bg-accent/60" />
+          </span>
+        ))}
+      </div>
     </div>
   );
 }
