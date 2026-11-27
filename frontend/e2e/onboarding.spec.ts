@@ -11,7 +11,7 @@ test.describe("Jornada B — onboarding conversacional", () => {
     });
     await page.goto("/");
 
-    await page.getByRole("link", { name: /Começar agora/i }).click();
+    await page.getByRole("link", { name: /Começar minha jornada/i }).click();
     await expect(page).toHaveURL(/\/comecar$/);
 
     await page.getByLabel("Seu nome").fill("Marina Teste");
