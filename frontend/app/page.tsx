@@ -52,11 +52,11 @@ export default function LandingPage() {
         <section id="aprender" className="relative overflow-hidden bg-[#090909]">
           <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
             <div
-              className="absolute inset-0 bg-contain bg-center bg-no-repeat opacity-55 blur-[18px] brightness-110 contrast-105"
+              className="absolute inset-0 bg-contain bg-center bg-no-repeat opacity-60 blur-[12px] brightness-115 contrast-105"
               style={{ backgroundImage: "url('/brand/hero-smartphone.jpg')" }}
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#090909] via-[#090909]/15 to-[#090909]" />
-            <div className="absolute inset-0 bg-[radial-gradient(46rem_30rem_at_50%_50%,transparent,rgba(9,9,9,0.15))]" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#090909] via-[#090909]/10 to-[#090909]" />
+            <div className="absolute inset-0 bg-[radial-gradient(46rem_30rem_at_50%_50%,transparent,rgba(9,9,9,0.1))]" />
           </div>
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(60rem_42rem_at_75%_15%,rgba(250,204,21,0.07),transparent_65%)]" />
           <div className="pointer-events-none absolute inset-0 opacity-[0.16] [background-image:linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:72px_72px] [mask-image:radial-gradient(ellipse_at_70%_20%,black,transparent_70%)]" />
