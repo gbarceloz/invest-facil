@@ -43,22 +43,8 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen">
       <header className="border-b border-white/[0.07]">
-        <div className="container-page flex h-16 items-center justify-between gap-6">
+        <div className="flex h-16 w-full items-center px-5 sm:px-8">
           <Logo />
-          <nav className="hidden items-center gap-7 text-[12px] font-medium text-neutral-400 md:flex" aria-label="Navegação">
-            <a href="#aprender" className="transition hover:text-neutral-100">Aprender</a>
-            <a href="#modulos" className="transition hover:text-neutral-100">Mercado</a>
-            <a href="#modulos" className="transition hover:text-neutral-100">Bitcoin</a>
-            <a href="#como-funciona" className="transition hover:text-neutral-100">Sobre</a>
-          </nav>
-          <div className="flex items-center gap-3">
-            <Link href="/entrar" className="hidden text-[12px] font-medium text-neutral-300 transition hover:text-neutral-50 sm:block">
-              Entrar
-            </Link>
-            <Link href="/comecar" className="btn-primary uppercase tracking-[0.06em]">
-              COMEÇAR AGORA
-            </Link>
-          </div>
         </div>
       </header>
 
