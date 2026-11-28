@@ -74,7 +74,6 @@ verde para indicadores positivos, tipografia geométrica e composições limpas.
 - `Counter` — número que conta ao entrar na viewport; SSR entrega o valor final.
 - `JourneyTimeline` — linha preenchida pelo scroll, com marcos acendendo em
   sequência.
-- `Marquee` — faixa decorativa contínua.
 - `AutoReveal` — observador global das páginas internas; ativa
   `data-reveal-auto` e `data-stagger-auto` sem transformar cada card em
   componente cliente.
@@ -83,7 +82,7 @@ verde para indicadores positivos, tipografia geométrica e composições limpas.
 ### Onde foi aplicado
 
 - **Home**: hero com foto em `next/image` (preload + `fetchPriority`), título
-  imediato, marquee, manifesto, contadores, linha do tempo, nova seção
+  imediato, manifesto, contadores, linha do tempo, nova seção
   “Plataforma” (benefícios + gamificação), módulos e CTA.
 - **Dashboard**: header, hero, saúde financeira, progresso, próxima missão,
   mercado e timeline com reveal curto e stagger.

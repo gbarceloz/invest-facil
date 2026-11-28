@@ -23,7 +23,6 @@ import { JourneyTimeline, type JourneyStep } from "@/components/journey-timeline
 import {
   Counter,
   HeroBackdrop,
-  Marquee,
   Reveal,
   ScrollProgress,
   SplitIntro,
@@ -67,8 +66,6 @@ const STATS = [
   { value: 100, pad: 0, suffix: "%", label: "gratuito, sem cartão" },
   { value: 0, pad: 2, suffix: "", label: "promessas de retorno" },
 ];
-
-const TOPICS = ["Inflação", "Selic", "Renda fixa", "Ações", "ETFs", "Bitcoin", "Blockchain", "Custódia", "Risco", "Liquidez"];
 
 const FEATURES = [
   {
@@ -226,8 +223,6 @@ export default function LandingPage() {
             </Reveal>
           </div>
         </section>
-
-        <Marquee items={TOPICS} />
 
         <section className="relative overflow-hidden">
           <div className="container-page py-20 text-center sm:py-28">
