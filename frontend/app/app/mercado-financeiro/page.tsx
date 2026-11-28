@@ -57,7 +57,7 @@ export default function MercadoFinanceiroPage() {
 
   return (
     <div className="mx-auto max-w-3xl pb-8">
-      <header className="border-b border-white/[0.07] pb-7">
+      <header data-reveal-auto="up" className="border-b border-white/[0.07] pb-7">
         <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-accent">Módulo 01</p>
         <h1 className="mt-3 text-[30px] font-medium tracking-[-0.04em] text-neutral-100 sm:text-[36px]">Mercado financeiro</h1>
         <p className="mt-3 max-w-2xl text-[13px] leading-6 text-neutral-400">

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/format";
 
@@ -91,7 +92,7 @@ export function SplitText({
   text,
   className,
   delay = 0,
-  step = 45,
+  step = 50,
 }: {
   text: string;
   className?: string;
@@ -125,13 +126,48 @@ export function SplitText({
 }
 
 /**
+ * Versão do título para o hero: a animação roda no primeiro paint, via CSS,
+ * sem esperar hidratação. Isso preserva o LCP e dá ritmo imediato à página.
+ */
+export function SplitIntro({
+  text,
+  className,
+  delay = 0,
+  step = 45,
+}: {
+  text: string;
+  className?: string;
+  delay?: number;
+  step?: number;
+}) {
+  const words = text.split(" ");
+
+  return (
+    <span data-split-intro className={cn("inline", className)}>
+      {words.map((word, index) => (
+        <Fragment key={`${word}-${index}`}>
+          <span className="split-word">
+            <span
+              style={{ "--i": index, "--base": `${delay}ms`, "--step": `${step}ms` } as React.CSSProperties}
+            >
+              {word}
+            </span>
+          </span>
+          {index < words.length - 1 ? " " : null}
+        </Fragment>
+      ))}
+    </span>
+  );
+}
+
+/**
  * Aplica uma entrada escalonada aos filhos diretos quando o grupo entra na
  * viewport. Os atrasos são definidos via CSS (`--step` + nth-child).
  */
 export function Stagger({
   children,
   className,
-  step = 60,
+  step = 80,
   threshold = 0.3,
 }: {
   children: React.ReactNode;
@@ -162,7 +198,7 @@ export function Counter({
   pad = 0,
   prefix = "",
   suffix = "",
-  duration = 1200,
+  duration = 1600,
   className,
 }: {
   value: number;
@@ -235,11 +271,11 @@ export function Marquee({ items }: { items: string[] }) {
 }
 
 /**
- * Barra fina de progresso de leitura no topo. Usa transform para não
- * recalcular layout a cada frame.
+ * Barra fina de progresso de leitura no topo. Escreve direto no DOM para não
+ * provocar re-render a cada frame de scroll.
  */
 export function ScrollProgress() {
-  const [progress, setProgress] = useState(0);
+  const barRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let frame = 0;
@@ -247,7 +283,8 @@ export function ScrollProgress() {
       frame = 0;
       const doc = document.documentElement;
       const max = doc.scrollHeight - window.innerHeight;
-      setProgress(max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0);
+      const progress = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+      if (barRef.current) barRef.current.style.transform = `scaleX(${progress})`;
     };
     const schedule = () => {
       if (!frame) frame = window.requestAnimationFrame(update);
@@ -265,8 +302,9 @@ export function ScrollProgress() {
   return (
     <div className="pointer-events-none fixed inset-x-0 top-0 z-[60] h-[2px]" aria-hidden="true">
       <div
+        ref={barRef}
         className="h-full origin-left bg-accent transition-transform duration-150 ease-out"
-        style={{ transform: `scaleX(${progress})` }}
+        style={{ transform: "scaleX(0)" }}
       />
     </div>
   );
@@ -302,11 +340,16 @@ export function HeroBackdrop() {
 
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-      <div
-        ref={imageRef}
-        className="absolute -inset-[6%] bg-contain bg-center bg-no-repeat opacity-60 blur-[4px] brightness-[1.12] contrast-[1.05]"
-        style={{ backgroundImage: "url('/brand/hero-smartphone.jpg')" }}
-      />
+      <div ref={imageRef} className="absolute -inset-[6%]">
+        <Image
+          src="/brand/hero-smartphone.jpg"
+          alt=""
+          fill
+          preload
+          sizes="100vw"
+          className="hero-photo object-contain object-center blur-[4px] brightness-[1.12] contrast-[1.05]"
+        />
+      </div>
       <div className="absolute inset-0 bg-gradient-to-r from-[#090909] via-[#090909]/10 to-[#090909]" />
       <div className="absolute inset-0 bg-[radial-gradient(46rem_30rem_at_50%_50%,transparent,rgba(9,9,9,0.1))]" />
     </div>

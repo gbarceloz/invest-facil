@@ -1,16 +1,8 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import {
-  Area,
-  AreaChart,
-  CartesianGrid,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -26,21 +18,20 @@ import {
 import { api } from "@/lib/api";
 import { useAppData } from "@/lib/app-data";
 import type { BitcoinMarketResponse, Category } from "@/lib/types";
+import { type ChartRange } from "@/lib/chart";
 import { cn, compactMoney, compactUsd, dateTime, money, relativeTime, signedPercent, usd } from "@/lib/format";
 import { LevelCards } from "@/components/learning-track-list";
 import { ProgressBar } from "@/components/progress";
 import { Badge } from "@/components/page";
 import { Alert, Disclaimer, Skeleton, Spinner } from "@/components/ui";
 
-type ChartRange = "24h" | "7d";
-
-function chartLabel(timestamp: number, range: ChartRange) {
-  const date = new Date(timestamp);
-  if (range === "24h") {
-    return date.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
-  }
-  return date.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" });
-}
+const BitcoinPriceChart = dynamic(
+  () => import("@/components/charts/bitcoin-price-chart").then((mod) => mod.BitcoinPriceChart),
+  {
+    ssr: false,
+    loading: () => <Skeleton className="h-full w-full" />,
+  },
+);
 
 export default function BitcoinPage() {
   const { progress } = useAppData();
@@ -98,7 +89,7 @@ export default function BitcoinPage() {
 
   return (
     <div className="mx-auto max-w-4xl pb-8">
-      <header className="relative overflow-hidden border-b border-white/[0.07] pb-7 pt-0">
+      <header data-reveal-auto="up" className="relative overflow-hidden border-b border-white/[0.07] pb-7 pt-0">
         <div className="pointer-events-none absolute -right-20 -top-32 h-72 w-72 rounded-full bg-accent/10 blur-3xl" />
         <div className="relative grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
           <div>
@@ -185,7 +176,7 @@ export default function BitcoinPage() {
         </div>
       </header>
 
-      <section className="grid gap-5 py-7 lg:grid-cols-[1.1fr_0.9fr]">
+      <section data-reveal-auto="up" className="grid gap-5 py-7 lg:grid-cols-[1.1fr_0.9fr]">
         <div className="rounded-xl border border-white/[0.08] bg-[#111111] p-5 sm:p-6">
           <div className="flex items-center justify-between gap-3">
             <div>
@@ -222,45 +213,7 @@ export default function BitcoinPage() {
                 </div>
               </div>
             ) : (
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={chartData} margin={{ top: 8, right: 4, bottom: 0, left: 0 }}>
-                  <defs>
-                    <linearGradient id="bitcoinFill" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#facc15" stopOpacity={0.28} />
-                      <stop offset="100%" stopColor="#facc15" stopOpacity={0} />
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid stroke="rgba(255,255,255,0.06)" vertical={false} />
-                  <XAxis
-                    dataKey="time"
-                    tick={{ fill: "#737373", fontSize: 10 }}
-                    tickLine={false}
-                    axisLine={false}
-                    minTickGap={34}
-                    tickFormatter={(value) => chartLabel(Number(value), range)}
-                  />
-                  <YAxis hide domain={["dataMin", "dataMax"]} />
-                  <Tooltip
-                    contentStyle={{
-                      background: "#0b0b0b",
-                      border: "1px solid rgba(255,255,255,0.12)",
-                      borderRadius: 10,
-                      fontSize: 12,
-                    }}
-                    labelFormatter={(value) => chartLabel(Number(value), range)}
-                    formatter={(value) => [usd(Number(value)), "BTC"]}
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="price"
-                    stroke="#facc15"
-                    strokeWidth={2}
-                    fill="url(#bitcoinFill)"
-                    dot={false}
-                    activeDot={{ r: 3, fill: "#facc15", stroke: "#050505" }}
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
+              <BitcoinPriceChart data={chartData} range={range} />
             )}
           </div>
 
@@ -333,7 +286,7 @@ export default function BitcoinPage() {
       </section>
 
       {bitcoinCategories.length > 0 && (
-        <section className="pt-2">
+        <section data-reveal-auto="up" className="pt-2">
           <div className="mb-5 flex items-end justify-between gap-4">
             <div>
               <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500">

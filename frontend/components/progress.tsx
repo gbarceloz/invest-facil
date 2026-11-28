@@ -29,8 +29,11 @@ export function ProgressBar({
         aria-label={label ?? "Progresso"}
       >
         <div
-          className={cn("h-full rounded-full bg-accent transition-all duration-500", barClassName)}
-          style={{ width: `${safe}%` }}
+          className={cn("h-full rounded-full bg-accent", barClassName)}
+          style={{
+            width: `${safe}%`,
+            transition: "width 700ms cubic-bezier(0.22, 1, 0.36, 1)",
+          }}
         />
       </div>
     </div>
@@ -75,7 +78,7 @@ export function LevelRing({
           fill="none"
           strokeDasharray={circumference}
           strokeDashoffset={offset}
-          className="transition-all duration-700"
+          style={{ transition: "stroke-dashoffset 1000ms cubic-bezier(0.22, 1, 0.36, 1)" }}
         />
       </svg>
       <div className="absolute inset-0 grid place-items-center text-center">

@@ -113,7 +113,7 @@ function LessonVideo({
   }
 
   return (
-    <div className="overflow-hidden rounded-xl border border-white/[0.07] bg-black">
+    <div className="overflow-hidden rounded-xl border border-white/[0.07] bg-black" data-reveal-auto="zoom">
       <video
         key={source}
         controls
@@ -287,7 +287,7 @@ export default function LessonPage() {
   if (locked) {
     return (
       <div className="mx-auto max-w-xl">
-        <div className="card p-6 text-center sm:p-8">
+        <div data-reveal-auto="up" className="card p-6 text-center sm:p-8">
           <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-white/[0.05] text-neutral-300">
             <Lock className="h-6 w-6" />
           </div>
@@ -335,7 +335,7 @@ export default function LessonPage() {
 
   return (
     <div className="space-y-6">
-      <header>
+      <header data-reveal-auto="up">
         <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-accent">
           {lesson.categoryName} · Aula {lesson.order}
         </p>
@@ -408,7 +408,7 @@ export default function LessonPage() {
         </p>
       )}
 
-      <div className="flex flex-col gap-4 rounded-xl border border-white/[0.07] bg-[#111111] p-4 sm:flex-row sm:items-center sm:justify-between">
+      <div data-reveal-auto="up" className="flex flex-col gap-4 rounded-xl border border-white/[0.07] bg-[#111111] p-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="text-[12px] font-medium text-neutral-200">{panelTitle}</p>
           <p id="continuar-ajuda" className="mt-1 max-w-xl text-[10px] leading-5 text-neutral-500">
@@ -428,7 +428,7 @@ export default function LessonPage() {
         </button>
       </div>
 
-      <div className="rounded-xl border border-accent/20 bg-accent/[0.04] px-4 py-3.5">
+      <div data-reveal-auto="fade" className="rounded-xl border border-accent/20 bg-accent/[0.04] px-4 py-3.5">
         <p className="text-[9px] font-semibold uppercase tracking-[0.16em] text-accent">Em uma frase</p>
         <p className="mt-1 text-[12px] leading-6 text-neutral-300">{oneLineSummary(lesson.contentMd)}</p>
       </div>

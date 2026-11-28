@@ -69,7 +69,7 @@ export default function DashboardPage() {
 
   return (
     <div className="mx-auto max-w-4xl space-y-5 pb-8">
-      <header className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+      <header data-reveal-auto="up" className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-neutral-500">
             {today || "—"}
@@ -91,6 +91,7 @@ export default function DashboardPage() {
       </header>
 
       <section
+        data-reveal-auto="up"
         className={cn(
           "relative overflow-hidden rounded-xl border border-white/[0.08] bg-[#111111] p-6 sm:p-7",
           reveal && "onb-enter",
@@ -148,7 +149,7 @@ export default function DashboardPage() {
                   Um plano feito a partir das suas respostas.
                 </h2>
                 <p className="mt-2 max-w-lg text-[12px] leading-6 text-neutral-400">
-                  Responda 13 perguntas rápidas com a Fina. O servidor calcula seu ponto de partida,
+                  Responda 7 perguntas rápidas com a Fina. O servidor calcula seu ponto de partida,
                   e você chega aqui com um painel personalizado — sem números inventados.
                 </p>
                 <div className="mt-5 flex flex-wrap gap-2">
@@ -175,6 +176,7 @@ export default function DashboardPage() {
 
       <div className="grid gap-5 lg:grid-cols-[1.1fr_1fr]">
         <section
+          data-reveal-auto="up"
           className={cn(
             "rounded-xl border border-white/[0.08] bg-[#111111] p-5 sm:p-6",
             reveal && "onb-enter",
@@ -203,6 +205,7 @@ export default function DashboardPage() {
         </section>
 
         <section
+          data-reveal-auto="up"
           className={cn(
             "rounded-xl border border-white/[0.08] bg-[#111111] p-5 sm:p-6",
             reveal && "onb-enter",
@@ -260,7 +263,7 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid gap-5 lg:grid-cols-[1fr_1fr]">
-        <section className="rounded-xl border border-white/[0.08] bg-[#111111] p-5 sm:p-6">
+        <section data-reveal-auto="up" className="rounded-xl border border-white/[0.08] bg-[#111111] p-5 sm:p-6">
           <div className="flex items-center justify-between gap-3">
             <div>
               <h2 className="text-[13px] font-semibold text-neutral-100">Próxima missão</h2>
@@ -304,7 +307,7 @@ export default function DashboardPage() {
           )}
         </section>
 
-        <section className="rounded-xl border border-white/[0.08] bg-[#111111] p-5 sm:p-6">
+        <section data-reveal-auto="up" className="rounded-xl border border-white/[0.08] bg-[#111111] p-5 sm:p-6">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-[13px] font-semibold text-neutral-100">Mercado agora</h2>
@@ -362,7 +365,7 @@ export default function DashboardPage() {
         </section>
       </div>
 
-      <section className="rounded-xl border border-white/[0.08] bg-[#111111] p-5 sm:p-6">
+      <section data-reveal-auto="up" className="rounded-xl border border-white/[0.08] bg-[#111111] p-5 sm:p-6">
         <div className="flex items-center justify-between gap-3">
           <div>
             <h2 className="text-[13px] font-semibold text-neutral-100">Sua trilha</h2>
@@ -377,7 +380,7 @@ export default function DashboardPage() {
             O catálogo aparece aqui assim que a primeira trilha for carregada.
           </p>
         ) : (
-          <ol className="mt-5 space-y-4">
+          <ol data-stagger-auto className="mt-5 space-y-4">
             {timeline.map((item, index) => (
               <li key={item.id} className="grid grid-cols-[auto_1fr_auto] items-center gap-3">
                 <span

@@ -134,7 +134,7 @@ function AprenderContent() {
         </section>
       )}
 
-      <section className="mb-5 rounded-xl border border-white/[0.07] bg-[#111111] p-4">
+      <section data-reveal-auto="up" className="mb-5 rounded-xl border border-white/[0.07] bg-[#111111] p-4">
         <div className="flex items-center justify-between text-[10px] text-neutral-500">
           <span>progresso geral</span>
           <span className="text-accent">{progress?.percent ?? 0}%</span>
