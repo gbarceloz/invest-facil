@@ -63,7 +63,6 @@ const STEPS: JourneyStep[] = [
 
 const STATS = [
   { value: 2, pad: 2, suffix: "", label: "módulos completos" },
-  { value: 100, pad: 0, suffix: "%", label: "gratuito, sem cartão" },
   { value: 0, pad: 2, suffix: "", label: "promessas de retorno" },
 ];
 
@@ -247,7 +246,7 @@ export default function LandingPage() {
 
           <div className="container-page pb-20 sm:pb-28">
             <Reveal variant="up" delay={80}>
-              <div className="grid gap-px overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.06] sm:grid-cols-3">
+              <div className="mx-auto grid max-w-3xl gap-px overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.06] sm:grid-cols-2">
                 {STATS.map((stat) => (
                   <div key={stat.label} className="bg-[#0d0d0d] px-6 py-9 text-center">
                     <p className="text-[42px] font-medium leading-none tracking-[-0.05em] text-neutral-100">
