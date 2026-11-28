@@ -1,16 +1,7 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
-import {
-  Area,
-  AreaChart,
-  CartesianGrid,
-  Legend,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
 import {
   ArrowRight,
   Calculator,
@@ -29,6 +20,14 @@ import { money, percent } from "@/lib/format";
 import type { SavedScenario, ScenarioInput, ScenarioResult } from "@/lib/types";
 import { PageHeader, Stat } from "@/components/page";
 import { Alert, Disclaimer } from "@/components/ui";
+
+const SimulationChart = dynamic(
+  () => import("@/components/charts/simulation-chart").then((mod) => mod.SimulationChart),
+  {
+    ssr: false,
+    loading: () => <div className="h-full w-full animate-pulse rounded-lg bg-white/[0.03]" />,
+  },
+);
 
 const PRESETS = [
   { label: "Conservador", rate: 6 },
@@ -292,7 +291,7 @@ export default function SimulatorPage() {
           </div>
         </section>
 
-        <section className="min-w-0 space-y-5">
+        <section data-reveal-auto="up" className="min-w-0 space-y-5">
           {!result && (
             <div className="card grid min-h-[340px] place-items-center p-8 text-center">
               <div>
@@ -310,7 +309,7 @@ export default function SimulatorPage() {
 
           {result && (
             <>
-              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+              <div data-stagger-auto className="grid gap-3 sm:grid-cols-2">
                 <Stat label="Patrimônio final" value={money(result.finalAmount)} hint="valor nominal" icon={<Wallet className="h-4 w-4" />} tone="accent" />
                 <Stat label="Total investido" value={money(result.investedAmount)} hint="aportes + capital inicial" icon={<PiggyBank className="h-4 w-4" />} />
                 <Stat label="Juros hipotéticos" value={money(result.interestAmount)} hint="diferença para o investido" icon={<TrendingUp className="h-4 w-4" />} />
@@ -323,32 +322,7 @@ export default function SimulatorPage() {
                   <span className="text-[10px] text-muted">Taxa mensal equivalente: {percent(result.monthlyRate, 4)}</span>
                 </div>
                 <div className="mt-4 h-[320px] w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={chartData} margin={{ top: 5, right: 8, left: 0, bottom: 0 }}>
-                      <defs>
-                        <linearGradient id="balance" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#facc15" stopOpacity={0.35} />
-                          <stop offset="95%" stopColor="#facc15" stopOpacity={0} />
-                        </linearGradient>
-                        <linearGradient id="invested" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#a3a3a3" stopOpacity={0.18} />
-                          <stop offset="95%" stopColor="#a3a3a3" stopOpacity={0} />
-                        </linearGradient>
-                      </defs>
-                      <CartesianGrid stroke="rgba(255,255,255,0.07)" vertical={false} />
-                      <XAxis dataKey="label" tick={{ fill: "#a3a3a3", fontSize: 10 }} tickLine={false} axisLine={false} minTickGap={28} />
-                      <YAxis tick={{ fill: "#a3a3a3", fontSize: 10 }} tickLine={false} axisLine={false} tickFormatter={(value) => `R$ ${(Number(value) / 1000).toFixed(0)}k`} width={58} />
-                      <Tooltip
-                        contentStyle={{ background: "#111111", border: "1px solid #2b2b2b", borderRadius: 12, fontSize: 12 }}
-                        labelStyle={{ color: "#a3a3a3" }}
-                        formatter={(value) => money(Number(value ?? 0))}
-                      />
-                      <Legend wrapperStyle={{ fontSize: 11, color: "#a3a3a3" }} />
-                      <Area type="monotone" dataKey="patrimônio" stroke="#facc15" strokeWidth={2} fill="url(#balance)" />
-                      <Area type="monotone" dataKey="investido" stroke="#a3a3a3" strokeWidth={1.5} fill="url(#invested)" />
-                      <Area type="monotone" dataKey="poder de compra" stroke="#d4d4d4" strokeWidth={1.5} fillOpacity={0} />
-                    </AreaChart>
-                  </ResponsiveContainer>
+                  <SimulationChart data={chartData} />
                 </div>
               </div>
 

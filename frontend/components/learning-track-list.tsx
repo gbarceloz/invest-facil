@@ -15,7 +15,7 @@ export function LevelCards({
   const progressBySlug = new Map((progress?.categories ?? []).map((item) => [item.slug, item]));
 
   return (
-    <div className="space-y-3">
+    <div data-stagger-auto className="space-y-3">
       {categories.map((category, index) => {
         const categoryProgress = progressBySlug.get(category.slug);
         const totalLessons = categoryProgress?.totalLessons ?? category.modules.reduce((sum, module) => sum + module.lessonCount, 0);
@@ -81,7 +81,7 @@ export function LearningTrackList({
         const percent = categoryProgress?.percent ?? 0;
 
         return (
-          <section key={category.id} className="py-7 first:pt-6 last:pb-2">
+          <section key={category.id} data-reveal-auto="up" className="py-7 first:pt-6 last:pb-2">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
               <div className="flex items-start gap-4">
                 <span className="mt-1 font-mono text-[11px] font-bold tracking-widest text-accent">

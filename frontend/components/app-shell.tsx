@@ -22,6 +22,7 @@ import { useAuth } from "@/lib/auth";
 import { AppDataProvider, useAppData } from "@/lib/app-data";
 import { cn, dayCount, initials } from "@/lib/format";
 import { resolveFichas, resolveStreak } from "@/lib/learning";
+import { AutoReveal } from "./auto-reveal";
 import { Logo } from "./logo";
 import { ProgressBar } from "./progress";
 import { Alert, Spinner } from "./ui";
@@ -344,6 +345,7 @@ function Shell({ children }: { children: React.ReactNode }) {
 
   return (
     <AppDataProvider>
+      <AutoReveal />
       {focusedLesson ? (
         <FocusedLessonShell>{children}</FocusedLessonShell>
       ) : (

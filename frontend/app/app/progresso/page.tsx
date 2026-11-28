@@ -60,7 +60,7 @@ export default function ProgressPage() {
         }
       />
 
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+      <div data-stagger-auto className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
         <Stat label="Conhecimento" value={`${progress?.quizAverage ?? 0}%`} hint="média nos quizzes" icon={<Target className="h-4 w-4" />} />
         <Stat label="Progresso" value={`${progress?.completedLessons ?? 0}/${progress?.totalLessons ?? 0}`} hint="aulas concluídas" icon={<BookOpen className="h-4 w-4" />} />
         <Stat label="Consistência" value={dayCount(streak.current)} hint={`melhor: ${streak.best}`} icon={<Flame className="h-4 w-4" />} tone="accent" />
@@ -69,7 +69,7 @@ export default function ProgressPage() {
       </div>
 
       <div className="mt-5 grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
-        <section className="card flex flex-col items-center p-6 text-center">
+        <section data-reveal-auto="up" className="card flex flex-col items-center p-6 text-center">
           <LevelRing
             percent={gamification?.progressPercent ?? 0}
             level={gamification?.level.number ?? 1}
@@ -98,7 +98,7 @@ export default function ProgressPage() {
           </div>
         </section>
 
-        <section className="card p-5 sm:p-6">
+        <section data-reveal-auto="up" className="card p-5 sm:p-6">
           <h2 className="text-sm font-bold">Domínio por tema</h2>
           <p className="mt-1 text-xs text-muted">Percentual de aulas concluídas em cada trilha.</p>
           <div className="mt-5 space-y-4">
@@ -118,7 +118,7 @@ export default function ProgressPage() {
       </div>
 
       <div className="mt-5 grid gap-5 lg:grid-cols-2">
-        <section className="card p-5 sm:p-6">
+        <section data-reveal-auto="up" className="card p-5 sm:p-6">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-bold">Atividade recente</h2>
             <span className="text-[11px] text-muted">{progress?.recent.length ?? 0} registros</span>
@@ -143,7 +143,7 @@ export default function ProgressPage() {
           </div>
         </section>
 
-        <section className="card p-5 sm:p-6">
+        <section data-reveal-auto="up" className="card p-5 sm:p-6">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-bold">Histórico de XP</h2>
             <span className="text-[11px] text-muted">últimos 20</span>
@@ -170,7 +170,7 @@ export default function ProgressPage() {
         </section>
       </div>
 
-      <section className="card mt-5 p-5 sm:p-6">
+      <section data-reveal-auto="up" className="card mt-5 p-5 sm:p-6">
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-sm font-bold">Conquistas</h2>
@@ -182,7 +182,7 @@ export default function ProgressPage() {
             <Award className="h-4 w-4" /> {unlocked.length}/{gamification?.achievementsTotal ?? 0}
           </span>
         </div>
-        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div data-stagger-auto className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {(gamification?.achievements ?? []).map((achievement) => (
             <div
               key={achievement.id}

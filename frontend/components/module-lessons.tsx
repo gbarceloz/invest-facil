@@ -96,7 +96,7 @@ export function ModuleSpotlight() {
   const percent = lessons.length === 0 ? 0 : Math.round((done / lessons.length) * 100);
 
   return (
-    <section className="rounded-xl border border-white/[0.08] bg-[#111111] p-5 sm:p-6" aria-labelledby="modulo-01-titulo">
+    <section data-reveal-auto="up" className="rounded-xl border border-white/[0.08] bg-[#111111] p-5 sm:p-6" aria-labelledby="modulo-01-titulo">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <p className="text-[9px] font-semibold uppercase tracking-[0.16em] text-accent">
@@ -124,7 +124,7 @@ export function ModuleSpotlight() {
         </span>
       </div>
 
-      <ol className="mt-4 space-y-1.5">
+      <ol data-stagger-auto className="mt-4 space-y-1.5">
         {lessons.map((lesson, index) => {
           const state = states[index];
           const locked = state === "locked";

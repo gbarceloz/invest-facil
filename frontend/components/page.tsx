@@ -15,7 +15,10 @@ export function PageHeader({
   className?: string;
 }) {
   return (
-    <div className={cn("mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between", className)}>
+    <div
+      data-reveal-auto="up"
+      className={cn("mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between", className)}
+    >
       <div>
         {eyebrow && <p className="eyebrow mb-2">{eyebrow}</p>}
         <h1 className="text-[26px] font-medium tracking-[-0.035em] text-neutral-100 sm:text-[30px]">{title}</h1>

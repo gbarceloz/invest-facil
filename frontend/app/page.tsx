@@ -1,16 +1,22 @@
 import Link from "next/link";
 import {
+  Award,
   ArrowRight,
   Bitcoin,
+  BookOpen,
+  Calculator,
   Check,
   ChevronRight,
   CircleDollarSign,
+  Flame,
   LineChart,
   Lock,
   Play,
   ShieldCheck,
   Sparkles,
   TrendingUp,
+  Trophy,
+  Zap,
 } from "lucide-react";
 import { Logo } from "@/components/logo";
 import { JourneyTimeline, type JourneyStep } from "@/components/journey-timeline";
@@ -20,9 +26,11 @@ import {
   Marquee,
   Reveal,
   ScrollProgress,
+  SplitIntro,
   SplitText,
   Stagger,
 } from "@/components/scroll-effects";
+import { SiteHeader } from "@/components/site-header";
 import { Disclaimer } from "@/components/ui";
 
 const JOURNEY = [
@@ -62,15 +70,35 @@ const STATS = [
 
 const TOPICS = ["Inflação", "Selic", "Renda fixa", "Ações", "ETFs", "Bitcoin", "Blockchain", "Custódia", "Risco", "Liquidez"];
 
+const FEATURES = [
+  {
+    icon: BookOpen,
+    title: "Aulas guiadas",
+    description: "Trilhas curtas, na ordem certa, com quizzes que verificam entendimento — não cliques.",
+  },
+  {
+    icon: Calculator,
+    title: "Simulador sem risco",
+    description: "Teste juros, inflação e aportes com dinheiro fictício antes de decidir qualquer coisa.",
+  },
+  {
+    icon: Trophy,
+    title: "Progresso visível",
+    description: "Acompanhe XP, sequência de estudo e domínio por tema em um painel que reflete o que você fez.",
+  },
+];
+
+const GAMIFICATION = [
+  { icon: Zap, label: "XP por aula", description: "Cada missão concluída soma experiência de verdade." },
+  { icon: Flame, label: "Sequência", description: "Dias seguidos de estudo, sem punição por pausas." },
+  { icon: Award, label: "Conquistas", description: "Marcos de aprendizado, não de cliques ou transações." },
+];
+
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#090909]">
       <ScrollProgress />
-      <header className="sticky top-0 z-50 border-b border-white/[0.07] bg-[#090909]/75 backdrop-blur-xl">
-        <div className="flex h-16 w-full items-center px-5 sm:px-8">
-          <Logo />
-        </div>
-      </header>
+      <SiteHeader />
 
       <main>
         <section id="aprender" className="relative overflow-hidden bg-[#090909]">
@@ -84,10 +112,10 @@ export default function LandingPage() {
                 </span>
               </Reveal>
               <h1 className="mt-6 max-w-[760px] text-[44px] font-medium leading-[1.04] tracking-[-0.045em] text-neutral-100 sm:text-[58px] lg:text-[66px]">
-                <SplitText text="Aprenda a investir" delay={80} step={55} />
+                <SplitIntro text="Aprenda a investir" delay={80} step={55} />
                 <br />
                 <span className="text-accent">
-                  <SplitText text="antes de colocar seu dinheiro em risco." delay={190} step={38} />
+                  <SplitIntro text="antes de colocar seu dinheiro em risco." delay={190} step={38} />
                 </span>
               </h1>
               <Reveal variant="up" delay={260}>
@@ -260,6 +288,72 @@ export default function LandingPage() {
           </div>
         </section>
 
+        <section id="plataforma" className="container-page scroll-mt-24 py-20 sm:py-24">
+          <Reveal
+            variant="up"
+            className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
+          >
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-accent">A plataforma</p>
+              <h2 className="mt-3 max-w-2xl text-[30px] font-medium tracking-[-0.04em] text-neutral-100 sm:text-[42px]">
+                <SplitText text="Aprender, simular e acompanhar — no mesmo lugar." step={30} />
+              </h2>
+            </div>
+            <p className="max-w-sm text-[12px] leading-6 text-neutral-500">
+              Três ferramentas simples, conectadas pelo mesmo objetivo: fazer você entender antes de
+              decidir.
+            </p>
+          </Reveal>
+
+          <div className="mt-10 grid gap-4 md:grid-cols-3">
+            {FEATURES.map((feature, index) => {
+              const Icon = feature.icon;
+              return (
+                <Reveal key={feature.title} variant="up" delay={index * 110} className="h-full">
+                  <div className="group flex h-full flex-col rounded-xl border border-white/[0.08] bg-[#111111] p-6 transition duration-500 hover:-translate-y-1 hover:border-accent/25 hover:bg-[#141414] hover:shadow-[0_24px_60px_-32px_rgba(0,0,0,0.95)]">
+                    <span className="grid h-11 w-11 place-items-center rounded-lg bg-accent/10 text-accent transition duration-500 group-hover:bg-accent group-hover:text-ink-950">
+                      <Icon className="h-5 w-5" />
+                    </span>
+                    <h3 className="mt-6 text-[18px] font-medium tracking-[-0.02em] text-neutral-100">{feature.title}</h3>
+                    <p className="mt-2 text-[12px] leading-6 text-neutral-400">{feature.description}</p>
+                  </div>
+                </Reveal>
+              );
+            })}
+          </div>
+
+          <Reveal variant="up" delay={120}>
+            <div className="mt-4 grid overflow-hidden rounded-xl border border-white/[0.08] bg-[#0d0d0d] lg:grid-cols-[1.05fr_0.95fr]">
+              <div className="p-6 sm:p-8">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">Gamificação com propósito</p>
+                <h3 className="mt-4 max-w-md text-[24px] font-medium leading-[1.15] tracking-[-0.035em] text-neutral-100 sm:text-[28px]">
+                  Seu avanço fica visível — sem transformar estudo em cassino.
+                </h3>
+                <p className="mt-3 max-w-md text-[12px] leading-6 text-neutral-400">
+                  XP, sequência e conquistas existem para sustentar consistência, não para viciar. Nada
+                  aqui depende de dinheiro real.
+                </p>
+              </div>
+              <div className="grid gap-px bg-white/[0.06] sm:grid-cols-3 lg:grid-cols-1">
+                {GAMIFICATION.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <div key={item.label} className="flex items-start gap-3 bg-[#0b0b0b] px-5 py-5">
+                      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md border border-accent/20 bg-accent/[0.06] text-accent">
+                        <Icon className="h-4 w-4" />
+                      </span>
+                      <div>
+                        <p className="text-[12px] font-semibold text-neutral-100">{item.label}</p>
+                        <p className="mt-1 text-[10px] leading-5 text-neutral-500">{item.description}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </Reveal>
+        </section>
+
         <section id="modulos" className="container-page scroll-mt-24 py-16 sm:py-24">
           <Reveal variant="up" className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
@@ -358,6 +452,7 @@ export default function LandingPage() {
           <div className="flex flex-wrap gap-x-6 gap-y-2 text-[11px] text-neutral-500">
             <Link href="/entrar" className="hover:text-neutral-100">Entrar</Link>
             <Link href="/comecar" className="hover:text-neutral-100">Criar conta</Link>
+            <a href="#plataforma" className="hover:text-neutral-100">Plataforma</a>
             <a href="#modulos" className="hover:text-neutral-100">Módulos</a>
             <a href="#como-funciona" className="hover:text-neutral-100">Como funciona</a>
           </div>

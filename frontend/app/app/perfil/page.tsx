@@ -204,7 +204,7 @@ export default function ProfilePage() {
       )}
 
       <div className="grid gap-5 lg:grid-cols-[0.8fr_1.2fr]">
-        <section className="card p-6">
+        <section data-reveal-auto="up" className="card p-6">
           <div className="flex items-center gap-4">
             <div className="grid h-16 w-16 place-items-center rounded-2xl border border-accent/30 bg-accent/10 text-xl font-black text-accent">
               {initials(user.name)}
@@ -284,7 +284,7 @@ export default function ProfilePage() {
             </div>
           </form>
 
-          <section className="card p-5 sm:p-6">
+          <section data-reveal-auto="up" className="card p-5 sm:p-6">
             <h2 className="flex items-center gap-2 text-sm font-bold">
               <ShieldCheck className="h-4 w-4 text-accent" /> Autenticação em duas etapas
             </h2>

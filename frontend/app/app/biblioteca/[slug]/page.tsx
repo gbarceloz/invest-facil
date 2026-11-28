@@ -49,7 +49,7 @@ export default function ArticlePage() {
         <ArrowLeft className="h-4 w-4" /> Biblioteca
       </Link>
 
-      <div className="mb-6">
+      <div data-reveal-auto="up" className="mb-6">
         <div className="flex flex-wrap items-center gap-2">
           <Badge tone="accent">{article.categoryName ?? "Educação financeira"}</Badge>
           <span className="inline-flex items-center gap-1 text-[11px] text-muted">
@@ -62,7 +62,7 @@ export default function ArticlePage() {
         <p className="mt-3 text-sm leading-6 text-muted">{article.subtitle}</p>
       </div>
 
-      <article className="card p-6 sm:p-8">
+      <article data-reveal-auto="fade" className="card p-6 sm:p-8">
         <Markdown content={article.contentMd} />
         {(article.sourceName || article.sourceUrl) && (
           <div className="mt-8 border-t border-ink-500/60 pt-5 text-xs text-muted">

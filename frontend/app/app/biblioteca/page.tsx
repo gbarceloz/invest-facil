@@ -53,7 +53,7 @@ export default function LibraryPage() {
       {loading ? (
         <Spinner label="Carregando artigos" />
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div data-stagger-auto className="grid gap-4 sm:grid-cols-2">
           {articles.map((article) => (
             <Link key={article.id} href={`/app/biblioteca/${article.slug}`} className="card card-hover flex flex-col p-5">
               <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-accent">

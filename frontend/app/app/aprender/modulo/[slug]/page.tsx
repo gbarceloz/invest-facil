@@ -108,7 +108,7 @@ export default function ModulePage() {
         description={module.description}
       />
 
-      <div className="card mb-6 flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
+      <div data-reveal-auto="up" className="card mb-6 flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap items-center gap-3 text-xs text-muted">
           <span>{module.lessons.length} aulas</span>
           <span className="h-1 w-1 rounded-full bg-neutral-600" />
@@ -130,7 +130,7 @@ export default function ModulePage() {
 
       <ProgressBar value={modulePercent} label="Progresso do módulo" className="mb-6" />
 
-      <ol className="space-y-3">
+      <ol data-stagger-auto className="space-y-3">
         {module.lessons.map((lesson, index) => {
           const state = states[index];
           const status = statuses[lesson.id];
