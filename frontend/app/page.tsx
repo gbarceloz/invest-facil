@@ -12,8 +12,6 @@ import {
   LineChart,
   Lock,
   Play,
-  ShieldCheck,
-  Sparkles,
   TrendingUp,
   Trophy,
   Zap,
@@ -63,7 +61,6 @@ const STEPS: JourneyStep[] = [
 
 const STATS = [
   { value: 2, pad: 2, suffix: "", label: "módulos completos" },
-  { value: 0, pad: 2, suffix: "", label: "promessas de retorno" },
 ];
 
 const FEATURES = [
@@ -102,12 +99,7 @@ export default function LandingPage() {
           <div className="pointer-events-none absolute inset-0 opacity-[0.16] [background-image:linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:72px_72px] [mask-image:radial-gradient(ellipse_at_70%_20%,black,transparent_70%)]" />
           <div className="relative mx-auto grid w-full max-w-[1240px] items-center gap-12 px-5 pb-16 pt-14 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:pb-20 lg:pt-20">
             <div>
-              <Reveal variant="down" delay={40}>
-                <span className="inline-flex items-center gap-2 rounded-md border border-accent/25 bg-accent/[0.06] px-3 py-1.5 text-[10px] font-semibold text-accent">
-                  <Sparkles className="h-3 w-3" /> Educação financeira para iniciantes
-                </span>
-              </Reveal>
-              <h1 className="mt-6 max-w-[760px] text-[44px] font-medium leading-[1.04] tracking-[-0.045em] text-neutral-100 sm:text-[58px] lg:text-[66px]">
+              <h1 className="max-w-[760px] text-[44px] font-medium leading-[1.04] tracking-[-0.045em] text-neutral-100 sm:text-[58px] lg:text-[66px]">
                 <SplitIntro text="Aprenda a investir" delay={80} step={55} />
                 <br />
                 <span className="text-accent">
@@ -116,8 +108,7 @@ export default function LandingPage() {
               </h1>
               <Reveal variant="up" delay={260}>
                 <p className="mt-6 max-w-[600px] text-[15px] leading-7 text-neutral-400">
-                  Aulas rápidas, desafios interativos e simulações com dinheiro fictício para você
-                  entender o mercado de verdade.
+                  Aulas rápidas, desafios e simulações fictícias para você entender o mercado.
                 </p>
               </Reveal>
               <Reveal variant="up" delay={340}>
@@ -129,12 +120,6 @@ export default function LandingPage() {
                     Explorar o mercado
                   </a>
                 </div>
-              </Reveal>
-              <Reveal variant="up" delay={420}>
-                <p className="mt-6 inline-flex items-center gap-2 text-[11px] text-neutral-500">
-                  <ShieldCheck className="h-4 w-4 text-accent" />
-                  Conteúdo educacional. Sem promessas. Sem dinheiro real.
-                </p>
               </Reveal>
             </div>
 
@@ -246,7 +231,7 @@ export default function LandingPage() {
 
           <div className="container-page pb-20 sm:pb-28">
             <Reveal variant="up" delay={80}>
-              <div className="mx-auto grid max-w-3xl gap-px overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.06] sm:grid-cols-2">
+              <div className="mx-auto max-w-sm overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.06]">
                 {STATS.map((stat) => (
                   <div key={stat.label} className="bg-[#0d0d0d] px-6 py-9 text-center">
                     <p className="text-[42px] font-medium leading-none tracking-[-0.05em] text-neutral-100">
