@@ -214,10 +214,10 @@ export default function LandingPage() {
               <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-accent">Nosso ponto de partida</p>
             </Reveal>
             <h2 className="mx-auto mt-6 max-w-4xl text-[38px] font-medium leading-[1.06] tracking-[-0.045em] text-neutral-100 sm:text-[62px]">
-              <SplitText text="Investir não é apostar." step={50} />
+              <SplitText text="Seu dinheiro merece" step={50} />
               <br />
               <span className="text-accent">
-                <SplitText text="É entender o jogo." delay={140} step={50} />
+                <SplitText text="decisões melhores." delay={140} step={50} />
               </span>
             </h2>
             <p className="mx-auto mt-7 max-w-2xl text-[14px] leading-7 text-neutral-400 sm:text-[15px]">
