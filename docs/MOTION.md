@@ -117,22 +117,24 @@ Comparação entre a produção anterior (a06745d) e o build novo rodando localm
 (`next start`), 3 execuções, mediana, viewport 1440×900. A produção está em outra
 rede/host, então os números são indicativos, não um benchmark controlado.
 
-| Métrica | Antes (produção) | Depois (build local) |
+| Métrica | Antes (produção) | Depois (produção) |
 | --- | --- | --- |
-| LCP | 720 ms | 796 ms |
+| LCP | 720 ms | 936 ms |
 | CLS | 0,004 | 0,004 |
 | Requisições | 17 | 19 |
-| Transferência total | 288 KB | 244 KB |
-| JavaScript | 177 KB | 179 KB |
+| Transferência total | 288 KB | 250 KB |
+| JavaScript | 177 KB | 184 KB |
 
-Leitura: o JS praticamente não cresceu (+2 KB), a transferência total caiu 15%
-(a foto do hero passou a ser servida otimizada por `next/image`), o CLS ficou
-igual e o LCP segue abaixo de 1 s no ambiente local. A diferença de LCP é
-esperada por comparar Vercel (CDN global) com um servidor local; a validação
-final deve ser refeita após o deploy.
+Leitura: o JS cresceu 7 KB (sistema de motion + `next/image`), a transferência
+total caiu 13% e o CLS ficou igual. O LCP subiu de 720 ms para 936 ms porque a
+foto do hero passou a ser o maior elemento pintado (antes o texto era), mas
+segue abaixo de 1 s. No build local o LCP medido foi 796 ms; a diferença entre
+os ambientes é esperada.
 
 Os gráficos de Bitcoin e do simulador (Recharts) foram extraídos para chunks
-carregados sob demanda (`next/dynamic`), reduzindo o JS inicial dessas rotas.
+carregados sob demanda (`next/dynamic`): o chunk da página do simulador caiu
+para ~20 KB e não contém mais a biblioteca de gráficos (o chunk separado do
+Recharts só é baixado quando o gráfico aparece).
 
 ## 5. Limitações
 
