@@ -328,30 +328,6 @@ body {
   animation: grow-bar 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
 }
 
-@keyframes marquee {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
-.marquee {
-  mask-image: linear-gradient(90deg, transparent, black 7%, black 93%, transparent);
-  -webkit-mask-image: linear-gradient(90deg, transparent, black 7%, black 93%, transparent);
-}
-
-.marquee-track {
-  display: flex;
-  width: max-content;
-  animation: marquee 46s linear infinite;
-}
-
-.marquee:hover .marquee-track {
-  animation-play-state: paused;
-}
-
 /* Split headlines: each word rises out of a mask. */
 
 [data-split] .split-word,
@@ -532,7 +508,6 @@ body {
   .float-y,
   .float-y-delayed,
   .hero-progress,
-  .marquee-track,
   .hero-photo {
     animation: none !important;
   }

@@ -244,33 +244,6 @@ export function Counter({
 }
 
 /**
- * Faixa horizontal infinita com os temas da plataforma. Decorativa: o mesmo
- * conteúdo aparece de forma acessível na seção de módulos.
- */
-export function Marquee({ items }: { items: string[] }) {
-  const row = [...items, ...items];
-
-  return (
-    <div
-      className="marquee relative overflow-hidden border-y border-white/[0.07] bg-[#0b0b0b] py-4"
-      aria-hidden="true"
-    >
-      <div className="marquee-track items-center">
-        {row.map((item, index) => (
-          <span
-            key={`${item}-${index}`}
-            className="flex shrink-0 items-center gap-8 pr-8 text-[10px] font-semibold uppercase tracking-[0.24em] text-neutral-500"
-          >
-            {item}
-            <span className="h-1 w-1 rotate-45 bg-accent/60" />
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/**
  * Barra fina de progresso de leitura no topo. Escreve direto no DOM para não
  * provocar re-render a cada frame de scroll.
  */
