@@ -38,24 +38,24 @@ const JOURNEY = [
 
 const STEPS: JourneyStep[] = [
   {
-    title: "Responda 7 perguntas",
+    title: "Conheça seu momento",
     description:
-      "Objetivos, situações e quanto sobra por mês. Sem renda, sem extrato e sem julgamento.",
+      "Responda 7 perguntas sobre seus objetivos, sua rotina e sua relação com o dinheiro. Leva poucos minutos.",
   },
   {
-    title: "Receba seu perfil",
+    title: "Descubra seu perfil financeiro",
     description:
-      "Um retrato honesto do seu momento financeiro, com o que já está saudável e o que merece atenção.",
+      "Veja como você está hoje, seus pontos fortes e o que pode melhorar na forma de cuidar do seu dinheiro.",
   },
   {
-    title: "Aprenda em sequência",
+    title: "Aprenda na prática",
     description:
-      "Aulas curtas, exemplos visuais e quizzes que verificam entendimento — não cliques.",
+      "Aulas rápidas, exemplos do dia a dia e quizzes para fixar o que você acabou de aprender.",
   },
   {
-    title: "Simule sem risco",
+    title: "Teste suas decisões",
     description:
-      "Decisões com dinheiro fictício para entender o efeito de cada escolha antes de arriscar o seu.",
+      "Explore investimentos e cenários com dinheiro virtual. Entenda como suas escolhas funcionam antes de colocar seu próprio dinheiro.",
   },
 ];
 
@@ -66,25 +66,40 @@ const STATS = [
 const FEATURES = [
   {
     icon: BookOpen,
-    title: "Aulas guiadas",
-    description: "Trilhas curtas, na ordem certa, com quizzes que verificam entendimento — não cliques.",
+    title: "Aulas que fazem sentido",
+    description:
+      "Conteúdo direto ao ponto, organizado por etapas, com exemplos e desafios para você realmente entender cada assunto.",
   },
   {
     icon: Calculator,
-    title: "Simulador sem risco",
-    description: "Teste juros, inflação e aportes com dinheiro fictício antes de decidir qualquer coisa.",
+    title: "Simulador de investimentos",
+    description:
+      "Faça aportes virtuais, explore diferentes investimentos e veja como juros, tempo e mercado podem influenciar seus resultados.",
   },
   {
     icon: Trophy,
-    title: "Progresso visível",
-    description: "Acompanhe XP, sequência de estudo e domínio por tema em um painel que reflete o que você fez.",
+    title: "Seu progresso",
+    description:
+      "Acompanhe suas aulas, experiência acumulada, sequência de estudos e os assuntos que já domina.",
   },
 ];
 
 const GAMIFICATION = [
-  { icon: Zap, label: "XP por aula", description: "Cada missão concluída soma experiência de verdade." },
-  { icon: Flame, label: "Sequência", description: "Dias seguidos de estudo, sem punição por pausas." },
-  { icon: Award, label: "Conquistas", description: "Marcos de aprendizado, não de cliques ou transações." },
+  {
+    icon: Zap,
+    label: "Experiência",
+    description: "Conclua aulas e atividades para ganhar XP e avançar na sua jornada de aprendizado.",
+  },
+  {
+    icon: Flame,
+    label: "Consistência",
+    description: "Continue aprendendo ao longo dos dias e acompanhe sua sequência de estudos.",
+  },
+  {
+    icon: Award,
+    label: "Conquistas",
+    description: "Desbloqueie marcos conforme aprende novos conteúdos e completa desafios.",
+  },
 ];
 
 export default function LandingPage() {
@@ -108,13 +123,14 @@ export default function LandingPage() {
               </h1>
               <Reveal variant="up" delay={260}>
                 <p className="mt-6 max-w-[600px] text-[15px] leading-7 text-neutral-400">
-                  Aulas rápidas, desafios e simulações fictícias para você entender o mercado.
+                  Aulas rápidas, desafios e simulações com dinheiro virtual para você se familiarizar
+                  com o mercado.
                 </p>
               </Reveal>
               <Reveal variant="up" delay={340}>
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                   <Link href="/comecar" className="btn-primary px-5 py-3 text-sm">
-                    Começar minha jornada <ArrowRight className="h-4 w-4" />
+                    Começar agora <ArrowRight className="h-4 w-4" />
                   </Link>
                   <a href="#modulos" className="btn-secondary px-5 py-3 text-sm">
                     Explorar o mercado
@@ -211,7 +227,7 @@ export default function LandingPage() {
         <section className="relative overflow-hidden">
           <div className="container-page py-20 text-center sm:py-28">
             <Reveal variant="fade">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-accent">Nosso ponto de partida</p>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-accent">Por que a Invest Fácil</p>
             </Reveal>
             <h2 className="mx-auto mt-6 max-w-4xl text-[38px] font-medium leading-[1.06] tracking-[-0.045em] text-neutral-100 sm:text-[62px]">
               <SplitText text="Seu dinheiro merece" step={50} />
@@ -222,7 +238,7 @@ export default function LandingPage() {
             </h2>
             <p className="mx-auto mt-7 max-w-2xl text-[14px] leading-7 text-neutral-400 sm:text-[15px]">
               <SplitText
-                text="Sem promessas de retorno, sem pressa e sem dinheiro real. Só clareza, um conceito por vez."
+                text="Aulas curtas, exemplos práticos e simulações com dinheiro virtual para você praticar antes de investir."
                 delay={260}
                 step={18}
               />
@@ -251,15 +267,15 @@ export default function LandingPage() {
           <div className="container-page grid gap-12 py-20 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16 lg:py-28">
             <div className="lg:sticky lg:top-28 lg:self-start">
               <Reveal variant="fade">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-accent">Como funciona</p>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-accent">Passo a passo</p>
               </Reveal>
               <h2 className="mt-4 text-[32px] font-medium leading-[1.08] tracking-[-0.04em] text-neutral-100 sm:text-[44px]">
-                <SplitText text="Do primeiro clique à primeira decisão." step={42} />
+                <SplitText text="Comece de onde você está." step={42} />
               </h2>
               <Reveal variant="up" delay={180}>
                 <p className="mt-6 max-w-md text-sm leading-6 text-neutral-400">
-                  Quatro passos, sem atalhos e sem gamificação vazia. Você entende o conceito antes de
-                  avançar — e vê sua evolução a cada etapa.
+                  Conheça seu perfil, aprenda os fundamentos e pratique com situações do mercado. Em
+                  poucos minutos por dia, você começa a entender melhor como seu dinheiro funciona.
                 </p>
               </Reveal>
             </div>
@@ -273,14 +289,14 @@ export default function LandingPage() {
             className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
           >
             <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-accent">A plataforma</p>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-accent">Recursos</p>
               <h2 className="mt-3 max-w-2xl text-[30px] font-medium tracking-[-0.04em] text-neutral-100 sm:text-[42px]">
-                <SplitText text="Aprender, simular e acompanhar — no mesmo lugar." step={30} />
+                <SplitText text="Tudo para aprender e praticar." step={30} />
               </h2>
             </div>
             <p className="max-w-sm text-[12px] leading-6 text-neutral-500">
-              Três ferramentas simples, conectadas pelo mesmo objetivo: fazer você entender antes de
-              decidir.
+              Aprenda sobre o mercado financeiro, explore possibilidades e acompanhe o que já evoluiu
+              dentro da plataforma.
             </p>
           </Reveal>
 
@@ -304,13 +320,13 @@ export default function LandingPage() {
           <Reveal variant="up" delay={120}>
             <div className="mt-4 grid overflow-hidden rounded-xl border border-white/[0.08] bg-[#0d0d0d] lg:grid-cols-[1.05fr_0.95fr]">
               <div className="p-6 sm:p-8">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">Gamificação com propósito</p>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">Gamificação</p>
                 <h3 className="mt-4 max-w-md text-[24px] font-medium leading-[1.15] tracking-[-0.035em] text-neutral-100 sm:text-[28px]">
-                  Seu avanço fica visível — sem transformar estudo em cassino.
+                  Aprender também tem suas conquistas.
                 </h3>
                 <p className="mt-3 max-w-md text-[12px] leading-6 text-neutral-400">
-                  XP, sequência e conquistas existem para sustentar consistência, não para viciar. Nada
-                  aqui depende de dinheiro real.
+                  Cada aula concluída, novo conceito aprendido e desafio superado conta. Acompanhe seu
+                  progresso e veja o quanto já avançou.
                 </p>
               </div>
               <div className="grid gap-px bg-white/[0.06] sm:grid-cols-3 lg:grid-cols-1">
@@ -336,14 +352,14 @@ export default function LandingPage() {
         <section id="modulos" className="container-page scroll-mt-24 py-16 sm:py-24">
           <Reveal variant="up" className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">Dois módulos</p>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">Trilhas</p>
               <h2 className="mt-3 max-w-xl text-balance text-[30px] font-medium tracking-[-0.04em] text-neutral-100 sm:text-[38px]">
-                <SplitText text="O que você precisa entender, na ordem certa." step={30} />
+                <SplitText text="Sua jornada começa aqui." step={30} />
               </h2>
             </div>
             <p className="max-w-sm text-[12px] leading-6 text-neutral-500">
-              Nada de dez categorias ou gráficos decorativos. Cada módulo tem uma promessa simples:
-              explicar bem.
+              Do funcionamento do mercado financeiro ao universo das criptomoedas. Explore os temas
+              essenciais para construir sua base financeira.
             </p>
           </Reveal>
 
@@ -359,8 +375,8 @@ export default function LandingPage() {
                 <p className="mt-6 text-[10px] font-semibold uppercase tracking-[0.16em] text-accent">Módulo 01</p>
                 <h3 className="mt-2 text-[24px] font-medium tracking-[-0.03em] text-neutral-100">Mercado financeiro</h3>
                 <p className="mt-2 text-[12px] leading-6 text-neutral-400">
-                  Inflação, Selic, renda fixa, ações, ETFs e risco. A base para entender o sistema — não
-                  para seguir dicas.
+                  Entenda como o dinheiro circula, o que movimenta o mercado e como funcionam os
+                  principais investimentos. Do básico à primeira análise.
                 </p>
                 <Stagger step={50} className="mt-5 flex flex-wrap gap-2">
                   {["Inflação", "Selic", "Renda fixa", "Ações", "ETFs"].map((topic) => (
@@ -379,13 +395,13 @@ export default function LandingPage() {
                   <ChevronRight className="h-4 w-4 text-neutral-600 transition group-hover:text-accent" />
                 </div>
                 <p className="mt-6 text-[10px] font-semibold uppercase tracking-[0.16em] text-accent">Módulo 02</p>
-                <h3 className="mt-2 text-[24px] font-medium tracking-[-0.03em] text-neutral-100">Bitcoin</h3>
+                <h3 className="mt-2 text-[24px] font-medium tracking-[-0.03em] text-neutral-100">Bitcoin e criptomoedas</h3>
                 <p className="mt-2 text-[12px] leading-6 text-neutral-400">
-                  A tecnologia, a escassez e a custódia explicadas do zero. O mercado como contexto
-                  educacional, com dados reais e sem promessas.
+                  Conheça a tecnologia por trás do Bitcoin, como funciona sua rede, por que sua oferta é
+                  limitada e os riscos de um mercado que muda constantemente.
                 </p>
                 <Stagger step={50} className="mt-5 flex flex-wrap gap-2">
-                  {["Blockchain", "21 milhões", "Mineração", "Carteiras", "Volatilidade"].map((topic) => (
+                  {["Blockchain", "Oferta limitada", "Mineração", "Carteiras", "Volatilidade"].map((topic) => (
                     <span key={topic} className="rounded-md border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[10px] text-neutral-400">{topic}</span>
                   ))}
                 </Stagger>
@@ -404,13 +420,14 @@ export default function LandingPage() {
               <div className="relative">
                 <CircleDollarSign className="mx-auto h-6 w-6 text-accent" />
                 <h2 className="mt-4 text-balance text-[28px] font-medium tracking-[-0.04em] text-neutral-100">
-                  <SplitText text="Seu primeiro passo não precisa ser um investimento." step={30} />
+                  <SplitText text="Comece a entender seu dinheiro." step={30} />
                 </h2>
                 <p className="mx-auto mt-3 max-w-lg text-[13px] leading-6 text-neutral-400">
-                  Pode ser uma aula de quatro minutos sobre inflação, uma introdução ao Bitcoin ou um quiz.
+                  Escolha uma aula, descubra algo novo e dê o primeiro passo para tomar decisões
+                  financeiras mais conscientes.
                 </p>
                 <Link href="/comecar" className="btn-primary mt-6 px-5 py-3 text-sm">
-                  Criar minha conta gratuita <ArrowRight className="h-4 w-4" />
+                  Criar minha conta <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
             </div>
@@ -433,7 +450,7 @@ export default function LandingPage() {
             <Link href="/comecar" className="hover:text-neutral-100">Criar conta</Link>
             <a href="#plataforma" className="hover:text-neutral-100">Plataforma</a>
             <a href="#modulos" className="hover:text-neutral-100">Módulos</a>
-            <a href="#como-funciona" className="hover:text-neutral-100">Como funciona</a>
+            <a href="#como-funciona" className="hover:text-neutral-100">Passo a passo</a>
           </div>
         </div>
       </footer>
